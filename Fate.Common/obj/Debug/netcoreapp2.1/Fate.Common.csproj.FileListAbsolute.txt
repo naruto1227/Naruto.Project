@@ -1,0 +1,9 @@
+D:\MyProgect\MyProject\Fate.Common\bin\Debug\netcoreapp2.1\Fate.Common.deps.json
+D:\MyProgect\MyProject\Fate.Common\bin\Debug\netcoreapp2.1\Fate.Common.dll
+D:\MyProgect\MyProject\Fate.Common\bin\Debug\netcoreapp2.1\Fate.Common.pdb
+D:\MyProgect\MyProject\Fate.Common\obj\Debug\netcoreapp2.1\Fate.Common.csprojAssemblyReference.cache
+D:\MyProgect\MyProject\Fate.Common\obj\Debug\netcoreapp2.1\Fate.Common.csproj.CoreCompileInputs.cache
+D:\MyProgect\MyProject\Fate.Common\obj\Debug\netcoreapp2.1\Fate.Common.AssemblyInfoInputs.cache
+D:\MyProgect\MyProject\Fate.Common\obj\Debug\netcoreapp2.1\Fate.Common.AssemblyInfo.cs
+D:\MyProgect\MyProject\Fate.Common\obj\Debug\netcoreapp2.1\Fate.Common.dll
+D:\MyProgect\MyProject\Fate.Common\obj\Debug\netcoreapp2.1\Fate.Common.pdb

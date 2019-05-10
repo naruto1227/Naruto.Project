@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Common.Repository.Mysql\Fate.Common.Repository.Mysql.csproj" />
+    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Domain.Event\Fate.Domain.Event.csproj" />
+    <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
+  </ItemGroup>
+
+</Project>

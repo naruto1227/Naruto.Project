@@ -1,0 +1,14 @@
+D:\MyProject\MyProject\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.IdentityServer4.deps.json
+D:\MyProject\MyProject\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.IdentityServer4.runtimeconfig.json
+D:\MyProject\MyProject\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.IdentityServer4.runtimeconfig.dev.json
+D:\MyProject\MyProject\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.IdentityServer4.dll
+D:\MyProject\MyProject\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.IdentityServer4.pdb
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.csprojAssemblyReference.cache
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.csproj.CoreCompileInputs.cache
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.RazorAssemblyInfo.cache
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.RazorAssemblyInfo.cs
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.AssemblyInfoInputs.cache
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.AssemblyInfo.cs
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.RazorTargetAssemblyInfo.cache
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.dll
+D:\MyProject\MyProject\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.pdb

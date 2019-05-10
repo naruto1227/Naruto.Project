@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
+    <ProjectReference Include="..\Fate.Domain\Fate.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

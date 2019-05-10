@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Common.Repository.Mysql\Fate.Common.Repository.Mysql.csproj" />
+    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+  </ItemGroup>
+
+</Project>

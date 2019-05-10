@@ -1,0 +1,805 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using StackExchange.Redis;
+using Fate.Common.Redis.IRedisManage;
+using System.Threading.Tasks;
+using Fate.Common.Enum;
+
+namespace Fate.Common.Redis.RedisManage
+{
+    /// <summary>
+    /// redis操作封装类
+    /// </summary>
+    public class RedisOperationHelp : IRedisOperationHelp
+    {
+        private IRedisBase redisBase;
+        /// <summary>
+        /// 实例化连接
+        /// </summary>
+        public RedisOperationHelp(IRedisBase _redisBase)
+        {
+            redisBase = _redisBase;
+        }
+        /// <summary>
+        /// string的缓存前缀
+        /// </summary>
+        private readonly string StringSysCustomKey = "string:";
+        /// <summary>
+        /// list的前缀
+        /// </summary>
+        private readonly string ListSysCustomKey = "list:";
+
+        /// <summary>
+        /// set的前缀
+        /// </summary>
+        private readonly string SetSysCustomKey = "ids:";
+
+        /// <summary>
+        /// Store的前缀
+        /// </summary>
+        private readonly string StoreSysCustomKey = "urn:";
+
+        #region list
+        #region 同步
+        /// <summary>
+        /// 存储list 集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void ListSet<T>(string key, List<T> value)
+        {
+            if (value != null && value.Count > 0)
+            {
+                foreach (var single in value)
+                {
+                    var result = redisBase.ConvertJson(single);
+                    redisBase.DoSave(db => db.ListRightPush(ListSysCustomKey + key, result));
+                }
+            }
+        }
+        /// <summary>
+        /// 取list 集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        public List<T> ListGet<T>(string key)
+        {
+            var vList = redisBase.DoSave(db => db.ListRange(ListSysCustomKey + key));
+            List<T> result = new List<T>();
+            foreach (var item in vList)
+            {
+                var model = redisBase.ConvertObj<T>(item); //反序列化
+                result.Add(model);
+            }
+            return result;
+        }
+        /// <summary>
+        /// 删除list集合的某一项
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value">value值</param>
+        public void ListRemove<T>(string key, T value)
+        {
+            redisBase.DoSave(db => db.ListRemove(ListSysCustomKey + key, redisBase.ConvertJson(value)));
+        }
+
+
+        /// <summary>
+        /// 获取集合中的数量
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public long ListLength(string key)
+        {
+            return redisBase.DoSave(db => db.ListLength(ListSysCustomKey + key));
+        }
+        #endregion
+
+        #region 异步
+        /// <summary>
+        /// 存储list 集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public async Task ListSetAsync<T>(string key, List<T> value)
+        {
+            if (value != null && value.Count > 0)
+            {
+                foreach (var single in value)
+                {
+                    var result = redisBase.ConvertJson(single);
+                    await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, result));
+                }
+            }
+        }
+        /// <summary>
+        /// 取list 集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        public async Task<List<T>> ListGetAsync<T>(string key)
+        {
+            var vList = await redisBase.DoSave(db => db.ListRangeAsync(ListSysCustomKey + key));
+            List<T> result = new List<T>();
+            foreach (var item in vList)
+            {
+                var model = redisBase.ConvertObj<T>(item); //反序列化
+                result.Add(model);
+            }
+            return result;
+        }
+        /// <summary>
+        /// 删除list集合的某一项
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value">value值</param>
+        public async Task<long> ListRemoveAsync<T>(string key, T value)
+        {
+            return await redisBase.DoSave(db => db.ListRemoveAsync(ListSysCustomKey + key, redisBase.ConvertJson(value)));
+        }
+
+
+        /// <summary>
+        /// 获取集合中的数量
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<long> ListLengthAsync(string key)
+        {
+            return await redisBase.DoSave(db => db.ListLengthAsync(ListSysCustomKey + key));
+        }
+        #endregion
+
+        #endregion
+
+        #region string
+        #region 同步
+        /// <summary>
+        /// 保存字符串
+        /// </summary>
+        public void StringSet(string key, string value, TimeSpan? expiry = default(TimeSpan?))
+        {
+            key = StringSysCustomKey + key;
+            redisBase.DoSave(db => db.StringSet(key, value, expiry));
+        }
+        /// <summary>
+        /// 保存对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void StringSet<T>(string key, T value, TimeSpan? expiry = default(TimeSpan?))
+        {
+            key = StringSysCustomKey + key;
+            var res = redisBase.ConvertJson(value);
+            redisBase.DoSave(db => db.StringSet(key, res, expiry));
+        }
+
+        /// <summary>
+        /// 保存集合对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public bool StringSet<T>(string key, List<T> value, TimeSpan? expiry = default(TimeSpan?))
+        {
+            key = StringSysCustomKey + key;
+            List<T> li = new List<T>();
+            foreach (var item in value)
+            {
+                li.Add(item);
+            }
+            var res = redisBase.ConvertJson(li);
+            return redisBase.DoSave(db => db.StringSet(key, res, expiry));
+        }
+
+        /// <summary>
+        /// 获取字符串
+        /// </summary>
+        public string StringGet(string key)
+        {
+            key = StringSysCustomKey + key;
+            return redisBase.DoSave(db => db.StringGet(key));
+        }
+
+        /// <summary>
+        /// 获取对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T StringGet<T>(string key)
+        {
+            key = StringSysCustomKey + key;
+            var value = redisBase.DoSave(db => db.StringGet(key));
+            return redisBase.ConvertObj<T>(value);
+        }
+        #endregion
+
+        #region 异步
+        /// <summary>
+        /// 保存字符串
+        /// </summary>
+        public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?))
+        {
+            key = StringSysCustomKey + key;
+            return await redisBase.DoSave(db => db.StringSetAsync(key, value, expiry));
+        }
+        /// <summary>
+        /// 保存对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public async Task<bool> StringSetAsync<T>(string key, T value, TimeSpan? expiry = default(TimeSpan?))
+        {
+            key = StringSysCustomKey + key;
+            var res = redisBase.ConvertJson(value);
+            return await redisBase.DoSave(db => db.StringSetAsync(key, res, expiry));
+        }
+
+        /// <summary>
+        /// 保存集合对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public async Task<bool> StringSetAsync<T>(string key, List<T> value, TimeSpan? expiry = default(TimeSpan?))
+        {
+            key = StringSysCustomKey + key;
+            List<T> li = new List<T>();
+            foreach (var item in value)
+            {
+                li.Add(item);
+            }
+            var res = redisBase.ConvertJson(li);
+            return await redisBase.DoSave(db => db.StringSetAsync(key, res, expiry));
+        }
+
+        /// <summary>
+        /// 获取字符串
+        /// </summary>
+        public async Task<RedisValue> StringGetAsync(string key)
+        {
+            key = StringSysCustomKey + key;
+            return await redisBase.DoSave(db => db.StringGetAsync(key));
+        }
+
+        /// <summary>
+        /// 获取对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public async Task<T> StringGetAsync<T>(string key)
+        {
+            key = StringSysCustomKey + key;
+            var value = await redisBase.DoSave(db => db.StringGetAsync(key));
+            return redisBase.ConvertObj<T>(value);
+        }
+        #endregion
+        #endregion
+
+        #region key
+        #region 同步
+        /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="key"></param>
+        public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum=default)
+        {
+            if (keyOperatorEnum == KeyOperatorEnum.STRING)
+            {
+                key = StringSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            {
+                key = ListSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            {
+                key = SetSysCustomKey + key;
+            }
+            redisBase.DoSave(db => db.KeyDelete(key));
+        }
+
+        /// <summary>
+        /// 判断key是否存在
+        /// </summary>
+        /// <param name="key"></param>
+        public bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default)
+        {
+
+            if (keyOperatorEnum== KeyOperatorEnum.STRING)
+            {
+                key = StringSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            {
+                key = ListSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            {
+                key = SetSysCustomKey + key;
+            }
+            return redisBase.DoSave(db => db.KeyExists(key));
+        }
+        #endregion
+
+        #region 异步
+        /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="key"></param>
+        public async Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
+        {
+            if (keyOperatorEnum == KeyOperatorEnum.STRING)
+            {
+                key = StringSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            {
+                key = ListSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            {
+                key = SetSysCustomKey + key;
+            }
+            return await redisBase.DoSave(db => db.KeyDeleteAsync(key));
+        }
+
+        /// <summary>
+        /// 判断key是否存在
+        /// </summary>
+        /// <param name="key"></param>
+        public async Task<bool> KeyExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
+        {
+            if (keyOperatorEnum == KeyOperatorEnum.STRING)
+            {
+                key = StringSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            {
+                key = ListSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            {
+                key = SetSysCustomKey + key;
+            }
+            return await redisBase.DoSave(db => db.KeyExistsAsync(key));
+        }
+        #endregion
+        #endregion
+
+        #region SortedSet
+        #region 同步
+        /// <summary>
+        /// SortedSet 新增
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <param name="member"></param>
+        /// <param name="score"></param>
+        /// <returns></returns>
+        public bool SortedSetAdd<T>(string key, T value, double score)
+        {
+            var result = redisBase.ConvertJson(value);
+            return redisBase.DoSave(db => db.SortedSetAdd(key, result, score));
+        }
+        /// <summary>
+        /// 获取SortedSet的数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T SortedSetGet<T>(string key, double score)
+        {
+            var result = redisBase.DoSave(db => db.SortedSetRangeByScore(key, score));
+            return redisBase.ConvertObj<T>(result.ToString());
+        }
+        /// <summary>
+        /// 获取集合中的数量
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public long SortedSetLength(string key)
+        {
+            return redisBase.DoSave(db => db.SortedSetLength(key));
+        }
+        /// <summary>
+        /// 移除SortedSet
+        /// </summary>
+        public bool SortedSetRemove<T>(string key, T value)
+        {
+            var result = redisBase.ConvertJson(value);
+            return redisBase.DoSave(db => db.SortedSetRemove(key, result));
+        }
+        #endregion
+
+        #region 异步
+        /// <summary>
+        /// SortedSet 新增
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <param name="member"></param>
+        /// <param name="score"></param>
+        /// <returns></returns>
+        public async Task<bool> SortedSetAddAsync<T>(string key, T value, double score)
+        {
+            var result = redisBase.ConvertJson(value);
+            return await redisBase.DoSave(db => db.SortedSetAddAsync(key, result, score));
+        }
+        /// <summary>
+        /// 获取SortedSet的数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public async Task<T> SortedSetGetAsync<T>(string key, double score)
+        {
+            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(key, score));
+            return redisBase.ConvertObj<T>(result.ToString());
+        }
+        /// <summary>
+        /// 获取集合中的数量
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<long> SortedSetLengthAsync(string key)
+        {
+            return await redisBase.DoSave(db => db.SortedSetLengthAsync(key));
+        }
+        /// <summary>
+        /// 移除SortedSet
+        /// </summary>
+        public async Task<bool> SortedSetRemoveAsync<T>(string key, T value)
+        {
+            var result = redisBase.ConvertJson(value);
+            return await redisBase.DoSave(db => db.SortedSetRemoveAsync(key, result));
+        }
+        #endregion
+        #endregion
+
+        #region Set
+        #region 同步
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public bool SetAdd<T>(string value)
+        {
+            //反射实体的信息
+            var type = typeof(T);
+            string key = SetSysCustomKey + type.Name;
+            return redisBase.DoSave(db => db.SetAdd(key, value));
+        }
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public bool SetRemove<T>(string value)
+        {
+            //反射实体的信息
+            var type = typeof(T);
+            string key = SetSysCustomKey + type.Name;
+            return redisBase.DoSave(db => db.SetRemove(key, value));
+        }
+        /// <summary>
+        /// 取值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public string[] SetGet<T>()
+        {
+            //反射实体的信息
+            var type = typeof(T);
+            string key = SetSysCustomKey + type.Name;
+            return redisBase.DoSave(db => db.SetMembers(key)).ToStringArray();
+        }
+        /// <summary>
+        /// 取值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public string[] SetGet(string key)
+        {
+            return redisBase.DoSave(db => db.SetMembers(key)).ToStringArray();
+        }
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public bool SetAdd(string key, string value)
+        {
+            return redisBase.DoSave(db => db.SetAdd(key, value));
+        }
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void SetRemove(string key, string value)
+        {
+            redisBase.DoSave(db => db.SetRemove(key, value));
+        }
+        #endregion
+        #region 异步
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public async Task<bool> SetAddAsync<T>(string value)
+        {
+            //反射实体的信息
+            var type = typeof(T);
+            string key = SetSysCustomKey + type.Name;
+            return await redisBase.DoSave(db => db.SetAddAsync(key, value));
+        }
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public async Task<bool> SetRemoveAsync<T>(string value)
+        {
+            //反射实体的信息
+            var type = typeof(T);
+            string key = SetSysCustomKey + type.Name;
+            return await redisBase.DoSave(db => db.SetRemoveAsync(key, value));
+        }
+        /// <summary>
+        /// 取值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public async Task<string[]> SetGetAsync<T>()
+        {
+            //反射实体的信息
+            var type = typeof(T);
+            string key = SetSysCustomKey + type.Name;
+            return (await redisBase.DoSave(db => db.SetMembersAsync(key))).ToStringArray();
+        }
+        /// <summary>
+        /// 取值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public async Task<string[]> SetGetAsync(string key)
+        {
+            return (await redisBase.DoSave(db => db.SetMembersAsync(key))).ToStringArray();
+        }
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public async Task<bool> SetAddAsync(string key, string value)
+        {
+            return await redisBase.DoSave(db => db.SetAddAsync(key, value));
+        }
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public async Task<bool> SetRemoveAsync(string key, string value)
+        {
+            return await redisBase.DoSave(db => db.SetRemoveAsync(key, value));
+        }
+        #endregion
+        #endregion
+
+        #region Store
+        /// <summary>
+        /// 保存一个集合 （事务）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        public bool StoreAll<T>(List<T> list)
+        {
+            if (list != null && list.Count >= 0)
+            {
+                //获取实体的信息
+                var type = typeof(T);
+                //获取类名
+                var name = type.Name;
+                string key = StoreSysCustomKey + name.ToLower() + ":";
+                //获取id的属性
+                System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Id");
+                var tran = redisBase.DoSave(db => db.CreateTransaction());
+                foreach (var item in list)
+                {
+                    //获取id的值
+                    var id = propertyInfo.GetValue(item, null);
+                    tran.SetAddAsync(SetSysCustomKey + type.Name, id.ToString());
+                    tran.StringSetAsync(key + id, redisBase.ConvertJson(item));
+                }
+                return tran.Execute();
+            }
+            return false;
+        }
+        /// <summary>
+        /// 保存单个对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        public bool Store<T>(T info)
+        {
+            if (info == null)
+            {
+                return false;
+            }
+            //获取实体的信息
+            var type = typeof(T);
+            //获取类名
+            var name = type.Name;
+            string key = StoreSysCustomKey + name.ToLower() + ":";
+            //获取id的属性
+            System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Id");
+
+            //获取id的值
+            var id = propertyInfo.GetValue(info, null);
+            var tran = redisBase.DoSave(db => db.CreateTransaction());
+            tran.SetAddAsync(SetSysCustomKey + type.Name, id.ToString());
+            tran.StringSetAsync(key + id.ToString(), redisBase.ConvertJson(info));
+            return tran.Execute();
+
+        }
+        ///// <summary>
+        ///// 删除所有的
+        ///// </summary>
+        //public void DeleteAll<T>()
+        //{
+        //    //获取实体的信息
+        //    var type = typeof(T);
+        //    //获取类名
+        //    var name = type.Name;
+        //    string key = StoreSysCustomKey + name.ToLower() + ":";
+
+        //    //获取需要删除的id
+        //     var ids= SetGet<T>();
+        //    if (redis.KeyDelete(SetSysCustomKey + type.Name))
+        //    {
+        //        foreach (var item in ids)
+        //        {
+        //            redis.KeyDelete(key+item.ToString());
+        //        }
+        //    }
+        //}
+
+        /// <summary>
+        /// 删除所有的
+        /// </summary>
+        public bool DeleteAll<T>()
+        {
+            //获取实体的信息
+            var type = typeof(T);
+            //获取类名
+            var name = type.Name;
+            string key = StoreSysCustomKey + name.ToLower() + ":";
+
+            var tran = redisBase.DoSave(db => db.CreateTransaction());
+            //获取需要删除的id
+            var ids = SetGet<T>();
+            tran.KeyDeleteAsync(SetSysCustomKey + type.Name);
+            foreach (var item in ids)
+            {
+                tran.KeyDeleteAsync(key + item.ToString());
+            }
+            return tran.Execute();
+        }
+        /// <summary>
+        /// 移除 单个的集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        public bool DeleteById<T>(int id)
+        {
+            //获取实体的信息
+            var type = typeof(T);
+            //获取类名
+            var name = type.Name;
+            string key = StoreSysCustomKey + name.ToLower() + ":";
+            var tran = redisBase.DoSave(db => db.CreateTransaction());
+            tran.SetRemoveAsync(SetSysCustomKey + type.Name, id);
+            tran.KeyDeleteAsync(key + id.ToString());
+           return tran.Execute();
+        }
+
+        /// <summary>
+        /// 移除 多个的集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        public bool DeleteByIds<T>(List<int> ids)
+        {
+            if (ids != null && ids.Count > 0)
+            {
+                //获取实体的信息
+                var type = typeof(T);
+                //获取类名
+                var name = type.Name;
+                string key = StoreSysCustomKey + name.ToLower() + ":";
+                var tran = redisBase.DoSave(db => db.CreateTransaction());
+                foreach (var item in ids)
+                {
+                    tran.SetRemoveAsync(SetSysCustomKey + type.Name, item);
+                    tran.KeyDeleteAsync(key + item.ToString());
+                }
+               return tran.Execute();
+            }
+            return false;
+
+        }
+        /// <summary>
+        /// 获取所有的集合数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public List<T> GetAll<T>()
+        {
+            //获取实体的信息
+            var type = typeof(T);
+            //获取类名
+            var name = type.Name;
+            string key = StoreSysCustomKey + name.ToLower() + ":";
+            //获取id的属性
+            System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Id");
+            List<T> li = new List<T>();
+            //获取id的集合
+            var ids = SetGet<T>();
+            if (ids != null && ids.Length > 0)
+            {
+                foreach (var item in ids)
+                {
+                    var res = redisBase.DoSave(db => db.StringGet(key + item));
+                    if (!res.IsNullOrEmpty)
+                    {
+                        li.Add(redisBase.ConvertObj<T>(res));
+                    }
+                }
+            }
+            return li;
+        }
+
+        /// <summary>
+        /// 获取单个的
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public T GetById<T>(int id)
+        {
+            //获取实体的信息
+            var type = typeof(T);
+            //获取类名
+            var name = type.Name;
+            string key = StoreSysCustomKey + name.ToLower() + ":";
+            var res = redisBase.DoSave(db => db.StringGet(key + id.ToString()));
+            if (!res.IsNullOrEmpty)
+            {
+                return redisBase.ConvertObj<T>(res);
+            }
+            return default(T);
+        }
+
+        /// <summary>
+        /// 获取多个的
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<T> GetByIds<T>(List<int> ids)
+        {
+            //获取实体的信息
+            var type = typeof(T);
+            //获取类名
+            var name = type.Name;
+            string key = StoreSysCustomKey + name.ToLower() + ":";
+            List<T> li = new List<T>();
+            foreach (var item in ids)
+            {
+                var res = redisBase.DoSave(db => db.StringGet(key + item.ToString()));
+                if (!res.IsNullOrEmpty)
+                {
+                    li.Add(redisBase.ConvertObj<T>(res));
+                }
+            }
+            return li;
+        }
+        #endregion
+
+    }
+}
