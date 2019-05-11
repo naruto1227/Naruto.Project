@@ -8,10 +8,14 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using Fate.Common.Interface;
+
 namespace CP.Common.Infrastructure.Email
 {
-
-    public class Email
+    /// <summary>
+    /// 邮件服务
+    /// </summary>
+    public class Emai: ICommonClassDependency
     {
         /// <summary>
         /// 邮箱服务
