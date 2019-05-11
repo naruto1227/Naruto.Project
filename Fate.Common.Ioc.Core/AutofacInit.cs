@@ -5,6 +5,8 @@ using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
 using Fate.Common.Enum;
 using System.Linq;
+using Fate.Common.Infrastructure;
+
 namespace Fate.Common.Ioc.Core
 {
     public class AutofacInit
@@ -37,6 +39,9 @@ namespace Fate.Common.Ioc.Core
             //获取公共层的程序信息
             Assembly assemblyCommon = Assembly.Load("Fate.Common");
 
+            //注入实体层
+            Assembly assemblyModel = Assembly.Load("Fate.Domain.Model");
+
             //自动注册接口
             builder.RegisterAssemblyTypes(assemblies.ToArray())
                 .Where(b => b.GetInterface("IAppServicesAutoInject")!=null || b.GetInterface("IDomainServicesAutoInject") !=null)
@@ -48,6 +53,9 @@ namespace Fate.Common.Ioc.Core
             builder.RegisterAssemblyTypes(assemblyRedis).Where(a=>a.GetInterface("IRedisDependency") !=null).AsImplementedInterfaces().SingleInstance();
             //注册公共层的接口
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a=>a.GetInterface("ICommonDependency") !=null).AsImplementedInterfaces().InstancePerLifetimeScope();
+            //注入领域实体
+            builder.RegisterAssemblyTypes(assemblyModel).InstancePerLifetimeScope();
+            builder.RegisterType<MyJsonResult>();
             builder.Populate(services);
             container = builder.Build();
             return container;
