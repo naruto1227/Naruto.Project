@@ -41,8 +41,17 @@ namespace Fate.Common.NLog
             logger.Debug(message);
         }
 
-        public void Error(string message) {
+        public void Error(string message)
+        {
             logger.Error(message);
+        }
+        public void Trace(string message)
+        {
+            logger.Trace(message);
+        }
+        public void Fatal(string message)
+        {
+            logger.Fatal(message);
         }
     }
 }
