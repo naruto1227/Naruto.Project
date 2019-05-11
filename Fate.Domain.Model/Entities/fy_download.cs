@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Fate.Domain.Model.Entities
 {
-   public class fy_download :Fate.Common.Interface.IEntity
+   public class fy_download : IEntity
     {
         public int Id { get; set; }
 

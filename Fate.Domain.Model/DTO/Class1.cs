@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Fate.Domain.Model.DTO
 {
-    class Class1
+    public class Class1
     {
     }
 }

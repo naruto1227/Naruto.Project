@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Fate.Application.Interface;
-using Fate.Common.Interface;
+using Fate.Domain.Model;
 using Fate.Domain.Interface;
 namespace Fate.Application.Services
 {

@@ -1,4 +1,4 @@
-﻿using Fate.Common.Interface;
+﻿using Fate.Domain.Model;
 using Fate.Common.Repository.Mysql;
 using Fate.Domain.Interface;
 using System;

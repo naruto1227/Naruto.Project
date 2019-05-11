@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Interface;
+using Fate.Domain.Model;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
     public interface IUnitOfWork:IDisposable, IRepositoryDependency

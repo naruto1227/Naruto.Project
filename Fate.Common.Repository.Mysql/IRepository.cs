@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Fate.Common.Interface;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
-
+using Fate.Domain.Model;
 namespace Fate.Common.Repository.Mysql
 {
     /// <summary>

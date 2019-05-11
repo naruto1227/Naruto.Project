@@ -44,7 +44,7 @@ namespace Fate.Common.Ioc.Core
 
             //自动注册接口
             builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(b => b.GetInterface("IAppServicesAutoInject")!=null || b.GetInterface("IDomainServicesAutoInject") !=null)
+                .Where(b => b.GetInterface("IAppServicesDependency") !=null || b.GetInterface("IDomainServicesDependency") !=null)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope(); //见上方说明
             //为仓储设置lifttime 生命周期
@@ -53,9 +53,13 @@ namespace Fate.Common.Ioc.Core
             builder.RegisterAssemblyTypes(assemblyRedis).Where(a=>a.GetInterface("IRedisDependency") !=null).AsImplementedInterfaces().SingleInstance();
             //注册公共层的接口
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a=>a.GetInterface("ICommonDependency") !=null).AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            //注册公共层(通过类)
+            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassDependency") != null).InstancePerLifetimeScope();
+
             //注入领域实体
-            builder.RegisterAssemblyTypes(assemblyModel).InstancePerLifetimeScope();
-            builder.RegisterType<MyJsonResult>();
+            builder.RegisterAssemblyTypes(assemblyModel).Where(a=>a.GetInterface("IModelDependency") !=null).InstancePerLifetimeScope();
+            //builder.RegisterType<MyJsonResult>();
             builder.Populate(services);
             container = builder.Build();
             return container;

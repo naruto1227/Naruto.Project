@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using Fate.Common.Interface;
 namespace Fate.Common.Infrastructure
 {
     /// <summary>
     /// 定义一个json返回类型 用于接口的返回
     /// </summary>
-    public class MyJsonResult
+    public class MyJsonResult:ICommonClassDependency
     {
         /// <summary>
         /// 页数

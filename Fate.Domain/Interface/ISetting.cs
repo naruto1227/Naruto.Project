@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Interface;
+using Fate.Domain.Model;
 namespace Fate.Domain.Interface
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface ISetting: IDomainServicesAutoInject
+    public interface ISetting: IDomainServicesDependency
     {
         Task add(IEntity info);
         Task EventTest();
