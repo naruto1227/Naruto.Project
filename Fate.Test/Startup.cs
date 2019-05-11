@@ -18,6 +18,7 @@ using Fate.Common.Infrastructure;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using System.Text;
+using Fate.Common.Middleware;
 
 namespace Fate.Test
 {
@@ -66,7 +67,8 @@ namespace Fate.Test
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
             loggerFactory.AddNLog();//添加NLog
             env.ConfigureNLog("nlog.config");//读取Nlog配置文件
-
+            //注入一场处理中间件
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
             ConfigurationManage.SetAppSetting(Configuration.GetSection("AppSetting"));
         }

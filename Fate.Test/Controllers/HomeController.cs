@@ -9,6 +9,8 @@ using Fate.Application.Interface;
 using Fate.Common.Repository.Mysql.UnitOfWork;
 using Fate.Common.Redis.IRedisManage;
 using Microsoft.AspNetCore.Authorization;
+using Fate.Domain.Model.Entities;
+using Fate.Common.Ioc.Core;
 
 namespace Fate.Test.Controllers
 {
@@ -21,12 +23,15 @@ namespace Fate.Test.Controllers
         ISettingApp setting;
         private IUnitOfWork unitOfWork;
         private IRedisOperationHelp redis;
-        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis)
+
+        private fy_download fy_Download;
+        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, fy_download _Download)
         {
 
             setting = _setting;
             unitOfWork = _unitOfWork;
             redis = _redis;
+            fy_Download = _Download;
         }
         [HttpGet]
         public async Task test()
@@ -69,6 +74,8 @@ namespace Fate.Test.Controllers
         }
 
         public void test22() {
+            var str = AutofacInit.Resolve<fy_download>();
+            throw new ArgumentException(fy_Download.Title);
             Fate.Common.NLog.NLogHelper.Default.Info("11");
             Fate.Common.NLog.NLogHelper.Default.Error("11");
         }
