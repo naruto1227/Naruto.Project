@@ -15,7 +15,7 @@ namespace CP.Common.Infrastructure.Email
     /// <summary>
     /// 邮件服务
     /// </summary>
-    public class Emai: ICommonClassDependency
+    public class Email: ICommonClassDependency
     {
         /// <summary>
         /// 邮箱服务
