@@ -11,7 +11,7 @@ using Fate.Common.Redis.IRedisManage;
 using Microsoft.AspNetCore.Authorization;
 using Fate.Domain.Model.Entities;
 using Fate.Common.Ioc.Core;
-
+using Fate.Common.Infrastructure;
 namespace Fate.Test.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -19,19 +19,20 @@ namespace Fate.Test.Controllers
 
     public class Home1Controller : ControllerBase
     {
-        Fate.Common.Infrastructure.MyJsonResult jsonResult = new Common.Infrastructure.MyJsonResult();
+        MyJsonResult jsonResult;
         ISettingApp setting;
         private IUnitOfWork unitOfWork;
         private IRedisOperationHelp redis;
 
         private fy_download fy_Download;
-        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, fy_download _Download)
+        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, fy_download _Download, MyJsonResult myJson)
         {
 
             setting = _setting;
             unitOfWork = _unitOfWork;
             redis = _redis;
             fy_Download = _Download;
+            jsonResult = myJson;
         }
         [HttpGet]
         public async Task test()
@@ -73,7 +74,8 @@ namespace Fate.Test.Controllers
             return new JsonResult("111111");
         }
 
-        public void test22() {
+        public void test22()
+        {
             var str = AutofacInit.Resolve<fy_download>();
             throw new ArgumentException(fy_Download.Title);
             Fate.Common.NLog.NLogHelper.Default.Info("11");
