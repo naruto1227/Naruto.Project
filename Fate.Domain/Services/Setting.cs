@@ -45,10 +45,11 @@ namespace Fate.Domain.Services
             return Task.FromResult(0);
         }
 
-        public async Task testEF() {
+        public async Task testEF()
+        {
             //await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().DeleteAsync(a=>a.Id==1);
-           await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().BulkDeleteAsync(a => a.Id <6);
-            var info = await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().Find(a=>a.Id==6);
+            await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().BulkDeleteAsync(a => a.Id < 6);
+            var info = await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().Find(a => a.Id == 6);
             info.Contact = "sssssssssss";
             await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().UpdateAsync(info);
             await unitOfWork.SaveChangeAsync();

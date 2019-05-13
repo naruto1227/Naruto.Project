@@ -46,3 +46,66 @@ The request matched multiple endpoints. Matches:
 Fate.WebApi.Controllers.ValuesController.Get (Fate.WebApi)
 Fate.Test.Controllers.ValuesController.Get (Fate.Test)
 
+2019-05-13 23:22:29.2476|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+The request matched multiple endpoints. Matches: 
+
+Fate.WebApi.Controllers.ValuesController.Get (Fate.WebApi)
+Fate.Test.Controllers.ValuesController.Get (Fate.Test)
+
+2019-05-13 23:22:50.6910|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+111111111111111
+
+2019-05-13 23:23:25.2035|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+111111111111111
+
+2019-05-13 23:40:09.8557|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+The request matched multiple endpoints. Matches: 
+
+Fate.WebApi.Controllers.ValuesController.Get (Fate.WebApi)
+Fate.Test.Controllers.ValuesController.Get (Fate.Test)
+
+2019-05-13 23:41:27.1141|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:41:49.8299|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:44:03.3989|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+The request matched multiple endpoints. Matches: 
+
+Fate.WebApi.Controllers.ValuesController.Get (Fate.WebApi)
+Fate.Test.Controllers.ValuesController.Get (Fate.Test)
+
+2019-05-13 23:44:45.0832|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+The request matched multiple endpoints. Matches: 
+
+Fate.WebApi.Controllers.ValuesController.Get (Fate.WebApi)
+Fate.Test.Controllers.ValuesController.Get (Fate.Test)
+
+2019-05-13 23:45:49.4486|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Application.Services.SettingApp -> Fate.Domain.Services.Setting -> Fate.Common.Repository.Mysql.UnitOfWork.UnitOfWork -> Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:46:16.2073|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Application.Services.SettingApp -> Fate.Domain.Services.Setting -> Fate.Common.Repository.Mysql.UnitOfWork.UnitOfWork -> Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:46:16.9535|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Application.Services.SettingApp -> Fate.Domain.Services.Setting -> Fate.Common.Repository.Mysql.UnitOfWork.UnitOfWork -> Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:46:17.3236|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Application.Services.SettingApp -> Fate.Domain.Services.Setting -> Fate.Common.Repository.Mysql.UnitOfWork.UnitOfWork -> Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:46:17.6057|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Application.Services.SettingApp -> Fate.Domain.Services.Setting -> Fate.Common.Repository.Mysql.UnitOfWork.UnitOfWork -> Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:46:17.8648|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+An exception was thrown while activating Fate.Application.Services.SettingApp -> Fate.Domain.Services.Setting -> Fate.Common.Repository.Mysql.UnitOfWork.UnitOfWork -> Fate.Common.Repository.Mysql.RepositoryBase.
+
+2019-05-13 23:56:26.7615|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+The request matched multiple endpoints. Matches: 
+
+Fate.WebApi.Controllers.ValuesController.Get (Fate.WebApi)
+Fate.Test.Controllers.ValuesController.Get (Fate.Test)
+
+2019-05-13 23:56:33.4069|位置：Fate.Common.Middleware.ExceptionHandlerMiddleware+<Invoke>d__3.MoveNext(D:\MyProject\Fate.DDD\Fate.Common\Middleware\ExceptionHandlerMiddleware.cs:43)
+111111111111111
+

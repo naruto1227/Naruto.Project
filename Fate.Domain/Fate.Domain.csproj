@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
