@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Fate.Common.Interface;
+using Fate.Common.Ioc.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork 
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly MysqlDbContent dbContext;
         public UnitOfWork(MysqlDbContent _dbContext)

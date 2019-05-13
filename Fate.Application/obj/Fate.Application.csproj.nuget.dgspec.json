@@ -92,12 +92,6 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\MyProject\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-                "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
-              },
-              "D:\\MyProject\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
-                "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
-              },
               "D:\\MyProject\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
                 "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
               }
@@ -168,9 +162,6 @@
             "projectReferences": {
               "D:\\MyProject\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
                 "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
-              },
-              "D:\\MyProject\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-                "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
               }
             }
           }
@@ -233,6 +224,9 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
+              "D:\\MyProject\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
+                "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
+              },
               "D:\\MyProject\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
                 "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
               }

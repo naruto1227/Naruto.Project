@@ -2534,19 +2534,6 @@
         "runtime": {
           "bin/placeholder/Fate.Common.dll": {}
         }
-      },
-      "Fate.Domain.Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Fate.Common": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Fate.Domain.Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Fate.Domain.Model.dll": {}
-        }
       }
     }
   },
@@ -7792,17 +7779,11 @@
       "type": "project",
       "path": "../Fate.Common/Fate.Common.csproj",
       "msbuildProject": "../Fate.Common/Fate.Common.csproj"
-    },
-    "Fate.Domain.Model/1.0.0": {
-      "type": "project",
-      "path": "../Fate.Domain.Model/Fate.Domain.Model.csproj",
-      "msbuildProject": "../Fate.Domain.Model/Fate.Domain.Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "Fate.Common >= 1.0.0",
-      "Fate.Domain.Model >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 12.0.1",
       "StackExchange.Redis >= 2.0.601"
@@ -7840,9 +7821,6 @@
           "projectReferences": {
             "D:\\MyProject\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
               "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
-            },
-            "D:\\MyProject\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-              "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
             }
           }
         }
