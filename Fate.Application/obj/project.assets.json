@@ -2704,6 +2704,27 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "XC.BouncyCastle.Crypto/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/XC.BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/XC.BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "XC.RSAUtil/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "XC.BouncyCastle.Crypto": "1.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/XC.RSAUtil.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/XC.RSAUtil.dll": {}
+        }
+      },
       "Fate.Common/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -2714,7 +2735,8 @@
           "MySql.Data": "8.0.16",
           "NLog": "4.6.3",
           "NLog.Web.AspNetCore": "4.8.2",
-          "Newtonsoft.Json": "12.0.1"
+          "Newtonsoft.Json": "12.0.1",
+          "XC.RSAUtil": "1.1.0"
         },
         "compile": {
           "bin/placeholder/Fate.Common.dll": {}
@@ -8318,6 +8340,30 @@
         "ref/xamarinwatchos10/_._",
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
+      ]
+    },
+    "XC.BouncyCastle.Crypto/1.0.0": {
+      "sha512": "tXs8j4//6hZkLi19GqjsAaGok0LfhrJ43UeCs4cwO7r+0nkc2Cce7VYaJVtC/GtvuNy9ocmWHBGWunD1+uOQww==",
+      "type": "package",
+      "path": "xc.bouncycastle.crypto/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/XC.BouncyCastle.Crypto.dll",
+        "xc.bouncycastle.crypto.1.0.0.nupkg.sha512",
+        "xc.bouncycastle.crypto.nuspec"
+      ]
+    },
+    "XC.RSAUtil/1.1.0": {
+      "sha512": "CmddTkEsg8/WPIMGuQc/qm45YF/Ck38EteiQDhc88ktztPdbwyYhstUY9o5FvQ7YGEo1vcnuoRu+ab4mwxBVZg==",
+      "type": "package",
+      "path": "xc.rsautil/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/XC.RSAUtil.dll",
+        "xc.rsautil.1.1.0.nupkg.sha512",
+        "xc.rsautil.nuspec"
       ]
     },
     "Fate.Common/1.0.0": {

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Fate.Domain.Model.Entities;
 using Fate.Common.Ioc.Core;
 using Fate.Common.Infrastructure;
+
 namespace Fate.Test.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -76,10 +77,9 @@ namespace Fate.Test.Controllers
 
         public void test22()
         {
-            var str = AutofacInit.Resolve<fy_download>();
-            throw new ArgumentException(fy_Download.Title);
-            Fate.Common.NLog.NLogHelper.Default.Info("11");
-            Fate.Common.NLog.NLogHelper.Default.Error("11");
+            var str = "yeshi nishoasdlashdas";
+            var en = str.ToEncrypt();
+            var de= en.ToDecrypt();
         }
     }
 }

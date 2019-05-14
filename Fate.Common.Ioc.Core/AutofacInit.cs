@@ -55,11 +55,10 @@ namespace Fate.Common.Ioc.Core
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a=>a.GetInterface("ICommonDependency") !=null).AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //注册公共层(通过类)
-            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassDependency") != null).InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassDependency") != null).InstancePerDependency();
 
             //注入领域实体
-            builder.RegisterAssemblyTypes(assemblyModel).Where(a=>a.GetInterface("IModelDependency") !=null).InstancePerLifetimeScope();
-            //builder.RegisterType<MyJsonResult>();
+            builder.RegisterAssemblyTypes(assemblyModel).Where(a=>a.GetInterface("IModelDependency") !=null).InstancePerDependency();
             builder.Populate(services);
             container = builder.Build();
             return container;

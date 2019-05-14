@@ -1,14 +1,12 @@
-﻿using Fate.Common.Infrastructure;
+﻿
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
-using System.Threading.Tasks;
 using Fate.Common.Interface;
+using Fate.Common.Config;
 
 namespace CP.Common.Infrastructure.Email
 {
@@ -45,7 +43,7 @@ namespace CP.Common.Infrastructure.Email
         private int SendToEmail(string msgToEmail, string title, string content, string msgaddress = "")
         {
             //发件人和收件人的邮箱地址
-            mmsg = new MailMessage(StaticFieldConfig.SendEmailAddress, msgToEmail);
+            mmsg = new MailMessage(EmailConfig.SendEmailAddress, msgToEmail);
             //设置为HTML格式
             mmsg.IsBodyHtml = true;
             //邮件主题
@@ -65,7 +63,7 @@ namespace CP.Common.Infrastructure.Email
             //设置邮件协议
             SmtpClient client = new SmtpClient();   //System.Net.Mail.SmtpClient
             //设置所需邮箱smtp服务器及支持的协议
-            client.Host = StaticFieldConfig.EmailHost;
+            client.Host = EmailConfig.EmailHost;
             //QQ邮箱使用ssl加密，需要设置SmtpClient.EnableSsl 属性为True表示“指定 SmtpClient 使用安全套接字层 (SSL) 加密连接。”
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
@@ -73,7 +71,7 @@ namespace CP.Common.Infrastructure.Email
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             //打开邮箱的smtp服务  并且 将获取的smtp授权码  （第一个参数发件人邮箱第二个参数是邮箱的授权码）
             //通过用户名和授权码
-            client.Credentials = new NetworkCredential(StaticFieldConfig.SendEmailAddress, StaticFieldConfig.SendEmailCode);  //System.Net.NetworkCredential
+            client.Credentials = new NetworkCredential(EmailConfig.SendEmailAddress, EmailConfig.SendEmailCode);  //System.Net.NetworkCredential
             try
             {
                 client.Send(mmsg);
