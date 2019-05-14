@@ -105,7 +105,7 @@ namespace Fate.Common.Infrastructure
                 StringBuilder sBuilder = new StringBuilder();
                 for (int i = 0; i < data.Length; i++)
                 {
-                    sBuilder.Append(data[i].ToString("x2"));
+                    sBuilder.Append(data[i].ToString("x2").PadLeft(2, '0'));
                 }
                 string hash = sBuilder.ToString();
                 return hash.ToUpper();
