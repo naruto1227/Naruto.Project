@@ -3,9 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
-using Fate.Common.Enum;
+
 using System.Linq;
-using Fate.Common.Infrastructure;
 
 namespace Fate.Common.Ioc.Core
 {
@@ -69,13 +68,13 @@ namespace Fate.Common.Ioc.Core
         /// </summary>
         /// <typeparam name="T">类</typeparam>
         /// <typeparam name="IT">当前类所继承的接口</typeparam>
-        public static void RegisterType<T, IT>(LiftTimeEnum liftTimeEnum = Enum.LiftTimeEnum.InstancePerDependency) where T : class where IT : class
+        public static void RegisterType<T, IT>(LiftTimeEnum liftTimeEnum = LiftTimeEnum.InstancePerDependency) where T : class where IT : class
         {
-            if (liftTimeEnum == Enum.LiftTimeEnum.SingleInstance)
+            if (liftTimeEnum ==LiftTimeEnum.SingleInstance)
             {
                 builder.RegisterType<T>().As<IT>().SingleInstance();
             }
-            else if (liftTimeEnum == Enum.LiftTimeEnum.InstancePerLifetimeScope)
+            else if (liftTimeEnum == LiftTimeEnum.InstancePerLifetimeScope)
             {
                 builder.RegisterType<T>().As<IT>().InstancePerLifetimeScope();
             }

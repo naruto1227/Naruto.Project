@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Enum
+namespace Fate.Common.Ioc.Core
 {
     /// <summary>
     /// autofac生命周期的三种形式

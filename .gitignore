@@ -1,0 +1,15 @@
+*.dll
+*.pdb
+/Fate.Application/obj/
+/Fate.Common/obj/
+/Fate.Common.Ioc.Core/obj/
+/Fate.Common.Redis/obj/
+/Fate.Common.Repository.Mysql/obj/
+/Fate.Domain/obj/
+/Fate.Domain.Event/obj/
+/Fate.Domain.Model/obj/
+/Fate.IdentityServer4/obj/
+/Fate.Test/obj/
+/Fate.WebApi/obj/
+/Fate.XUnitTest/obj/
+/.vs/

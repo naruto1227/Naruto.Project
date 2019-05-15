@@ -26,7 +26,8 @@ namespace Fate.Test.Controllers
         private IRedisOperationHelp redis;
 
         private fy_download fy_Download;
-        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, fy_download _Download, MyJsonResult myJson)
+        RSAHelper rSA;
+        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, fy_download _Download, MyJsonResult myJson, RSAHelper _rSA)
         {
 
             setting = _setting;
@@ -34,6 +35,7 @@ namespace Fate.Test.Controllers
             redis = _redis;
             fy_Download = _Download;
             jsonResult = myJson;
+            rSA = _rSA;
         }
         [HttpGet]
         public async Task test()
@@ -70,16 +72,14 @@ namespace Fate.Test.Controllers
         }
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> addmvc()
+        public IActionResult addmvc()
         {
             return new JsonResult("111111");
         }
 
         public void test22()
         {
-            var str = "yeshi nishoasdlashdas";
-            var en = str.ToEncrypt();
-            var de= en.ToDecrypt();
+            rSA.CreateRSACache();
         }
     }
 }

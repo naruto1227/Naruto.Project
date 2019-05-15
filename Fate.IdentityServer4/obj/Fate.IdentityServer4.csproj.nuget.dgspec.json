@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MyProject\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {}
+    "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {}
   },
   "projects": {
-    "D:\\MyProject\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {
+    "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProject\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+        "projectUniqueName": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
         "projectName": "Fate.IdentityServer4",
-        "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+        "projectPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProject\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
+        "outputPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

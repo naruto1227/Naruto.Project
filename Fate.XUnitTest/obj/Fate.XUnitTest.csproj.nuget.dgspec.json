@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MyProject\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj": {}
+    "D:\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj": {}
   },
   "projects": {
-    "D:\\MyProject\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj": {
+    "D:\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProject\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
+        "projectUniqueName": "D:\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
         "projectName": "Fate.XUnitTest",
-        "projectPath": "D:\\MyProject\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
+        "projectPath": "D:\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProject\\Fate.DDD\\Fate.XUnitTest\\obj\\",
+        "outputPath": "D:\\Fate.DDD\\Fate.XUnitTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
