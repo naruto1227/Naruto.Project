@@ -7,13 +7,13 @@ using Fate.Common.Config;
 using System.IO;
 using System.Xml;
 using Fate.Common.Redis.IRedisManage;
-
+using Fate.Common.Interface;
 namespace Fate.Common.Infrastructure
 {
     /// <summary>
     /// RSA 加密 解密
     /// </summary>
-    public class RSAHelper
+    public class RSAHelper : ICommonClassDependency
     {
         private IRedisOperationHelp redis;
         public RSAHelper(IRedisOperationHelp redisOperationHelp)
