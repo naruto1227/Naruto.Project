@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using Fate.Common.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 namespace Fate.Common.Redis.RedisConfig
 {
@@ -11,13 +11,13 @@ namespace Fate.Common.Redis.RedisConfig
     /// </summary>
     public class RedisConnectionHelp
     {
-
+        private static IConfigurationRoot ConfigurationManage = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
         private static readonly object Locker = new object();
         private static ConnectionMultiplexer _instance;
         /// <summary>
         /// redis密码
         /// </summary>
-        private static string RedisPassword = ConfigurationManage.GetAppSetting("RedisConfig:Password");
+        private static string RedisPassword = ConfigurationManage.GetSection("AppSetting:RedisConfig:Password").Value;
         /// <summary>
         /// 默认访问存储库
         /// </summary>
@@ -26,7 +26,7 @@ namespace Fate.Common.Redis.RedisConfig
             get
             {
                 var dataBase = 0;
-                var dataBase2 = ConfigurationManage.GetAppSetting("RedisConfig:DefaultDataBase");
+                var dataBase2 = ConfigurationManage.GetSection("AppSetting:RedisConfig:DefaultDataBase").Value;
                 int.TryParse(dataBase2, out dataBase);
                 return dataBase;
             }
@@ -34,7 +34,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// <summary>
         /// redis连接字符串
         /// </summary>
-        private static string RedisConnectionConfig = ConfigurationManage.GetAppSetting("RedisConfig:Connection");
+        private static string RedisConnectionConfig = ConfigurationManage.GetSection("AppSetting:RedisConfig:Connection").Value;
 
         /// <summary>
         /// 缓存

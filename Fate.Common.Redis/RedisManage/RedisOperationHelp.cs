@@ -4,7 +4,6 @@ using System.Text;
 using StackExchange.Redis;
 using Fate.Common.Redis.IRedisManage;
 using System.Threading.Tasks;
-using Fate.Common.Enum;
 
 namespace Fate.Common.Redis.RedisManage
 {
