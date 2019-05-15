@@ -43,21 +43,23 @@ namespace Fate.Common.Ioc.Core
 
             //自动注册接口
             builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(b => b.GetInterface("IAppServicesDependency") !=null || b.GetInterface("IDomainServicesDependency") !=null)
+                .Where(b => b.GetInterface("IAppServicesDependency") != null || b.GetInterface("IDomainServicesDependency") != null)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope(); //见上方说明
             //为仓储设置lifttime 生命周期
-            builder.RegisterAssemblyTypes(assemblyMysql).Where(a=>a.GetInterface("IRepositoryDependency")!=null).AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(assemblyMysql).Where(a => a.GetInterface("IRepositoryDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
             //注册redis 单例模式
-            builder.RegisterAssemblyTypes(assemblyRedis).Where(a=>a.GetInterface("IRedisDependency") !=null).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterAssemblyTypes(assemblyRedis).Where(a => a.GetInterface("IRedisDependency") != null).AsImplementedInterfaces().SingleInstance();
             //注册公共层的接口
-            builder.RegisterAssemblyTypes(assemblyCommon).Where(a=>a.GetInterface("ICommonDependency") !=null).AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //注册公共层(通过类)
-            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassDependency") != null).InstancePerDependency();
+            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassDependency") != null);
 
+            //注册公共层(单例模式)
+            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassSigleDependency") != null).SingleInstance();
             //注入领域实体
-            builder.RegisterAssemblyTypes(assemblyModel).Where(a=>a.GetInterface("IModelDependency") !=null).InstancePerDependency();
+            builder.RegisterAssemblyTypes(assemblyModel).Where(a => a.GetInterface("IModelDependency") != null).InstancePerDependency();
             builder.Populate(services);
             container = builder.Build();
             return container;
@@ -70,7 +72,7 @@ namespace Fate.Common.Ioc.Core
         /// <typeparam name="IT">当前类所继承的接口</typeparam>
         public static void RegisterType<T, IT>(LiftTimeEnum liftTimeEnum = LiftTimeEnum.InstancePerDependency) where T : class where IT : class
         {
-            if (liftTimeEnum ==LiftTimeEnum.SingleInstance)
+            if (liftTimeEnum == LiftTimeEnum.SingleInstance)
             {
                 builder.RegisterType<T>().As<IT>().SingleInstance();
             }

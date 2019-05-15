@@ -13,7 +13,7 @@ namespace CP.Common.Infrastructure.Email
     /// <summary>
     /// 邮件服务
     /// </summary>
-    public class Email: ICommonClassDependency
+    public class Email: ICommonClassSigleDependency
     {
         /// <summary>
         /// 邮箱服务

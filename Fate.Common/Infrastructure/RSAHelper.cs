@@ -13,7 +13,7 @@ namespace Fate.Common.Infrastructure
     /// <summary>
     /// RSA 加密 解密
     /// </summary>
-    public class RSAHelper : ICommonClassDependency
+    public class RSAHelper : ICommonClassSigleDependency
     {
         private IRedisOperationHelp redis;
         public RSAHelper(IRedisOperationHelp redisOperationHelp)
