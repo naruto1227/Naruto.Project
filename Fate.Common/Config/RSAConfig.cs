@@ -13,6 +13,7 @@ namespace Fate.Common.Config
     /// </summary>
     public class RSAConfig
     {
+        #region 用来配置存放RSA文件的地址
         /// <summary>
         /// 私钥的文件存放路径
         /// </summary>
@@ -82,5 +83,17 @@ namespace Fate.Common.Config
                 return publicKey;
             }
         }
+        #endregion
+
+        #region 用来配置存储的RSA缓存Key
+        /// <summary>
+        /// 公钥
+        /// </summary>
+        public const string Cache_PublicKey = "publickey";
+        /// <summary>
+        /// 私钥
+        /// </summary>
+        public const string Cache_PrivateKey = "privatekey";
+        #endregion
     }
 }
