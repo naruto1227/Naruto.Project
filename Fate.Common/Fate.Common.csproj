@@ -21,4 +21,8 @@
     <Folder Include="Email\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
+  </ItemGroup>
+
 </Project>
