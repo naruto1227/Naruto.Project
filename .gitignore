@@ -1,5 +1,4 @@
-*.dll
-*.pdb
+#过滤
 /Fate.Application/obj/
 /Fate.Common/obj/
 /Fate.Common.Ioc.Core/obj/
@@ -12,4 +11,16 @@
 /Fate.Test/obj/
 /Fate.WebApi/obj/
 /Fate.XUnitTest/obj/
+/Fate.Application/bin/
+/Fate.Common/bin/
+/Fate.Common.Ioc.Core/bin/
+/Fate.Common.Redis/bin/
+/Fate.Common.Repository.Mysql/bin/
+/Fate.Domain/bin/
+/Fate.Domain.Event/bin/
+/Fate.Domain.Model/bin/
+/Fate.IdentityServer4/bin/
+/Fate.Test/bin/
+/Fate.WebApi/bin/
+/Fate.XUnitTest/bin/
 /.vs/
