@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Interface;
-using Fate.Common.Ioc.Core;
-using Microsoft.EntityFrameworkCore;
+using Fate.Domain.Model;
 
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
@@ -60,7 +57,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             return dbContext.SaveChanges();
         }
 
-        IRepository<T> IUnitOfWork.Respositiy<T>()
+        public IRepository<T> Respositiy<T>() where T : class, IEntity
         {
             return new RepositoryBase<T>(dbContext);
         }

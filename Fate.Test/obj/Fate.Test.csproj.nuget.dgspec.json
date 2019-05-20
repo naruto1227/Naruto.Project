@@ -228,9 +228,6 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
-                "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
-              },
               "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
                 "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
               }

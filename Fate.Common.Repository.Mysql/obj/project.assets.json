@@ -2,28 +2,6 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
-      "Autofac/4.9.2": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Autofac.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Autofac.dll": {}
-        }
-      },
-      "Autofac.Extensions.DependencyInjection/4.4.0": {
-        "type": "package",
-        "dependencies": {
-          "Autofac": "4.9.1",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.dll": {}
-        }
-      },
       "AutoMapper/8.1.0": {
         "type": "package",
         "dependencies": {
@@ -2746,21 +2724,6 @@
           "bin/placeholder/Fate.Common.dll": {}
         }
       },
-      "Fate.Common.Ioc.Core/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Autofac": "4.9.2",
-          "Autofac.Extensions.DependencyInjection": "4.4.0",
-          "Microsoft.Extensions.DependencyInjection": "2.2.0"
-        },
-        "compile": {
-          "bin/placeholder/Fate.Common.Ioc.Core.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Fate.Common.Ioc.Core.dll": {}
-        }
-      },
       "Fate.Common.Redis/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -2794,43 +2757,6 @@
     }
   },
   "libraries": {
-    "Autofac/4.9.2": {
-      "sha512": "lfCcNOzU97f2WFtdo/+SkR0XtpdH20QA5Ob/T2Iv027wFMvDk7EZZ2oj6ERtWL+LBfPTOrbk9zyLj6Okx2CoHA==",
-      "type": "package",
-      "path": "autofac/4.9.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "autofac.4.9.2.nupkg.sha512",
-        "autofac.nuspec",
-        "lib/net45/Autofac.dll",
-        "lib/net45/Autofac.pdb",
-        "lib/net45/Autofac.xml",
-        "lib/netstandard1.1/Autofac.dll",
-        "lib/netstandard1.1/Autofac.pdb",
-        "lib/netstandard1.1/Autofac.xml",
-        "lib/netstandard2.0/Autofac.dll",
-        "lib/netstandard2.0/Autofac.pdb",
-        "lib/netstandard2.0/Autofac.xml"
-      ]
-    },
-    "Autofac.Extensions.DependencyInjection/4.4.0": {
-      "sha512": "tkNVcEVTG+asY338sZQNbWQIoCrb13I6qOxBrVX7aStu7SGskDDyGT0TrqiJdfEB48GbCd04ZcNz86TdD4cIHg==",
-      "type": "package",
-      "path": "autofac.extensions.dependencyinjection/4.4.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "autofac.extensions.dependencyinjection.4.4.0.nupkg.sha512",
-        "autofac.extensions.dependencyinjection.nuspec",
-        "lib/netstandard1.1/Autofac.Extensions.DependencyInjection.dll",
-        "lib/netstandard1.1/Autofac.Extensions.DependencyInjection.pdb",
-        "lib/netstandard1.1/Autofac.Extensions.DependencyInjection.xml",
-        "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.dll",
-        "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.pdb",
-        "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.xml"
-      ]
-    },
     "AutoMapper/8.1.0": {
       "sha512": "Go75WXHE7p/8CtRaxZnvVEfcSh7xpE6zx9wkgN4I1BxvlzP0hoiTLHSXDYXgv9CoxaRj4ahwzCA/iwdpvyQyOA==",
       "type": "package",
@@ -8333,11 +8259,6 @@
       "path": "../Fate.Common/Fate.Common.csproj",
       "msbuildProject": "../Fate.Common/Fate.Common.csproj"
     },
-    "Fate.Common.Ioc.Core/1.0.0": {
-      "type": "project",
-      "path": "../Fate.Common.Ioc.Core/Fate.Common.Ioc.Core.csproj",
-      "msbuildProject": "../Fate.Common.Ioc.Core/Fate.Common.Ioc.Core.csproj"
-    },
     "Fate.Common.Redis/1.0.0": {
       "type": "project",
       "path": "../Fate.Common.Redis/Fate.Common.Redis.csproj",
@@ -8351,7 +8272,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "Fate.Common.Ioc.Core >= 1.0.0",
       "Fate.Domain.Model >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 2.2.4",
       "Microsoft.Extensions.Configuration >= 2.2.0",
@@ -8391,9 +8311,6 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
-            },
             "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
               "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
             }

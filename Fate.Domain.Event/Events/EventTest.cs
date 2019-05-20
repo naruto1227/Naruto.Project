@@ -24,11 +24,15 @@ namespace Fate.Domain.Event.Events
         {
             if (!string.IsNullOrWhiteSpace(obj))
             {
-                var info = Newtonsoft.Json.JsonConvert.DeserializeObject<EventTest>(obj);
-                this.EventTime = info.EventTime;
-                this.Id = info.Id;
-                this.IsFail = info.IsFail;
-                this.Mesage = info.Mesage;
+                try
+                {
+                    var info = Newtonsoft.Json.JsonConvert.DeserializeObject<EventTest>(obj);
+                    this.EventTime = info.EventTime;
+                    this.Id = info.Id;
+                    this.IsFail = info.IsFail;
+                    this.Mesage = info.Mesage;
+                }
+                catch (Exception ex) { throw ex; }
             }
         }
     }

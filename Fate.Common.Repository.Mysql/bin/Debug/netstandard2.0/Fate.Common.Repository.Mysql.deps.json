@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "27fe6d6a61120373abac3bbe4eecf1d371ac8699"
+    "signature": "1ca2e7df5e6fde13761f2964fd9ed6f068dd113a"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,7 +9,6 @@
     ".NETStandard,Version=v2.0/": {
       "Fate.Common.Repository.Mysql/1.0.0": {
         "dependencies": {
-          "Fate.Common.Ioc.Core": "1.0.0",
           "Fate.Domain.Model": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.4",
           "Microsoft.Extensions.Configuration": "2.2.0",
@@ -20,26 +19,6 @@
         },
         "runtime": {
           "Fate.Common.Repository.Mysql.dll": {}
-        }
-      },
-      "Autofac/4.9.2": {
-        "runtime": {
-          "lib/netstandard2.0/Autofac.dll": {
-            "assemblyVersion": "4.9.2.0",
-            "fileVersion": "4.9.2.0"
-          }
-        }
-      },
-      "Autofac.Extensions.DependencyInjection/4.4.0": {
-        "dependencies": {
-          "Autofac": "4.9.2",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.dll": {
-            "assemblyVersion": "4.4.0.0",
-            "fileVersion": "4.4.0.0"
-          }
         }
       },
       "AutoMapper/8.1.0": {
@@ -2221,16 +2200,6 @@
           "Fate.Common.dll": {}
         }
       },
-      "Fate.Common.Ioc.Core/1.0.0": {
-        "dependencies": {
-          "Autofac": "4.9.2",
-          "Autofac.Extensions.DependencyInjection": "4.4.0",
-          "Microsoft.Extensions.DependencyInjection": "2.2.0"
-        },
-        "runtime": {
-          "Fate.Common.Ioc.Core.dll": {}
-        }
-      },
       "Fate.Common.Redis/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration": "2.2.0",
@@ -2258,20 +2227,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "Autofac/4.9.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-lfCcNOzU97f2WFtdo/+SkR0XtpdH20QA5Ob/T2Iv027wFMvDk7EZZ2oj6ERtWL+LBfPTOrbk9zyLj6Okx2CoHA==",
-      "path": "autofac/4.9.2",
-      "hashPath": "autofac.4.9.2.nupkg.sha512"
-    },
-    "Autofac.Extensions.DependencyInjection/4.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-tkNVcEVTG+asY338sZQNbWQIoCrb13I6qOxBrVX7aStu7SGskDDyGT0TrqiJdfEB48GbCd04ZcNz86TdD4cIHg==",
-      "path": "autofac.extensions.dependencyinjection/4.4.0",
-      "hashPath": "autofac.extensions.dependencyinjection.4.4.0.nupkg.sha512"
     },
     "AutoMapper/8.1.0": {
       "type": "package",
@@ -3590,11 +3545,6 @@
       "hashPath": "xc.rsautil.1.1.0.nupkg.sha512"
     },
     "Fate.Common/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Fate.Common.Ioc.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

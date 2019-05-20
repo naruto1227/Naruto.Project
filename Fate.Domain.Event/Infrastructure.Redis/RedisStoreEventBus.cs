@@ -14,7 +14,6 @@ using System.Reflection;
 
 namespace Fate.Domain.Event.Infrastructure.Redis
 {
-
     /// <summary>
     /// 事件总线 Redis提供者
     /// </summary>

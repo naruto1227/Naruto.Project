@@ -58,9 +58,7 @@ D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Common.Re
 D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Common.Repository.Mysql.dll
 D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Common.Repository.Mysql.pdb
 D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Common.dll
-D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Common.Ioc.Core.dll
 D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Domain.Model.dll
-D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Common.Ioc.Core.pdb
 D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Domain.Model.pdb
 D:\Fate.DDD\Fate.Common.Repository.Mysql\bin\Debug\netstandard2.0\Fate.Common.pdb
 D:\Fate.DDD\Fate.Common.Repository.Mysql\obj\Debug\netstandard2.0\Fate.Common.Repository.Mysql.csprojAssemblyReference.cache

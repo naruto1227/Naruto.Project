@@ -36,6 +36,7 @@ namespace Fate.Common.Middleware
             }
             catch (Exception ex)
             {
+                ex = ex.GetBaseException();
                 //获取状态码
                 myJsonResult.code = context.Response.StatusCode;
                 myJsonResult.failMsg = ex.Message;

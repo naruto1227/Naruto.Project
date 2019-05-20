@@ -2782,7 +2782,6 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Fate.Common.Ioc.Core": "1.0.0",
           "Fate.Domain.Model": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.4",
           "Microsoft.Extensions.Configuration": "2.2.0",
