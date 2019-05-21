@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using IdentityModel.Client;
 using Fate.IdentityServer4.Model;
+using System.Net.Http;
 
 namespace Fate.IdentityServer4.Controllers
 {
@@ -14,7 +15,8 @@ namespace Fate.IdentityServer4.Controllers
     public class AuthenticationController : ControllerBase
     {
         MyJsonResult myJsonResult;
-        public AuthenticationController(MyJsonResult _myJsonResult) {
+        public AuthenticationController(MyJsonResult _myJsonResult)
+        {
             myJsonResult = _myJsonResult;
         }
         /// <summary>
@@ -23,18 +25,25 @@ namespace Fate.IdentityServer4.Controllers
         /// <returns></returns>
         public async Task<JsonResult> ConnectionToken()
         {
+            var client = new HttpClient();
             //从元数据中发现终结点,查找IdentityServer http://localhost:10284 为当前地址
-            var disco = await DiscoveryClient.GetAsync("http://localhost:54717");
+            var disco = await client.GetDiscoveryDocumentAsync("http://localhost:54717");
             if (disco.IsError)
             {
                 myJsonResult.Code = "1001";
                 myJsonResult.FailMsg = disco.Error;
                 return await Json(myJsonResult);
             }
-            //向IdentityServer请求令牌 (账号密码模式)
-            var tokenClient = new TokenClient(disco.TokenEndpoint, "ro.client", "secret");
             //通过账号密码访问
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("zhangsan", "password", "api1");
+            var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest()
+            {
+                Address = disco.TokenEndpoint,
+                ClientId = "ro.client",
+                ClientSecret = "secret",
+                UserName = "zhangsan",
+                Password = "password",
+                Scope = "api1"
+            });
             if (tokenResponse.IsError)
             {
                 myJsonResult.Code = "1002";
