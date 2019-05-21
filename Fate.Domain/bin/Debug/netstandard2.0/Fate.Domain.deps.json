@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "27fe6d6a61120373abac3bbe4eecf1d371ac8699"
+    "signature": "0b7758297b6c644f21d889b2e8a60f9f2a9c2250"
   },
   "compilationOptions": {},
   "targets": {
@@ -1216,6 +1216,14 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
+      "Snowflake.Core/2.0.0": {
+        "runtime": {
+          "lib/netstandard2.0/Snowflake.Core.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
       "StackExchange.Redis/2.0.601": {
         "dependencies": {
           "Pipelines.Sockets.Unofficial": "2.0.22",
@@ -1374,6 +1382,14 @@
           "Microsoft.NETCore.Platforms": "1.1.0",
           "Microsoft.NETCore.Targets": "1.1.0",
           "System.Runtime": "4.3.0"
+        }
+      },
+      "System.Drawing.Common/4.5.1": {
+        "runtime": {
+          "lib/netstandard2.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "4.0.0.1",
+            "fileVersion": "4.6.26919.2"
+          }
         }
       },
       "System.Dynamic.Runtime/4.3.0": {
@@ -2214,6 +2230,8 @@
           "NLog": "4.6.3",
           "NLog.Web.AspNetCore": "4.8.2",
           "Newtonsoft.Json": "12.0.1",
+          "Snowflake.Core": "2.0.0",
+          "System.Drawing.Common": "4.5.1",
           "XC.RSAUtil": "1.1.0"
         },
         "runtime": {
@@ -3057,6 +3075,13 @@
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512"
     },
+    "Snowflake.Core/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YB4SqYbTgG6UvwFHFZOWny/pE415KNjRbbiGwfPOUDWUCEjYLB9P11EiIHQ7y6LlkjejVAAIi8Wt3WM7Ys9qyw==",
+      "path": "snowflake.core/2.0.0",
+      "hashPath": "snowflake.core.2.0.0.nupkg.sha512"
+    },
     "StackExchange.Redis/2.0.601": {
       "type": "package",
       "serviceable": true,
@@ -3168,6 +3193,13 @@
       "sha512": "sha512-rswfv0f/Cqkh78rA5S8eN8Neocz234+emGCtTF3lxPY96F+mmmUen6tbn0glN6PMvlKQb9bPAY5e9u7fgPTkKw==",
       "path": "system.diagnostics.tracing/4.3.0",
       "hashPath": "system.diagnostics.tracing.4.3.0.nupkg.sha512"
+    },
+    "System.Drawing.Common/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GiyeGi/v4xYDz1vCNFwFvhz9k1XddOG7VD3jxRqzRBCbTHji+s3HxxbxtoymuK4OadEpgotI8zQ5+GEEH9sUEQ==",
+      "path": "system.drawing.common/4.5.1",
+      "hashPath": "system.drawing.common.4.5.1.nupkg.sha512"
     },
     "System.Dynamic.Runtime/4.3.0": {
       "type": "package",

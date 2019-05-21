@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
+using System.Linq;
 namespace Fate.Common.Redis.RedisConfig
 {
     /// <summary>
@@ -86,9 +87,20 @@ namespace Fate.Common.Redis.RedisConfig
                 Password = RedisPassword,
                 DefaultDatabase = RedisDefaultDataBase,
                 ConnectTimeout = 300,
-                //EndPoints = { { ConfigurationManage.GetAppSetting("RedisConfig:connection"), Convert.ToInt32(ConfigurationManage.GetAppSetting("RedisConfig:port")) } }
-                EndPoints = { { RedisConnectionConfig } }
             };
+            if (string.IsNullOrWhiteSpace(RedisConnectionConfig))
+            {
+                throw new ArgumentNullException("redis链接字符串未null");
+            }
+            //获取连接的字符串
+            var connections = RedisConnectionConfig.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            connections.ForEach(item =>
+            {
+                if (!string.IsNullOrWhiteSpace(item))
+                {
+                    configurationOptions.EndPoints.Add(item);
+                }
+            });
             var connect = ConnectionMultiplexer.Connect(configurationOptions);
 
             //注册如下事件
