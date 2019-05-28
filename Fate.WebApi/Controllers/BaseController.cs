@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Fate.Common.Ioc.Core;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 namespace Fate.WebApi.Controllers
 {
     /// <summary>
@@ -18,7 +20,8 @@ namespace Fate.WebApi.Controllers
 
         public async Task<JsonResult> Json(object value)
         {
-            return await Task.Run(() => { return new JsonResult(value); });
+            //JsonSerializerSettings中设置 ContractResolver=new CamelCasePropertyNamesContractResolver() 小驼峰
+            return await Task.Run(() => { return new JsonResult(value,new JsonSerializerSettings() {  DateFormatString= "yyyy-MM-dd HH:mm:ss" }); });
         }
         [NonAction]
         /// <summary>
