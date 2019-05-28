@@ -31,7 +31,7 @@ namespace Fate.Common.AutoMapper
         /// 为已经存在的对象进行automapper
         /// </summary>
         /// <returns></returns>
-        public static T MapTo<T>(this object obj, T result)
+        public static T MapperTo<T>(this object obj, T result) where T : class
         {
             if (obj == null)
                 return default(T);
