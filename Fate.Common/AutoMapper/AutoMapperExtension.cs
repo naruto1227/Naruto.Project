@@ -28,6 +28,18 @@ namespace Fate.Common.AutoMapper
             return Mapper.Map<T>(soure);
         }
         /// <summary>
+        /// 为已经存在的对象进行automapper
+        /// </summary>
+        /// <returns></returns>
+        public static T MapTo<T>(this object obj, T result)
+        {
+            if (obj == null)
+                return default(T);
+            Mapper.Reset();
+            Mapper.Initialize(a => a.CreateMap(obj.GetType().UnderlyingSystemType, typeof(T)));
+            return (T)Mapper.Map(obj, result, obj.GetType().UnderlyingSystemType, typeof(T));
+        }
+        /// <summary>
         /// 传输一个集合
         /// </summary>
         /// <typeparam name="T">返回类型</typeparam>
