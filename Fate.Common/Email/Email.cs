@@ -13,7 +13,7 @@ namespace CP.Common.Infrastructure.Email
     /// <summary>
     /// 邮件服务
     /// </summary>
-    public class Email: ICommonClassSigleDependency
+    public class Email : ICommonClassSigleDependency
     {
         /// <summary>
         /// 邮箱服务
@@ -59,27 +59,35 @@ namespace CP.Common.Infrastructure.Email
             mmsg.Priority = MailPriority.High;
             //发送邮件附件   不需要注释即可
             AddAttachments(msgaddress);
-
             //设置邮件协议
-            SmtpClient client = new SmtpClient();   //System.Net.Mail.SmtpClient
-            //设置所需邮箱smtp服务器及支持的协议
-            client.Host = EmailConfig.EmailHost;
-            //QQ邮箱使用ssl加密，需要设置SmtpClient.EnableSsl 属性为True表示“指定 SmtpClient 使用安全套接字层 (SSL) 加密连接。”
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            //通过网络发送到Smtp服务器
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            //打开邮箱的smtp服务  并且 将获取的smtp授权码  （第一个参数发件人邮箱第二个参数是邮箱的授权码）
-            //通过用户名和授权码
-            client.Credentials = new NetworkCredential(EmailConfig.SendEmailAddress, EmailConfig.SendEmailCode);  //System.Net.NetworkCredential
-            try
+            using (SmtpClient client = new SmtpClient())//System.Net.Mail.SmtpClient
             {
-                client.Send(mmsg);
-                return 1;               //发送成功
-            }
-            catch (Exception)
-            {
-                return 0;               //发送失败
+                //设置所需邮箱smtp服务器及支持的协议
+                client.Host = EmailConfig.EmailHost;
+                //QQ邮箱使用ssl加密，需要设置SmtpClient.EnableSsl 属性为True表示“指定 SmtpClient 使用安全套接字层 (SSL) 加密连接。”
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                //通过网络发送到Smtp服务器
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //打开邮箱的smtp服务  并且 将获取的smtp授权码  （第一个参数发件人邮箱第二个参数是邮箱的授权码）
+                //通过用户名和授权码
+                client.Credentials = new NetworkCredential(EmailConfig.SendEmailAddress, EmailConfig.SendEmailCode);  //System.Net.NetworkCredential
+                try
+                {
+                    client.Send(mmsg);
+                    return 1;               //发送成功
+                }
+                catch (Exception)
+                {
+                    return 0;               //发送失败
+                }
+                finally
+                {
+                    if (mmsg != null)
+                    {
+                        mmsg.Dispose();
+                    }
+                }
             }
         }
 

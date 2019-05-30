@@ -8,7 +8,7 @@ namespace Fate.Common.Config
     /// <summary>
     /// 邮箱的配置中心
     /// </summary>
-   public class EmailConfig
+    public class EmailConfig
     {
         /// <summary>
         /// 邮箱的发件人地址
@@ -41,6 +41,19 @@ namespace Fate.Common.Config
             {
                 var sendEmailCode = ConfigurationManage.GetAppSetting("EmailConfig:SendEmailCode");
                 return sendEmailCode;
+            }
+        }
+        /// <summary>
+        /// 邮箱服务器的端口 qq是 587
+        /// </summary>
+        public static int EmailPort
+        {
+            get
+            {
+                var emailPort = ConfigurationManage.GetAppSetting("EmailConfig:EmailPort");
+                var res = 0;
+                int.TryParse(emailPort,out res);
+                return res;
             }
         }
     }

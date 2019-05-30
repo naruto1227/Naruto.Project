@@ -26,17 +26,3 @@ D:\MyProject\MyProject\MyProject\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUn
 D:\MyProject\MyProject\MyProject\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.dll
 D:\MyProject\MyProject\MyProject\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.pdb
 D:\MyProject\MyProject\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.csprojAssemblyReference.cache
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\Fate.XUnitTest.deps.json
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\Fate.XUnitTest.runtimeconfig.json
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\Fate.XUnitTest.runtimeconfig.dev.json
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\Fate.XUnitTest.dll
-D:\Fate.DDD\Fate.XUnitTest\bin\Debug\netcoreapp2.1\Fate.XUnitTest.pdb
-D:\Fate.DDD\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.csprojAssemblyReference.cache
-D:\Fate.DDD\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.csproj.CoreCompileInputs.cache
-D:\Fate.DDD\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.AssemblyInfoInputs.cache
-D:\Fate.DDD\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.AssemblyInfo.cs
-D:\Fate.DDD\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.dll
-D:\Fate.DDD\Fate.XUnitTest\obj\Debug\netcoreapp2.1\Fate.XUnitTest.pdb
