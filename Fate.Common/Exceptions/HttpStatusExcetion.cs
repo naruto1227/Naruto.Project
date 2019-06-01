@@ -8,7 +8,7 @@ namespace Fate.Common.Exceptions
     /// <summary>
     /// http状态的异常
     /// </summary>
-    public abstract class HttpStatusExcetion : Exception
+    public abstract class HttpStatusExcetion : ApplicationException
     {
         public HttpStatusExcetion(string messsage):base(messsage) {
 

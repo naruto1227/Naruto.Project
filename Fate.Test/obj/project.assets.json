@@ -5343,8 +5343,6 @@
           "Fate.Application": "1.0.0",
           "Fate.Common": "1.0.0",
           "Fate.Common.Ioc.Core": "1.0.0",
-          "Fate.Common.Repository.Mysql": "1.0.0",
-          "Fate.Domain": "1.0.0",
           "Fate.Domain.Model": "1.0.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.4.10",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3"

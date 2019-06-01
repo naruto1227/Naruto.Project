@@ -1,5 +1,10 @@
 using System;
 using Xunit;
+using System.Collections.Generic;
+using Fate.Domain.Model.Entities;
+using System.Diagnostics;
+using Fate.Common.Ioc.Core;
+using Fate.Common.Repository.Mysql;
 
 namespace Fate.XUnitTest
 {
@@ -8,8 +13,6 @@ namespace Fate.XUnitTest
         [Fact]
         public void Test1()
         {
-            Console.WriteLine("1");
-            Console.ReadKey();
         }
     }
 }

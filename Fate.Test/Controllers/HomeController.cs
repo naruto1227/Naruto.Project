@@ -24,16 +24,12 @@ namespace Fate.Test.Controllers
         ISettingApp setting;
         private IUnitOfWork unitOfWork;
         private IRedisOperationHelp redis;
-
-        private fy_download fy_Download;
         RSAHelper rSA;
-        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, fy_download _Download, MyJsonResult myJson, RSAHelper _rSA)
+        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
         {
-
             setting = _setting;
             unitOfWork = _unitOfWork;
             redis = _redis;
-            fy_Download = _Download;
             jsonResult = myJson;
             rSA = _rSA;
         }

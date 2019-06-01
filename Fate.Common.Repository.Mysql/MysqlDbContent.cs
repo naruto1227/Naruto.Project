@@ -16,6 +16,5 @@ namespace Fate.Common.Repository.Mysql
         }
         public DbSet<setting> setting { get; set; }
 
-        public DbSet<fy_download> fy_download { get; set; }
     }
 }

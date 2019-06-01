@@ -12,4 +12,15 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Application\Fate.Application.csproj" />
+    <ProjectReference Include="..\Fate.Common.Ioc.Core\Fate.Common.Ioc.Core.csproj" />
+    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Common.Repository.Mysql\Fate.Common.Repository.Mysql.csproj" />
+    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Domain.Event\Fate.Domain.Event.csproj" />
+    <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
+    <ProjectReference Include="..\Fate.Domain\Fate.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

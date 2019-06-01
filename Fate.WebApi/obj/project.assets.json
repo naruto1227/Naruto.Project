@@ -14419,8 +14419,6 @@
       "Fate.Application >= 1.0.0",
       "Fate.Common >= 1.0.0",
       "Fate.Common.Ioc.Core >= 1.0.0",
-      "Fate.Common.Repository.Mysql >= 1.0.0",
-      "Fate.Domain >= 1.0.0",
       "Fate.Domain.Model >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
@@ -14465,17 +14463,11 @@
             "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
               "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
-            },
             "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
               "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
             },
             "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
               "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
-            },
-            "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj"
             }
           }
         }
