@@ -46,7 +46,7 @@ namespace Fate.Test.Controllers
             dt.Columns.Add("DuringTime");
             dt.Columns.Add("Integral");
             dt.Columns.Add("Rule");
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 DataRow dr = dt.NewRow();
                 dr["Contact"] = "1";

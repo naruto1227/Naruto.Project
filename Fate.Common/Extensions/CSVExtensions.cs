@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Fate.Common.Extensions
         /// </summary>
         /// <param name="table">数据表</param>
         /// <returns>返回标准的CSV</returns>
-        public static void ToCsv(this DataTable table)
+        public static string ToCsv(this DataTable table)
         {
             //以半角逗号（即,）作分隔符，列为空也要表达其存在。
             //列内容如存在半角逗号（即,）则用半角引号（即""）将该字段值包含起来。
@@ -33,8 +34,10 @@ namespace Fate.Common.Extensions
                 }
                 sb.AppendLine();
             }
-            File.WriteAllText(table.TableName + ".csv", sb.ToString());
+            //拼接路劲 地址位mysql默认允许的文件存放的地址
+            var path = Path.Combine(Config.MySqlBulkConfig.MySqlLoadFilePath, table.TableName + DateTime.Now.Ticks + ".csv");
+            File.WriteAllText(path, sb.ToString());
+            return path;
         }
-
     }
 }

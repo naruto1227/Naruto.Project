@@ -22,11 +22,16 @@ namespace Fate.Common.Extensions
         public static async Task<int> BulkLoadAsync(this DataTable table)
         {
             var res = 0;
+            var path = "";
             if (table != null && table.Rows.Count > 0)
             {
-                using (MySqlConnection _mySqlConnection = new MySqlConnection(config.GetConnectionString("MysqlConnection")))
+                //获取连接地址
+                var connection = config.GetConnectionString("MysqlConnection");
+                if (string.IsNullOrWhiteSpace(connection))
+                    throw new ArgumentNullException("mysql连接地址不能为空");
+                using (MySqlConnection _mySqlConnection = new MySqlConnection(connection))
                 {
-                    table.ToCsv();
+                    path = table.ToCsv();
                     MySqlTransaction mySqlTransaction = null;
                     try
                     {
@@ -42,9 +47,10 @@ namespace Fate.Common.Extensions
                             FieldQuotationCharacter = '"',
                             EscapeCharacter = '"',
                             LineTerminator = "\r\n",
-                            FileName = table.TableName + ".csv",//文件名
+                            FileName = path,//文件名
                             NumberOfLinesToSkip = 0,
                             TableName = table.TableName,//数据表名
+                            CharacterSet = "utf8"
                         };
                         bulk.Columns.AddRange(columns);
                         //通过文件的方式 添加数据到数据库
@@ -59,6 +65,13 @@ namespace Fate.Common.Extensions
                             mySqlTransaction.Rollback();
                         }
                         throw ex;
+                    }
+                    finally
+                    {
+                        if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
+                        {
+                            File.Delete(path);
+                        }
                     }
                 }
             }
