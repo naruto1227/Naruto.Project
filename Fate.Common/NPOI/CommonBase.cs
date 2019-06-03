@@ -11,7 +11,7 @@ using System.Text;
 namespace Fate.Common.NPOI
 {
     /// <summary>
-    /// ExcelUtility类库内部通用功能类
+    /// Excel类库内部通用功能类
     /// 作者：ZhangHaiBo
     /// 日期：2016/1/15
     /// </summary>
