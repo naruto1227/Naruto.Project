@@ -45,3 +45,11 @@ D:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.A
 D:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.dll
 D:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.pdb
 D:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.csprojAssemblyReference.cache
+E:\Fate.DDD\Fate.Common.Ioc.Core\bin\Debug\netstandard2.0\Fate.Common.Ioc.Core.deps.json
+E:\Fate.DDD\Fate.Common.Ioc.Core\bin\Debug\netstandard2.0\Fate.Common.Ioc.Core.dll
+E:\Fate.DDD\Fate.Common.Ioc.Core\bin\Debug\netstandard2.0\Fate.Common.Ioc.Core.pdb
+E:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.csproj.CoreCompileInputs.cache
+E:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.AssemblyInfoInputs.cache
+E:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.AssemblyInfo.cs
+E:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.dll
+E:\Fate.DDD\Fate.Common.Ioc.Core\obj\Debug\netstandard2.0\Fate.Common.Ioc.Core.pdb

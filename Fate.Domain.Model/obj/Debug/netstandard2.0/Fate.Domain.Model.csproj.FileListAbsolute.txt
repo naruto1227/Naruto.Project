@@ -48,3 +48,17 @@ D:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.Assembl
 D:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.csproj.CopyComplete
 D:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.dll
 D:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.pdb
+E:\Fate.DDD\Fate.Domain.Model\bin\Debug\netstandard2.0\Fate.Domain.Model.deps.json
+E:\Fate.DDD\Fate.Domain.Model\bin\Debug\netstandard2.0\Fate.Domain.Model.dll
+E:\Fate.DDD\Fate.Domain.Model\bin\Debug\netstandard2.0\Fate.Domain.Model.pdb
+E:\Fate.DDD\Fate.Domain.Model\bin\Debug\netstandard2.0\Fate.Common.dll
+E:\Fate.DDD\Fate.Domain.Model\bin\Debug\netstandard2.0\Fate.Common.Redis.dll
+E:\Fate.DDD\Fate.Domain.Model\bin\Debug\netstandard2.0\Fate.Common.pdb
+E:\Fate.DDD\Fate.Domain.Model\bin\Debug\netstandard2.0\Fate.Common.Redis.pdb
+E:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.csprojAssemblyReference.cache
+E:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.csproj.CoreCompileInputs.cache
+E:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.AssemblyInfoInputs.cache
+E:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.AssemblyInfo.cs
+E:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.csproj.CopyComplete
+E:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.dll
+E:\Fate.DDD\Fate.Domain.Model\obj\Debug\netstandard2.0\Fate.Domain.Model.pdb
