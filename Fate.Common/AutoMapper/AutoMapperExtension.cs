@@ -5,6 +5,8 @@ using System.Data;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
+using System.Linq;
+using Fate.Common.Extensions;
 
 namespace Fate.Common.AutoMapper
 {
@@ -19,24 +21,24 @@ namespace Fate.Common.AutoMapper
         /// <typeparam name="T">返回类型</typeparam>
         /// <param name="soure">数据源</param>
         /// <returns></returns>
-        public static T MapperTo<T>(this object soure) where T : class
+        public static T MapperTo<T>(this object soure, string[] ignores = null) where T : class
         {
             if (soure == null)
                 return null;
             Mapper.Reset();
-            Mapper.Initialize(a => a.CreateMap(soure.GetType(), typeof(T)));
+            Mapper.Initialize(a => a.CreateMap(soure.GetType(), typeof(T)).IgnoreAllExisting(ignores));
             return Mapper.Map<T>(soure);
         }
         /// <summary>
         /// 为已经存在的对象进行automapper
         /// </summary>
         /// <returns></returns>
-        public static T MapperTo<T>(this object obj, T result) where T : class
+        public static T MapperTo<T>(this object obj, T result, string[] ignores = null) where T : class
         {
             if (obj == null)
                 return default(T);
             Mapper.Reset();
-            Mapper.Initialize(a => a.CreateMap(obj.GetType().UnderlyingSystemType, typeof(T)));
+            Mapper.Initialize(a => a.CreateMap(obj.GetType().UnderlyingSystemType, typeof(T)).IgnoreAllExisting(ignores));
             return (T)Mapper.Map(obj, result, obj.GetType().UnderlyingSystemType, typeof(T));
         }
         /// <summary>
@@ -99,6 +101,30 @@ namespace Fate.Common.AutoMapper
                 dt.Rows.Add(row);
             }
             return dt;
+        }
+
+        /// <summary>
+        /// 忽略所有 存在于ignores中的字段
+        /// </summary>
+        /// <param name="mapping"></param>
+        /// <param name="ignores">需要忽略的字段</param>
+        /// <returns></returns>
+        public static IMappingExpression IgnoreAllExisting(this IMappingExpression mapping, string[] ignores)
+        {
+            if (mapping == null)
+                throw new ArgumentNullException("IMappingExpression 参数异常");
+            //获取需要忽略的字段
+            if (ignores != null && ignores.Count() > 0)
+            {
+                foreach (var item in ignores)
+                {
+                    if (!item.IsNullOrEmpty())
+                    {
+                        mapping.ForMember(item, opton => opton.Ignore());
+                    }
+                }
+            }
+            return mapping;
         }
     }
 }

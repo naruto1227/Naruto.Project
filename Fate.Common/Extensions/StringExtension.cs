@@ -38,7 +38,7 @@ namespace Fate.Common.Extensions
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static bool IsNullOrEmpty(this string source) => string.IsNullOrWhiteSpace(source) ? false : true;
+        public static bool IsNullOrEmpty(this string source) => string.IsNullOrWhiteSpace(source) ? true : false;
         #endregion
         #region # 计算字符串MD5值扩展方法 —— static string ToMD5(this string text)
         /// <summary>
