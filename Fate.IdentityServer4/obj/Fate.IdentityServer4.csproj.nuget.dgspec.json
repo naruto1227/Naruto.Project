@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {}
+    "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {}
   },
   "projects": {
-    "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {
+    "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+        "projectUniqueName": "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
         "projectName": "Fate.IdentityServer4",
-        "projectPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
+        "projectPath": "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+        "packagesPath": "C:\\Users\\xiaozhang\\.nuget\\packages\\",
+        "outputPath": "E:\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\xiaozhang\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
