@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Fate.Common.Infrastructure;
 using Fate.Common.Enum;
 using System.IO;
-
+using Fate.Common.FileOperation;
+using Fate.Common.Extensions;
 namespace Fate.FileServerApi.Controllers
 {
     /// <summary>
@@ -18,10 +19,13 @@ namespace Fate.FileServerApi.Controllers
     public class FileUploadController : ControllerBase
     {
         private MyJsonResult myJsonResult;
-        public FileUploadController(MyJsonResult jsonResult)
+        private FileHelper _file;
+        public FileUploadController(MyJsonResult jsonResult, FileHelper fileHelper)
         {
             myJsonResult = jsonResult;
+            _file = fileHelper;
         }
+        #region
         /// <summary>
         /// 添加文件
         /// </summary>
@@ -37,27 +41,12 @@ namespace Fate.FileServerApi.Controllers
             }
             else
             {
-                //获取文件上传的根地址
-                string path = StaticFieldConfig.UploadFilePath;
-                //获取的时间的目录
-                var time = DateTime.Now.ToString("yyyMMdd");
-                if (!Directory.Exists(Path.Combine(path, time)))
-                {
-                    Directory.CreateDirectory(Path.Combine(path, time));
-                }
-                //拼接路径
-                string resPath = Path.Combine(time, DateTime.Now.Ticks + file.FileName);
-                //完整的路径
-                path = Path.Combine(path, resPath);
-                //写入文件
-                using (var fileStream = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
+                //上传文件
+                var res = await _file.AddFileAsync(file);
                 //判断文件是否上传成功
-                if (System.IO.File.Exists(path))
+                if (!res.IsNullOrEmpty())
                 {
-                    myJsonResult.rows = resPath;
+                    myJsonResult.rows = res;
                 }
                 else
                 {
@@ -65,6 +54,58 @@ namespace Fate.FileServerApi.Controllers
                     myJsonResult.msg = "文件上传失败";
                 }
             }
+            return myJsonResult;
+        }
+
+        /// <summary>
+        /// 添加多个文件
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<MyJsonResult> BulkAddFile(IFormFileCollection files)
+        {
+            if (files == null || files.Count <= 0)
+            {
+                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
+                myJsonResult.msg = "请上传文件";
+            }
+            else
+            {
+                var resPath = "";
+                foreach (var file in files)
+                {
+                    //上传文件
+                    var res = await _file.AddFileAsync(file);
+                    //判断文件是否上传成功
+                    if (!res.IsNullOrEmpty())
+                    {
+                        resPath += "," + res;
+                    }
+                }
+                if (!resPath.IsNullOrEmpty())
+                {
+                    resPath = resPath.Substring(1, resPath.Length - 1);
+                }
+                myJsonResult.rows = resPath;
+            }
+            return myJsonResult;
+        }
+        #endregion
+
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="files">多个文件逗号分隔</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<MyJsonResult> DeleteFiles(string files)
+        {
+            if (files == null)
+                throw new Common.Exceptions.MyExceptions("请填写文件的路径");
+            //获取需要删除的文件信息
+            var fileArray = files.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            await _file.DeleteFileAsync(fileArray);
             return myJsonResult;
         }
     }

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Fate.Common.Infrastructure;
 using Fate.Common.NLog;
 using Newtonsoft.Json;
+using Fate.Common.Exceptions;
+using Fate.Common.Enum;
+
 namespace Fate.Common.Middleware
 {
     /// <summary>
@@ -37,11 +40,21 @@ namespace Fate.Common.Middleware
             catch (Exception ex)
             {
                 ex = ex.GetBaseException();
-                //获取状态码
-                myJsonResult.code = context.Response.StatusCode;
-                myJsonResult.failMsg = ex.Message;
-                myJsonResult.msg = "请求异常";
-                NLogHelper.Default.Error(ex.Message);
+                if (ex is MyExceptions || ex is ApplicationException)
+                {
+                    //获取状态码
+                    myJsonResult.code = (int)MyJsonResultCodeEnum.CHECKCODE;
+                    myJsonResult.msg = ex.Message;
+                }
+                else if (ex is Exception)
+                {
+                    //获取状态码
+                    myJsonResult.code = (int)MyJsonResultCodeEnum.SERVERCODE;
+                    myJsonResult.failMsg = ex.Message;
+                    myJsonResult.msg = "请求异常";
+                    NLogHelper.Default.Error(ex.Message);
+                }
+
                 await HandleExceptionAsync(context, myJsonResult);
             }
         }

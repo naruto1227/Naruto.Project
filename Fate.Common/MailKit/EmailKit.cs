@@ -26,9 +26,9 @@ namespace Fate.Common.MailKit
         /// <param name="html">html内容</param>
         /// <param name="msgPath">附件地址</param>
         /// <returns></returns>
-        public async Task SendEmail(string msgToEmail, string title, string content = "", string html = "", string msgPath = "")
+        public async Task SendEmailAsync(string msgToEmail, string title, string content = "", string html = "", string msgPath = "")
         {
-            await SendToEmail(msgToEmail, title, content, html, msgPath);
+            await SendToEmailAsync(msgToEmail, title, content, html, msgPath);
         }
         /// <summary>
         /// 
@@ -38,7 +38,7 @@ namespace Fate.Common.MailKit
         /// <param name="content"></param>
         /// <param name="msgPath"></param>
         /// <returns></returns>
-        private async Task SendToEmail(string msgToEmail, string title, string content, string html, string msgPath = "")
+        private async Task SendToEmailAsync(string msgToEmail, string title, string content, string html, string msgPath = "")
         {
             //实例化需要发送的资源的消息
             MimeMessage message = new MimeMessage();

@@ -14,6 +14,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http.Features;
 using Fate.Common.Middleware;
+using Fate.Common.FileOperation;
 
 namespace Fate.FileServerApi
 {
@@ -37,6 +38,8 @@ namespace Fate.FileServerApi
             });
             //注入 返回的实体
             services.AddTransient<MyJsonResult>();
+            //注入文件操作类
+            services.AddSingleton<FileHelper>();
             services.AddMvcCore().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -50,8 +53,8 @@ namespace Fate.FileServerApi
             //定义一个文件夹的访问路径
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "UploadFile")),
-                RequestPath = "/staticfile",
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), StaticFieldConfig.FileUploadPathName)),
+                RequestPath ="/"+ StaticFieldConfig.FileRequestPathName,
             });
             app.Map("/api/values", options =>
             {

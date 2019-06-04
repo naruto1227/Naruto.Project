@@ -12,3 +12,17 @@ E:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.Assembl
 E:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.csproj.CopyComplete
 E:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.dll
 E:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.pdb
+D:\Fate.DDD\Fate.Domain.Event\bin\Debug\netstandard2.0\Fate.Domain.Event.deps.json
+D:\Fate.DDD\Fate.Domain.Event\bin\Debug\netstandard2.0\Fate.Domain.Event.dll
+D:\Fate.DDD\Fate.Domain.Event\bin\Debug\netstandard2.0\Fate.Domain.Event.pdb
+D:\Fate.DDD\Fate.Domain.Event\bin\Debug\netstandard2.0\Fate.Common.Ioc.Core.dll
+D:\Fate.DDD\Fate.Domain.Event\bin\Debug\netstandard2.0\Fate.Common.Redis.dll
+D:\Fate.DDD\Fate.Domain.Event\bin\Debug\netstandard2.0\Fate.Common.Ioc.Core.pdb
+D:\Fate.DDD\Fate.Domain.Event\bin\Debug\netstandard2.0\Fate.Common.Redis.pdb
+D:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.csprojAssemblyReference.cache
+D:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.csproj.CoreCompileInputs.cache
+D:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.AssemblyInfoInputs.cache
+D:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.AssemblyInfo.cs
+D:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.csproj.CopyComplete
+D:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.dll
+D:\Fate.DDD\Fate.Domain.Event\obj\Debug\netstandard2.0\Fate.Domain.Event.pdb

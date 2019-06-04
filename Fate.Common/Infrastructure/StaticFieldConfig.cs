@@ -16,9 +16,17 @@ namespace Fate.Common.Infrastructure
         {
             get
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "UploadFile");
+                var path = Path.Combine(Directory.GetCurrentDirectory(), FileUploadPathName);
                 return path;
             }
         }
+        /// <summary>
+        /// 文件上传保存的文件夹的名字
+        /// </summary>
+        public static string FileUploadPathName = "UploadFile";
+        /// <summary>
+        /// 接口访问文件请求的路径
+        /// </summary>
+        public static string FileRequestPathName = "staticfile";
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
-namespace Fate.Common.Infrastructure
+namespace Fate.Common.FileOperation
 {
     /// <summary>
     /// 文件上传
@@ -82,7 +82,7 @@ namespace Fate.Common.Infrastructure
                     //while 循环每次读取一样的buffer值的数据写入服务器中，直到将该段数据全部处理完毕
                     else if (tempBuffer == BUFFER_COUNT)
                     {
-                        fileStream.Read(bufferByteArray, 0, tempBuffer);
+                        await fileStream.ReadAsync(bufferByteArray, 0, tempBuffer);
                         await WriteToServer(uploadFilePath, writeStartPosition, bufferByteArray);
                     }
                     //通过每次的缓冲区数据，累计增加临时读取数

@@ -81,7 +81,7 @@ namespace Fate.Test.Controllers
         public async Task sendEmail()
         {
             Common.MailKit.EmailKit emailKi = new Common.MailKit.EmailKit();
-            await emailKi.SendEmail("1635783721@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "D:\\360极速浏览器下载\\AdminLTE-2.4.5.zip");
+            await emailKi.SendEmailAsync("1635783721@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "D:\\360极速浏览器下载\\AdminLTE-2.4.5.zip");
         }
     }
 }

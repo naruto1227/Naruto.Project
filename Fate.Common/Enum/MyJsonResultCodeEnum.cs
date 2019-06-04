@@ -21,5 +21,13 @@ namespace Fate.Common.Enum
         /// 文件上传失败
         /// </summary>
         UPLOADFILECODE=2,
+        /// <summary>
+        /// 服务器错误
+        /// </summary>
+        SERVERCODE=3,
+        /// <summary>
+        /// 验证错误
+        /// </summary>
+        CHECKCODE=4
     }
 }
