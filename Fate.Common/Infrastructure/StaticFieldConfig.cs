@@ -23,7 +23,19 @@ namespace Fate.Common.Infrastructure
         /// <summary>
         /// 文件上传保存的文件夹的名字
         /// </summary>
-        public static string FileUploadPathName = "UploadFile";
+        public static string FileUploadPathName
+        {
+            get
+            {
+                var file = "UploadFile";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), file);
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                return file;
+            }
+        }
         /// <summary>
         /// 接口访问文件请求的路径
         /// </summary>

@@ -25,7 +25,7 @@ namespace Fate.FileServerApi.Controllers
             myJsonResult = jsonResult;
             _file = fileHelper;
         }
-        #region
+        #region 新增文件
         /// <summary>
         /// 添加文件
         /// </summary>
@@ -108,5 +108,7 @@ namespace Fate.FileServerApi.Controllers
             await _file.DeleteFileAsync(fileArray);
             return myJsonResult;
         }
+
+
     }
 }
