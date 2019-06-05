@@ -18,7 +18,7 @@ namespace Fate.FileServerApi
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args).UseKestrel().UseIIS().UseUrls("http://*:5000")
                 .UseStartup<Startup>();
     }
 }

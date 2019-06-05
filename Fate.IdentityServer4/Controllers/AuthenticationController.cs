@@ -26,8 +26,9 @@ namespace Fate.IdentityServer4.Controllers
         public async Task<JsonResult> ConnectionToken()
         {
             var client = new HttpClient();
-            //从元数据中发现终结点,查找IdentityServer http://localhost:10284 为当前地址
-            var disco = await client.GetDiscoveryDocumentAsync("http://localhost:54717");
+            //从元数据中发现终结点,查找IdentityServer
+            var url = (Request.IsHttps ? "https://" : "http://") + Request.Host.Host + ":" + Request.Host.Port;
+            var disco = await client.GetDiscoveryDocumentAsync(url);
             if (disco.IsError)
             {
                 myJsonResult.Code = "1001";

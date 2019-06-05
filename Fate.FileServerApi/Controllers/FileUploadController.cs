@@ -9,6 +9,8 @@ using Fate.Common.Enum;
 using System.IO;
 using Fate.Common.FileOperation;
 using Fate.Common.Extensions;
+using Microsoft.AspNetCore.StaticFiles;
+
 namespace Fate.FileServerApi.Controllers
 {
     /// <summary>
@@ -32,6 +34,7 @@ namespace Fate.FileServerApi.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost]
+        [RequestFormLimits()]
         public async Task<MyJsonResult> AddFile(IFormFile file)
         {
             if (file == null || file.Length <= 0)
@@ -63,8 +66,10 @@ namespace Fate.FileServerApi.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit=int.MaxValue, ValueLengthLimit =int.MaxValue)]
         public async Task<MyJsonResult> BulkAddFile(IFormFileCollection files)
         {
+            
             if (files == null || files.Count <= 0)
             {
                 myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
@@ -99,8 +104,10 @@ namespace Fate.FileServerApi.Controllers
         /// <param name="files">多个文件逗号分隔</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<MyJsonResult> DeleteFiles(string files)
+        public async Task<MyJsonResult> DeleteFiles()
         {
+            //获取需要删除的文件
+            string files = Request.Form["files"];
             if (files == null)
                 throw new Common.Exceptions.MyExceptions("请填写文件的路径");
             //获取需要删除的文件信息
@@ -109,6 +116,25 @@ namespace Fate.FileServerApi.Controllers
             return myJsonResult;
         }
 
-
+        /// <summary>
+        /// 文件下载
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult DownLoad()
+        {
+            //获取需要下载的文件
+            var file = Request.Query["file"];
+            if (!file.Any() || file.ToString().IsNullOrEmpty())
+                throw new Common.Exceptions.MyExceptions("请填写文件下载地址");
+            //获取完整的文件地址
+            var path = Path.Combine(StaticFieldConfig.UploadFilePath, file);
+            if (!System.IO.File.Exists(path))
+                throw new Common.Exceptions.MyExceptions("需要下载的文件地址错误,找不到该文件");
+            //获取文件的mime类型
+            var provider = new FileExtensionContentTypeProvider();
+            var contentType = "";
+            provider.TryGetContentType(path, out contentType);
+            return File(System.IO.File.OpenRead(path), contentType, Path.GetFileName(path));
+        }
     }
 }
