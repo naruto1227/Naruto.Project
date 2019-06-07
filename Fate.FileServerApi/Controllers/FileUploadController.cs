@@ -10,7 +10,7 @@ using System.IO;
 using Fate.Common.FileOperation;
 using Fate.Common.Extensions;
 using Microsoft.AspNetCore.StaticFiles;
-
+using System.Diagnostics;
 namespace Fate.FileServerApi.Controllers
 {
     /// <summary>
@@ -29,47 +29,18 @@ namespace Fate.FileServerApi.Controllers
         }
         #region 新增文件
         /// <summary>
-        /// 添加文件
+        /// 添加文件(多个文件 地址逗号分隔)
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost]
-        [RequestFormLimits()]
-        public async Task<MyJsonResult> AddFile(IFormFile file)
+        [RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, MultipartHeadersLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)]
+        [RequestSizeLimit(int.MaxValue)]
+        public async Task<MyJsonResult> AddFile()
         {
-            if (file == null || file.Length <= 0)
-            {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
-                myJsonResult.msg = "请上传文件";
-            }
-            else
-            {
-                //上传文件
-                var res = await _file.AddFileAsync(file);
-                //判断文件是否上传成功
-                if (!res.IsNullOrEmpty())
-                {
-                    myJsonResult.rows = res;
-                }
-                else
-                {
-                    myJsonResult.code = (int)MyJsonResultCodeEnum.UPLOADFILECODE;
-                    myJsonResult.msg = "文件上传失败";
-                }
-            }
-            return myJsonResult;
-        }
-
-        /// <summary>
-        /// 添加多个文件
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit=int.MaxValue, ValueLengthLimit =int.MaxValue)]
-        public async Task<MyJsonResult> BulkAddFile(IFormFileCollection files)
-        {
-            
+            //测试时间
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            IFormFileCollection files = Request.Form.Files;
             if (files == null || files.Count <= 0)
             {
                 myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
@@ -77,6 +48,7 @@ namespace Fate.FileServerApi.Controllers
             }
             else
             {
+                stopwatch.Start();
                 var resPath = "";
                 foreach (var file in files)
                 {
@@ -94,6 +66,9 @@ namespace Fate.FileServerApi.Controllers
                 }
                 myJsonResult.rows = resPath;
             }
+            //测试时间
+            stopwatch.Stop();
+            myJsonResult.recordCount = (int)stopwatch.ElapsedMilliseconds;
             return myJsonResult;
         }
         #endregion

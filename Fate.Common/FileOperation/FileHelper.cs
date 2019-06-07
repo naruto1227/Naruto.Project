@@ -16,6 +16,15 @@ namespace Fate.Common.FileOperation
     public class FileHelper
     {
         /// <summary>
+        /// 获取文件写入的服务
+        /// </summary>
+        private UploadFile uploadFile;
+
+        public FileHelper(UploadFile upload)
+        {
+            uploadFile = upload;
+        }
+        /// <summary>
         /// 添加文件
         /// </summary>
         /// <param name="file"></param>
@@ -36,12 +45,9 @@ namespace Fate.Common.FileOperation
             //完整的路径
             path = Path.Combine(path, resPath);
             //写入文件
-            using (var fileStream = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
-            {
-                await file.CopyToAsync(fileStream);
-            }
+            await uploadFile.UpLoadFileFromStream(file.OpenReadStream(), path);
             //判断文件是否上传成功
-            if (!System.IO.File.Exists(path))
+            if (!File.Exists(path))
             {
                 resPath = "";
             }

@@ -40,3 +40,8 @@ E:\Fate.DDD\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.Ra
 E:\Fate.DDD\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.dll
 E:\Fate.DDD\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.pdb
 D:\Fate.DDD\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.csprojAssemblyReference.cache
+D:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.dll
+D:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.Redis.dll
+D:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.pdb
+D:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.Redis.pdb
+D:\Fate.DDD\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.csproj.CopyComplete
