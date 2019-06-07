@@ -40,6 +40,7 @@ namespace Fate.FileServerApi.Controllers
         {
             //测试时间
             Stopwatch stopwatch = Stopwatch.StartNew();
+            stopwatch.Start();
             IFormFileCollection files = Request.Form.Files;
             if (files == null || files.Count <= 0)
             {
@@ -48,7 +49,6 @@ namespace Fate.FileServerApi.Controllers
             }
             else
             {
-                stopwatch.Start();
                 var resPath = "";
                 foreach (var file in files)
                 {
