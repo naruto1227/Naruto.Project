@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {}
+    "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {}
   },
   "projects": {
-    "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
+    "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj",
+        "projectUniqueName": "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj",
         "projectName": "Fate.Common.Redis",
-        "projectPath": "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Fate.DDD\\Fate.Common.Redis\\obj\\",
+        "projectPath": "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj",
+        "packagesPath": "C:\\Users\\xiaozhang\\.nuget\\packages\\",
+        "outputPath": "E:\\Fate.DDD\\Fate.Common.Redis\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\xiaozhang\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -76,20 +76,20 @@
         }
       }
     },
-    "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+    "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj",
+        "projectUniqueName": "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj",
         "projectName": "Fate.Common",
-        "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Fate.DDD\\Fate.Common\\obj\\",
+        "projectPath": "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj",
+        "packagesPath": "C:\\Users\\xiaozhang\\.nuget\\packages\\",
+        "outputPath": "E:\\Fate.DDD\\Fate.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\xiaozhang\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -102,8 +102,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-                "projectPath": "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
+              "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
+                "projectPath": "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
               }
             }
           }
@@ -128,6 +128,18 @@
             "Microsoft.AspNetCore.Mvc": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.SignalR": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Microsoft.AspNetCore.SignalR.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[1.1.5, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[2.2.5, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -180,20 +192,20 @@
         }
       }
     },
-    "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {
+    "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+        "projectUniqueName": "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
         "projectName": "Fate.IdentityServer4",
-        "projectPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
+        "projectPath": "E:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+        "packagesPath": "C:\\Users\\xiaozhang\\.nuget\\packages\\",
+        "outputPath": "E:\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\xiaozhang\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -206,8 +218,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-                "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
+              "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+                "projectPath": "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
               }
             }
           }

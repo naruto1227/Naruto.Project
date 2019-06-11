@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 using System.Linq;
+using Fate.Common.Redis.RedisManage;
+
 namespace Fate.Common.Redis.RedisConfig
 {
     /// <summary>
@@ -18,11 +20,11 @@ namespace Fate.Common.Redis.RedisConfig
         /// <summary>
         /// redis密码
         /// </summary>
-        private static string RedisPassword = ConfigurationManage.GetSection("AppSetting:RedisConfig:Password").Value;
+        public static string RedisPassword = ConfigurationManage.GetSection("AppSetting:RedisConfig:Password").Value;
         /// <summary>
         /// 默认访问存储库
         /// </summary>
-        private static int RedisDefaultDataBase
+        public static int RedisDefaultDataBase
         {
             get
             {
@@ -35,8 +37,14 @@ namespace Fate.Common.Redis.RedisConfig
         /// <summary>
         /// redis连接字符串
         /// </summary>
-        private static string RedisConnectionConfig = ConfigurationManage.GetSection("AppSetting:RedisConfig:Connection").Value;
+        public static string RedisConnectionConfig = ConfigurationManage.GetSection("AppSetting:RedisConfig:Connection").Value;
 
+        /// <summary>
+        /// 是否开启哨兵模式 1 开启
+        /// </summary>
+        private static string IsOpenSentinel = ConfigurationManage.GetSection("AppSetting:RedisConfig:IsOpenSentinel").Value;
+
+        private static ISubscriber sentinelsub;
         /// <summary>
         /// 缓存
         /// </summary>
@@ -56,6 +64,11 @@ namespace Fate.Common.Redis.RedisConfig
                         if (_instance == null || !_instance.IsConnected)
                         {
                             _instance = GetFromCache();
+                            //判断是否开启集群哨兵模式
+                            if (!string.IsNullOrWhiteSpace(IsOpenSentinel) && IsOpenSentinel.Equals("1"))
+                            {
+                                OpenSentinelManager();
+                            }
                         }
                     }
                 }
@@ -114,6 +127,44 @@ namespace Fate.Common.Redis.RedisConfig
             return connect;
         }
 
+        #region 哨兵集群
+        public static ConfigurationOptions sentineloption = new ConfigurationOptions()
+        {
+            TieBreaker = "",
+            CommandMap = CommandMap.Sentinel,
+            ServiceName = "mymaster"
+        };
+        /// <summary>
+        /// 订阅哨兵主从切换
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private static void OpenSentinelManager(ConfigurationOptions sentineloptions = null)
+        {
+            //获取哨兵地址
+            List<string> sentinelConfig = ConfigurationManage.GetSection("AppSetting:RedisConfig:RedisSentinelIp").Value?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList() ?? new List<string>();
+            //哨兵节点
+            sentinelConfig.ForEach(a =>
+            {
+                var endPoint = RedisBase.ParseEndPoints(a);
+                if (!sentineloption.EndPoints.Contains(endPoint))
+                {
+                    sentineloption.EndPoints.Add(a);
+                }
+            });
+            sentineloptions = sentineloptions ?? sentineloption;
+            //我们可以成功的连接一个sentinel服务器，对这个连接的实际意义在于：当一个主从进行切换后，如果它外层有Twemproxy代理，我们可以在这个时机（+switch-master事件)通知你的Twemproxy代理服务器，并更新它的配置文件里的master服务器的地址，然后从起你的Twemproxy服务，这样你的主从切换才算真正完成。
+            //一般没有代理服务器，直接更改从数据库配置文件，将其升级为主数据库。
+            var connect = ConnectionMultiplexer.Connect(sentineloptions);
+            sentinelsub = connect.GetSubscriber();
+
+            sentinelsub.Subscribe("+switch-master", (ch, mg) =>
+            {
+                Console.WriteLine(mg);
+            });
+        }
+
+        #endregion
         #region 事件
 
         /// <summary>

@@ -5,6 +5,8 @@ using StackExchange.Redis;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Net;
+
 namespace Fate.Common.Redis.RedisManage
 {
     /// <summary>
@@ -67,6 +69,34 @@ namespace Fate.Common.Redis.RedisManage
         public RedisKey[] ConvertRedisKeys(List<string> val)
         {
             return val.Select(k => (RedisKey)k).ToArray();
+        }
+
+        /// <summary>
+        /// 生成EndPoint
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        /// <returns></returns>
+        public static EndPoint ParseEndPoints(string host, int port)
+        {
+            IPAddress ip;
+            if (IPAddress.TryParse(host, out ip)) return new IPEndPoint(ip, port);
+            return new DnsEndPoint(host, port);
+        }
+
+        public static EndPoint ParseEndPoints(string hostAndPort)
+        {
+            if (hostAndPort.IndexOf(":") != -1)
+            {
+                var obj = hostAndPort.Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+                var host = obj[0];
+                var port = Convert.ToInt32(obj[1]);
+                return ParseEndPoints(host, port);
+            }
+            else
+            {
+                throw new ApplicationException("hostAndPort error");
+            }
         }
     }
 }
