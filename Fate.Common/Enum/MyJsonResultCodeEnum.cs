@@ -32,6 +32,7 @@ namespace Fate.Common.Enum
         /// <summary>
         /// 第三方接口调用失败
         /// </summary>
-        thirdError=5
+        thirdError=5,
+
     }
 }

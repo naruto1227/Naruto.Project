@@ -6,7 +6,7 @@ using System.Net.Http;
 using Fate.Common.Infrastructure;
 using Fate.Common.Enum;
 
-namespace CP.Common.Infrastructure
+namespace Fate.Common.Config
 {
     /// <summary>
     /// 配置钉钉登录需要的数据
