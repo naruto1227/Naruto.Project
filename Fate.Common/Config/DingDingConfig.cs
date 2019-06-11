@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Fate.Common.Infrastructure;
+using Fate.Common.Enum;
+
 namespace CP.Common.Infrastructure
 {
     /// <summary>
@@ -11,17 +14,17 @@ namespace CP.Common.Infrastructure
     public class DingDingConfig
     {
         /// <summary>
-        /// 
+        /// 应用的appid
         /// </summary>
-        public const string DingDingAppkey = "dingoaemubpncq8guikorj";
+        public const string DingDingAppkey = "";
         /// <summary>
-        /// 
+        /// 应用的app密钥
         /// </summary>
-        public const string DingDingAppSecret = "_DK0ziUbcspLVfRyoE5F1vjLzHoxPqM92wJV2FlwkdVvIZSxlOvB9Cr36RDL8SCf";
+        public const string DingDingAppSecret = "";
         /// <summary>
-        /// 钉钉跳转的地址
+        /// 钉钉扫码成功跳转的地址
         /// </summary>
-        public const string DingDingReturnUrl = "http://cp.haibozs.xyz/account/dingdinglogin/";
+        public const string DingDingReturnUrl = "";
         /// <summary>
         /// 钉钉获取用户信息的地址
         /// </summary>
@@ -39,17 +42,17 @@ namespace CP.Common.Infrastructure
         /// </summary>
         public static async Task<MyJsonResult> GetTokenAsync()
         {
-            var res = await HttpRequest.DoGetAsync(string.Format(DingDingAccessTokenUrl, DingDingAppkey, DingDingAppSecret));
+            var res = await HttpWebRequest.DoGetAsync(string.Format(DingDingAccessTokenUrl, DingDingAppkey, DingDingAppSecret));
             MyJsonResult myJsonResult = new MyJsonResult();
             if (res != null && res["errcode"].ToString().Equals("0"))
             {
                 var token = res["access_token"] != null ? res["access_token"].ToString() : "";
-                myJsonResult.data = token;
+                myJsonResult.rows = token;
             }
             else
             {
-                myJsonResult.code = (int)MyJsonResultEnum.thirdError;
-                myJsonResult.data = res["errmsg"] != null ? res["errmsg"].ToString() : "";
+                myJsonResult.code = (int)MyJsonResultCodeEnum.thirdError;
+                myJsonResult.rows = res["errmsg"] != null ? res["errmsg"].ToString() : "";
             }
             return myJsonResult;
         }
@@ -61,17 +64,17 @@ namespace CP.Common.Infrastructure
         /// <returns></returns>
         public static async Task<MyJsonResult> GetUserInfoAsync(string token, string code)
         {
-            var res = await HttpRequest.DoPostAsync(string.Format(DingDingGetUserInfoUrl, token), new StringContent("{ \"tmp_auth_code\": \"" + code + "\"}"), null, PostContentTypeEnum.JSON);
+            var res = await HttpWebRequest.DoPostAsync(string.Format(DingDingGetUserInfoUrl, token), new StringContent("{ \"tmp_auth_code\": \"" + code + "\"}"), null, null, PostContentTypeEnum.JSON);
             MyJsonResult myJsonResult = new MyJsonResult();
             if (res != null && res["errcode"].ToString().Equals("0"))
             {
-                var userinfo = res["user_info"] != null ? res["user_info"].ToString().ToJson<DB.MemSysDB.DingDingUserInfo>() : default;
-                myJsonResult.data = userinfo;
+                var userinfo = res["user_info"] != null ? res["user_info"].ToString():"";
+                myJsonResult.rows = userinfo;
             }
             else
             {
-                myJsonResult.code = (int)MyJsonResultEnum.thirdError;
-                myJsonResult.data = res["errmsg"] != null ? res["errmsg"].ToString() : "";
+                myJsonResult.code = (int)MyJsonResultCodeEnum.thirdError;
+                myJsonResult.rows = res["errmsg"] != null ? res["errmsg"].ToString() : "";
             }
             return myJsonResult;
         }

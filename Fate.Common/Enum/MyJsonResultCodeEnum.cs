@@ -28,6 +28,10 @@ namespace Fate.Common.Enum
         /// <summary>
         /// 验证错误
         /// </summary>
-        CHECKCODE=4
+        CHECKCODE=4,
+        /// <summary>
+        /// 第三方接口调用失败
+        /// </summary>
+        thirdError=5
     }
 }

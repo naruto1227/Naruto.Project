@@ -31,11 +31,6 @@ namespace Fate.Common.Infrastructure
         /// </summary>
 
         public string msg { get; set; } = "操作成功";
-
-        /// <summary>
-        /// 错误编码
-        /// </summary>
-        public string failCode { get; set; }
         /// <summary>
         /// 错误消息
         /// </summary>
