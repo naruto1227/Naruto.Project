@@ -74,12 +74,11 @@ namespace Fate.Common.Infrastructure
                 }
                 if (contentTypeEnum == PostContentTypeEnum.URLENCODED)
                 {
-                    request.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
-
+                    request.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
                 }
                 else if (contentTypeEnum == PostContentTypeEnum.JSON)
                 {
-                    request.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+                    request.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 }
                 using (var res = await request.PostAsync(url, content))
                 {
