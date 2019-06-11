@@ -31,5 +31,17 @@ namespace Fate.Common.Extensions
                 return null;
             return JsonConvert.DeserializeObject<Dictionary<string, object>>(soure);
         }
+        /// <summary>
+        /// 转换成对应的实体
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="soure"></param>
+        /// <returns></returns>
+        public static T ConvertTo<T>(this string soure) where T : class
+        {
+            if (soure == null)
+                return default;
+            return JsonConvert.DeserializeObject<T>(soure);
+        }
     }
 }

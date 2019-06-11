@@ -26,7 +26,7 @@ namespace Fate.Common.Interface
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<T> GetAsync<T>(string key);
+        Task<T> GetAsync<T>(string key) where T:class;
         /// <summary>
         /// 删除指定key
         /// </summary>

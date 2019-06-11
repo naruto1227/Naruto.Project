@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Fate.Common.Interface;
-
+using Fate.Common.Extensions;
 namespace Fate.Common.Cache
 {
     /// <summary>
@@ -28,7 +28,7 @@ namespace Fate.Common.Cache
         /// <returns></returns>
         public async Task AddAsync<T>(string key, T value, DistributedCacheEntryOptions options)
         {
-           // await memoryCache.SetStringAsync(key, value.ToJsonString(), options);
+            await memoryCache.SetStringAsync(key, value.ToJson(), options);
         }
         /// <summary>
         /// 移除
@@ -39,13 +39,18 @@ namespace Fate.Common.Cache
         {
             await memoryCache.RemoveAsync(key);
         }
-
-        public async Task<T> GetAsync<T>(string key)
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<T> GetAsync<T>(string key) where T : class
         {
-            var bytes = await memoryCache.GetStringAsync(key);
-            if (bytes != null)
+            var str = await memoryCache.GetStringAsync(key);
+            if (str != null)
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(bytes);
+                return str.ConvertTo<T>();
             }
             return default;
         }
