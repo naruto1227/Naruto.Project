@@ -1,12 +1,10 @@
-﻿using Fate.Common.Infrastructure;
-using Fate.Common.Interface;
+﻿using Fate.Common.Config;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Extensions;
 using System.Linq;
 namespace Fate.Common.FileOperation
 {

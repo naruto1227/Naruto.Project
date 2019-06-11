@@ -66,7 +66,7 @@ namespace Fate.WebApi
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
             loggerFactory.AddNLog();//添加NLog
             env.ConfigureNLog("nlog.config");//读取Nlog配置文件
-            //注入一场处理中间件
+            //注入异常处理中间件
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
             ConfigurationManage.SetAppSetting(Configuration.GetSection("AppSetting"));

@@ -45,3 +45,8 @@ D:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.Redis.dll
 D:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.pdb
 D:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.Redis.pdb
 D:\Fate.DDD\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.csproj.CopyComplete
+E:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.dll
+E:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.Redis.dll
+E:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.pdb
+E:\Fate.DDD\Fate.IdentityServer4\bin\Debug\netcoreapp2.2\Fate.Common.Redis.pdb
+E:\Fate.DDD\Fate.IdentityServer4\obj\Debug\netcoreapp2.2\Fate.IdentityServer4.csproj.CopyComplete

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-namespace Fate.Common.Infrastructure
+using Fate.Common.Infrastructure;
+
+namespace Fate.Common.Config
 {
     /// <summary>
     /// 此地存放静态字段

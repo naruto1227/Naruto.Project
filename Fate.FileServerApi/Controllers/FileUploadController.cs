@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Fate.Common.Infrastructure;
+using Fate.Common.Config;
 using Fate.Common.Enum;
 using System.IO;
 using Fate.Common.FileOperation;
