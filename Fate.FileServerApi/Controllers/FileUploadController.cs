@@ -12,6 +12,8 @@ using Fate.Common.FileOperation;
 using Fate.Common.Extensions;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Diagnostics;
+using Fate.Common.Exceptions;
+
 namespace Fate.FileServerApi.Controllers
 {
     /// <summary>
@@ -101,11 +103,11 @@ namespace Fate.FileServerApi.Controllers
             //获取需要下载的文件
             var file = Request.Query["file"];
             if (!file.Any() || file.ToString().IsNullOrEmpty())
-                throw new Common.Exceptions.MyExceptions("请填写文件下载地址");
+                throw new MyExceptions("请填写文件下载地址");
             //获取完整的文件地址
             var path = Path.Combine(StaticFieldConfig.UploadFilePath, file);
             if (!System.IO.File.Exists(path))
-                throw new Common.Exceptions.MyExceptions("需要下载的文件地址错误,找不到该文件");
+                throw new MyExceptions("需要下载的文件地址错误,找不到该文件");
             //获取文件的mime类型
             var provider = new FileExtensionContentTypeProvider();
             var contentType = "";
