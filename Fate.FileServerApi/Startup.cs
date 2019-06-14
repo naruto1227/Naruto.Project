@@ -24,6 +24,7 @@ namespace Fate.FileServerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDirectoryBrowser();
             //设置文件 上传的 大小
             services.Configure<FormOptions>(options =>
             {
@@ -54,6 +55,12 @@ namespace Fate.FileServerApi
             {
                 FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
                 RequestPath = "/" + StaticFieldConfig.FileRequestPathName,
+            });
+            //启用目录浏览
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
+                RequestPath = "/myfile"
             });
             app.Map("/api/values", options =>
             {
