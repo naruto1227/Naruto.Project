@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Fate.Common.Infrastructure;
 using Fate.Common.Enum;
+using Fate.Common.Interface;
 
 namespace Fate.Common.Config
 {
     /// <summary>
     /// 配置钉钉登录需要的数据
     /// </summary>
-    public class DingDingConfig
+    public class DingDingConfig : ICommonClassSigleDependency
     {
         /// <summary>
         /// 应用的appid
@@ -32,18 +33,24 @@ namespace Fate.Common.Config
         /// <summary>
         /// 获取钉钉的token地址
         /// </summary>
-        public static string DingDingAccessTokenUrl = "https://oapi.dingtalk.com/sns/gettoken?appid={0}&appsecret={1}";
+        public const string DingDingAccessTokenUrl = "https://oapi.dingtalk.com/sns/gettoken?appid={0}&appsecret={1}";
         /// <summary>
         /// 钉钉的登录的二维码地址
         /// </summary>
-        public static string DingDingLoginQrCodeUrl = "https://oapi.dingtalk.com/connect/qrconnect?appid={0}&response_type=code&scope=snsapi_login&state={1}&redirect_uri={2}";
+        public const string DingDingLoginQrCodeUrl = "https://oapi.dingtalk.com/connect/qrconnect?appid={0}&response_type=code&scope=snsapi_login&state={1}&redirect_uri={2}";
+
+        private MyJsonResult myJsonResult;
+        public DingDingConfig(MyJsonResult myJson)
+        {
+            myJsonResult = myJson;
+        }
+
         /// <summary>
         /// 获取token
         /// </summary>
-        public static async Task<MyJsonResult> GetTokenAsync()
+        public async Task<MyJsonResult> GetTokenAsync()
         {
             var res = await HttpWebRequest.DoGetAsync(string.Format(DingDingAccessTokenUrl, DingDingAppkey, DingDingAppSecret));
-            MyJsonResult myJsonResult = new MyJsonResult();
             if (res != null && res["errcode"].ToString().Equals("0"))
             {
                 var token = res["access_token"] != null ? res["access_token"].ToString() : "";
@@ -62,13 +69,12 @@ namespace Fate.Common.Config
         /// <param name="token">接口凭证</param>
         /// <param name="code"></param>
         /// <returns></returns>
-        public static async Task<MyJsonResult> GetUserInfoAsync(string token, string code)
+        public async Task<MyJsonResult> GetUserInfoAsync(string token, string code)
         {
             var res = await HttpWebRequest.DoPostAsync(string.Format(DingDingGetUserInfoUrl, token), new StringContent("{ \"tmp_auth_code\": \"" + code + "\"}"), null, null, PostContentTypeEnum.JSON);
-            MyJsonResult myJsonResult = new MyJsonResult();
             if (res != null && res["errcode"].ToString().Equals("0"))
             {
-                var userinfo = res["user_info"] != null ? res["user_info"].ToString():"";
+                var userinfo = res["user_info"] != null ? res["user_info"].ToString() : "";
                 myJsonResult.rows = userinfo;
             }
             else

@@ -9,12 +9,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Fate.Common.Enum;
+using Fate.Common.Interface;
+
 namespace Fate.Common.Config
 {
     /// <summary>
     /// 支付宝配置信息
     /// </summary>
-    public class ZhiFuBaoConfig
+    public class ZhiFuBaoConfig: ICommonClassSigleDependency
     {
         /// <summary>
         /// 商户公钥(存储)
