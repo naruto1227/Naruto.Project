@@ -50,23 +50,27 @@ namespace Fate.FileServerApi
             }
             //注入读取配置文件服务
             ConfigurationManage.SetAppSetting(Configuration.GetSection("AppSetting"));
+           
             //定义一个文件夹的访问路径
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
                 RequestPath = "/" + StaticFieldConfig.FileRequestPathName,
+                DefaultContentType= "application/x-msdownload",
+                 ServeUnknownFileTypes=true
             });
             //启用目录浏览
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
                 FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
-                RequestPath = "/myfile"
+                RequestPath = "/myfile",
+
             });
             app.Map("/api/values", options =>
             {
                 options.Run(async (content) =>
                 {
-                    await content.Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("welcome to fileSystem"));
+                    await content.Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("WelCome To FileSystem"));
                 });
             });
             // app.UseDirectoryBrowser("/" + StaticFieldConfig.FileRequestPathName);
