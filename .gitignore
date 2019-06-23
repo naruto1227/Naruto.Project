@@ -24,3 +24,4 @@
 /Fate.WebApi/bin/
 /Fate.XUnitTest/bin/
 /.vs/
+*.dll

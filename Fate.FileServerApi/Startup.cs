@@ -55,15 +55,15 @@ namespace Fate.FileServerApi
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
-                RequestPath = "/" + StaticFieldConfig.FileRequestPathName,
-                DefaultContentType= "application/x-msdownload",
+                RequestPath = "/"+ StaticFieldConfig.FileRequestPathName,
+                DefaultContentType = "application/x-msdownload",
                  ServeUnknownFileTypes=true
             });
             //启用目录浏览
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
                 FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
-                RequestPath = "/myfile",
+                RequestPath = "/"+ StaticFieldConfig.FileRequestPathName,
 
             });
             app.Map("/api/values", options =>
