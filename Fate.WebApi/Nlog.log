@@ -8,3 +8,53 @@
 2019-06-24 16:38:44.7485 Info Adding target AsyncTargetWrapper(Name=database-file)
 2019-06-24 16:38:44.7646 Info Adding target AsyncTargetWrapper(Name=blackhole)
 2019-06-24 16:38:44.8192 Info Found 99 configuration items
+2019-06-24 17:55:03.8988 Info Message Template Auto Format enabled
+2019-06-24 17:55:03.9291 Info Loading assembly: NLog.Web.AspNetCore
+2019-06-24 17:55:04.0165 Info Adding target AsyncTargetWrapper(Name=info-file)
+2019-06-24 17:55:04.0165 Info Adding target AsyncTargetWrapper(Name=error-file)
+2019-06-24 17:55:04.0165 Info Adding target AsyncTargetWrapper(Name=debug-file)
+2019-06-24 17:55:04.0165 Info Adding target AsyncTargetWrapper(Name=trace-file)
+2019-06-24 17:55:04.0165 Info Adding target AsyncTargetWrapper(Name=fatal-file)
+2019-06-24 17:55:04.0320 Info Adding target AsyncTargetWrapper(Name=database-file)
+2019-06-24 17:55:04.0320 Info Adding target AsyncTargetWrapper(Name=blackhole)
+2019-06-24 17:55:04.0760 Info Found 94 configuration items
+2019-06-24 17:55:45.9662 Info FileTarget: Pattern {#} is missing in ArchiveFileName `E:\Fate.DDD\Fate.WebApi\bin\Debug\netcoreapp2.2\Logs\Error\2019-06-24.log` (Fallback to dynamic wildcard)
+2019-06-24 17:55:51.1313 Error DatabaseTarget(Name=database-file_wrapped): Error when writing to database. Exception: MySql.Data.MySqlClient.MySqlException (0x80004005): Host 'DESKTOP-EM28JO8' is not allowed to connect to this MySQL server
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString)
+   at NLog.Targets.DatabaseTarget.WriteEventToDatabase(LogEventInfo logEvent, String connectionString)
+   at NLog.Targets.DatabaseTarget.Write(IList`1 logEvents)
+2019-06-24 17:57:44.1739 Info Message Template Auto Format enabled
+2019-06-24 17:57:44.1739 Info Loading assembly: NLog.Web.AspNetCore
+2019-06-24 17:57:44.3190 Info Adding target AsyncTargetWrapper(Name=info-file)
+2019-06-24 17:57:44.3271 Info Adding target AsyncTargetWrapper(Name=error-file)
+2019-06-24 17:57:44.3271 Info Adding target AsyncTargetWrapper(Name=debug-file)
+2019-06-24 17:57:44.3271 Info Adding target AsyncTargetWrapper(Name=trace-file)
+2019-06-24 17:57:44.3271 Info Adding target AsyncTargetWrapper(Name=fatal-file)
+2019-06-24 17:57:44.3271 Info Adding target AsyncTargetWrapper(Name=database-file)
+2019-06-24 17:57:44.3271 Info Adding target AsyncTargetWrapper(Name=blackhole)
+2019-06-24 17:57:44.3791 Info Found 94 configuration items
+2019-06-24 17:58:37.7626 Info FileTarget: Pattern {#} is missing in ArchiveFileName `E:\Fate.DDD\Fate.WebApi\bin\Debug\netcoreapp2.2\Logs\Error\2019-06-24.log` (Fallback to dynamic wildcard)
+2019-06-24 17:58:38.1260 Error DatabaseTarget(Name=database-file_wrapped): Error when writing to database. Exception: MySql.Data.MySqlClient.MySqlException (0x80004005): Host 'DESKTOP-EM28JO8' is not allowed to connect to this MySQL server
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString)
+   at NLog.Targets.DatabaseTarget.WriteEventToDatabase(LogEventInfo logEvent, String connectionString)
+   at NLog.Targets.DatabaseTarget.Write(IList`1 logEvents)
