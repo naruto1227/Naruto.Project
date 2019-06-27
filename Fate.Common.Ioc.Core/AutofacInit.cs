@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
-
 using System.Linq;
 
 namespace Fate.Common.Ioc.Core

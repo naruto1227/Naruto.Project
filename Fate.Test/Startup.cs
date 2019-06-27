@@ -19,7 +19,8 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using System.Text;
 using Fate.Common.Middleware;
-
+using Fate.Common.Repository.Mysql;
+using Fate.Domain.Model.Entities;
 namespace Fate.Test
 {
     public class Startup
@@ -38,21 +39,26 @@ namespace Fate.Test
             //注入上下文
             services.AddDbContext<Fate.Common.Repository.Mysql.MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton(typeof( Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
+            services.AddSingleton(typeof(Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
                 option.Filters.Add(typeof(Fate.Common.Filters.TokenAuthorizationAttribute));
             }).AddAuthorization().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //注入api授权服务
-            services.AddAuthentication("Bearer").AddJwtBearer("Bearer",option=> {
+            services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
+            {
                 option.Authority = "http://localhost:54717";
                 option.RequireHttpsMetadata = false;
                 option.Audience = "api";
             });
+            //注入仓储
+            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
+
+            services.AddScoped(typeof(List<>));
             //替换自带的di 转换为autofac 注入程序集
-            ApplicationContainer= Fate.Common.Ioc.Core.AutofacInit.Injection(services);
-            return new AutofacServiceProvider(this.ApplicationContainer);
+            ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

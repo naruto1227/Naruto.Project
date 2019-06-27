@@ -19,8 +19,8 @@ namespace Fate.Common.Repository.Mysql
         /// <summary>
         /// 上下文
         /// </summary>
-        protected DbContext repository { get; set; }
-        public RepositoryBase(DbContext _dbContext)
+        protected MysqlDbContent repository { get; set; }
+        public RepositoryBase(MysqlDbContent _dbContext)
         {
             this.repository = _dbContext;
         }
@@ -76,7 +76,7 @@ namespace Fate.Common.Repository.Mysql
         /// <returns></returns>
         public async Task BulkDeleteAsync(Expression<Func<T, bool>> condition)
         {
-            var list = await QueryAllFromCondition(condition).ToListAsync();
+            var list = await Where(condition).ToListAsync();
             if (list != null && list.Count() > 0)
                 repository.Set<T>().RemoveRange(list);
         }
@@ -134,14 +134,14 @@ namespace Fate.Common.Repository.Mysql
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public IQueryable<T> QueryAll() => repository.Set<T>().AsQueryable();
+        public IQueryable<T> AsQueryable() => repository.Set<T>().AsQueryable();
 
         /// <summary>
         /// 根据条件查询
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public IQueryable<T> QueryAllFromCondition(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).AsQueryable();
+        public IQueryable<T> Where(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).AsQueryable();
 
         /// <summary>
         /// 获取单条记录

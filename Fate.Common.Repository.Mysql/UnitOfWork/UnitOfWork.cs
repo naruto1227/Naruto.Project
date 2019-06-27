@@ -2,13 +2,12 @@
 using System.Text;
 using System.Threading.Tasks;
 using Fate.Domain.Model;
-
+using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MysqlDbContent dbContext;
-        
         public UnitOfWork(MysqlDbContent _dbContext)
         {
             dbContext = _dbContext;
@@ -60,7 +59,13 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
 
         public IRepository<T> Respositiy<T>() where T : class, IEntity
         {
-            return new RepositoryBase<T>(dbContext);
+            //获取仓储服务
+            IRepository<T> repository = dbContext.GetService<IRepository<T>>();
+            if (repository == null)
+            {
+                repository = new RepositoryBase<T>(dbContext); ;
+            }
+            return repository;
         }
     }
 }

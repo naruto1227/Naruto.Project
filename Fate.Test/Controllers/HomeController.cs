@@ -39,11 +39,25 @@ namespace Fate.Test.Controllers
         [HttpGet]
         public async Task test()
         {
-          await  repository.AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
             redis.StringSet("zhang", "haibo");
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
             jsonResult.msg = "helloword";
             throw new Fate.Common.Exceptions.NoAuthorizationException("111111111111111");
+        }
+
+        [HttpGet]
+        public async Task test33()
+        {
+            List<setting> list = Common.Ioc.Core.AutofacInit.Resolve<List<setting>>();
+            List<string> li= Common.Ioc.Core.AutofacInit.Resolve<List<string>>();
+            list.Remove(list[0]);
+            await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+        }
+        [HttpGet]
+        public async Task test2()
+        {
+            await repository.AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+            await repository.SaveChangesAsync();
         }
         /// <summary>
         /// 测试事件
@@ -90,7 +104,7 @@ namespace Fate.Test.Controllers
 
         public void model()
         {
-            var str =AutofacInit.Resolve<setting>();
+            var str = AutofacInit.Resolve<setting>();
         }
     }
 }

@@ -85,14 +85,14 @@ namespace Fate.Common.Repository.Mysql
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        IQueryable<T> QueryAll();
+        IQueryable<T> AsQueryable();
 
         /// <summary>
         /// 根据条件查询
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        IQueryable<T> QueryAllFromCondition(Expression<Func<T, bool>> condition);
+        IQueryable<T> Where(Expression<Func<T, bool>> condition);
         /// <summary>
         /// 获取单条记录
         /// </summary>
