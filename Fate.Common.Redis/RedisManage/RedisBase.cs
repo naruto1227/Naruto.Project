@@ -19,7 +19,7 @@ namespace Fate.Common.Redis.RedisManage
         {
             get
             {
-               return RedisConfig.RedisConnectionHelp.RedisConnection.GetDatabase();
+                return RedisConfig.RedisConnectionHelp.RedisConnection.GetDatabase();
             }
         }
 
@@ -42,6 +42,8 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public string ConvertJson<T>(T val)
         {
+            if (val.ToString() == null)
+                return default;
             return val is string ? val.ToString() : JsonConvert.SerializeObject(val);
         }
         /// <summary>
@@ -52,6 +54,8 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public T ConvertObj<T>(RedisValue val)
         {
+            if (val.ToString() == null)
+                return default;
             return JsonConvert.DeserializeObject<T>(val);
         }
 
