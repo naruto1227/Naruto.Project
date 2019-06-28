@@ -59,7 +59,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
 
         public IRepository<T> Respositiy<T>() where T : class, IEntity
         {
-            //获取仓储服务
+            //获取仓储服务（需先注入仓储集合，否则将报错）
             IRepository<T> repository = dbContext.GetService<IRepository<T>>();
             repository.ChangeDbContext(dbContext);
             return repository;
