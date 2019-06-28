@@ -18,7 +18,7 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using System.Text;
 using Fate.Common.Middleware;
-
+using Fate.Common.Repository.Mysql;
 namespace Fate.WebApi
 {
     public class Startup
@@ -49,6 +49,10 @@ namespace Fate.WebApi
                 option.RequireHttpsMetadata = false;
                 option.Audience = "api";
             });
+            //注入仓储
+            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
+
+            services.AddScoped(typeof(List<>));
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
             return new AutofacServiceProvider(this.ApplicationContainer);

@@ -20,6 +20,12 @@ namespace Fate.Common.Repository.Mysql
         /// <returns></returns>
         Task ChangeDBConnection(string connectionName);
         /// <summary>
+        /// 更改上下文
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <returns></returns>
+        Task ChangeDbContext(DbContext dbContext);
+        /// <summary>
         /// 提交保存
         /// </summary>
         /// <returns></returns>
@@ -55,7 +61,7 @@ namespace Fate.Common.Repository.Mysql
         /// <param name="condition"></param>
         /// <param name="update"></param>
         /// <returns></returns>
-        Task UpdateAsync(Expression<Func<T,bool>> condition,Func<T,T> update);
+        Task UpdateAsync(Expression<Func<T, bool>> condition, Func<T, T> update);
         /// <summary>
         /// 批量添加
         /// </summary>

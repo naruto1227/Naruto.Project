@@ -61,10 +61,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         {
             //获取仓储服务
             IRepository<T> repository = dbContext.GetService<IRepository<T>>();
-            if (repository == null)
-            {
-                repository = new RepositoryBase<T>(dbContext); ;
-            }
+            repository.ChangeDbContext(dbContext);
             return repository;
         }
     }
