@@ -52,15 +52,11 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public T ConvertObj<T>(RedisValue val)
         {
-            if (val.ToString() == null)
-                return default;
             return JsonConvert.DeserializeObject<T>(val);
         }
 
         public List<T> ConvertList<T>(RedisValue[] val)
         {
-            if (val == null)
-                return default;
             List<T> result = new List<T>();
             foreach (var item in val)
             {

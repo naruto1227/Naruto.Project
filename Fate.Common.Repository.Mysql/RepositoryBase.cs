@@ -19,8 +19,8 @@ namespace Fate.Common.Repository.Mysql
         /// <summary>
         /// 上下文
         /// </summary>
-        protected MysqlDbContent repository { get; set; }
-        public RepositoryBase(MysqlDbContent _dbContext)
+        protected DbContext repository { get; set; }
+        public RepositoryBase(DbContext _dbContext = null)
         {
             this.repository = _dbContext;
         }
@@ -33,6 +33,16 @@ namespace Fate.Common.Repository.Mysql
         {
             var config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build();
             repository.Database.GetDbConnection().ConnectionString = config.GetConnectionString(connectionName);
+            return Task.FromResult(0);
+        }
+        /// <summary>
+        /// 更改上下文
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <returns></returns>
+        public Task ChangeDbContext(DbContext dbContext)
+        {
+            repository = dbContext;
             return Task.FromResult(0);
         }
         /// <summary>
@@ -124,7 +134,7 @@ namespace Fate.Common.Repository.Mysql
         public async Task UpdateAsync(Expression<Func<T, bool>> condition, Func<T, T> update)
         {
             var info = await repository.Set<T>().Where(condition).FirstOrDefaultAsync();
-            if (info!=null)
+            if (info != null)
             {
                 update(info);
             }
