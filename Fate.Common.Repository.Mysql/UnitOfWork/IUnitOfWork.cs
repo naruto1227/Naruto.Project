@@ -33,5 +33,11 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         void RollBackTransaction();
 
         IRepository<T> Respositiy<T>() where T : class, IEntity;
+
+        /// <summary>
+        /// 更改为只读连接字符串
+        /// </summary>
+        /// <returns></returns>
+        Task ChangeReadOnlyConnection();
     }
 }

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fate.Domain.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
@@ -63,6 +66,28 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             IRepository<T> repository = dbContext.GetService<IRepository<T>>();
             repository.ChangeDbContext(dbContext);
             return repository;
+        }
+
+        /// <summary>
+        /// 更改为只读连接字符串
+        /// </summary>
+        /// <returns></returns>
+        public async Task ChangeReadOnlyConnection()
+        {
+            //获取配置文件
+            var config = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+            //获取只读的连接字符串
+            var connection = config.GetConnectionString("ReadOnlyMySqlConnection");
+            if (connection == null)
+                throw new ApplicationException("数据库只读连接字符串不能为空");
+            //获取连接字符串的数组 多个用|分割开
+            var connections = connection.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+            if (connections == null || connections.Count() <= 0)
+                throw new ApplicationException("数据库只读连接字符串不能为空");
+            //随机数
+            var random = new Random();
+            dbContext.Database.GetDbConnection().ConnectionString = connections[random.Next(0, connections.Count() - 1)];
+            await Task.FromResult(0).ConfigureAwait(false);
         }
     }
 }
