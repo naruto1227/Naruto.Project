@@ -15,12 +15,12 @@ namespace Fate.Common.Config
         {
             get
             {
-                //是否开启文件保护 默认开启 0 开启 1 关闭
+                //是否开启文件保护 默认开启 1 开启 0 关闭
                 var isOpenSecureFilePriv = 0;
                 int.TryParse(ConfigurationManage.GetAppSetting("MySqlBulkConfig:IsOpenSecureFilePriv"), out isOpenSecureFilePriv);
                 var path = "";
                 //开启的时候
-                if (isOpenSecureFilePriv == 0)
+                if (isOpenSecureFilePriv == 1)
                 {
                     //获取输入的文件的存放地址
                     var loadPath = ConfigurationManage.GetAppSetting("MySqlBulkConfig:MySqlLoadFilePath");
