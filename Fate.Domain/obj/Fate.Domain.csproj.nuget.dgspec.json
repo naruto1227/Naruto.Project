@@ -420,11 +420,7 @@
         },
         "frameworks": {
           "netstandard2.0": {
-            "projectReferences": {
-              "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-                "projectPath": "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {

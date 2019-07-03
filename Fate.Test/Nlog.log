@@ -2612,3 +2612,13 @@
    at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString)
    at NLog.Targets.DatabaseTarget.WriteEventToDatabase(LogEventInfo logEvent, String connectionString)
    at NLog.Targets.DatabaseTarget.Write(LogEventInfo logEvent)
+2019-07-03 10:49:22.3443 Info Message Template Auto Format enabled
+2019-07-03 10:49:22.3678 Info Loading assembly: NLog.Web.AspNetCore
+2019-07-03 10:49:22.4858 Info Adding target FileTarget(Name=info-file)
+2019-07-03 10:49:22.4858 Info Adding target FileTarget(Name=error-file)
+2019-07-03 10:49:22.4939 Info Adding target FileTarget(Name=debug-file)
+2019-07-03 10:49:22.4939 Info Adding target FileTarget(Name=trace-file)
+2019-07-03 10:49:22.4939 Info Adding target FileTarget(Name=fatal-file)
+2019-07-03 10:49:22.4939 Info Adding target DatabaseTarget(Name=database-file)
+2019-07-03 10:49:22.4939 Info Adding target NullTarget(Name=blackhole)
+2019-07-03 10:49:22.5722 Info Found 102 configuration items

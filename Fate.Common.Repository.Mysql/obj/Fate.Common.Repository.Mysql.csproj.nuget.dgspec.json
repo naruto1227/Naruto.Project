@@ -4,78 +4,6 @@
     "E:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {}
   },
   "projects": {
-    "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj",
-        "projectName": "Fate.Common.Redis",
-        "projectPath": "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj",
-        "packagesPath": "C:\\Users\\xiaozhang\\.nuget\\packages\\",
-        "outputPath": "E:\\Fate.DDD\\Fate.Common.Redis\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\xiaozhang\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netstandard2.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netstandard2.0": {
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netstandard2.0": {
-          "dependencies": {
-            "Microsoft.Extensions.Configuration": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.Extensions.Configuration.FileExtensions": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.Extensions.Configuration.Json": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "NETStandard.Library": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
-            },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[12.0.1, )"
-            },
-            "StackExchange.Redis": {
-              "target": "Package",
-              "version": "[2.0.601, )"
-            }
-          },
-          "imports": [
-            "net461"
-          ],
-          "assetTargetFallback": true,
-          "warn": true
-        }
-      }
-    },
     "E:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -152,126 +80,6 @@
         }
       }
     },
-    "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj",
-        "projectName": "Fate.Common",
-        "projectPath": "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj",
-        "packagesPath": "C:\\Users\\xiaozhang\\.nuget\\packages\\",
-        "outputPath": "E:\\Fate.DDD\\Fate.Common\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\xiaozhang\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netstandard2.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netstandard2.0": {
-            "projectReferences": {
-              "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-                "projectPath": "E:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netstandard2.0": {
-          "dependencies": {
-            "Alipay.AopSdk.Core": {
-              "target": "Package",
-              "version": "[2.4.2, )"
-            },
-            "AutoMapper": {
-              "target": "Package",
-              "version": "[8.1.0, )"
-            },
-            "MailKit": {
-              "target": "Package",
-              "version": "[2.1.5.1, )"
-            },
-            "Microsoft.AspNetCore.Mvc": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.SignalR": {
-              "target": "Package",
-              "version": "[1.1.0, )"
-            },
-            "Microsoft.AspNetCore.SignalR.StackExchangeRedis": {
-              "target": "Package",
-              "version": "[1.1.5, )"
-            },
-            "Microsoft.Extensions.Caching.StackExchangeRedis": {
-              "target": "Package",
-              "version": "[2.2.5, )"
-            },
-            "Microsoft.Extensions.Configuration": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "MySql.Data": {
-              "target": "Package",
-              "version": "[8.0.16, )"
-            },
-            "NETStandard.Library": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
-            },
-            "NLog": {
-              "target": "Package",
-              "version": "[4.6.3, )"
-            },
-            "NLog.Web.AspNetCore": {
-              "target": "Package",
-              "version": "[4.8.2, )"
-            },
-            "NPOI": {
-              "target": "Package",
-              "version": "[2.4.1, )"
-            },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[12.0.1, )"
-            },
-            "Snowflake.Core": {
-              "target": "Package",
-              "version": "[2.0.0, )"
-            },
-            "System.Drawing.Common": {
-              "target": "Package",
-              "version": "[4.5.1, )"
-            },
-            "XC.RSAUtil": {
-              "target": "Package",
-              "version": "[1.1.0, )"
-            }
-          },
-          "imports": [
-            "net461"
-          ],
-          "assetTargetFallback": true,
-          "warn": true
-        }
-      }
-    },
     "E:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -297,11 +105,7 @@
         },
         "frameworks": {
           "netstandard2.0": {
-            "projectReferences": {
-              "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-                "projectPath": "E:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
