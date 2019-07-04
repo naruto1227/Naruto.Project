@@ -98,7 +98,7 @@ namespace Fate.FileServerApi.Controllers
         /// 文件下载
         /// </summary>
         /// <returns></returns>
-        public IActionResult DownLoad()
+        public async Task<FileResult> DownLoad()
         {
             //获取需要下载的文件
             var file = Request.Query["file"];
@@ -112,7 +112,7 @@ namespace Fate.FileServerApi.Controllers
             var provider = new FileExtensionContentTypeProvider();
             var contentType = "";
             provider.TryGetContentType(path, out contentType);
-            return File(System.IO.File.OpenRead(path), contentType, Path.GetFileName(path));
+            return File(await (System.IO.File.ReadAllBytesAsync(path)), contentType, Path.GetFileName(path));
         }
     }
 }
