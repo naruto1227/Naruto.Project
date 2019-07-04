@@ -13,7 +13,6 @@ using Fate.Common.Extensions;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Diagnostics;
 using Fate.Common.Exceptions;
-
 namespace Fate.FileServerApi.Controllers
 {
     /// <summary>
@@ -25,10 +24,12 @@ namespace Fate.FileServerApi.Controllers
     {
         private MyJsonResult myJsonResult;
         private FileHelper _file;
-        public FileUploadController(MyJsonResult jsonResult, FileHelper fileHelper)
+        private FileExtensionContentTypeProvider provider;
+        public FileUploadController(MyJsonResult jsonResult, FileHelper fileHelper, FileExtensionContentTypeProvider _provider)
         {
             myJsonResult = jsonResult;
             _file = fileHelper;
+            provider = _provider;
         }
         #region 新增文件
         /// <summary>
@@ -109,7 +110,6 @@ namespace Fate.FileServerApi.Controllers
             if (!System.IO.File.Exists(path))
                 throw new MyExceptions("需要下载的文件地址错误,找不到该文件");
             //获取文件的mime类型
-            var provider = new FileExtensionContentTypeProvider();
             var contentType = "";
             provider.TryGetContentType(path, out contentType);
             return File(await (System.IO.File.ReadAllBytesAsync(path)), contentType, Path.GetFileName(path));

@@ -36,6 +36,7 @@ namespace Fate.FileServerApi
             //注入文件操作类
             services.AddSingleton<FileHelper>();
             services.AddSingleton<UploadFile>();
+            services.AddTransient<Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider>();
             // services.AddDirectoryBrowser();
             services.AddMvcCore().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
