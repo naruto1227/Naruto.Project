@@ -1,0 +1,14 @@
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.csproj.CoreCompileInputs.cache
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.AssemblyInfoInputs.cache
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.AssemblyInfo.cs
+D:\Fate.DDD\Fate.TimeServer\bin\Debug\netcoreapp2.2\Fate.TimeServer.deps.json
+D:\Fate.DDD\Fate.TimeServer\bin\Debug\netcoreapp2.2\Fate.TimeServer.runtimeconfig.json
+D:\Fate.DDD\Fate.TimeServer\bin\Debug\netcoreapp2.2\Fate.TimeServer.runtimeconfig.dev.json
+D:\Fate.DDD\Fate.TimeServer\bin\Debug\netcoreapp2.2\Fate.TimeServer.dll
+D:\Fate.DDD\Fate.TimeServer\bin\Debug\netcoreapp2.2\Fate.TimeServer.pdb
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.csprojAssemblyReference.cache
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.RazorAssemblyInfo.cache
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.RazorAssemblyInfo.cs
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.RazorTargetAssemblyInfo.cache
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.dll
+D:\Fate.DDD\Fate.TimeServer\obj\Debug\netcoreapp2.2\Fate.TimeServer.pdb

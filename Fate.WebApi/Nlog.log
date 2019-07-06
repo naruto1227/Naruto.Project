@@ -58,3 +58,13 @@
    at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString)
    at NLog.Targets.DatabaseTarget.WriteEventToDatabase(LogEventInfo logEvent, String connectionString)
    at NLog.Targets.DatabaseTarget.Write(IList`1 logEvents)
+2019-07-06 12:25:45.5737 Info Message Template Auto Format enabled
+2019-07-06 12:25:45.5993 Info Loading assembly: NLog.Web.AspNetCore
+2019-07-06 12:25:45.7371 Info Adding target AsyncTargetWrapper(Name=info-file)
+2019-07-06 12:25:45.7371 Info Adding target AsyncTargetWrapper(Name=error-file)
+2019-07-06 12:25:45.7371 Info Adding target AsyncTargetWrapper(Name=debug-file)
+2019-07-06 12:25:45.7371 Info Adding target AsyncTargetWrapper(Name=trace-file)
+2019-07-06 12:25:45.7371 Info Adding target AsyncTargetWrapper(Name=fatal-file)
+2019-07-06 12:25:45.7675 Info Adding target AsyncTargetWrapper(Name=database-file)
+2019-07-06 12:25:45.7701 Info Adding target AsyncTargetWrapper(Name=blackhole)
+2019-07-06 12:25:45.8459 Info Found 94 configuration items
