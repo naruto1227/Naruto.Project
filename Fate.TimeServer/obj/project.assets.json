@@ -2,109 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
-      "Abp/4.7.0": {
-        "type": "package",
-        "dependencies": {
-          "Castle.Core": "4.4.0",
-          "Castle.LoggingFacility": "5.0.0",
-          "JetBrains.Annotations": "2019.1.1",
-          "Microsoft.Extensions.Caching.Memory": "2.2.0",
-          "Microsoft.Extensions.Options": "2.2.0",
-          "Newtonsoft.Json": "12.0.2",
-          "Nito.AsyncEx.Context": "5.0.0",
-          "Nito.AsyncEx.Coordination": "5.0.0",
-          "System.Collections.Immutable": "1.5.0",
-          "System.ComponentModel.Annotations": "4.5.0",
-          "System.Configuration.ConfigurationManager": "4.5.0",
-          "System.Data.Common": "4.3.0",
-          "System.Linq.Dynamic.Core": "1.0.16",
-          "System.Linq.Queryable": "4.3.0",
-          "System.Runtime.Serialization.Formatters": "4.3.0",
-          "System.Security.Claims": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Xml.XPath.XmlDocument": "4.3.0",
-          "TimeZoneConverter": "3.2.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Abp.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Abp.dll": {}
-        }
-      },
-      "Abp.Quartz/4.7.0": {
-        "type": "package",
-        "dependencies": {
-          "Abp": "4.7.0",
-          "Quartz": "3.0.7"
-        },
-        "compile": {
-          "lib/netstandard2.0/Abp.Quartz.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Abp.Quartz.dll": {}
-        }
-      },
-      "Castle.Core/4.4.0": {
-        "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.1",
-          "System.Collections.Specialized": "4.3.0",
-          "System.ComponentModel": "4.3.0",
-          "System.ComponentModel.TypeConverter": "4.3.0",
-          "System.Diagnostics.TraceSource": "4.3.0",
-          "System.Dynamic.Runtime": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Emit": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.3.0",
-          "System.Xml.XmlDocument": "4.3.0"
-        },
-        "compile": {
-          "lib/netstandard1.5/Castle.Core.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.5/Castle.Core.dll": {}
-        }
-      },
-      "Castle.LoggingFacility/5.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Castle.Windsor": "[5.0.0]",
-          "NETStandard.Library": "1.6.1"
-        },
-        "compile": {
-          "lib/netstandard1.6/Castle.Facilities.Logging.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.6/Castle.Facilities.Logging.dll": {}
-        }
-      },
-      "Castle.Windsor/5.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Castle.Core": "4.3.1",
-          "Microsoft.Extensions.DependencyModel": "1.1.2",
-          "NETStandard.Library": "1.6.1",
-          "System.Runtime.Loader": "4.3.0",
-          "System.Runtime.Serialization.Formatters": "4.3.0",
-          "System.Threading.Thread": "4.3.0"
-        },
-        "compile": {
-          "lib/netstandard1.6/Castle.Windsor.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.6/Castle.Windsor.dll": {}
-        }
-      },
-      "JetBrains.Annotations/2019.1.1": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/JetBrains.Annotations.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/JetBrains.Annotations.dll": {}
-        }
-      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -2834,7 +2731,7 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "Newtonsoft.Json/12.0.2": {
+      "Newtonsoft.Json/11.0.2": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
@@ -2854,65 +2751,6 @@
         },
         "runtime": {
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
-        }
-      },
-      "Nito.AsyncEx.Context/5.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Nito.AsyncEx.Tasks": "5.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.AsyncEx.Context.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.AsyncEx.Context.dll": {}
-        }
-      },
-      "Nito.AsyncEx.Coordination/5.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Nito.AsyncEx.Tasks": "5.0.0",
-          "Nito.Collections.Deque": "1.0.4",
-          "Nito.Disposables": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.AsyncEx.Coordination.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.AsyncEx.Coordination.dll": {}
-        }
-      },
-      "Nito.AsyncEx.Tasks/5.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Nito.Disposables": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.AsyncEx.Tasks.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.AsyncEx.Tasks.dll": {}
-        }
-      },
-      "Nito.Collections.Deque/1.0.4": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Nito.Collections.Deque.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.Collections.Deque.dll": {}
-        }
-      },
-      "Nito.Disposables/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Collections.Immutable": "1.4.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.Disposables.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.Disposables.dll": {}
         }
       },
       "Quartz/3.0.7": {
@@ -3479,33 +3317,6 @@
           "ref/netstandard1.0/System.Diagnostics.Tools.dll": {}
         }
       },
-      "System.Diagnostics.TraceSource/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Threading": "4.3.0",
-          "runtime.native.System": "4.3.0"
-        },
-        "compile": {
-          "ref/netstandard1.3/System.Diagnostics.TraceSource.dll": {}
-        },
-        "runtimeTargets": {
-          "runtimes/unix/lib/netstandard1.3/System.Diagnostics.TraceSource.dll": {
-            "assetType": "runtime",
-            "rid": "unix"
-          },
-          "runtimes/win/lib/netstandard1.3/System.Diagnostics.TraceSource.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
-        }
-      },
       "System.Diagnostics.Tracing/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -3711,15 +3522,6 @@
           "lib/netstandard1.6/System.Linq.dll": {}
         }
       },
-      "System.Linq.Dynamic.Core/1.0.16": {
-        "type": "package",
-        "compile": {
-          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {}
-        }
-      },
       "System.Linq.Expressions/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -3748,17 +3550,17 @@
           "lib/netstandard1.6/System.Linq.Expressions.dll": {}
         }
       },
-      "System.Linq.Queryable/4.3.0": {
+      "System.Linq.Queryable/4.0.1": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Linq.Expressions": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Extensions": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0"
+          "System.Collections": "4.0.11",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Linq.Expressions": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime": "4.1.0"
         },
         "compile": {
           "ref/netstandard1.0/System.Linq.Queryable.dll": {}
@@ -4129,20 +3931,6 @@
           }
         }
       },
-      "System.Runtime.Loader/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "System.IO": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Runtime": "4.3.0"
-        },
-        "compile": {
-          "ref/netstandard1.5/System.Runtime.Loader.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.5/System.Runtime.Loader.dll": {}
-        }
-      },
       "System.Runtime.Numerics/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4156,22 +3944,6 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Runtime.Numerics.dll": {}
-        }
-      },
-      "System.Runtime.Serialization.Formatters/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Serialization.Primitives": "4.3.0"
-        },
-        "compile": {
-          "ref/netstandard1.3/System.Runtime.Serialization.Formatters.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.4/System.Runtime.Serialization.Formatters.dll": {}
         }
       },
       "System.Runtime.Serialization.Primitives/4.3.0": {
@@ -4798,7 +4570,7 @@
           "System.Xml.ReaderWriter": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Xml.XPath.dll": {}
+          "ref/netstandard1.3/_._": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.dll": {}
@@ -4823,150 +4595,10 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
-      },
-      "System.Xml.XPath.XmlDocument/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Xml.ReaderWriter": "4.3.0",
-          "System.Xml.XPath": "4.3.0",
-          "System.Xml.XmlDocument": "4.3.0"
-        },
-        "compile": {
-          "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
-        }
-      },
-      "TimeZoneConverter/3.2.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/TimeZoneConverter.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/TimeZoneConverter.dll": {}
-        }
       }
     }
   },
   "libraries": {
-    "Abp/4.7.0": {
-      "sha512": "Rtl4PDncl6Okh67yCaq8gqameEBiHseMbCFD2bHIRH+nmB1TD1Dp/USt50DI7XQUi0cjuWZdLCwd7z3eSzCZDA==",
-      "type": "package",
-      "path": "abp/4.7.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "abp.4.7.0.nupkg.sha512",
-        "abp.nuspec",
-        "lib/netstandard2.0/Abp.dll",
-        "lib/netstandard2.0/Abp.pdb",
-        "lib/netstandard2.0/Abp.xml"
-      ]
-    },
-    "Abp.Quartz/4.7.0": {
-      "sha512": "CVTY4KY1MtOOom5kSiMIANnw4rTMdB0DJFc7tlydLDrZpPpRxejeRiuwOrwyWjFsj5Qj/0Ea2b5b+e1BGY4g+g==",
-      "type": "package",
-      "path": "abp.quartz/4.7.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "abp.quartz.4.7.0.nupkg.sha512",
-        "abp.quartz.nuspec",
-        "lib/netstandard2.0/Abp.Quartz.dll",
-        "lib/netstandard2.0/Abp.Quartz.pdb",
-        "lib/netstandard2.0/Abp.Quartz.xml"
-      ]
-    },
-    "Castle.Core/4.4.0": {
-      "sha512": "b5rRL5zeaau1y/5hIbI+6mGw3cwun16YjkHZnV9RRT5UyUIFsgLmNXJ0YnIN9p8Hw7K7AbG1q1UclQVU3DinAQ==",
-      "type": "package",
-      "path": "castle.core/4.4.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ASL - Apache Software Foundation License.txt",
-        "CHANGELOG.md",
-        "LICENSE",
-        "castle.core.4.4.0.nupkg.sha512",
-        "castle.core.nuspec",
-        "lib/net35/Castle.Core.dll",
-        "lib/net35/Castle.Core.xml",
-        "lib/net40/Castle.Core.dll",
-        "lib/net40/Castle.Core.xml",
-        "lib/net45/Castle.Core.dll",
-        "lib/net45/Castle.Core.xml",
-        "lib/netstandard1.3/Castle.Core.dll",
-        "lib/netstandard1.3/Castle.Core.xml",
-        "lib/netstandard1.5/Castle.Core.dll",
-        "lib/netstandard1.5/Castle.Core.xml",
-        "readme.txt"
-      ]
-    },
-    "Castle.LoggingFacility/5.0.0": {
-      "sha512": "tVAGQQMnrvg+JZ3isghCOg7aDlt1VMgBgegb7jBwSJ6yfbAwK4Qdrw/kezcFnmgZey6dQDQZo5wNEZpok52J8A==",
-      "type": "package",
-      "path": "castle.loggingfacility/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ASL - Apache Software Foundation License.txt",
-        "CHANGELOG.md",
-        "LICENSE",
-        "castle.loggingfacility.5.0.0.nupkg.sha512",
-        "castle.loggingfacility.nuspec",
-        "lib/net45/Castle.Facilities.Logging.dll",
-        "lib/net45/Castle.Facilities.Logging.xml",
-        "lib/netstandard1.6/Castle.Facilities.Logging.dll",
-        "lib/netstandard1.6/Castle.Facilities.Logging.xml"
-      ]
-    },
-    "Castle.Windsor/5.0.0": {
-      "sha512": "kfaIV95ZnYQj6gjq1G9o81gBuxo4o2/yCwgaylIeytcK3jtKJe4RGN6KxSV6viwvKKn+XQvblrBHk1qQyD/YtQ==",
-      "type": "package",
-      "path": "castle.windsor/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ASL - Apache Software Foundation License.txt",
-        "CHANGELOG.md",
-        "LICENSE",
-        "castle.windsor.5.0.0.nupkg.sha512",
-        "castle.windsor.nuspec",
-        "lib/net45/Castle.Windsor.dll",
-        "lib/net45/Castle.Windsor.xml",
-        "lib/netstandard1.6/Castle.Windsor.dll",
-        "lib/netstandard1.6/Castle.Windsor.xml"
-      ]
-    },
-    "JetBrains.Annotations/2019.1.1": {
-      "sha512": "y4RFn+HZ7BekqIx+uXuVAvh80quYNiu86oRG2QztmFXQ2mm1lprb7xNawZdFfLxBAh8BQUkSQdO0Itanal8DbQ==",
-      "type": "package",
-      "path": "jetbrains.annotations/2019.1.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "jetbrains.annotations.2019.1.1.nupkg.sha512",
-        "jetbrains.annotations.nuspec",
-        "lib/net20/JetBrains.Annotations.dll",
-        "lib/net20/JetBrains.Annotations.xml",
-        "lib/netstandard1.0/JetBrains.Annotations.deps.json",
-        "lib/netstandard1.0/JetBrains.Annotations.dll",
-        "lib/netstandard1.0/JetBrains.Annotations.xml",
-        "lib/netstandard2.0/JetBrains.Annotations.deps.json",
-        "lib/netstandard2.0/JetBrains.Annotations.dll",
-        "lib/netstandard2.0/JetBrains.Annotations.xml",
-        "lib/portable40-net40+sl5+win8+wp8+wpa81/JetBrains.Annotations.dll",
-        "lib/portable40-net40+sl5+win8+wp8+wpa81/JetBrains.Annotations.xml"
-      ]
-    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "owAlEIUZXWSnkK8Z1c+zR47A0X6ykF4XjbPok4lQKNuciUfHLGPd6QnI+rt/8KlQ17PmF+I4S3f+m+Qe4IvViw==",
       "type": "package",
@@ -7923,10 +7555,10 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Newtonsoft.Json/12.0.2": {
-      "sha512": "rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
+    "Newtonsoft.Json/11.0.2": {
+      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
       "type": "package",
-      "path": "newtonsoft.json/12.0.2",
+      "path": "newtonsoft.json/11.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7949,7 +7581,7 @@
         "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "newtonsoft.json.12.0.2.nupkg.sha512",
+        "newtonsoft.json.11.0.2.nupkg.sha512",
         "newtonsoft.json.nuspec"
       ]
     },
@@ -7966,83 +7598,6 @@
         "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
         "newtonsoft.json.bson.1.0.1.nupkg.sha512",
         "newtonsoft.json.bson.nuspec"
-      ]
-    },
-    "Nito.AsyncEx.Context/5.0.0": {
-      "sha512": "Qnth1Ye+QSLg8P3fSFYzk7ue6oUUHQcKpLitgAig8xRFqTK5W1KTlfxF/Z8Eo0BuqZ17a5fAGtXrdKJsLqivZw==",
-      "type": "package",
-      "path": "nito.asyncex.context/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard1.3/Nito.AsyncEx.Context.dll",
-        "lib/netstandard1.3/Nito.AsyncEx.Context.xml",
-        "lib/netstandard2.0/Nito.AsyncEx.Context.dll",
-        "lib/netstandard2.0/Nito.AsyncEx.Context.xml",
-        "nito.asyncex.context.5.0.0.nupkg.sha512",
-        "nito.asyncex.context.nuspec"
-      ]
-    },
-    "Nito.AsyncEx.Coordination/5.0.0": {
-      "sha512": "kjauyO8UMo/FGZO/M8TdjXB8ZlBPFOiRN8yakThaGQbYOywazQ0kGZ39SNr2gNNzsTxbZOUudBMYNo+IrtscbA==",
-      "type": "package",
-      "path": "nito.asyncex.coordination/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard1.3/Nito.AsyncEx.Coordination.dll",
-        "lib/netstandard1.3/Nito.AsyncEx.Coordination.xml",
-        "lib/netstandard2.0/Nito.AsyncEx.Coordination.dll",
-        "lib/netstandard2.0/Nito.AsyncEx.Coordination.xml",
-        "nito.asyncex.coordination.5.0.0.nupkg.sha512",
-        "nito.asyncex.coordination.nuspec"
-      ]
-    },
-    "Nito.AsyncEx.Tasks/5.0.0": {
-      "sha512": "ZtvotignafOLteP4oEjVcF3k2L8h73QUCaFpVKWbU+EOlW/I+JGkpMoXIl0rlwPcDmR84RxzggLRUNMaWlOosA==",
-      "type": "package",
-      "path": "nito.asyncex.tasks/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard1.3/Nito.AsyncEx.Tasks.dll",
-        "lib/netstandard1.3/Nito.AsyncEx.Tasks.xml",
-        "lib/netstandard2.0/Nito.AsyncEx.Tasks.dll",
-        "lib/netstandard2.0/Nito.AsyncEx.Tasks.xml",
-        "nito.asyncex.tasks.5.0.0.nupkg.sha512",
-        "nito.asyncex.tasks.nuspec"
-      ]
-    },
-    "Nito.Collections.Deque/1.0.4": {
-      "sha512": "yGDKqCQ61i97MyfEUYG6+ln5vxpx11uA5M9+VV9B7stticbFm19YMI/G9w4AFYVBj5PbPi138P8IovkMFAL0Aw==",
-      "type": "package",
-      "path": "nito.collections.deque/1.0.4",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard1.0/Nito.Collections.Deque.dll",
-        "lib/netstandard1.0/Nito.Collections.Deque.xml",
-        "lib/netstandard2.0/Nito.Collections.Deque.dll",
-        "lib/netstandard2.0/Nito.Collections.Deque.xml",
-        "nito.collections.deque.1.0.4.nupkg.sha512",
-        "nito.collections.deque.nuspec"
-      ]
-    },
-    "Nito.Disposables/2.0.0": {
-      "sha512": "ExJl/jTjegSLHGcwnmaYaI5xIlrefAsVdeLft7VLtXI2+W5irihiu36LizWvlaUpzY1/llo+YSh09uSHMu2VFw==",
-      "type": "package",
-      "path": "nito.disposables/2.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard1.0/Nito.Disposables.dll",
-        "lib/netstandard1.0/Nito.Disposables.pdb",
-        "lib/netstandard1.0/Nito.Disposables.xml",
-        "lib/netstandard2.0/Nito.Disposables.dll",
-        "lib/netstandard2.0/Nito.Disposables.pdb",
-        "lib/netstandard2.0/Nito.Disposables.xml",
-        "nito.disposables.2.0.0.nupkg.sha512",
-        "nito.disposables.nuspec"
       ]
     },
     "Quartz/3.0.7": {
@@ -9385,47 +8940,6 @@
         "system.diagnostics.tools.nuspec"
       ]
     },
-    "System.Diagnostics.TraceSource/4.3.0": {
-      "sha512": "VnYp1NxGx8Ww731y2LJ1vpfb/DKVNKEZ8Jsh5SgQTZREL/YpWRArgh9pI8CDLmgHspZmLL697CaLvH85qQpRiw==",
-      "type": "package",
-      "path": "system.diagnostics.tracesource/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net46/System.Diagnostics.TraceSource.dll",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/MonoAndroid10/_._",
-        "ref/MonoTouch10/_._",
-        "ref/net46/System.Diagnostics.TraceSource.dll",
-        "ref/netstandard1.3/System.Diagnostics.TraceSource.dll",
-        "ref/netstandard1.3/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/de/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/es/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/fr/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/it/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/ja/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/ko/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/ru/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/zh-hans/System.Diagnostics.TraceSource.xml",
-        "ref/netstandard1.3/zh-hant/System.Diagnostics.TraceSource.xml",
-        "ref/xamarinios10/_._",
-        "ref/xamarinmac20/_._",
-        "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "runtimes/unix/lib/netstandard1.3/System.Diagnostics.TraceSource.dll",
-        "runtimes/win/lib/net46/System.Diagnostics.TraceSource.dll",
-        "runtimes/win/lib/netstandard1.3/System.Diagnostics.TraceSource.dll",
-        "system.diagnostics.tracesource.4.3.0.nupkg.sha512",
-        "system.diagnostics.tracesource.nuspec"
-      ]
-    },
     "System.Diagnostics.Tracing/4.3.0": {
       "sha512": "rswfv0f/Cqkh78rA5S8eN8Neocz234+emGCtTF3lxPY96F+mmmUen6tbn0glN6PMvlKQb9bPAY5e9u7fgPTkKw==",
       "type": "package",
@@ -10095,42 +9609,6 @@
         "system.linq.nuspec"
       ]
     },
-    "System.Linq.Dynamic.Core/1.0.16": {
-      "sha512": "hiieu+wiOv78inG/gMTaHF3wKu6hleYr8yzrhKPkir/8fLT1WD8ISIk4y5prLHjySEN960rICaZO67MVnu2Hfw==",
-      "type": "package",
-      "path": "system.linq.dynamic.core/1.0.16",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net35/System.Linq.Dynamic.Core.dll",
-        "lib/net35/System.Linq.Dynamic.Core.pdb",
-        "lib/net35/System.Linq.Dynamic.Core.xml",
-        "lib/net40/System.Linq.Dynamic.Core.dll",
-        "lib/net40/System.Linq.Dynamic.Core.pdb",
-        "lib/net40/System.Linq.Dynamic.Core.xml",
-        "lib/net45/System.Linq.Dynamic.Core.dll",
-        "lib/net45/System.Linq.Dynamic.Core.pdb",
-        "lib/net45/System.Linq.Dynamic.Core.xml",
-        "lib/net46/System.Linq.Dynamic.Core.dll",
-        "lib/net46/System.Linq.Dynamic.Core.pdb",
-        "lib/net46/System.Linq.Dynamic.Core.xml",
-        "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll",
-        "lib/netcoreapp2.1/System.Linq.Dynamic.Core.pdb",
-        "lib/netcoreapp2.1/System.Linq.Dynamic.Core.xml",
-        "lib/netstandard1.3/System.Linq.Dynamic.Core.dll",
-        "lib/netstandard1.3/System.Linq.Dynamic.Core.pdb",
-        "lib/netstandard1.3/System.Linq.Dynamic.Core.xml",
-        "lib/netstandard2.0/System.Linq.Dynamic.Core.dll",
-        "lib/netstandard2.0/System.Linq.Dynamic.Core.pdb",
-        "lib/netstandard2.0/System.Linq.Dynamic.Core.xml",
-        "lib/uap10.0/System.Linq.Dynamic.Core.dll",
-        "lib/uap10.0/System.Linq.Dynamic.Core.pdb",
-        "lib/uap10.0/System.Linq.Dynamic.Core.pri",
-        "lib/uap10.0/System.Linq.Dynamic.Core.xml",
-        "system.linq.dynamic.core.1.0.16.nupkg.sha512",
-        "system.linq.dynamic.core.nuspec"
-      ]
-    },
     "System.Linq.Expressions/4.3.0": {
       "sha512": "PGKkrd2khG4CnlyJwxwwaWWiSiWFNBGlgXvJpeO0xCXrZ89ODrQ6tjEWS/kOqZ8GwEOUATtKtzp1eRgmYNfclg==",
       "type": "package",
@@ -10215,13 +9693,12 @@
         "system.linq.expressions.nuspec"
       ]
     },
-    "System.Linq.Queryable/4.3.0": {
-      "sha512": "In1Bmmvl/j52yPu3xgakQSI0YIckPUr870w4K5+Lak3JCCa8hl+my65lABOuKfYs4ugmZy25ScFerC4nz8+b6g==",
+    "System.Linq.Queryable/4.0.1": {
+      "sha512": "Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
       "type": "package",
-      "path": "system.linq.queryable/4.3.0",
+      "path": "system.linq.queryable/4.0.1",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/monoandroid10/_._",
@@ -10270,7 +9747,7 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
-        "system.linq.queryable.4.3.0.nupkg.sha512",
+        "system.linq.queryable.4.0.1.nupkg.sha512",
         "system.linq.queryable.nuspec"
       ]
     },
@@ -11474,38 +10951,6 @@
         "system.runtime.interopservices.runtimeinformation.nuspec"
       ]
     },
-    "System.Runtime.Loader/4.3.0": {
-      "sha512": "DHMaRn8D8YCK2GG2pw+UzNxn/OHVfaWx7OTLBD/hPegHZZgcZh3H6seWegrC4BYwsfuGrywIuT+MQs+rPqRLTQ==",
-      "type": "package",
-      "path": "system.runtime.loader/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net462/_._",
-        "lib/netstandard1.5/System.Runtime.Loader.dll",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/netstandard1.5/System.Runtime.Loader.dll",
-        "ref/netstandard1.5/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/de/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/es/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/fr/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/it/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/ja/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/ko/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/ru/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/zh-hans/System.Runtime.Loader.xml",
-        "ref/netstandard1.5/zh-hant/System.Runtime.Loader.xml",
-        "system.runtime.loader.4.3.0.nupkg.sha512",
-        "system.runtime.loader.nuspec"
-      ]
-    },
     "System.Runtime.Numerics/4.3.0": {
       "sha512": "yMH+MfdzHjy17l2KESnPiF2dwq7T+xLnSJar7slyimAkUh/gTrS9/UQOtv7xarskJ2/XDSNvfLGOBQPjL7PaHQ==",
       "type": "package",
@@ -11560,34 +11005,6 @@
         "ref/xamarinwatchos10/_._",
         "system.runtime.numerics.4.3.0.nupkg.sha512",
         "system.runtime.numerics.nuspec"
-      ]
-    },
-    "System.Runtime.Serialization.Formatters/4.3.0": {
-      "sha512": "KT591AkTNFOTbhZlaeMVvfax3RqhH1EJlcwF50Wm7sfnBLuHiOeZRRKrr1ns3NESkM20KPZ5Ol/ueMq5vg4QoQ==",
-      "type": "package",
-      "path": "system.runtime.serialization.formatters/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net46/System.Runtime.Serialization.Formatters.dll",
-        "lib/netstandard1.4/System.Runtime.Serialization.Formatters.dll",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/MonoAndroid10/_._",
-        "ref/MonoTouch10/_._",
-        "ref/net46/System.Runtime.Serialization.Formatters.dll",
-        "ref/netstandard1.3/System.Runtime.Serialization.Formatters.dll",
-        "ref/xamarinios10/_._",
-        "ref/xamarinmac20/_._",
-        "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "system.runtime.serialization.formatters.4.3.0.nupkg.sha512",
-        "system.runtime.serialization.formatters.nuspec"
       ]
     },
     "System.Runtime.Serialization.Primitives/4.3.0": {
@@ -13227,80 +12644,15 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
-    },
-    "System.Xml.XPath.XmlDocument/4.3.0": {
-      "sha512": "A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
-      "type": "package",
-      "path": "system.xml.xpath.xmldocument/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net46/System.Xml.XPath.XmlDocument.dll",
-        "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/MonoAndroid10/_._",
-        "ref/MonoTouch10/_._",
-        "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll",
-        "ref/netstandard1.3/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/de/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/es/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/fr/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/it/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/ja/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/ko/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/ru/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/zh-hans/System.Xml.XPath.XmlDocument.xml",
-        "ref/netstandard1.3/zh-hant/System.Xml.XPath.XmlDocument.xml",
-        "ref/xamarinios10/_._",
-        "ref/xamarinmac20/_._",
-        "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
-        "system.xml.xpath.xmldocument.nuspec"
-      ]
-    },
-    "TimeZoneConverter/3.2.0": {
-      "sha512": "f0UpF9H+ylj3qjO/l2+Yt0R77FFR327efJwsoXAys6J1fSYFcQPrPVhaGVVWoN79+PVutj0qzj79kuhSPN70gA==",
-      "type": "package",
-      "path": "timezoneconverter/3.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net35/TimeZoneConverter.dll",
-        "lib/net35/TimeZoneConverter.xml",
-        "lib/net40/TimeZoneConverter.dll",
-        "lib/net40/TimeZoneConverter.xml",
-        "lib/net45/TimeZoneConverter.dll",
-        "lib/net45/TimeZoneConverter.xml",
-        "lib/net461/TimeZoneConverter.dll",
-        "lib/net461/TimeZoneConverter.xml",
-        "lib/net471/TimeZoneConverter.dll",
-        "lib/net471/TimeZoneConverter.xml",
-        "lib/netstandard1.1/TimeZoneConverter.dll",
-        "lib/netstandard1.1/TimeZoneConverter.xml",
-        "lib/netstandard1.3/TimeZoneConverter.dll",
-        "lib/netstandard1.3/TimeZoneConverter.xml",
-        "lib/netstandard2.0/TimeZoneConverter.dll",
-        "lib/netstandard2.0/TimeZoneConverter.xml",
-        "timezoneconverter.3.2.0.nupkg.sha512",
-        "timezoneconverter.nuspec"
-      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "Abp.Quartz >= 4.7.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
-      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.7.9"
+      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.7.9",
+      "Quartz >= 3.0.7"
     ]
   },
   "packageFolders": {
@@ -13344,10 +12696,6 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
-          "Abp.Quartz": {
-            "target": "Package",
-            "version": "[4.7.0, )"
-          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -13368,6 +12716,10 @@
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
             "target": "Package",
             "version": "[1.7.9, )"
+          },
+          "Quartz": {
+            "target": "Package",
+            "version": "[3.0.7, )"
           }
         },
         "imports": [

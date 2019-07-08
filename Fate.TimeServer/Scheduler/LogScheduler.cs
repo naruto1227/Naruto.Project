@@ -13,6 +13,7 @@ namespace Fate.TimeServer.Scheduler
     /// </summary>
     public class LogScheduler : ISchedulerServer
     {
+        public IScheduler scheduler = default;
         /// <summary>
         /// 执行
         /// </summary>
@@ -20,12 +21,13 @@ namespace Fate.TimeServer.Scheduler
         public async Task ExecAsync()
         {
             //1. 创建Schedule
-            IScheduler scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+             scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+
             //2. 创建Job
             var job1 = JobBuilder.Create<LogJob>().Build();
             //3. 创建Trigger
             //5s执行一次，永远执行
-            var trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInSeconds(5).RepeatForever()).Build();
+            var trigger = TriggerBuilder.Create().StartNow().WithSimpleSchedule(x => x.WithIntervalInSeconds(5).RepeatForever()).Build();
             //2s执行一次，执行10次
             //var trigger = TriggerBuilder.Create()
             //                            .WithSimpleSchedule(x => x.WithIntervalInSeconds(2).WithRepeatCount(10))

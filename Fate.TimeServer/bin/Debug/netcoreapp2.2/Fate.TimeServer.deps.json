@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "b5c014299f4da702ffd533735c18f26038dd66dc"
+    "signature": "e6c807e29d00caa56187552d7a81c0a8f90fe769"
   },
   "compilationOptions": {
     "defines": [
@@ -24,215 +24,20 @@
     ".NETCoreApp,Version=v2.2": {
       "Fate.TimeServer/1.0.0": {
         "dependencies": {
-          "Abp.Quartz": "4.7.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
-          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.7.9"
-        },
-        "runtime": {
-          "Fate.TimeServer.dll": {}
-        },
-        "compile": {
-          "Fate.TimeServer.dll": {}
-        }
-      },
-      "Abp/4.7.0": {
-        "dependencies": {
-          "Castle.Core": "4.4.0",
-          "Castle.LoggingFacility": "5.0.0",
-          "JetBrains.Annotations": "2019.1.1",
-          "Microsoft.Extensions.Caching.Memory": "2.2.0",
-          "Microsoft.Extensions.Options": "2.2.0",
-          "Newtonsoft.Json": "12.0.2",
-          "Nito.AsyncEx.Context": "5.0.0",
-          "Nito.AsyncEx.Coordination": "5.0.0",
-          "System.Collections.Immutable": "1.5.0",
-          "System.ComponentModel.Annotations": "4.5.0",
-          "System.Configuration.ConfigurationManager": "4.5.0",
-          "System.Data.Common": "4.3.0",
-          "System.Linq.Dynamic.Core": "1.0.16",
-          "System.Linq.Queryable": "4.3.0",
-          "System.Runtime.Serialization.Formatters": "4.3.0",
-          "System.Security.Claims": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Xml.XPath.XmlDocument": "4.3.0",
-          "TimeZoneConverter": "3.2.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Abp.dll": {
-            "assemblyVersion": "4.7.0.0",
-            "fileVersion": "4.7.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Abp.dll": {}
-        }
-      },
-      "Abp.Quartz/4.7.0": {
-        "dependencies": {
-          "Abp": "4.7.0",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.7.9",
           "Quartz": "3.0.7"
         },
         "runtime": {
-          "lib/netstandard2.0/Abp.Quartz.dll": {
-            "assemblyVersion": "4.7.0.0",
-            "fileVersion": "4.7.0.0"
-          }
+          "Fate.TimeServer.dll": {}
         },
         "compile": {
-          "lib/netstandard2.0/Abp.Quartz.dll": {}
-        }
-      },
-      "Castle.Core/4.4.0": {
-        "dependencies": {
-          "NETStandard.Library": "2.0.3",
-          "System.Collections.Specialized": "4.3.0",
-          "System.ComponentModel": "4.3.0",
-          "System.ComponentModel.TypeConverter": "4.3.0",
-          "System.Diagnostics.TraceSource": "4.3.0",
-          "System.Dynamic.Runtime": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Emit": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.5.0",
-          "System.Xml.XmlDocument": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.5/Castle.Core.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.4.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard1.5/Castle.Core.dll": {}
-        }
-      },
-      "Castle.LoggingFacility/5.0.0": {
-        "dependencies": {
-          "Castle.Windsor": "5.0.0",
-          "NETStandard.Library": "2.0.3"
-        },
-        "runtime": {
-          "lib/netstandard1.6/Castle.Facilities.Logging.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard1.6/Castle.Facilities.Logging.dll": {}
-        }
-      },
-      "Castle.Windsor/5.0.0": {
-        "dependencies": {
-          "Castle.Core": "4.4.0",
-          "Microsoft.Extensions.DependencyModel": "2.1.0",
-          "NETStandard.Library": "2.0.3",
-          "System.Runtime.Loader": "4.3.0",
-          "System.Runtime.Serialization.Formatters": "4.3.0",
-          "System.Threading.Thread": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.6/Castle.Windsor.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard1.6/Castle.Windsor.dll": {}
-        }
-      },
-      "JetBrains.Annotations/2019.1.1": {
-        "runtime": {
-          "lib/netstandard2.0/JetBrains.Annotations.dll": {
-            "assemblyVersion": "2019.1.1.0",
-            "fileVersion": "2019.1.1.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/JetBrains.Annotations.dll": {}
+          "Fate.TimeServer.dll": {}
         }
       },
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.7.9": {},
-      "Newtonsoft.Json/12.0.2": {
-        "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "assemblyVersion": "12.0.0.0",
-            "fileVersion": "12.0.2.23222"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
-        }
-      },
-      "Nito.AsyncEx.Context/5.0.0": {
-        "dependencies": {
-          "Nito.AsyncEx.Tasks": "5.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.AsyncEx.Context.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.AsyncEx.Context.dll": {}
-        }
-      },
-      "Nito.AsyncEx.Coordination/5.0.0": {
-        "dependencies": {
-          "Nito.AsyncEx.Tasks": "5.0.0",
-          "Nito.Collections.Deque": "1.0.4",
-          "Nito.Disposables": "2.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.AsyncEx.Coordination.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.AsyncEx.Coordination.dll": {}
-        }
-      },
-      "Nito.AsyncEx.Tasks/5.0.0": {
-        "dependencies": {
-          "Nito.Disposables": "2.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.AsyncEx.Tasks.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.AsyncEx.Tasks.dll": {}
-        }
-      },
-      "Nito.Collections.Deque/1.0.4": {
-        "runtime": {
-          "lib/netstandard2.0/Nito.Collections.Deque.dll": {
-            "assemblyVersion": "1.0.4.0",
-            "fileVersion": "1.0.4.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.Collections.Deque.dll": {}
-        }
-      },
-      "Nito.Disposables/2.0.0": {
-        "dependencies": {
-          "System.Collections.Immutable": "1.5.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Nito.Disposables.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Nito.Disposables.dll": {}
-        }
-      },
       "Quartz/3.0.7": {
         "dependencies": {
           "Microsoft.CSharp": "4.5.0",
@@ -316,52 +121,6 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
-      "System.Diagnostics.TraceSource/4.3.0": {
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "2.2.0",
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Threading": "4.3.0",
-          "runtime.native.System": "4.3.0"
-        },
-        "runtimeTargets": {
-          "runtime/unix/lib/_._": {
-            "rid": "unix",
-            "assetType": "runtime"
-          },
-          "runtime/win/lib/_._": {
-            "rid": "win",
-            "assetType": "runtime"
-          }
-        }
-      },
-      "System.Linq.Dynamic.Core/1.0.16": {
-        "runtime": {
-          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {
-            "assemblyVersion": "1.0.16.0",
-            "fileVersion": "1.0.16.0"
-          }
-        },
-        "compile": {
-          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {}
-        }
-      },
-      "System.Linq.Queryable/4.3.0": {
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Linq.Expressions": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Extensions": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
       "System.Net.NameResolution/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0",
@@ -391,22 +150,6 @@
         }
       },
       "System.Reflection.TypeExtensions/4.5.0": {},
-      "System.Runtime.Loader/4.3.0": {
-        "dependencies": {
-          "System.IO": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
-      "System.Runtime.Serialization.Formatters/4.3.0": {
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Serialization.Primitives": "4.3.0"
-        }
-      },
       "System.Security.Cryptography.ProtectedData/4.5.0": {
         "runtime": {
           "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
@@ -423,43 +166,9 @@
           }
         }
       },
-      "System.Xml.XPath.XmlDocument/4.3.0": {
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Xml.ReaderWriter": "4.3.0",
-          "System.Xml.XPath": "4.3.0",
-          "System.Xml.XmlDocument": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {
-            "assemblyVersion": "4.0.2.0",
-            "fileVersion": "4.6.24705.1"
-          }
-        },
-        "compile": {
-          "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
-        }
-      },
-      "TimeZoneConverter/3.2.0": {
-        "runtime": {
-          "lib/netstandard2.0/TimeZoneConverter.dll": {
-            "assemblyVersion": "3.2.0.0",
-            "fileVersion": "3.2.0.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/TimeZoneConverter.dll": {}
-        }
-      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "dependencies": {
-          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json": "11.0.2",
           "Newtonsoft.Json.Bson": "1.0.1"
         },
         "compile": {
@@ -747,7 +456,7 @@
       "Microsoft.AspNetCore.Authentication.OAuth/2.2.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication": "2.2.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.OAuth.dll": {}
@@ -1025,7 +734,7 @@
           "Microsoft.AspNetCore.Http.Connections.Common": "1.1.0",
           "Microsoft.AspNetCore.Routing": "2.2.0",
           "Microsoft.AspNetCore.WebSockets": "2.2.0",
-          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json": "11.0.2",
           "System.Security.Principal.Windows": "4.5.0"
         },
         "compile": {
@@ -1036,7 +745,7 @@
       "Microsoft.AspNetCore.Http.Connections.Common/1.1.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "2.2.0",
-          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json": "11.0.2",
           "System.Buffers": "4.5.0"
         },
         "compile": {
@@ -1130,7 +839,7 @@
       "Microsoft.AspNetCore.JsonPatch/2.2.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.5.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll": {}
@@ -1363,7 +1072,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
           "Microsoft.Extensions.Logging.Console": "2.2.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.NodeServices.dll": {}
@@ -1613,7 +1322,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "2.2.0",
           "Microsoft.Extensions.Options": "2.2.0",
-          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json": "11.0.2",
           "System.Buffers": "4.5.0"
         },
         "compile": {
@@ -1639,7 +1348,7 @@
       "Microsoft.AspNetCore.SignalR.Protocols.Json/1.1.0": {
         "dependencies": {
           "Microsoft.AspNetCore.SignalR.Common": "1.1.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.SignalR.Protocols.Json.dll": {}
@@ -1964,7 +1673,7 @@
         "dependencies": {
           "Microsoft.Extensions.Configuration": "2.2.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "2.2.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.Json.dll": {}
@@ -2019,7 +1728,7 @@
       "Microsoft.Extensions.DependencyModel/2.1.0": {
         "dependencies": {
           "Microsoft.DotNet.PlatformAbstractions": "2.1.0",
-          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json": "11.0.2",
           "System.Diagnostics.Debug": "4.3.0",
           "System.Dynamic.Runtime": "4.3.0",
           "System.Linq": "4.3.0"
@@ -2226,7 +1935,7 @@
       "Microsoft.Extensions.Logging.EventSource/2.2.0": {
         "dependencies": {
           "Microsoft.Extensions.Logging": "2.2.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Logging.EventSource.dll": {}
@@ -2306,7 +2015,7 @@
       "Microsoft.IdentityModel.JsonWebTokens/5.3.0": {
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "5.3.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.IdentityModel.JsonWebTokens.dll": {}
@@ -2341,7 +2050,7 @@
       "Microsoft.IdentityModel.Protocols.OpenIdConnect/5.3.0": {
         "dependencies": {
           "Microsoft.IdentityModel.Protocols": "5.3.0",
-          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json": "11.0.2",
           "System.Dynamic.Runtime": "4.3.0",
           "System.IdentityModel.Tokens.Jwt": "5.3.0"
         },
@@ -2365,7 +2074,7 @@
       "Microsoft.IdentityModel.Tokens/5.3.0": {
         "dependencies": {
           "Microsoft.IdentityModel.Logging": "5.3.0",
-          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json": "11.0.2",
           "System.Collections": "4.3.0",
           "System.Diagnostics.Tools": "4.3.0",
           "System.Reflection": "4.3.0",
@@ -2605,10 +2314,16 @@
         },
         "compileOnly": true
       },
+      "Newtonsoft.Json/11.0.2": {
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "compileOnly": true
+      },
       "Newtonsoft.Json.Bson/1.0.1": {
         "dependencies": {
           "NETStandard.Library": "2.0.3",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
@@ -2621,7 +2336,7 @@
           "System.Diagnostics.Debug": "4.3.0",
           "System.Linq": "4.3.0",
           "System.Linq.Expressions": "4.3.0",
-          "System.Linq.Queryable": "4.3.0",
+          "System.Linq.Queryable": "4.0.1",
           "System.ObjectModel": "4.3.0",
           "System.Reflection": "4.3.0",
           "System.Reflection.Extensions": "4.3.0",
@@ -2916,7 +2631,7 @@
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "5.3.0",
           "Microsoft.IdentityModel.Tokens": "5.3.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
           "lib/netstandard2.0/System.IdentityModel.Tokens.Jwt.dll": {}
@@ -3013,6 +2728,19 @@
           "System.Runtime": "4.3.0",
           "System.Runtime.Extensions": "4.3.0",
           "System.Threading": "4.3.0"
+        },
+        "compileOnly": true
+      },
+      "System.Linq.Queryable/4.0.1": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Linq.Expressions": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Extensions": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0"
         },
         "compileOnly": true
       },
@@ -3633,96 +3361,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Abp/4.7.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Rtl4PDncl6Okh67yCaq8gqameEBiHseMbCFD2bHIRH+nmB1TD1Dp/USt50DI7XQUi0cjuWZdLCwd7z3eSzCZDA==",
-      "path": "abp/4.7.0",
-      "hashPath": "abp.4.7.0.nupkg.sha512"
-    },
-    "Abp.Quartz/4.7.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-CVTY4KY1MtOOom5kSiMIANnw4rTMdB0DJFc7tlydLDrZpPpRxejeRiuwOrwyWjFsj5Qj/0Ea2b5b+e1BGY4g+g==",
-      "path": "abp.quartz/4.7.0",
-      "hashPath": "abp.quartz.4.7.0.nupkg.sha512"
-    },
-    "Castle.Core/4.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-b5rRL5zeaau1y/5hIbI+6mGw3cwun16YjkHZnV9RRT5UyUIFsgLmNXJ0YnIN9p8Hw7K7AbG1q1UclQVU3DinAQ==",
-      "path": "castle.core/4.4.0",
-      "hashPath": "castle.core.4.4.0.nupkg.sha512"
-    },
-    "Castle.LoggingFacility/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-tVAGQQMnrvg+JZ3isghCOg7aDlt1VMgBgegb7jBwSJ6yfbAwK4Qdrw/kezcFnmgZey6dQDQZo5wNEZpok52J8A==",
-      "path": "castle.loggingfacility/5.0.0",
-      "hashPath": "castle.loggingfacility.5.0.0.nupkg.sha512"
-    },
-    "Castle.Windsor/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-kfaIV95ZnYQj6gjq1G9o81gBuxo4o2/yCwgaylIeytcK3jtKJe4RGN6KxSV6viwvKKn+XQvblrBHk1qQyD/YtQ==",
-      "path": "castle.windsor/5.0.0",
-      "hashPath": "castle.windsor.5.0.0.nupkg.sha512"
-    },
-    "JetBrains.Annotations/2019.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-y4RFn+HZ7BekqIx+uXuVAvh80quYNiu86oRG2QztmFXQ2mm1lprb7xNawZdFfLxBAh8BQUkSQdO0Itanal8DbQ==",
-      "path": "jetbrains.annotations/2019.1.1",
-      "hashPath": "jetbrains.annotations.2019.1.1.nupkg.sha512"
-    },
     "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.7.9": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-qctOe/wBGvigq5c0GSjzR8TUgdpQv7YhHugiUyvBHTXhOpKKbhVhrsXqy4fEHZ4kVU5498ywsigEbrQ22ps4ew==",
       "path": "microsoft.visualstudio.azure.containers.tools.targets/1.7.9",
       "hashPath": "microsoft.visualstudio.azure.containers.tools.targets.1.7.9.nupkg.sha512"
-    },
-    "Newtonsoft.Json/12.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
-      "path": "newtonsoft.json/12.0.2",
-      "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
-    },
-    "Nito.AsyncEx.Context/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Qnth1Ye+QSLg8P3fSFYzk7ue6oUUHQcKpLitgAig8xRFqTK5W1KTlfxF/Z8Eo0BuqZ17a5fAGtXrdKJsLqivZw==",
-      "path": "nito.asyncex.context/5.0.0",
-      "hashPath": "nito.asyncex.context.5.0.0.nupkg.sha512"
-    },
-    "Nito.AsyncEx.Coordination/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-kjauyO8UMo/FGZO/M8TdjXB8ZlBPFOiRN8yakThaGQbYOywazQ0kGZ39SNr2gNNzsTxbZOUudBMYNo+IrtscbA==",
-      "path": "nito.asyncex.coordination/5.0.0",
-      "hashPath": "nito.asyncex.coordination.5.0.0.nupkg.sha512"
-    },
-    "Nito.AsyncEx.Tasks/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ZtvotignafOLteP4oEjVcF3k2L8h73QUCaFpVKWbU+EOlW/I+JGkpMoXIl0rlwPcDmR84RxzggLRUNMaWlOosA==",
-      "path": "nito.asyncex.tasks/5.0.0",
-      "hashPath": "nito.asyncex.tasks.5.0.0.nupkg.sha512"
-    },
-    "Nito.Collections.Deque/1.0.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-yGDKqCQ61i97MyfEUYG6+ln5vxpx11uA5M9+VV9B7stticbFm19YMI/G9w4AFYVBj5PbPi138P8IovkMFAL0Aw==",
-      "path": "nito.collections.deque/1.0.4",
-      "hashPath": "nito.collections.deque.1.0.4.nupkg.sha512"
-    },
-    "Nito.Disposables/2.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ExJl/jTjegSLHGcwnmaYaI5xIlrefAsVdeLft7VLtXI2+W5irihiu36LizWvlaUpzY1/llo+YSh09uSHMu2VFw==",
-      "path": "nito.disposables/2.0.0",
-      "hashPath": "nito.disposables.2.0.0.nupkg.sha512"
     },
     "Quartz/3.0.7": {
       "type": "package",
@@ -3766,27 +3410,6 @@
       "path": "system.data.common/4.3.0",
       "hashPath": "system.data.common.4.3.0.nupkg.sha512"
     },
-    "System.Diagnostics.TraceSource/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-VnYp1NxGx8Ww731y2LJ1vpfb/DKVNKEZ8Jsh5SgQTZREL/YpWRArgh9pI8CDLmgHspZmLL697CaLvH85qQpRiw==",
-      "path": "system.diagnostics.tracesource/4.3.0",
-      "hashPath": "system.diagnostics.tracesource.4.3.0.nupkg.sha512"
-    },
-    "System.Linq.Dynamic.Core/1.0.16": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-hiieu+wiOv78inG/gMTaHF3wKu6hleYr8yzrhKPkir/8fLT1WD8ISIk4y5prLHjySEN960rICaZO67MVnu2Hfw==",
-      "path": "system.linq.dynamic.core/1.0.16",
-      "hashPath": "system.linq.dynamic.core.1.0.16.nupkg.sha512"
-    },
-    "System.Linq.Queryable/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-In1Bmmvl/j52yPu3xgakQSI0YIckPUr870w4K5+Lak3JCCa8hl+my65lABOuKfYs4ugmZy25ScFerC4nz8+b6g==",
-      "path": "system.linq.queryable/4.3.0",
-      "hashPath": "system.linq.queryable.4.3.0.nupkg.sha512"
-    },
     "System.Net.NameResolution/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -3801,40 +3424,12 @@
       "path": "system.reflection.typeextensions/4.5.0",
       "hashPath": "system.reflection.typeextensions.4.5.0.nupkg.sha512"
     },
-    "System.Runtime.Loader/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-DHMaRn8D8YCK2GG2pw+UzNxn/OHVfaWx7OTLBD/hPegHZZgcZh3H6seWegrC4BYwsfuGrywIuT+MQs+rPqRLTQ==",
-      "path": "system.runtime.loader/4.3.0",
-      "hashPath": "system.runtime.loader.4.3.0.nupkg.sha512"
-    },
-    "System.Runtime.Serialization.Formatters/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-KT591AkTNFOTbhZlaeMVvfax3RqhH1EJlcwF50Wm7sfnBLuHiOeZRRKrr1ns3NESkM20KPZ5Ol/ueMq5vg4QoQ==",
-      "path": "system.runtime.serialization.formatters/4.3.0",
-      "hashPath": "system.runtime.serialization.formatters.4.3.0.nupkg.sha512"
-    },
     "System.Security.Cryptography.ProtectedData/4.5.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-wLBKzFnDCxP12VL9ANydSYhk59fC4cvOr9ypYQLPnAj48NQIhqnjdD2yhP8yEKyBJEjERWS9DisKL7rX5eU25Q==",
       "path": "system.security.cryptography.protecteddata/4.5.0",
       "hashPath": "system.security.cryptography.protecteddata.4.5.0.nupkg.sha512"
-    },
-    "System.Xml.XPath.XmlDocument/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
-      "path": "system.xml.xpath.xmldocument/4.3.0",
-      "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
-    },
-    "TimeZoneConverter/3.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-f0UpF9H+ylj3qjO/l2+Yt0R77FFR327efJwsoXAys6J1fSYFcQPrPVhaGVVWoN79+PVutj0qzj79kuhSPN70gA==",
-      "path": "timezoneconverter/3.2.0",
-      "hashPath": "timezoneconverter.3.2.0.nupkg.sha512"
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",
@@ -5040,6 +4635,13 @@
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
     },
+    "Newtonsoft.Json/11.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "path": "newtonsoft.json/11.0.2",
+      "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
+    },
     "Newtonsoft.Json.Bson/1.0.1": {
       "type": "package",
       "serviceable": true,
@@ -5403,6 +5005,13 @@
       "sha512": "sha512-PGKkrd2khG4CnlyJwxwwaWWiSiWFNBGlgXvJpeO0xCXrZ89ODrQ6tjEWS/kOqZ8GwEOUATtKtzp1eRgmYNfclg==",
       "path": "system.linq.expressions/4.3.0",
       "hashPath": "system.linq.expressions.4.3.0.nupkg.sha512"
+    },
+    "System.Linq.Queryable/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
+      "path": "system.linq.queryable/4.0.1",
+      "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
     },
     "System.Memory/4.5.1": {
       "type": "package",

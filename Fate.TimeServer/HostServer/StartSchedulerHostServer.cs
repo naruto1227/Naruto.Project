@@ -44,7 +44,7 @@ namespace Fate.TimeServer
             applicationLifetime.ApplicationStopped.Register(Stopped);
             applicationLifetime.ApplicationStopping.Register(Stopping);
             logger.LogInformation("start  HostServer");
-            await logScheduler.ExecAsync();
+             await logScheduler.ExecAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

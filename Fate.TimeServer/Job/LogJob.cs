@@ -12,12 +12,12 @@ namespace Fate.TimeServer.Job
     /// </summary>
     public class LogJob : IJob
     {
-        private ILogger<LogJob> logger;
+        //private ILogger<LogJob> logger;
 
-        public LogJob(ILogger<LogJob> _logger)
-        {
-            logger = _logger;
-        }
+        //public LogJob(ILogger<LogJob> _logger)
+        //{
+        //    logger = _logger;
+        //}
         /// <summary>
         /// 需要执行的方法
         /// </summary>
@@ -27,7 +27,7 @@ namespace Fate.TimeServer.Job
         {
             await Task.Run(() =>
             {
-                logger.LogInformation("1");
+                //logger.LogInformation("1");
             });
         }
     }
