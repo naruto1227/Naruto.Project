@@ -39,5 +39,12 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// </summary>
         /// <returns></returns>
         Task ChangeReadOnlyConnection();
+
+        /// <summary>
+        /// 执行slq语句
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        Task<int> ExecuteSqlAsync(string sql, params object[] _params);
     }
 }

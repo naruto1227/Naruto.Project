@@ -14902,11 +14902,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
+      "projectUniqueName": "D:\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
       "projectName": "Fate.Test",
-      "projectPath": "F:\\我的\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
+      "projectPath": "D:\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\我的\\Fate.DDD\\Fate.Test\\obj\\",
+      "outputPath": "D:\\Fate.DDD\\Fate.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14925,32 +14925,32 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
+            "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
+            "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj"
+            "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
+            "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj"
+            "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj"
+            "D:\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj"
             }
           }
         }

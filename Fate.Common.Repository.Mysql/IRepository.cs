@@ -49,7 +49,7 @@ namespace Fate.Common.Repository.Mysql
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        Task BulkDeleteAsync(Expression<Func<T, bool>> condition);
+        Task BulkDeleteAsync(params T[] entities);
         /// <summary>
         /// 修改
         /// </summary>
@@ -63,12 +63,6 @@ namespace Fate.Common.Repository.Mysql
         /// <param name="update"></param>
         /// <returns></returns>
         Task UpdateAsync(Expression<Func<T, bool>> condition, Func<T, T> update);
-        /// <summary>
-        /// 批量添加
-        /// </summary>
-        /// <param name="entities"></param>
-        /// <returns></returns>
-        Task BulkAddAsync(IEnumerable<T> entities);
 
         /// <summary>
         /// 批量编辑
@@ -77,11 +71,11 @@ namespace Fate.Common.Repository.Mysql
         /// <returns></returns>
         Task BulkUpdateAsync(params T[] entities);
         /// <summary>
-        /// 执行slq语句
+        /// 批量添加
         /// </summary>
-        /// <param name="sql"></param>
+        /// <param name="entities"></param>
         /// <returns></returns>
-        Task<int> ExecuteSqlAsync(string sql, params object[] _params);
+        Task BulkAddAsync(IEnumerable<T> entities);
 
         /// <summary>
         /// 获取单条记录
@@ -90,6 +84,64 @@ namespace Fate.Common.Repository.Mysql
         /// <returns></returns>
         Task<T> FindAsync(Expression<Func<T, bool>> condition);
         #endregion
+        
+        #region 同步
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="info"></param>
+        void Add(T entity);
+
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="info"></param>
+        void BulkAdd(IEnumerable<T> entities);
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        void Delete(Expression<Func<T, bool>> condition);
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        void BulkDelete(params T[] entities);
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        void Update(T info);
+        /// <summary>
+        /// 更新个别的字段数据
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="update"></param>
+        /// <returns></returns>
+        void Update(Expression<Func<T, bool>> condition, Func<T, T> update);
+
+        /// <summary>
+        /// 批量编辑
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        void BulkUpdate(params T[] entities);
+
+        /// <summary>
+        /// 获取单条记录
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
+        T Find(Expression<Func<T, bool>> condition);
+        #endregion
+
+        #region 查询
         /// <summary>
         /// sql语句查询
         /// </summary>
@@ -108,19 +160,6 @@ namespace Fate.Common.Repository.Mysql
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         IQueryable<T> Where(Expression<Func<T, bool>> condition);
-
-        #region 同步
-        /// <summary>
-        /// 添加数据
-        /// </summary>
-        /// <param name="info"></param>
-        void Add(T entity);
-
-        /// <summary>
-        /// 添加数据
-        /// </summary>
-        /// <param name="info"></param>
-        void BulkAdd(IEnumerable<T> entities);
         #endregion
     }
 }

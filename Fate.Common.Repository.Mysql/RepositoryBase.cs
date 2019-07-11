@@ -59,16 +59,7 @@ namespace Fate.Common.Repository.Mysql
         /// <param name="entities"></param>
         /// <returns></returns>
         public async Task BulkAddAsync(IEnumerable<T> entities) => await repository.Set<T>().AddRangeAsync(entities);
-        /// <summary>
-        /// 编辑
-        /// </summary>
-        /// <param name="entities"></param>
-        /// <returns></returns>
-        public Task BulkUpdateAsync(params T[] entities)
-        {
-            repository.Set<T>().UpdateRange(entities);
-            return Task.FromResult(0);
-        }
+
         /// <summary>
         /// 删除数据
         /// </summary>
@@ -76,29 +67,22 @@ namespace Fate.Common.Repository.Mysql
         /// <returns></returns>
         public async Task DeleteAsync(Expression<Func<T, bool>> condition)
         {
-            var info = await FindAsync(condition);
-            if (info != null)
-                repository.Set<T>().Remove(info);
+            var list = await Where(condition).ToArrayAsync();
+            if (list != null && list.Count() > 0)
+                BulkDelete(list);
         }
         /// <summary>
         /// 批量删除数据
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public async Task BulkDeleteAsync(Expression<Func<T, bool>> condition)
+        public async Task BulkDeleteAsync(params T[] entities)
         {
-            var list = await Where(condition).ToListAsync();
-            if (list != null && list.Count() > 0)
-                repository.Set<T>().RemoveRange(list);
+            await Task.Run(() =>
+            {
+                repository.Set<T>().RemoveRange(entities);
+            }).ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// 执行sql语句的 返回 受影响的行数
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="_params"></param>
-        /// <returns></returns>
-        public async Task<int> ExecuteSqlAsync(string sql, params object[] _params) => await repository.Database.ExecuteSqlCommandAsync(sql, _params);
 
         /// <summary>
         /// 保存
@@ -123,18 +107,29 @@ namespace Fate.Common.Repository.Mysql
         /// <returns></returns>
         public async Task UpdateAsync(Expression<Func<T, bool>> condition, Func<T, T> update)
         {
-            var info = await repository.Set<T>().Where(condition).FirstOrDefaultAsync();
-            if (info != null)
+            var list = await Where(condition).ToListAsync();
+            if (list != null && list.Count() > 0)
             {
-                update(info);
+                foreach (var item in list)
+                    update(item);
             }
+        }
+        /// <summary>
+        /// 编辑
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public Task BulkUpdateAsync(params T[] entities)
+        {
+            repository.Set<T>().UpdateRange(entities);
+            return Task.FromResult(0);
         }
         /// <summary>
         /// 获取单条记录
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public Task<T> FindAsync(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).FirstOrDefaultAsync();
+        public Task<T> FindAsync(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefaultAsync();
 
         #endregion
 
@@ -156,6 +151,57 @@ namespace Fate.Common.Repository.Mysql
         {
             repository.Set<T>().AddRange(entities);
         }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public void Delete(Expression<Func<T, bool>> condition)
+        {
+            var list = Where(condition).ToArray();
+            if (list != null && list.Count() > 0)
+                BulkDelete(list);
+        }
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public void BulkDelete(params T[] entities) => repository.Set<T>().RemoveRange(entities);
+        /// <summary>
+        /// 更新单条实体
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public void Update(T info) => repository.Set<T>().Update(info);
+        /// <summary>
+        /// 更新个别的字段数据
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="update"></param>
+        /// <returns></returns>
+        public void Update(Expression<Func<T, bool>> condition, Func<T, T> update)
+        {
+            var list = Where(condition).ToList();
+            if (list != null && list.Count() > 0)
+            {
+                foreach (var item in list)
+                    update(item);
+            }
+        }
+        /// <summary>
+        /// 编辑
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public void BulkUpdate(params T[] entities) => repository.Set<T>().UpdateRange(entities);
+        /// <summary>
+        /// 获取单条记录
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
+        public T Find(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefault();
         #endregion
 
         #region 查询

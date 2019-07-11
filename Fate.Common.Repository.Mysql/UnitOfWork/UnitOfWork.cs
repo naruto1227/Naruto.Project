@@ -89,5 +89,13 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             dbContext.Database.GetDbConnection().ConnectionString = connections[random.Next(0, connections.Count() - 1)];
             await Task.FromResult(0).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// 执行sql语句的 返回 受影响的行数
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="_params"></param>
+        /// <returns></returns>
+        public async Task<int> ExecuteSqlAsync(string sql, params object[] _params) => await dbContext.Database.ExecuteSqlCommandAsync(sql, _params);
     }
 }
