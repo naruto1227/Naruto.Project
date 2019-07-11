@@ -45,6 +45,7 @@ namespace Fate.Common.Repository.Mysql
             repository = dbContext;
             return Task.FromResult(0);
         }
+        #region 异步
         /// <summary>
         /// 单条数据添加
         /// </summary>
@@ -75,7 +76,7 @@ namespace Fate.Common.Repository.Mysql
         /// <returns></returns>
         public async Task DeleteAsync(Expression<Func<T, bool>> condition)
         {
-            var info = await Find(condition);
+            var info = await FindAsync(condition);
             if (info != null)
                 repository.Set<T>().Remove(info);
         }
@@ -90,14 +91,7 @@ namespace Fate.Common.Repository.Mysql
             if (list != null && list.Count() > 0)
                 repository.Set<T>().RemoveRange(list);
         }
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        public void Dispose()
-        {
-            repository?.Dispose();
-            GC.SuppressFinalize(this);
-        }
+
         /// <summary>
         /// 执行sql语句的 返回 受影响的行数
         /// </summary>
@@ -105,11 +99,7 @@ namespace Fate.Common.Repository.Mysql
         /// <param name="_params"></param>
         /// <returns></returns>
         public async Task<int> ExecuteSqlAsync(string sql, params object[] _params) => await repository.Database.ExecuteSqlCommandAsync(sql, _params);
-        /// <summary>
-        /// sql语句查询
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<T> QuerySqlAsync(string sql, params object[] _params) => repository.Set<T>().FromSql(sql, _params);
+
         /// <summary>
         /// 保存
         /// </summary>
@@ -140,6 +130,37 @@ namespace Fate.Common.Repository.Mysql
             }
         }
         /// <summary>
+        /// 获取单条记录
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
+        public Task<T> FindAsync(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).FirstOrDefaultAsync();
+
+        #endregion
+
+        #region 同步
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Add(T entity)
+        {
+            repository.Set<T>().Add(entity);
+        }
+
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="info"></param>
+        public void BulkAdd(IEnumerable<T> entities)
+        {
+            repository.Set<T>().AddRange(entities);
+        }
+        #endregion
+
+        #region 查询
+
+        /// <summary>
         ///获取所有数据
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -152,12 +173,21 @@ namespace Fate.Common.Repository.Mysql
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         public IQueryable<T> Where(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).AsQueryable();
+        /// <summary>
+        /// sql语句查询
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<T> QuerySqlAsync(string sql, params object[] _params) => repository.Set<T>().FromSql(sql, _params);
+
+        #endregion
 
         /// <summary>
-        /// 获取单条记录
+        /// 释放资源
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        public Task<T> Find(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).FirstOrDefaultAsync();
+        public void Dispose()
+        {
+            repository?.Dispose();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -9689,7 +9689,6 @@
       "path": "runtime.native.system.io.compression/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -13130,7 +13129,6 @@
       "path": "system.runtime.serialization.primitives/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -13458,7 +13456,6 @@
       "path": "system.security.cryptography.csp/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -13530,7 +13527,6 @@
       "path": "system.security.cryptography.openssl/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.6/System.Security.Cryptography.OpenSsl.dll",
@@ -14889,11 +14885,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj",
+      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj",
       "projectName": "Fate.WebApi",
-      "projectPath": "D:\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj",
+      "projectPath": "F:\\我的\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\Fate.DDD\\Fate.WebApi\\obj\\",
+      "outputPath": "F:\\我的\\Fate.DDD\\Fate.WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14912,17 +14908,17 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
             }
           }
         }

@@ -25,6 +25,7 @@ namespace Fate.Common.Repository.Mysql
         /// <param name="dbContext"></param>
         /// <returns></returns>
         Task ChangeDbContext(DbContext dbContext);
+        #region 异步
         /// <summary>
         /// 提交保存
         /// </summary>
@@ -81,6 +82,14 @@ namespace Fate.Common.Repository.Mysql
         /// <param name="sql"></param>
         /// <returns></returns>
         Task<int> ExecuteSqlAsync(string sql, params object[] _params);
+
+        /// <summary>
+        /// 获取单条记录
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
+        Task<T> FindAsync(Expression<Func<T, bool>> condition);
+        #endregion
         /// <summary>
         /// sql语句查询
         /// </summary>
@@ -99,11 +108,19 @@ namespace Fate.Common.Repository.Mysql
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         IQueryable<T> Where(Expression<Func<T, bool>> condition);
+
+        #region 同步
         /// <summary>
-        /// 获取单条记录
+        /// 添加数据
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        Task<T> Find(Expression<Func<T, bool>> condition);
+        /// <param name="info"></param>
+        void Add(T entity);
+
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="info"></param>
+        void BulkAdd(IEnumerable<T> entities);
+        #endregion
     }
 }
