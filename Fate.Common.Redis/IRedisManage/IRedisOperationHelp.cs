@@ -330,6 +330,14 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <returns></returns>
         Dictionary<string, string> HashGetAll(string key);
+
+        /// <summary>
+        /// 返回所有值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        string[] HashValues(string key);
+
         #endregion
 
         #endregion
@@ -609,7 +617,12 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="value">值</param>
         /// <returns></returns>
         Task<bool> HashSetAsync(string key, string hashField, string value);
-
+        /// <summary>
+        /// 返回所有值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<string[]> HashValuesAsync(string key);
         #endregion
 
         #endregion

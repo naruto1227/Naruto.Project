@@ -1029,7 +1029,16 @@ namespace Fate.Common.Redis.RedisManage
             var res = redisBase.DoSave(db => db.HashGet(HashSysCustomKey + key, hashField));
             return !res.IsNull ? res.ToString() : default;
         }
-
+        /// <summary>
+        /// 获取所有的数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Dictionary<string, string> HashGetAll(string key)
+        {
+            var res = redisBase.DoSave(db => db.HashGetAll(HashSysCustomKey + key));
+            return res != null ? res.ToStringDictionary() : default;
+        }
         /// <summary>
         /// 获取多条数据
         /// </summary>
@@ -1074,7 +1083,16 @@ namespace Fate.Common.Redis.RedisManage
         {
             return redisBase.DoSave(db => db.HashSet(HashSysCustomKey + key, hashField, value));
         }
-
+        /// <summary>
+        /// 返回所有值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string[] HashValues(string key)
+        {
+            var res = redisBase.DoSave(db => db.HashValues(HashSysCustomKey + key));
+            return res != null ? res.ToStringArray() : default;
+        }
         #endregion
 
         #region 异步
@@ -1119,16 +1137,7 @@ namespace Fate.Common.Redis.RedisManage
             var res = await redisBase.DoSave(db => db.HashGetAsync(HashSysCustomKey + key, hashField));
             return !res.IsNull ? res.ToString() : default;
         }
-        /// <summary>
-        /// 获取所有的数据
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public Dictionary<string, string> HashGetAll(string key)
-        {
-            var res = redisBase.DoSave(db => db.HashGetAll(HashSysCustomKey + key));
-            return res != null ? res.ToStringDictionary() : default;
-        }
+
         /// <summary>
         /// 获取所有的数据
         /// </summary>
@@ -1182,6 +1191,17 @@ namespace Fate.Common.Redis.RedisManage
         public Task<bool> HashSetAsync(string key, string hashField, string value)
         {
             return redisBase.DoSave(db => db.HashSetAsync(HashSysCustomKey + key, hashField, value));
+        }
+
+        /// <summary>
+        /// 返回所有值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<string[]> HashValuesAsync(string key)
+        {
+            var res = await redisBase.DoSave(db => db.HashValuesAsync(HashSysCustomKey + key));
+            return res != null ? res.ToStringArray() : default;
         }
         #endregion
 
