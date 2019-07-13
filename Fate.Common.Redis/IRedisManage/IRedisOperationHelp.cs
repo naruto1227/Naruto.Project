@@ -270,7 +270,7 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key">主键</param>
         /// <param name="hashField"需要删除的字段</param>
         /// <returns></returns>
-        bool HashDelete(RedisKey key, string hashField);
+        bool HashDelete(string key, string hashField);
 
         /// <summary>
         /// 删除多条
@@ -278,21 +278,21 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key">主键</param>
         /// <param name="hashFields"需要删除的字段</param>
         /// <returns></returns>
-        long HashDelete(RedisKey key, string[] hashFields);
+        long HashDelete(string key, string[] hashFields);
         /// <summary>
         /// 验证是否存在指定列
         /// </summary>
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        bool HashExists(RedisKey key, string hashField);
+        bool HashExists(string key, string hashField);
         /// <summary>
         /// 获取指定的列的值
         /// </summary>
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        string HashGet(RedisKey key, string hashField);
+        string HashGet(string key, string hashField);
 
         /// <summary>
         /// 获取多条数据
@@ -300,13 +300,13 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="hashFields"></param>
         /// <returns></returns>
-        string[] HashGet(RedisKey key, string[] hashFields);
+        string[] HashGet(string key, string[] hashFields);
         /// <summary>
         /// 获取hash的长度
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        long HashLength(RedisKey key);
+        long HashLength(string key);
 
         /// <summary>
         /// 存储hash值
@@ -314,7 +314,7 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        void HashSet(RedisKey key, HashEntry[] hashFields);
+        void HashSet(string key, HashEntry[] hashFields);
 
         /// <summary>
         /// 储存单条hash值
@@ -323,9 +323,15 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        bool HashSet(RedisKey key, string hashField, string value);
-
+        bool HashSet(string key, string hashField, string value);
+        /// <summary>
+        /// 获取所有的数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Dictionary<string, string> HashGetAll(string key);
         #endregion
+
         #endregion
 
         #region 异步
@@ -543,7 +549,7 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key">主键</param>
         /// <param name="hashField"需要删除的字段</param>
         /// <returns></returns>
-        Task<bool> HashDeleteAsync(RedisKey key, string hashField);
+        Task<bool> HashDeleteAsync(string key, string hashField);
 
         /// <summary>
         /// 删除多条
@@ -551,21 +557,21 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key">主键</param>
         /// <param name="hashFields"需要删除的字段</param>
         /// <returns></returns>
-        Task<long> HashDeleteAsync(RedisKey key, string[] hashFields);
+        Task<long> HashDeleteAsync(string key, string[] hashFields);
         /// <summary>
         /// 验证是否存在指定列
         /// </summary>
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        Task<bool> HashExistsAsync(RedisKey key, string hashField);
+        Task<bool> HashExistsAsync(string key, string hashField);
         /// <summary>
         /// 获取指定的列的值
         /// </summary>
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        Task<string> HashGetAsync(RedisKey key, string hashField);
+        Task<string> HashGetAsync(string key, string hashField);
 
         /// <summary>
         /// 获取多条数据
@@ -573,13 +579,19 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="hashFields"></param>
         /// <returns></returns>
-        Task<string[]> HashGetAsync(RedisKey key, string[] hashFields);
+        Task<string[]> HashGetAsync(string key, string[] hashFields);
+        /// <summary>
+        /// 获取所有的数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<Dictionary<string, string>> HashGetAllAsync(string key);
         /// <summary>
         /// 获取hash的长度
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<long> HashLengthAsync(RedisKey key);
+        Task<long> HashLengthAsync(string key);
 
         /// <summary>
         /// 存储hash值
@@ -587,7 +599,7 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        Task HashSetAsync(RedisKey key, HashEntry[] hashFields);
+        Task HashSetAsync(string key, HashEntry[] hashFields);
 
         /// <summary>
         /// 储存单条hash值
@@ -596,7 +608,7 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        Task<bool> HashSetAsync(RedisKey key, string hashField, string value);
+        Task<bool> HashSetAsync(string key, string hashField, string value);
 
         #endregion
 

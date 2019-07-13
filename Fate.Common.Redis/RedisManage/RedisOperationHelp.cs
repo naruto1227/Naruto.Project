@@ -461,15 +461,15 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
-            if (keyOperatorEnum == KeyOperatorEnum.STRING)
+            if (keyOperatorEnum == KeyOperatorEnum.String)
             {
                 key = StringSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            else if (keyOperatorEnum == KeyOperatorEnum.List)
             {
                 key = ListSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            else if (keyOperatorEnum == KeyOperatorEnum.Set)
             {
                 key = SetSysCustomKey + key;
             }
@@ -483,15 +483,15 @@ namespace Fate.Common.Redis.RedisManage
         public bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
 
-            if (keyOperatorEnum == KeyOperatorEnum.STRING)
+            if (keyOperatorEnum == KeyOperatorEnum.String)
             {
                 key = StringSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            else if (keyOperatorEnum == KeyOperatorEnum.List)
             {
                 key = ListSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            else if (keyOperatorEnum == KeyOperatorEnum.Set)
             {
                 key = SetSysCustomKey + key;
             }
@@ -506,15 +506,15 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         public async Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
-            if (keyOperatorEnum == KeyOperatorEnum.STRING)
+            if (keyOperatorEnum == KeyOperatorEnum.String)
             {
                 key = StringSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            else if (keyOperatorEnum == KeyOperatorEnum.List)
             {
                 key = ListSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            else if (keyOperatorEnum == KeyOperatorEnum.Set)
             {
                 key = SetSysCustomKey + key;
             }
@@ -527,15 +527,15 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         public async Task<bool> KeyExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
-            if (keyOperatorEnum == KeyOperatorEnum.STRING)
+            if (keyOperatorEnum == KeyOperatorEnum.String)
             {
                 key = StringSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.LIST)
+            else if (keyOperatorEnum == KeyOperatorEnum.List)
             {
                 key = ListSysCustomKey + key;
             }
-            else if (keyOperatorEnum == KeyOperatorEnum.SET)
+            else if (keyOperatorEnum == KeyOperatorEnum.Set)
             {
                 key = SetSysCustomKey + key;
             }
@@ -993,8 +993,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key">主键</param>
         /// <param name="hashField"需要删除的字段</param>
         /// <returns></returns>
-        public bool HashDelete(RedisKey key, string hashField)
-            => redisBase.DoSave(db => db.HashDelete(key, hashField));
+        public bool HashDelete(string key, string hashField)
+        {
+            return redisBase.DoSave(db => db.HashDelete(HashSysCustomKey + key, hashField));
+        }
 
         /// <summary>
         /// 删除多条
@@ -1002,11 +1004,11 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key">主键</param>
         /// <param name="hashFields"需要删除的字段</param>
         /// <returns></returns>
-        public long HashDelete(RedisKey key, string[] hashFields)
+        public long HashDelete(string key, string[] hashFields)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            return redisBase.DoSave(db => db.HashDelete(key, hashFields.ToRedisValueArray()));
+            return redisBase.DoSave(db => db.HashDelete(HashSysCustomKey + key, hashFields.ToRedisValueArray()));
         }
 
         /// <summary>
@@ -1015,16 +1017,16 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        public bool HashExists(RedisKey key, string hashField) => redisBase.DoSave(db => db.HashExists(key, hashField));
+        public bool HashExists(string key, string hashField) => redisBase.DoSave(db => db.HashExists(HashSysCustomKey + key, hashField));
         /// <summary>
         /// 获取指定的列的值
         /// </summary>
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        public string HashGet(RedisKey key, string hashField)
+        public string HashGet(string key, string hashField)
         {
-            var res = redisBase.DoSave(db => db.HashGet(key, hashField));
+            var res = redisBase.DoSave(db => db.HashGet(HashSysCustomKey + key, hashField));
             return !res.IsNull ? res.ToString() : default;
         }
 
@@ -1034,11 +1036,11 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="hashFields"></param>
         /// <returns></returns>
-        public string[] HashGet(RedisKey key, string[] hashFields)
+        public string[] HashGet(string key, string[] hashFields)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            var res = redisBase.DoSave(db => db.HashGet(key, hashFields.ToRedisValueArray()));
+            var res = redisBase.DoSave(db => db.HashGet(HashSysCustomKey + key, hashFields.ToRedisValueArray()));
             return res != null ? res.ToStringArray() : default;
         }
         /// <summary>
@@ -1046,7 +1048,7 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public long HashLength(RedisKey key) => redisBase.DoSave(db => db.HashLength(key));
+        public long HashLength(string key) => redisBase.DoSave(db => db.HashLength(HashSysCustomKey + key));
 
         /// <summary>
         /// 存储hash值
@@ -1054,11 +1056,11 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        public void HashSet(RedisKey key, HashEntry[] hashFields)
+        public void HashSet(string key, HashEntry[] hashFields)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            redisBase.DoSave(db=>db.HashSet(key, hashFields));
+            redisBase.DoSave(db => db.HashSet(HashSysCustomKey + key, hashFields));
         }
 
         /// <summary>
@@ -1068,9 +1070,9 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        public bool HashSet(RedisKey key, string hashField, string value)
+        public bool HashSet(string key, string hashField, string value)
         {
-            return redisBase.DoSave(db => db.HashSet(key, hashField, value));
+            return redisBase.DoSave(db => db.HashSet(HashSysCustomKey + key, hashField, value));
         }
 
         #endregion
@@ -1083,8 +1085,8 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key">主键</param>
         /// <param name="hashField"需要删除的字段</param>
         /// <returns></returns>
-        public Task<bool> HashDeleteAsync(RedisKey key, string hashField)
-            => redisBase.DoSave(db => db.HashDeleteAsync(key, hashField));
+        public Task<bool> HashDeleteAsync(string key, string hashField)
+            => redisBase.DoSave(db => db.HashDeleteAsync(HashSysCustomKey + key, hashField));
 
         /// <summary>
         /// 删除多条
@@ -1092,11 +1094,11 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key">主键</param>
         /// <param name="hashFields"需要删除的字段</param>
         /// <returns></returns>
-        public Task<long> HashDeleteAsync(RedisKey key, string[] hashFields)
+        public Task<long> HashDeleteAsync(string key, string[] hashFields)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            return redisBase.DoSave(db => db.HashDeleteAsync(key, hashFields.ToRedisValueArray()));
+            return redisBase.DoSave(db => db.HashDeleteAsync(HashSysCustomKey + key, hashFields.ToRedisValueArray()));
         }
 
         /// <summary>
@@ -1105,30 +1107,49 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        public Task<bool> HashExistsAsync(RedisKey key, string hashField) => redisBase.DoSave(db => db.HashExistsAsync(key, hashField));
+        public Task<bool> HashExistsAsync(string key, string hashField) => redisBase.DoSave(db => db.HashExistsAsync(HashSysCustomKey + key, hashField));
         /// <summary>
         /// 获取指定的列的值
         /// </summary>
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        public async Task<string> HashGetAsync(RedisKey key, string hashField)
+        public async Task<string> HashGetAsync(string key, string hashField)
         {
-            var res = await redisBase.DoSave(db => db.HashGetAsync(key, hashField));
+            var res = await redisBase.DoSave(db => db.HashGetAsync(HashSysCustomKey + key, hashField));
             return !res.IsNull ? res.ToString() : default;
         }
-
+        /// <summary>
+        /// 获取所有的数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Dictionary<string, string> HashGetAll(string key)
+        {
+            var res = redisBase.DoSave(db => db.HashGetAll(HashSysCustomKey + key));
+            return res != null ? res.ToStringDictionary() : default;
+        }
+        /// <summary>
+        /// 获取所有的数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<Dictionary<string, string>> HashGetAllAsync(string key)
+        {
+            var res = await redisBase.DoSave(db => db.HashGetAllAsync(HashSysCustomKey + key));
+            return res != null ? res.ToStringDictionary() : default;
+        }
         /// <summary>
         /// 获取多条数据
         /// </summary>
         /// <param name="key"></param>
         /// <param name="hashFields"></param>
         /// <returns></returns>
-        public async Task<string[]> HashGetAsync(RedisKey key, string[] hashFields)
+        public async Task<string[]> HashGetAsync(string key, string[] hashFields)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            var res = await redisBase.DoSave(db => db.HashGetAsync(key, hashFields.ToRedisValueArray()));
+            var res = await redisBase.DoSave(db => db.HashGetAsync(HashSysCustomKey + key, hashFields.ToRedisValueArray()));
             return res != null ? res.ToStringArray() : default;
         }
         /// <summary>
@@ -1136,7 +1157,7 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-       public Task<long> HashLengthAsync(RedisKey key) => redisBase.DoSave(db => db.HashLengthAsync(key));
+        public Task<long> HashLengthAsync(string key) => redisBase.DoSave(db => db.HashLengthAsync(HashSysCustomKey + key));
 
         /// <summary>
         /// 存储hash值
@@ -1144,11 +1165,11 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        public Task HashSetAsync(RedisKey key, HashEntry[] hashFields)
+        public Task HashSetAsync(string key, HashEntry[] hashFields)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            return redisBase.DoSave(db => db.HashSetAsync(key, hashFields));
+            return redisBase.DoSave(db => db.HashSetAsync(HashSysCustomKey + key, hashFields));
         }
 
         /// <summary>
@@ -1158,9 +1179,9 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        public Task<bool> HashSetAsync(RedisKey key, string hashField, string value)
+        public Task<bool> HashSetAsync(string key, string hashField, string value)
         {
-            return redisBase.DoSave(db => db.HashSetAsync(key, hashField, value));
+            return redisBase.DoSave(db => db.HashSetAsync(HashSysCustomKey + key, hashField, value));
         }
         #endregion
 

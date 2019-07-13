@@ -12,14 +12,18 @@ namespace Fate.Common.Redis
         /// <summary>
         /// 字符串类型
         /// </summary>
-        STRING,
+        String,
         /// <summary>
         /// list类型
         /// </summary>
-        LIST,
+        List,
         /// <summary>
         /// set 类型
         /// </summary>
-        SET,
+        Set,
+        /// <summary>
+        /// Hash 类型
+        /// </summary>
+        Hash,
     }
 }
