@@ -32,9 +32,46 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value">value值</param>
-        void ListRemove<T>(string key, T value);
+        long ListRemove<T>(string key, T value);
 
-
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        string ListLeftPop(string key);
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        long ListRightPush(string key, string value);
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        long ListRightPush(string key, string[] value);
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        long ListRightPush<T>(string key, List<T> value);
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        T ListLeftPop<T>(string key);
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        long ListRightPush<T>(string key, T value);
         /// <summary>
         /// 获取集合中的数量
         /// </summary>
@@ -173,13 +210,13 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
-        bool DeleteById<T>(int id);
+        bool DeleteById<T>(string id);
         /// <summary>
         /// 移除 多个的集合
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
-        bool DeleteByIds<T>(List<int> ids);
+        bool DeleteByIds<T>(List<string> ids);
         /// <summary>
         /// 获取所有的集合数据
         /// </summary>
@@ -227,7 +264,13 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         Task<T> StringGetAsync<T>(string key);
-
+        ///// <summary>
+        ///// 获取多个key的值
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="keys"></param>
+        ///// <returns></returns>
+        //Task<T> StringGetMultipleAsync<T>(string[] keys);
         /// <summary>
         /// 存储list 集合
         /// </summary>
@@ -242,6 +285,15 @@ namespace Fate.Common.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         Task<List<T>> ListGetAsync<T>(string key);
+
+        /// <summary>
+        /// 取list 集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        Task<List<string>> ListGetAsync(string key);
+
+
         /// <summary>
         /// 删除list集合的某一项
         /// </summary>
@@ -254,6 +306,46 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <returns></returns>
         Task<long> ListLengthAsync(string key);
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<string> ListLeftPopAsync(string key);
+
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task ListRightPushAsync(string key, string value);
+
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<T> ListLeftPopAsync<T>(string key);
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<long> ListRightPushAsync<T>(string key, T value);
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<long> ListRightPushAsync(string key, string[] value);
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<long> ListRightPushAsync<T>(string key, List<T> value);
         /// <summary>
         /// 移除key
         /// </summary>

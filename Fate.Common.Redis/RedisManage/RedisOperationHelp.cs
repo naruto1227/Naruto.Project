@@ -4,7 +4,7 @@ using System.Text;
 using StackExchange.Redis;
 using Fate.Common.Redis.IRedisManage;
 using System.Threading.Tasks;
-
+using System.Linq;
 namespace Fate.Common.Redis.RedisManage
 {
     /// <summary>
@@ -79,12 +79,81 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value">value值</param>
-        public void ListRemove<T>(string key, T value)
+        public long ListRemove<T>(string key, T value)
         {
-            redisBase.DoSave(db => db.ListRemove(ListSysCustomKey + key, redisBase.ConvertJson(value)));
+            if (value == null)
+                throw new ApplicationException("值不能为空");
+            return redisBase.DoSave(db => db.ListRemove(ListSysCustomKey + key, redisBase.ConvertJson(value)));
         }
-
-
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string ListLeftPop(string key)
+        {
+            return redisBase.DoSave(db => db.ListLeftPop(ListSysCustomKey + key));
+        }
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public long ListRightPush(string key, string value)
+        {
+            if (value == null)
+                throw new ApplicationException("值不能为空");
+            return redisBase.DoSave(db => db.ListRightPush(ListSysCustomKey + key, value));
+        }
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public T ListLeftPop<T>(string key)
+        {
+            return redisBase.ConvertObj<T>(redisBase.DoSave(db => db.ListLeftPop(ListSysCustomKey + key)));
+        }
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public long ListRightPush<T>(string key, T value)
+        {
+            if (value == null)
+                throw new ApplicationException("值不能为空");
+            return redisBase.DoSave(db => db.ListRightPush(ListSysCustomKey + key, redisBase.ConvertJson(value)));
+        }
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public long ListRightPush(string key, string[] value)
+        {
+            if (value == null || value.Count()<=0)
+                throw new ApplicationException("值不能为空");
+            return redisBase.DoSave(db => db.ListRightPush(ListSysCustomKey + key, value.ToRedisValueArray()));
+        }
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public long ListRightPush<T>(string key, List<T> value)
+        {
+            if (value == null || value.Count <= 0)
+                throw new ApplicationException("值不能为空");
+            RedisValue[] redisValues = new RedisValue[value.Count];
+            for (int i = 0; i < value.Count; i++)
+            {
+                redisValues[i] = redisBase.ConvertJson(value[i]);
+            }
+            return redisBase.DoSave(db => db.ListRightPush(ListSysCustomKey + key, redisValues));
+        }
         /// <summary>
         /// 获取集合中的数量
         /// </summary>
@@ -130,6 +199,18 @@ namespace Fate.Common.Redis.RedisManage
             }
             return result;
         }
+
+        /// <summary>
+        /// 取list 集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        public async Task<List<string>> ListGetAsync(string key)
+        {
+            var vList = await redisBase.DoSave(db => db.ListRangeAsync(ListSysCustomKey + key));
+            return vList.ToStringArray().ToList();
+        }
+
         /// <summary>
         /// 删除list集合的某一项
         /// </summary>
@@ -137,6 +218,8 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value">value值</param>
         public async Task<long> ListRemoveAsync<T>(string key, T value)
         {
+            if (value == null)
+                throw new ApplicationException("值不能为空");
             return await redisBase.DoSave(db => db.ListRemoveAsync(ListSysCustomKey + key, redisBase.ConvertJson(value)));
         }
 
@@ -149,6 +232,76 @@ namespace Fate.Common.Redis.RedisManage
         public async Task<long> ListLengthAsync(string key)
         {
             return await redisBase.DoSave(db => db.ListLengthAsync(ListSysCustomKey + key));
+        }
+
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<string> ListLeftPopAsync(string key)
+        {
+            return await redisBase.DoSave(db => db.ListLeftPopAsync(ListSysCustomKey + key));
+        }
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task ListRightPushAsync(string key, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ApplicationException("值不能为空");
+            await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, value));
+        }
+        /// <summary>
+        /// 删除并返回存储在key上的列表的第一个元素。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<T> ListLeftPopAsync<T>(string key)
+        {
+            return redisBase.ConvertObj<T>((await redisBase.DoSave(db => db.ListLeftPopAsync(ListSysCustomKey + key))));
+        }
+        /// <summary>
+        /// 往最后推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<long> ListRightPushAsync<T>(string key, T value)
+        {
+            if (value==null)
+                throw new ApplicationException("值不能为空");
+            return await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, redisBase.ConvertJson(value)));
+        }
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<long> ListRightPushAsync<T>(string key, List<T> value)
+        {
+            if (value == null || value.Count <= 0)
+                throw new ApplicationException("值不能为空");
+            RedisValue[] redisValues = new RedisValue[value.Count];
+            for (int i = 0; i < value.Count; i++)
+            {
+                redisValues[i] = redisBase.ConvertJson(value[i]);
+            }
+            return await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, redisValues));
+        }
+        /// <summary>
+        /// 往末尾推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<long> ListRightPushAsync(string key, string[] value)
+        {
+            if (value == null || value.Count() <= 0)
+                throw new ApplicationException("值不能为空");
+            return await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, value.ToRedisValueArray()));
         }
         #endregion
 
@@ -265,8 +418,34 @@ namespace Fate.Common.Redis.RedisManage
         {
             key = StringSysCustomKey + key;
             var value = await redisBase.DoSave(db => db.StringGetAsync(key));
+            if (value.ToString() == null)
+            {
+                return default(T);
+            }
             return redisBase.ConvertObj<T>(value);
         }
+
+        ///// <summary>
+        ///// 获取多个key的值
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="keys"></param>
+        ///// <returns></returns>
+        //public async Task<T> StringGetMultipleAsync<T>(string[] keys) where T : class, new()
+        //{
+        //    if (keys == null)
+        //        throw new ApplicationException("参数不能为空");
+        //    T li = new T();
+        //    foreach (var item in keys)
+        //    {
+        //        var key = StringSysCustomKey + item;
+        //        var value = await redisBase.DoSave(db => db.StringGetAsync(key));
+        //        if (value.ToString() != null)
+        //        {
+        //            li(redisBase.ConvertObj<T>(value));
+        //        }
+        //    }
+        //}
         #endregion
         #endregion
 
@@ -276,7 +455,7 @@ namespace Fate.Common.Redis.RedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum=default)
+        public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
             if (keyOperatorEnum == KeyOperatorEnum.STRING)
             {
@@ -300,7 +479,7 @@ namespace Fate.Common.Redis.RedisManage
         public bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
 
-            if (keyOperatorEnum== KeyOperatorEnum.STRING)
+            if (keyOperatorEnum == KeyOperatorEnum.STRING)
             {
                 key = StringSysCustomKey + key;
             }
@@ -684,7 +863,7 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
-        public bool DeleteById<T>(int id)
+        public bool DeleteById<T>(string id)
         {
             //获取实体的信息
             var type = typeof(T);
@@ -694,7 +873,7 @@ namespace Fate.Common.Redis.RedisManage
             var tran = redisBase.DoSave(db => db.CreateTransaction());
             tran.SetRemoveAsync(SetSysCustomKey + type.Name, id);
             tran.KeyDeleteAsync(key + id.ToString());
-           return tran.Execute();
+            return tran.Execute();
         }
 
         /// <summary>
@@ -702,7 +881,7 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
-        public bool DeleteByIds<T>(List<int> ids)
+        public bool DeleteByIds<T>(List<string> ids)
         {
             if (ids != null && ids.Count > 0)
             {
@@ -717,7 +896,7 @@ namespace Fate.Common.Redis.RedisManage
                     tran.SetRemoveAsync(SetSysCustomKey + type.Name, item);
                     tran.KeyDeleteAsync(key + item.ToString());
                 }
-               return tran.Execute();
+                return tran.Execute();
             }
             return false;
 
