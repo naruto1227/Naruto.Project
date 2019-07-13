@@ -10,14 +10,17 @@ using Fate.Domain.Event;
 using Fate.Domain.Event.Infrastructure;
 using Fate.Domain.Event.Events;
 using Fate.Domain.Event.EventHandlers;
+using Fate.Domain.Event.Infrastructure.Redis;
 
 namespace Fate.Domain.Services
 {
     public class Setting : ISetting
     {
         private IUnitOfWork unitOfWork;
-        public Setting(IUnitOfWork _unitOfWork)
+        private RedisStoreEventBus redisStoreEventBus;
+        public Setting(IUnitOfWork _unitOfWork, RedisStoreEventBus _redisStoreEventBus)
         {
+            redisStoreEventBus = _redisStoreEventBus;
             unitOfWork = _unitOfWork;
         }
 
@@ -31,7 +34,7 @@ namespace Fate.Domain.Services
         /// 事件测试
         /// </summary>
         /// <returns></returns>
-        public Task EventTest()
+        public async Task EventTest()
         {
             //注册
             //EventBus.Default.Register(new EventHandlerTest());
@@ -42,13 +45,14 @@ namespace Fate.Domain.Services
             //Fate.Domain.Event.Infrastructure.Redis.RedisStoreEventBus.Default.RegisterAllFromAssembly();
             //Fate.Domain.Event.Infrastructure.Redis.RedisStoreEventBus.Default.Trigger(new EventTest() { Mesage = "触发的事件" });
             //Fate.Domain.Event.Infrastructure.Redis.RedisStoreEventBus.Default.HandleFailEvent();
-            return Task.FromResult(0);
+            await redisStoreEventBus.Register(new EventHandlerTest());
+            await redisStoreEventBus.Trigger(new EventTest() { Mesage = "触发的事件" });
         }
 
         public async Task testEF()
         {
             //await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().DeleteAsync(a=>a.Id==1);
-            
+
             var info = await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().FindAsync(a => a.Id == 6);
             info.Contact = "sssssssssss";
             await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().UpdateAsync(info);

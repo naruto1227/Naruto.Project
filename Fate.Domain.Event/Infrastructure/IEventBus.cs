@@ -9,7 +9,7 @@ namespace Fate.Domain.Event.Infrastructure
     /// <summary>
     /// 事件总线继承的接口 实现依赖注入
     /// </summary>
-    public interface IEventBus
+    public interface IEventBus : IEventDependency
     {
         /// <summary>
         /// 注册
@@ -40,7 +40,7 @@ namespace Fate.Domain.Event.Infrastructure
         /// <typeparam name="TEvent"></typeparam>
         /// <param name="handlerType"></param>
 
-        Task UnRegister<TEvent>(IEventHandler<TEvent> handlerType) where TEvent :class, IEventData;
+        Task UnRegister<TEvent>(IEventHandler<TEvent> handlerType) where TEvent : class, IEventData;
         /// <summary>
         /// 触发
         /// </summary>
@@ -48,7 +48,7 @@ namespace Fate.Domain.Event.Infrastructure
         /// <param name="eventHandlerType"></param>
         /// <param name="eventData"></param>
 
-        Task Trigger<TEvent>(TEvent eventData) where TEvent :class, IEventData;
+        Task Trigger<TEvent>(TEvent eventData) where TEvent : class, IEventData;
 
     }
 }

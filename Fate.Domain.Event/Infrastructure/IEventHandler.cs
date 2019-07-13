@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Fate.Domain.Event.Infrastructure
 {
-    public interface IEventHandler
+    public interface IEventHandler: IEventDependency
     {
 
     }

@@ -56,6 +56,8 @@ namespace Fate.Test
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
 
             services.AddScoped(typeof(List<>));
+
+            services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
             return new AutofacServiceProvider(ApplicationContainer);

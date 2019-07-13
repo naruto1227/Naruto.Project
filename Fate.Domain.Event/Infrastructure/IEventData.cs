@@ -7,7 +7,7 @@ namespace Fate.Domain.Event.Infrastructure
     /// <summary>
     /// 事件实体接口
     /// </summary>
-    public interface IEventData 
+    public interface IEventData : IEventDependency
     {
         /// <summary>
         /// 事件的发生的时间

@@ -17,10 +17,6 @@ namespace Fate.Common.Ioc.Core
             //InstancePerLifetimeScope：同一个Lifetime生成的对象是同一个实例
             //SingleInstance：单例模式，每次调用，都会使用同一个实例化的对象；每次都用同一个对象；
             //InstancePerDependency：默认模式，每次调用，都会重新实例化对象；每次请求都创建一个新的对象；
-
-            //获取领域服务接口的类型
-            //var baseTypeDomain = typeof(Fate.Domain.Interface.IDomainServicesAutoInject);
-            //var baseTypeApp = typeof(IAppServicesAutoInject);
             //获取所有需要依赖注入的程序集
             //.Domain是服务所在程序集命名空间  
             Assembly assembliesDomain = Assembly.Load("Fate.Domain");
@@ -39,6 +35,8 @@ namespace Fate.Common.Ioc.Core
 
             //注入实体层
             Assembly assemblyModel = Assembly.Load("Fate.Domain.Model");
+            //注入领域事件
+            Assembly assemblyEvent = Assembly.Load("Fate.Domain.Event");
 
             //自动注册接口
             builder.RegisterAssemblyTypes(assemblies.ToArray())
@@ -59,6 +57,8 @@ namespace Fate.Common.Ioc.Core
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassSigleDependency") != null).SingleInstance();
             //注入领域实体
             builder.RegisterAssemblyTypes(assemblyModel).Where(a => a.GetInterface("IModelDependency") != null).InstancePerDependency();
+            //注入领域事件
+            builder.RegisterAssemblyTypes(assemblyEvent).Where(a => a.GetInterface("IEventDependency") != null).InstancePerLifetimeScope();
             builder.Populate(services);
             container = builder.Build();
             return container;

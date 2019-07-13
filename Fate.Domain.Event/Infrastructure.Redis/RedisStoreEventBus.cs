@@ -9,9 +9,7 @@ using Fate.Common.Redis.IRedisManage;
 using Fate.Common.Redis.RedisConfig;
 using Newtonsoft.Json;
 using StackExchange.Redis;
-using Fate.Domain.Event.Infrastructure.Redis;
 using System.Reflection;
-
 namespace Fate.Domain.Event.Infrastructure.Redis
 {
     /// <summary>
@@ -19,11 +17,11 @@ namespace Fate.Domain.Event.Infrastructure.Redis
     /// </summary>
     public class RedisStoreEventBus : IEventBus
     {
-        /// <summary>
-        /// 将事件存放到redis中
-        /// </summary>
-        private IDatabase redis = RedisConnectionHelp.RedisConnection.GetDatabase();
-
+        private IRedisOperationHelp redis;
+        public RedisStoreEventBus(IRedisOperationHelp _redis)
+        {
+            redis = _redis;
+        }
         /// <summary>
         /// 存放所有的事件的key
         /// </summary>
@@ -37,21 +35,6 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         /// </summary>
         private static readonly object sync = new object();
 
-        /// <summary>
-        ///  定义一个静态的实例 实现一个唯一的入口访问事件总线 来操作
-        /// </summary>
-        public static RedisStoreEventBus Default { get; set; }
-        /// <summary>
-        /// 静态构造初始一个实例
-        /// </summary>
-        static RedisStoreEventBus()
-        {
-            Default = new RedisStoreEventBus();
-        }
-        public RedisStoreEventBus()
-        {
-
-        }
         /// <summary>
         /// 事件的触发
         /// </summary>
@@ -103,7 +86,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
             {
                 redis.HashDeleteAsync(RedisEventHashKey, typeof(TEvent).ToString());
             }
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
         /// <summary>
         /// 注册
@@ -118,7 +101,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                 //将注册的事件写入redis缓存
                 redis.HashSetAsync(RedisEventHashKey, typeof(TEvent).ToString(), eventHandler.EventToJson());
             }
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
         /// <summary>
         /// 从程序集注册所有事件 (可放在系统启动的时候 运行)
@@ -160,9 +143,9 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         /// <returns></returns>
         public async Task ClearAllEvent()
         {
-            if (await redis.KeyExistsAsync(RedisEventHashKey))
+            if (await redis.KeyExistsAsync(RedisEventHashKey,Common.Redis.KeyOperatorEnum.Hash))
             {
-                await redis.KeyDeleteAsync(RedisEventHashKey);
+                await redis.KeyRemoveAsync(RedisEventHashKey, Common.Redis.KeyOperatorEnum.Hash);
             }
         }
 
@@ -189,7 +172,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                         //获取方法的参数 因为方法只有一个参数所以默认取第一个
                         var param = method.GetParameters()[0];
                         //定义方法的参数
-                        var oldInfo = JsonConvert.DeserializeObject(eventHandle.Name.ToString()).ToString();
+                        var oldInfo = JsonConvert.DeserializeObject(eventHandle.Key.ToString()).ToString();
                         /*
                          动态创建实例 并为当前实例 赋值 
                          注意 Activator.CreateInstance(s.ParameterType, oldInfo) 此方法的实现需要为事件实体 创建一个有参构造函数 进行动态赋值
@@ -198,7 +181,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                         //执行方法
                         method.Invoke(obj, parameters);
                         //删除
-                        redis.HashDeleteAsync(RedisEventFailHashKey, eventHandle.Name);
+                        redis.HashDeleteAsync(RedisEventFailHashKey, eventHandle.Key);
                     });
                 }
             }
