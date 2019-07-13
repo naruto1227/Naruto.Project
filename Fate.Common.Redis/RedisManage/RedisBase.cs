@@ -40,7 +40,15 @@ namespace Fate.Common.Redis.RedisManage
         {
             return action(redisDataBase);
         }
-
+        /// <summary>
+        /// 执行缓存库保存 无返回值
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public void DoSave(Action<IDatabase> action)
+        {
+            action(redisDataBase);
+        }
         /// <summary>
         /// 序列化
         /// </summary>

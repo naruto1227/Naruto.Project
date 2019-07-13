@@ -38,6 +38,10 @@ namespace Fate.Common.Redis.RedisManage
         /// Store的前缀
         /// </summary>
         private readonly string StoreSysCustomKey = "urn:";
+        /// <summary>
+        /// hash的前缀
+        /// </summary>
+        private readonly string HashSysCustomKey = "hash:";
 
         #region list
         #region 同步
@@ -977,6 +981,189 @@ namespace Fate.Common.Redis.RedisManage
             }
             return li;
         }
+        #endregion
+
+        #region hash
+
+        #region 同步
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashField"需要删除的字段</param>
+        /// <returns></returns>
+        public bool HashDelete(RedisKey key, string hashField)
+            => redisBase.DoSave(db => db.HashDelete(key, hashField));
+
+        /// <summary>
+        /// 删除多条
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashFields"需要删除的字段</param>
+        /// <returns></returns>
+        public long HashDelete(RedisKey key, string[] hashFields)
+        {
+            if (hashFields == null || hashFields.Count() <= 0)
+                throw new ApplicationException("值不能为空");
+            return redisBase.DoSave(db => db.HashDelete(key, hashFields.ToRedisValueArray()));
+        }
+
+        /// <summary>
+        /// 验证是否存在指定列
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        public bool HashExists(RedisKey key, string hashField) => redisBase.DoSave(db => db.HashExists(key, hashField));
+        /// <summary>
+        /// 获取指定的列的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        public string HashGet(RedisKey key, string hashField)
+        {
+            var res = redisBase.DoSave(db => db.HashGet(key, hashField));
+            return !res.IsNull ? res.ToString() : default;
+        }
+
+        /// <summary>
+        /// 获取多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields"></param>
+        /// <returns></returns>
+        public string[] HashGet(RedisKey key, string[] hashFields)
+        {
+            if (hashFields == null || hashFields.Count() <= 0)
+                throw new ApplicationException("值不能为空");
+            var res = redisBase.DoSave(db => db.HashGet(key, hashFields.ToRedisValueArray()));
+            return res != null ? res.ToStringArray() : default;
+        }
+        /// <summary>
+        /// 获取hash的长度
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public long HashLength(RedisKey key) => redisBase.DoSave(db => db.HashLength(key));
+
+        /// <summary>
+        /// 存储hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields">存储的数据key-value结构</param>
+        /// <returns></returns>
+        public void HashSet(RedisKey key, HashEntry[] hashFields)
+        {
+            if (hashFields == null || hashFields.Count() <= 0)
+                throw new ApplicationException("值不能为空");
+            redisBase.DoSave(db=>db.HashSet(key, hashFields));
+        }
+
+        /// <summary>
+        /// 储存单条hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField">字段名</param>
+        /// <param name="value">值</param>
+        /// <returns></returns>
+        public bool HashSet(RedisKey key, string hashField, string value)
+        {
+            return redisBase.DoSave(db => db.HashSet(key, hashField, value));
+        }
+
+        #endregion
+
+        #region 异步
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashField"需要删除的字段</param>
+        /// <returns></returns>
+        public Task<bool> HashDeleteAsync(RedisKey key, string hashField)
+            => redisBase.DoSave(db => db.HashDeleteAsync(key, hashField));
+
+        /// <summary>
+        /// 删除多条
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashFields"需要删除的字段</param>
+        /// <returns></returns>
+        public Task<long> HashDeleteAsync(RedisKey key, string[] hashFields)
+        {
+            if (hashFields == null || hashFields.Count() <= 0)
+                throw new ApplicationException("值不能为空");
+            return redisBase.DoSave(db => db.HashDeleteAsync(key, hashFields.ToRedisValueArray()));
+        }
+
+        /// <summary>
+        /// 验证是否存在指定列
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        public Task<bool> HashExistsAsync(RedisKey key, string hashField) => redisBase.DoSave(db => db.HashExistsAsync(key, hashField));
+        /// <summary>
+        /// 获取指定的列的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        public async Task<string> HashGetAsync(RedisKey key, string hashField)
+        {
+            var res = await redisBase.DoSave(db => db.HashGetAsync(key, hashField));
+            return !res.IsNull ? res.ToString() : default;
+        }
+
+        /// <summary>
+        /// 获取多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields"></param>
+        /// <returns></returns>
+        public async Task<string[]> HashGetAsync(RedisKey key, string[] hashFields)
+        {
+            if (hashFields == null || hashFields.Count() <= 0)
+                throw new ApplicationException("值不能为空");
+            var res = await redisBase.DoSave(db => db.HashGetAsync(key, hashFields.ToRedisValueArray()));
+            return res != null ? res.ToStringArray() : default;
+        }
+        /// <summary>
+        /// 获取hash的长度
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+       public Task<long> HashLengthAsync(RedisKey key) => redisBase.DoSave(db => db.HashLengthAsync(key));
+
+        /// <summary>
+        /// 存储hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields">存储的数据key-value结构</param>
+        /// <returns></returns>
+        public Task HashSetAsync(RedisKey key, HashEntry[] hashFields)
+        {
+            if (hashFields == null || hashFields.Count() <= 0)
+                throw new ApplicationException("值不能为空");
+            return redisBase.DoSave(db => db.HashSetAsync(key, hashFields));
+        }
+
+        /// <summary>
+        /// 储存单条hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField">字段名</param>
+        /// <param name="value">值</param>
+        /// <returns></returns>
+        public Task<bool> HashSetAsync(RedisKey key, string hashField, string value)
+        {
+            return redisBase.DoSave(db => db.HashSetAsync(key, hashField, value));
+        }
+        #endregion
+
         #endregion
 
         #region 发布订阅

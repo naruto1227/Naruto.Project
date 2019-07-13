@@ -13,6 +13,8 @@ namespace Fate.Common.Redis.IRedisManage
     public interface IRedisOperationHelp : IRedisDependency
     {
         #region 同步
+
+        #region list
         /// <summary>
         /// 存储list 集合
         /// </summary>
@@ -79,6 +81,10 @@ namespace Fate.Common.Redis.IRedisManage
         /// <returns></returns>
         long ListLength(string key);
 
+        #endregion
+
+        #region string
+
         /// <summary>
         /// 保存字符串
         /// </summary>
@@ -106,6 +112,10 @@ namespace Fate.Common.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         T StringGet<T>(string key);
 
+        #endregion
+
+        #region key
+
         /// <summary>
         /// 移除key
         /// </summary>
@@ -116,6 +126,10 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <param name="key"></param>
         bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default);
+
+        #endregion
+
+        #region SortedSet
 
         /// <summary>
         /// SortedSet 新增
@@ -144,6 +158,10 @@ namespace Fate.Common.Redis.IRedisManage
         /// 移除SortedSet
         /// </summary>
         bool SortedSetRemove<T>(string key, T value);
+
+        #endregion
+
+        #region Set
 
         /// <summary>
         /// 新增
@@ -186,6 +204,9 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         void SetRemove(string key, string value);
+        #endregion
+
+        #region Store
 
         /// <summary>
         /// 保存一个集合 （事务）
@@ -238,9 +259,79 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="id"></param>
         /// <returns></returns>
         List<T> GetByIds<T>(List<int> ids);
+
+        #endregion
+
+        #region hash
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashField"需要删除的字段</param>
+        /// <returns></returns>
+        bool HashDelete(RedisKey key, string hashField);
+
+        /// <summary>
+        /// 删除多条
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashFields"需要删除的字段</param>
+        /// <returns></returns>
+        long HashDelete(RedisKey key, string[] hashFields);
+        /// <summary>
+        /// 验证是否存在指定列
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        bool HashExists(RedisKey key, string hashField);
+        /// <summary>
+        /// 获取指定的列的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        string HashGet(RedisKey key, string hashField);
+
+        /// <summary>
+        /// 获取多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields"></param>
+        /// <returns></returns>
+        string[] HashGet(RedisKey key, string[] hashFields);
+        /// <summary>
+        /// 获取hash的长度
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        long HashLength(RedisKey key);
+
+        /// <summary>
+        /// 存储hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields">存储的数据key-value结构</param>
+        /// <returns></returns>
+        void HashSet(RedisKey key, HashEntry[] hashFields);
+
+        /// <summary>
+        /// 储存单条hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField">字段名</param>
+        /// <param name="value">值</param>
+        /// <returns></returns>
+        bool HashSet(RedisKey key, string hashField, string value);
+
+        #endregion
         #endregion
 
         #region 异步
+
+        #region string
+
         /// <summary>
         /// 保存字符串
         /// </summary>
@@ -264,6 +355,9 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         Task<T> StringGetAsync<T>(string key);
+
+        #endregion
+
         ///// <summary>
         ///// 获取多个key的值
         ///// </summary>
@@ -271,6 +365,8 @@ namespace Fate.Common.Redis.IRedisManage
         ///// <param name="keys"></param>
         ///// <returns></returns>
         //Task<T> StringGetMultipleAsync<T>(string[] keys);
+        #region list
+
         /// <summary>
         /// 存储list 集合
         /// </summary>
@@ -346,6 +442,9 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="value"></param>
         /// <returns></returns>
         Task<long> ListRightPushAsync<T>(string key, List<T> value);
+        #endregion
+
+        #region key
         /// <summary>
         /// 移除key
         /// </summary>
@@ -357,6 +456,9 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <param name="key"></param>
         Task<bool> KeyExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default);
+        #endregion
+
+        #region SortedSet
 
         /// <summary>
         /// SortedSet 新增
@@ -384,6 +486,11 @@ namespace Fate.Common.Redis.IRedisManage
         /// 移除SortedSet
         /// </summary>
         Task<bool> SortedSetRemoveAsync<T>(string key, T value);
+
+        #endregion
+
+        #region set
+
         /// <summary>
         /// 新增
         /// </summary>
@@ -425,6 +532,74 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         Task<bool> SetRemoveAsync(string key, string value);
+
+        #endregion
+
+        #region hash
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashField"需要删除的字段</param>
+        /// <returns></returns>
+        Task<bool> HashDeleteAsync(RedisKey key, string hashField);
+
+        /// <summary>
+        /// 删除多条
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <param name="hashFields"需要删除的字段</param>
+        /// <returns></returns>
+        Task<long> HashDeleteAsync(RedisKey key, string[] hashFields);
+        /// <summary>
+        /// 验证是否存在指定列
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        Task<bool> HashExistsAsync(RedisKey key, string hashField);
+        /// <summary>
+        /// 获取指定的列的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        Task<string> HashGetAsync(RedisKey key, string hashField);
+
+        /// <summary>
+        /// 获取多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields"></param>
+        /// <returns></returns>
+        Task<string[]> HashGetAsync(RedisKey key, string[] hashFields);
+        /// <summary>
+        /// 获取hash的长度
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<long> HashLengthAsync(RedisKey key);
+
+        /// <summary>
+        /// 存储hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashFields">存储的数据key-value结构</param>
+        /// <returns></returns>
+        Task HashSetAsync(RedisKey key, HashEntry[] hashFields);
+
+        /// <summary>
+        /// 储存单条hash值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashField">字段名</param>
+        /// <param name="value">值</param>
+        /// <returns></returns>
+        Task<bool> HashSetAsync(RedisKey key, string hashField, string value);
+
+        #endregion
+
         #endregion
 
         #region 发布订阅
@@ -446,7 +621,7 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler=null);
+        void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null);
         /// <summary>
         /// 取消所有的订阅
         /// </summary>

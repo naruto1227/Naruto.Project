@@ -26,6 +26,11 @@ namespace Fate.Common.Redis.IRedisManage
         /// <returns></returns>
         TResult DoSave<TResult>(Func<IDatabase, TResult> action);
         /// <summary>
+        /// 保存 无返回值的
+        /// </summary>
+        /// <param name="action"></param>
+        void DoSave(Action<IDatabase> action);
+        /// <summary>
         /// 序列化
         /// </summary>
         /// <typeparam name="T"></typeparam>
