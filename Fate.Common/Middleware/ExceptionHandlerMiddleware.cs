@@ -53,8 +53,7 @@ namespace Fate.Common.Middleware
                     myJsonResult.failMsg = ex.Message;
                     myJsonResult.msg = "请求异常";
                     //转换成错误的集合
-                    var exceptionList = ex.ToString().Trim().Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-                    NLogHelper.Default.Error(exceptionList[1] != null && exceptionList[1].Length > 2 ? exceptionList[1].Trim().Remove(0, 2) : "" + "\n错误消息：" + ex.Message + "\n");//记录日志
+                    NLogHelper.Default.Error("\n错误消息：" + ex.ToString().Trim() + "\n");//记录日志
                 }
 
                 await HandleExceptionAsync(context, myJsonResult);
