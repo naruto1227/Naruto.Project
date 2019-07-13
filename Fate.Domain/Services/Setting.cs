@@ -48,7 +48,7 @@ namespace Fate.Domain.Services
         public async Task testEF()
         {
             //await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().DeleteAsync(a=>a.Id==1);
-            await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().BulkDeleteAsync(a => a.Id < 6);
+            
             var info = await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().FindAsync(a => a.Id == 6);
             info.Contact = "sssssssssss";
             await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().UpdateAsync(info);

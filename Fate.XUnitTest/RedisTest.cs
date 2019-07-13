@@ -20,7 +20,7 @@ namespace Fate.XUnitTest
             });
             //发布
             subscriber.Publish("push", "你好");
-
+            Console.WriteLine("1");
         }
     }
 }

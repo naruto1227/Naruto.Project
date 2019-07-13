@@ -13,6 +13,7 @@ using Fate.Domain.Model.Entities;
 using Fate.Common.Ioc.Core;
 using Fate.Common.Infrastructure;
 using Fate.Common.Repository.Mysql;
+using StackExchange.Redis;
 
 namespace Fate.Test.Controllers
 {
@@ -49,7 +50,7 @@ namespace Fate.Test.Controllers
         public async Task test33()
         {
             List<setting> list = Common.Ioc.Core.AutofacInit.Resolve<List<setting>>();
-            List<string> li= Common.Ioc.Core.AutofacInit.Resolve<List<string>>();
+            List<string> li = Common.Ioc.Core.AutofacInit.Resolve<List<string>>();
             list.Remove(list[0]);
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
         }
@@ -105,6 +106,20 @@ namespace Fate.Test.Controllers
         public void model()
         {
             var str = AutofacInit.Resolve<setting>();
+        }
+
+        public string subTest()
+        {
+            Action<RedisChannel, RedisValue> handler = (channel, message) =>
+            {
+                Console.WriteLine(channel);
+                   Console.WriteLine(message);
+            };
+            redis.Subscribe("push", handler);
+
+            ////发布
+            redis.Publish("push", "你好");
+            return "1";
         }
     }
 }

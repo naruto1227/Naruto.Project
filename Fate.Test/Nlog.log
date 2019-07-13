@@ -2703,3 +2703,78 @@
    at NLog.Targets.DatabaseTarget.Write(LogEventInfo logEvent)
 2019-07-11 10:46:31.6570 Info AppDomain Shutting down. Logger closing...
 2019-07-11 10:46:31.6714 Info Logger has been shut down.
+2019-07-13 19:25:36.7848 Info Message Template Auto Format enabled
+2019-07-13 19:25:36.8025 Info Loading assembly: NLog.Web.AspNetCore
+2019-07-13 19:25:36.9138 Info Adding target FileTarget(Name=info-file)
+2019-07-13 19:25:36.9138 Info Adding target FileTarget(Name=error-file)
+2019-07-13 19:25:36.9138 Info Adding target FileTarget(Name=debug-file)
+2019-07-13 19:25:36.9138 Info Adding target FileTarget(Name=trace-file)
+2019-07-13 19:25:36.9138 Info Adding target FileTarget(Name=fatal-file)
+2019-07-13 19:25:36.9374 Info Adding target DatabaseTarget(Name=database-file)
+2019-07-13 19:25:36.9374 Info Adding target NullTarget(Name=blackhole)
+2019-07-13 19:25:36.9920 Info Found 102 configuration items
+2019-07-13 19:25:41.6180 Info FileTarget: Pattern {#} is missing in ArchiveFileName `D:\Fate.DDD\Fate.Test\bin\Debug\netcoreapp2.2\Logs\Error\2019-07-13.log` (Fallback to dynamic wildcard)
+2019-07-13 19:25:46.6757 Error DatabaseTarget(Name=database-file): Error when writing to database. Exception: MySql.Data.MySqlClient.MySqlException (0x80004005): Host 'DESKTOP-KMMH39K' is not allowed to connect to this MySQL server
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString)
+   at NLog.Targets.DatabaseTarget.WriteEventToDatabase(LogEventInfo logEvent, String connectionString)
+   at NLog.Targets.DatabaseTarget.Write(LogEventInfo logEvent)
+2019-07-13 21:32:46.6044 Info Message Template Auto Format enabled
+2019-07-13 21:32:46.6178 Info Loading assembly: NLog.Web.AspNetCore
+2019-07-13 21:32:46.7292 Info Adding target FileTarget(Name=info-file)
+2019-07-13 21:32:46.7357 Info Adding target FileTarget(Name=error-file)
+2019-07-13 21:32:46.7357 Info Adding target FileTarget(Name=debug-file)
+2019-07-13 21:32:46.7357 Info Adding target FileTarget(Name=trace-file)
+2019-07-13 21:32:46.7357 Info Adding target FileTarget(Name=fatal-file)
+2019-07-13 21:32:46.7522 Info Adding target DatabaseTarget(Name=database-file)
+2019-07-13 21:32:46.7522 Info Adding target NullTarget(Name=blackhole)
+2019-07-13 21:32:46.8116 Info Found 102 configuration items
+2019-07-13 21:32:51.7977 Info FileTarget: Pattern {#} is missing in ArchiveFileName `D:\Fate.DDD\Fate.Test\bin\Debug\netcoreapp2.2\Logs\Error\2019-07-13.log` (Fallback to dynamic wildcard)
+2019-07-13 21:32:52.3716 Error DatabaseTarget(Name=database-file): Error when writing to database. Exception: MySql.Data.MySqlClient.MySqlException (0x80004005): Host 'DESKTOP-KMMH39K' is not allowed to connect to this MySQL server
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString)
+   at NLog.Targets.DatabaseTarget.WriteEventToDatabase(LogEventInfo logEvent, String connectionString)
+   at NLog.Targets.DatabaseTarget.Write(LogEventInfo logEvent)
+2019-07-13 21:34:50.3337 Info Message Template Auto Format enabled
+2019-07-13 21:34:50.3470 Info Loading assembly: NLog.Web.AspNetCore
+2019-07-13 21:34:50.4710 Info Adding target FileTarget(Name=info-file)
+2019-07-13 21:34:50.4821 Info Adding target FileTarget(Name=error-file)
+2019-07-13 21:34:50.4821 Info Adding target FileTarget(Name=debug-file)
+2019-07-13 21:34:50.4821 Info Adding target FileTarget(Name=trace-file)
+2019-07-13 21:34:50.4821 Info Adding target FileTarget(Name=fatal-file)
+2019-07-13 21:34:50.5008 Info Adding target DatabaseTarget(Name=database-file)
+2019-07-13 21:34:50.5008 Info Adding target NullTarget(Name=blackhole)
+2019-07-13 21:34:50.5570 Info Found 102 configuration items
+2019-07-13 21:34:54.1081 Info FileTarget: Pattern {#} is missing in ArchiveFileName `D:\Fate.DDD\Fate.Test\bin\Debug\netcoreapp2.2\Logs\Error\2019-07-13.log` (Fallback to dynamic wildcard)
+2019-07-13 21:34:54.5339 Error DatabaseTarget(Name=database-file): Error when writing to database. Exception: MySql.Data.MySqlClient.MySqlException (0x80004005): Host 'DESKTOP-KMMH39K' is not allowed to connect to this MySQL server
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+   at MySql.Data.MySqlClient.Driver.Open()
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString)
+   at NLog.Targets.DatabaseTarget.WriteEventToDatabase(LogEventInfo logEvent, String connectionString)
+   at NLog.Targets.DatabaseTarget.Write(LogEventInfo logEvent)

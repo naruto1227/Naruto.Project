@@ -133,7 +133,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public long ListRightPush(string key, string[] value)
         {
-            if (value == null || value.Count()<=0)
+            if (value == null || value.Count() <= 0)
                 throw new ApplicationException("值不能为空");
             return redisBase.DoSave(db => db.ListRightPush(ListSysCustomKey + key, value.ToRedisValueArray()));
         }
@@ -270,7 +270,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public async Task<long> ListRightPushAsync<T>(string key, T value)
         {
-            if (value==null)
+            if (value == null)
                 throw new ApplicationException("值不能为空");
             return await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, redisBase.ConvertJson(value)));
         }
@@ -977,6 +977,92 @@ namespace Fate.Common.Redis.RedisManage
             }
             return li;
         }
+        #endregion
+
+        #region 发布订阅
+        #region 同步
+        /// <summary>
+        /// 订阅消息
+        /// </summary>
+        /// <param name="chanel">订阅的名称</param>
+        /// <param name="handler">需要处理的事件</param>
+        public void Subscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            subscriber.Subscribe(chanel, handler);
+        }
+        /// <summary>
+        /// 发布消息
+        /// </summary>
+        /// <param name="channel">被订阅的name</param>
+        /// <param name="message">需要传递的参数</param>
+        public long Publish(RedisChannel channel, RedisValue message)
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            return subscriber.Publish(channel, message);
+        }
+        /// <summary>
+        /// 取消订阅
+        /// </summary>
+        /// <param name="chanel">订阅的名称</param>
+        /// <param name="handler">需要处理的事件</param>
+        public void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            subscriber.Unsubscribe(chanel, handler);
+        }
+        /// <summary>
+        /// 取消所有的订阅
+        /// </summary>
+        public void UnsubscribeAll()
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            subscriber.UnsubscribeAll();
+        }
+        #endregion
+        #region 异步
+        /// <summary>
+        /// 订阅消息
+        /// </summary>
+        /// <param name="chanel">订阅的名称</param>
+        /// <param name="handler">需要处理的事件</param>
+        public Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            subscriber.SubscribeAsync(chanel, handler);
+            return Task.CompletedTask;
+        }
+        /// <summary>
+        /// 发布消息
+        /// </summary>
+        /// <param name="channel">被订阅的name</param>
+        /// <param name="message">需要传递的参数</param>
+        public Task<long> PublishAsync(RedisChannel channel, RedisValue message)
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            return subscriber.PublishAsync(channel, message);
+        }
+        /// <summary>
+        /// 取消订阅
+        /// </summary>
+        /// <param name="chanel">订阅的名称</param>
+        /// <param name="handler">需要处理的事件</param>
+        public Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            subscriber.UnsubscribeAsync(chanel, handler);
+            return Task.CompletedTask;
+        }
+        /// <summary>
+        /// 取消所有的订阅
+        /// </summary>
+        public Task UnsubscribeAllAsync()
+        {
+            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            subscriber.UnsubscribeAllAsync();
+            return Task.CompletedTask;
+        }
+        #endregion
         #endregion
 
     }

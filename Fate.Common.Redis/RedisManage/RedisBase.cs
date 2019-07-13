@@ -22,6 +22,13 @@ namespace Fate.Common.Redis.RedisManage
                 return RedisConfig.RedisConnectionHelp.RedisConnection.GetDatabase();
             }
         }
+        public ConnectionMultiplexer RedisConnection
+        {
+            get
+            {
+                return RedisConfig.RedisConnectionHelp.RedisConnection;
+            }
+        }
 
         /// <summary>
         /// 执行缓存库保存

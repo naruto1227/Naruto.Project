@@ -8,12 +8,16 @@ namespace Fate.Common.Redis.IRedisManage
     /// <summary>
     /// 缓存的基类 
     /// </summary>
-    public interface IRedisBase: IRedisDependency
+    public interface IRedisBase : IRedisDependency
     {
         /// <summary>
         /// 访问存储库
         /// </summary>
         IDatabase redisDataBase { get; }
+        /// <summary>
+        /// 实例连接
+        /// </summary>
+        ConnectionMultiplexer RedisConnection { get; }
         /// <summary>
         /// 保存
         /// </summary>
