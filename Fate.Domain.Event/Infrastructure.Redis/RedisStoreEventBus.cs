@@ -53,16 +53,16 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                 {
                     //执行方法
                     await res.Handle(eventData);
-                    //执行成功清理事件
-                    if (eventData.IsFail == false)
-                    {
-                        await redis.HashDeleteAsync(RedisEventHashKey, eventData.GetType().ToString());
-                    }
-                    else
+                    //验证事件是否执行成功
+                    if (eventData.IsFail)
                     {
                         //存储到失败的集合
                         await redis.HashSetAsync(RedisEventFailHashKey, JsonConvert.SerializeObject(eventData), res.GetType().FullName);
                     }
+                    //else
+                    //{
+                    //    await redis.HashDeleteAsync(RedisEventHashKey, eventData.GetType().ToString());
+                    //}
                 });
             }
         }
@@ -80,7 +80,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         /// <typeparam name="TEvent">事件实体</typeparam>
         /// <param name="handlerType">事件的动作</param>
         /// <returns></returns>
-        public Task UnRegister<TEvent>(IEventHandler<TEvent> handlerType) where TEvent : class, IEventData
+        public Task UnRegister<TEvent>() where TEvent : class, IEventData
         {
             lock (sync)
             {

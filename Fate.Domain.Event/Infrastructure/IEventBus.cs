@@ -40,7 +40,7 @@ namespace Fate.Domain.Event.Infrastructure
         /// <typeparam name="TEvent"></typeparam>
         /// <param name="handlerType"></param>
 
-        Task UnRegister<TEvent>(IEventHandler<TEvent> handlerType) where TEvent : class, IEventData;
+        Task UnRegister<TEvent>() where TEvent : class, IEventData;
         /// <summary>
         /// 触发
         /// </summary>
