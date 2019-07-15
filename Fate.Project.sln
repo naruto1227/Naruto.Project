@@ -37,7 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.IdentityServer4", "Fat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.FileServerApi", "Fate.FileServerApi\Fate.FileServerApi.csproj", "{D974FF83-A946-4EEE-A584-2955E68EA0C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.TimeServer", "Fate.TimeServer\Fate.TimeServer.csproj", "{307B30CA-0FB6-4B08-9696-B9612B9BD9CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.TimeServer", "Fate.TimeServer\Fate.TimeServer.csproj", "{307B30CA-0FB6-4B08-9696-B9612B9BD9CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Common.RabbitMQ", "Fate.Common.RabbitMQ\Fate.Common.RabbitMQ.csproj", "{557F9335-37E5-4BA9-AE6F-E978000CF708}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +103,10 @@ Global
 		{307B30CA-0FB6-4B08-9696-B9612B9BD9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{307B30CA-0FB6-4B08-9696-B9612B9BD9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{307B30CA-0FB6-4B08-9696-B9612B9BD9CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{557F9335-37E5-4BA9-AE6F-E978000CF708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{557F9335-37E5-4BA9-AE6F-E978000CF708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{557F9335-37E5-4BA9-AE6F-E978000CF708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{557F9335-37E5-4BA9-AE6F-E978000CF708}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{E5637F6A-99F9-425C-89D1-B20DB0C9145B} = {7A3DF7B3-2E97-4ED9-A060-DB825BC26FB4}
 		{D974FF83-A946-4EEE-A584-2955E68EA0C4} = {7A3DF7B3-2E97-4ED9-A060-DB825BC26FB4}
 		{307B30CA-0FB6-4B08-9696-B9612B9BD9CD} = {7A3DF7B3-2E97-4ED9-A060-DB825BC26FB4}
+		{557F9335-37E5-4BA9-AE6F-E978000CF708} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}
