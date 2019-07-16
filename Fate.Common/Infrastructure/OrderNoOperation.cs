@@ -20,13 +20,15 @@ namespace Fate.Common.Infrastructure
     /// </summary>
     public class OrderNoOperation : ICommonClassSigleDependency
     {
+        private NLogHelper nLog;
         private IRedisOperationHelp redis;
         //定义获取服务的实例
         private IServiceProvider serviceProvider;
-        public OrderNoOperation(IRedisOperationHelp _reids, IServiceProvider _serviceProvider)
+        public OrderNoOperation(IRedisOperationHelp _reids, IServiceProvider _serviceProvider, NLogHelper _nLog)
         {
             redis = _reids;
             serviceProvider = _serviceProvider;
+            nLog = _nLog;
         }
         /// <summary>
         /// 获取单号的数量
@@ -69,7 +71,7 @@ namespace Fate.Common.Infrastructure
                     CreateOrderNOByDay();//按照天批量生成
                     CreateOrderNOByMonth();//按照月批量生成
                 }
-                catch (Exception ex) { NLogHelper.Default.Error(ex.Message); }
+                catch (Exception ex) { nLog.Error(ex.Message); }
             }
         }
         /// <summary>
@@ -257,7 +259,7 @@ namespace Fate.Common.Infrastructure
                     }
                 }
             }
-            catch (Exception ex) { NLogHelper.Default.Error(ex.Message); }
+            catch (Exception ex) { nLog.Error(ex.Message); }
         }
     }
 }

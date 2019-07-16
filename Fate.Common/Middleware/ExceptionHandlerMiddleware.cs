@@ -20,11 +20,12 @@ namespace Fate.Common.Middleware
         private readonly RequestDelegate next;
 
         private readonly MyJsonResult myJsonResult;
-
-        public ExceptionHandlerMiddleware(RequestDelegate request, MyJsonResult _myJsonResult)
+        private NLogHelper nLog;
+        public ExceptionHandlerMiddleware(RequestDelegate request, MyJsonResult _myJsonResult, NLogHelper _nLog)
         {
             next = request;
             myJsonResult = _myJsonResult;
+            nLog = _nLog;
         }
         /// <summary>
         /// 中间件的处理
@@ -53,7 +54,7 @@ namespace Fate.Common.Middleware
                     myJsonResult.failMsg = ex.Message;
                     myJsonResult.msg = "请求异常";
                     //转换成错误的集合
-                    NLogHelper.Default.Error("\n错误消息：" + ex.ToString().Trim() + "\n");//记录日志
+                    nLog.Error("\n错误消息：" + ex.ToString().Trim() + "\n");//记录日志
                 }
 
                 await HandleExceptionAsync(context, myJsonResult);

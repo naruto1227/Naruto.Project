@@ -113,13 +113,19 @@ namespace Fate.Test.Controllers
             Action<RedisChannel, RedisValue> handler = (channel, message) =>
             {
                 Console.WriteLine(channel);
-                   Console.WriteLine(message);
+                Console.WriteLine(message);
             };
             redis.Subscribe("push", handler);
 
             ////发布
             redis.Publish("push", "你好");
             return "1";
+        }
+        public void testlog()
+        {
+
+            var log = AutofacInit.Resolve<Fate.Common.NLog.NLogHelper>();
+            log.Info("1");
         }
     }
 }

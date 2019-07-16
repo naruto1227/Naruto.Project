@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using NLog;
 using NLog.Web.AspNetCore;
+using Fate.Common.Interface;
 
 namespace Fate.Common.NLog
 {
     /// <summary>
     /// 写日志
     /// </summary>
-    public class NLogHelper
+    public class NLogHelper : ICommonClassSigleDependency
     {
-        /// <summary>
-        /// 提供一个默认的静态入口
-        /// </summary>
-        public static NLogHelper Default { get; set; }
         /// <summary>
         /// 
         /// </summary>
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        static NLogHelper()
+        public NLogHelper()
         {
-            Default = new NLogHelper();
         }
         /// <summary>
         /// 写入一个基本信息消息
