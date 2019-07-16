@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\我的\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj": {}
+    "D:\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj": {}
   },
   "projects": {
-    "F:\\我的\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj": {
+    "D:\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj",
+        "projectUniqueName": "D:\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj",
         "projectName": "Fate.TimeServer",
-        "projectPath": "F:\\我的\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj",
+        "projectPath": "D:\\Fate.DDD\\Fate.TimeServer\\Fate.TimeServer.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\我的\\Fate.DDD\\Fate.TimeServer\\obj\\",
+        "outputPath": "D:\\Fate.DDD\\Fate.TimeServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

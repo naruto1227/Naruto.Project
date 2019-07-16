@@ -3028,7 +3028,7 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "Newtonsoft.Json/12.0.1": {
+      "Newtonsoft.Json/12.0.2": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
@@ -5384,7 +5384,7 @@
           "NLog": "4.6.3",
           "NLog.Web.AspNetCore": "4.8.2",
           "NPOI": "2.4.1",
-          "Newtonsoft.Json": "12.0.1",
+          "Newtonsoft.Json": "12.0.2",
           "Snowflake.Core": "2.0.0",
           "System.Drawing.Common": "4.5.1",
           "XC.RSAUtil": "1.1.0"
@@ -5456,7 +5456,7 @@
           "Fate.Common.Repository.Mysql": "1.0.0",
           "Fate.Domain.Event": "1.0.0",
           "Fate.Domain.Model": "1.0.0",
-          "Newtonsoft.Json": "12.0.1"
+          "Newtonsoft.Json": "12.0.2"
         },
         "compile": {
           "bin/placeholder/Fate.Domain.dll": {}
@@ -9130,42 +9130,33 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Newtonsoft.Json/12.0.1": {
-      "sha512": "pBR3wCgYWZGiaZDYP+HHYnalVnPJlpP1q55qvVb+adrDHmFMDc1NAKio61xTwftK3Pw5h7TZJPJEEVMd6ty8rg==",
+    "Newtonsoft.Json/12.0.2": {
+      "sha512": "rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
       "type": "package",
-      "path": "newtonsoft.json/12.0.1",
+      "path": "newtonsoft.json/12.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
-        "lib/net20/Newtonsoft.Json.pdb",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
-        "lib/net35/Newtonsoft.Json.pdb",
         "lib/net35/Newtonsoft.Json.xml",
         "lib/net40/Newtonsoft.Json.dll",
-        "lib/net40/Newtonsoft.Json.pdb",
         "lib/net40/Newtonsoft.Json.xml",
         "lib/net45/Newtonsoft.Json.dll",
-        "lib/net45/Newtonsoft.Json.pdb",
         "lib/net45/Newtonsoft.Json.xml",
         "lib/netstandard1.0/Newtonsoft.Json.dll",
-        "lib/netstandard1.0/Newtonsoft.Json.pdb",
         "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/netstandard1.3/Newtonsoft.Json.dll",
-        "lib/netstandard1.3/Newtonsoft.Json.pdb",
         "lib/netstandard1.3/Newtonsoft.Json.xml",
         "lib/netstandard2.0/Newtonsoft.Json.dll",
-        "lib/netstandard2.0/Newtonsoft.Json.pdb",
         "lib/netstandard2.0/Newtonsoft.Json.xml",
         "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.pdb",
         "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.pdb",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "newtonsoft.json.12.0.1.nupkg.sha512",
+        "newtonsoft.json.12.0.2.nupkg.sha512",
         "newtonsoft.json.nuspec"
       ]
     },
@@ -14773,11 +14764,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
+      "projectUniqueName": "D:\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
       "projectName": "Fate.Test",
-      "projectPath": "F:\\我的\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
+      "projectPath": "D:\\Fate.DDD\\Fate.Test\\Fate.Test.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\我的\\Fate.DDD\\Fate.Test\\obj\\",
+      "outputPath": "D:\\Fate.DDD\\Fate.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14796,32 +14787,32 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
+            "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
+            "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj"
+            "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
+            "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj"
+            "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj"
+            "D:\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.WebApi\\Fate.WebApi.csproj"
             }
           }
         }

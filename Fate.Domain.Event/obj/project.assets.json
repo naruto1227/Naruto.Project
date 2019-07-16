@@ -981,11 +981,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj",
+      "projectUniqueName": "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj",
       "projectName": "Fate.Domain.Event",
-      "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj",
+      "projectPath": "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\obj\\",
+      "outputPath": "D:\\Fate.DDD\\Fate.Domain.Event\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1004,11 +1004,11 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
             },
-            "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
+            "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
             }
           }
         }

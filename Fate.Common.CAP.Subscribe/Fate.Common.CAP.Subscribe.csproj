@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>CAPRabbitMQ的订阅服务都写在此层</Description>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Common.BaseRibbitMQ\Fate.Common.BaseRibbitMQ.csproj" />
+  </ItemGroup>
+
+</Project>
