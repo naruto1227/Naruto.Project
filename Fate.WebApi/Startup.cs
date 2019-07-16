@@ -37,7 +37,7 @@ namespace Fate.WebApi
             //注入上下文
             services.AddDbContext<Fate.Common.Repository.Mysql.MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton(typeof(Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
+           // services.AddSingleton(typeof(Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
