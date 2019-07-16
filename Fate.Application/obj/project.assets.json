@@ -3336,6 +3336,7 @@
           "Alipay.AopSdk.Core": "2.4.2",
           "AutoMapper": "8.1.0",
           "Fate.Common.Redis": "1.0.0",
+          "Fate.Common.Repository.Mysql": "1.0.0",
           "MailKit": "2.1.5.1",
           "Microsoft.AspNetCore.Mvc": "2.2.0",
           "Microsoft.AspNetCore.SignalR": "1.1.0",

@@ -50,5 +50,24 @@ namespace Fate.Common.Config
         /// 接口访问文件请求的路径
         /// </summary>
         public static string FileRequestPathName = "staticfile";
+
+        /// <summary>
+        /// 按天单号的缓存的集合
+        /// </summary>
+        public const string OrderNOByDayCacheList = "ordernodaylist";
+
+        /// <summary>
+        /// 按月单号的缓存的集合
+        /// </summary>
+        public const string OrderNOByMonthCacheList = "ordernomonthlist";
+
+        /// <summary>
+        /// 当单号达到多少数量的时候 往单号的集合添加数据
+        /// </summary>
+        public const int OrderNOMinLength = 1000;
+        /// <summary>
+        /// 单号追加时的最大的数量
+        /// </summary>
+        public const int OrderNOMaxLength = 10000;
     }
 }
