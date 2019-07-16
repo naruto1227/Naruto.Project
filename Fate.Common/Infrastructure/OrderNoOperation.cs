@@ -32,31 +32,28 @@ namespace Fate.Common.Infrastructure
         /// 获取单号的数量
         /// </summary>
         /// <returns></returns>
-        private long DayLength
+        private long DayLength(string tableName = default)
         {
-            get
+            var key = StaticFieldConfig.OrderNOByDayCacheList + tableName;
+            if (!redis.KeyExists(key, Redis.KeyOperatorEnum.List))
             {
-                if (!redis.KeyExists(StaticFieldConfig.OrderNOByDayCacheList, Redis.KeyOperatorEnum.List))
-                {
-                    return 0;
-                }
-                return redis.ListLength(StaticFieldConfig.OrderNOByDayCacheList);
+                return 0;
             }
+            return redis.ListLength(key);
+
         }
         /// <summary>
         /// 获取月单号的数量
         /// </summary>
         /// <returns></returns>
-        private long MonthLength
+        private long MonthLength(string tableName = default)
         {
-            get
+            var key = StaticFieldConfig.OrderNOByMonthCacheList + tableName;
+            if (!redis.KeyExists(key, Redis.KeyOperatorEnum.List))
             {
-                if (!redis.KeyExists(StaticFieldConfig.OrderNOByMonthCacheList, Redis.KeyOperatorEnum.List))
-                {
-                    return 0;
-                }
-                return redis.ListLength(StaticFieldConfig.OrderNOByMonthCacheList);
+                return 0;
             }
+            return redis.ListLength(key);
         }
         private readonly object _lock = new object();
 
@@ -87,38 +84,49 @@ namespace Fate.Common.Infrastructure
                 var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
                 //获取当前日期
                 var date = Convert.ToInt32(DateTime.Now.ToString("yyMMdd"));
-                //验证当天的 单号是否生成 如果没有生成的话 就删除 缓存中的单号key
-                if (!unitOfWork.Respositiy<OrderNo>().Where(a => a.Date == date).Any())
-                    redis.KeyRemove(StaticFieldConfig.OrderNOByDayCacheList, Redis.KeyOperatorEnum.List);
-                //验证缓存中的key的数量 是否达到最小约束
-                else if (DayLength > StaticFieldConfig.OrderNOMinLength)
-                    return;
-                //从数据库中获取最后的一个单号
-                var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date).Select(a => a.NO).FirstOrDefault();
-                //获取集合实例
-                List<OrderNo> addLi = serviceProvider.GetRequiredService<List<OrderNo>>();
-                if (addLi.Count() > 0)
-                    addLi.Remove(addLi[0]);
-                //初始一个订单号
-                if (resNO <= 0)
-                    resNO = 1000;
-                //追加新的单号
-                for (int i = 0; i < StaticFieldConfig.OrderNOMaxLength; i++)
+                //遍历表名
+                foreach (var item in OrderNOConfig.TableNameList)
                 {
-                    resNO++;
-                    //添加数据到数据库
-                    addLi.Add(new OrderNo() { NO = resNO, Date = date });
-                }
-                if (addLi != null && addLi.Count() > 0)
-                {
-                    //追加到数据库
-                    unitOfWork.Respositiy<OrderNo>().BulkAdd(addLi);
-                    var res = unitOfWork.SaveChanges();
-                    if (res > 0)
+                    #region 生成单号
+                    //验证当天的 单号是否生成 如果没有生成的话 就删除 缓存中的单号key
+                    var key = StaticFieldConfig.OrderNOByDayCacheList + item;//缓存的key
+                    if (!unitOfWork.Respositiy<OrderNo>().Where(a => a.Date == date && a.TableName.Equals(item)).Any())
+                        redis.KeyRemove(key, Redis.KeyOperatorEnum.List);
+                    //验证缓存中的key的数量 是否达到最小约束
+                    else if (DayLength(item) > StaticFieldConfig.OrderNOMinLength)
+                        return;
+                    //从数据库中获取最后的一个单号
+                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.NO).FirstOrDefault();
+                    //获取集合实例
+                    List<OrderNo> addLi = service.ServiceProvider.GetRequiredService<List<OrderNo>>();
+                    if (addLi.Count() > 0)
+                        addLi.Remove(addLi[0]);
+                    //初始一个订单号
+                    if (resNO <= 0)
+                        resNO = StaticFieldConfig.FirstOrderNO;
+                    //追加新的单号
+                    for (int i = 0; i < StaticFieldConfig.OrderNOMaxLength; i++)
                     {
-                        //追加到缓存
-                        redis.ListRightPush(StaticFieldConfig.OrderNOByDayCacheList, addLi.Select(a => a.NO).ToList());
+                        resNO++;
+                        var orderNO = service.ServiceProvider.GetRequiredService<OrderNo>();
+                        orderNO.NO = resNO;
+                        orderNO.Date = date;
+                        orderNO.TableName = item;
+                        //添加数据到数据库
+                        addLi.Add(orderNO);
                     }
+                    if (addLi != null && addLi.Count() > 0)
+                    {
+                        //追加到数据库
+                        unitOfWork.Respositiy<OrderNo>().BulkAdd(addLi);
+                        var res = unitOfWork.SaveChanges();
+                        if (res > 0)
+                        {
+                            //追加到缓存
+                            redis.ListRightPush(key, addLi.Select(a => a.NO).ToList());
+                        }
+                    }
+                    #endregion
                 }
             }
         }
@@ -134,74 +142,85 @@ namespace Fate.Common.Infrastructure
                 var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
                 //获取当前日期
                 var date = Convert.ToInt32(DateTime.Now.ToString("yyMM"));
-                //在1号的时候 验证当月的 单号是否生成 如果没有生成的话 就删除 缓存中的单号key
-                if (DateTime.Now.Day == 1 && !unitOfWork.Respositiy<OrderNo>().Where(a => a.Date == date).Any())
-                    redis.KeyRemove(StaticFieldConfig.OrderNOByMonthCacheList, Redis.KeyOperatorEnum.List);
-                //验证缓存中的key的数量 是否达到最小约束
-                else if (MonthLength > StaticFieldConfig.OrderNOMinLength)
-                    return;
-                //从数据库中获取最后的一个单号
-                var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date).Select(a => a.NO).FirstOrDefault();
-                //获取集合实例
-                List<OrderNo> addLi = service.ServiceProvider.GetRequiredService<List<OrderNo>>();
-                if (addLi.Count() > 0)
-                    addLi.Remove(addLi[0]);
-                //初始一个订单号
-                if (resNO <= 0)
-                    resNO = 1000;
-                //验证单号
-                for (int i = 0; i < StaticFieldConfig.OrderNOMaxLength; i++)
+                //遍历表名
+                foreach (var item in OrderNOConfig.TableNameList)
                 {
-                    resNO++;
-                    //添加数据到数据库
-                    addLi.Add(new OrderNo() { NO = resNO, Date = date });
-                }
-                if (addLi != null && addLi.Count() > 0)
-                {
-                    //追加到数据库
-                    unitOfWork.Respositiy<OrderNo>().BulkAdd(addLi);
-                    var res = unitOfWork.SaveChanges();
-                    if (res > 0)
+                    //在1号的时候 验证当月的 单号是否生成 如果没有生成的话 就删除 缓存中的单号key
+                    var key = StaticFieldConfig.OrderNOByMonthCacheList + item;//缓存的key
+                    if (DateTime.Now.Day == 1 && !unitOfWork.Respositiy<OrderNo>().Where(a => a.Date == date && a.TableName.Equals(item)).Any())
+                        redis.KeyRemove(key, Redis.KeyOperatorEnum.List);
+                    //验证缓存中的key的数量 是否达到最小约束
+                    else if (MonthLength(item) > StaticFieldConfig.OrderNOMinLength)
+                        return;
+                    //从数据库中获取最后的一个单号
+                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.NO).FirstOrDefault();
+                    //获取集合实例
+                    List<OrderNo> addLi = service.ServiceProvider.GetRequiredService<List<OrderNo>>();
+                    if (addLi.Count() > 0)
+                        addLi.Remove(addLi[0]);
+                    //初始一个订单号
+                    if (resNO <= 0)
+                        resNO = StaticFieldConfig.FirstOrderNO;
+                    //验证单号
+                    for (int i = 0; i < StaticFieldConfig.OrderNOMaxLength; i++)
                     {
-                        //追加到缓存
-                        redis.ListRightPush(StaticFieldConfig.OrderNOByMonthCacheList, addLi.Select(a => a.NO).ToList());
+                        resNO++;
+                        var orderNO = service.ServiceProvider.GetRequiredService<OrderNo>();
+                        orderNO.NO = resNO;
+                        orderNO.Date = date;
+                        orderNO.TableName = item;
+                        //添加数据到数据库
+                        addLi.Add(orderNO);
+                    }
+                    if (addLi != null && addLi.Count() > 0)
+                    {
+                        //追加到数据库
+                        unitOfWork.Respositiy<OrderNo>().BulkAdd(addLi);
+                        var res = unitOfWork.SaveChanges();
+                        if (res > 0)
+                        {
+                            //追加到缓存
+                            redis.ListRightPush(key, addLi.Select(a => a.NO).ToList());
+                        }
                     }
                 }
             }
         }
 
         /// <summary>
-        /// 根据天生成单号 (单号生成规则 日期+6位随机数 +序号) 返回单号
+        /// 根据天生成单号 (单号生成规则 日期 +序号) 返回单号
         /// </summary>
-        public async Task<string> GenerateOrderNOByDay()
+        public async Task<string> GenerateOrderNOByDay(string tableName = default)
         {
             ////验证是否开启缓存 如果没有开启的话 就用雪花算法生成单号
             //if (!StaticFieldConfig.IsOpenReids)
             //    return SnowFlakeHelper.NewID().ToString();
             ////当缓存中的单号没有的话 就读取雪花算法的单号
-            //if (!(await redis.KeyExistsAsync(StaticFieldConfig.OrderNOByDayCacheList, Redis.KeyOperatorEnum.LIST)) && (await redis.ListLengthAsync(StaticFieldConfig.OrderNOByDayCacheList)) <= 0)
+            var key = StaticFieldConfig.OrderNOByDayCacheList + tableName;
+            //if (!(await redis.KeyExistsAsync(key, Redis.KeyOperatorEnum.LIST)) && (await redis.ListLengthAsync(key)) <= 0)
             //    return SnowFlakeHelper.NewID().ToString();
             //获取单号
-            var no = await redis.ListLeftPopAsync(StaticFieldConfig.OrderNOByDayCacheList);
+            var no = await redis.ListLeftPopAsync(key);
             //拼接单号
-            return DateTime.Now.ToString("yyMMdd") + new Random().Next(100000, 999999) + no;
+            return DateTime.Now.ToString("yyMMdd") + no;
         }
 
         /// <summary>
-        /// 根据月生成单号 (单号生成规则 日期+6位随机数 +序号) 返回单号
+        /// 根据月生成单号 (单号生成规则 日期 +序号) 返回单号
         /// </summary>
-        public async Task<string> GenerateOrderNOByMonth()
+        public async Task<string> GenerateOrderNOByMonth(string tableName = default)
         {
             ////验证是否开启缓存 如果没有开启的话 就用雪花算法生成单号
             //if (!StaticFieldConfig.IsOpenReids)
             //    return SnowFlakeHelper.NewID().ToString();
             ////当缓存中的单号没有的话 就读取雪花算法的单号
-            //if (!(await redis.KeyExistsAsync(StaticFieldConfig.OrderNOByDayCacheList, Redis.KeyOperatorEnum.LIST)) && (await redis.ListLengthAsync(StaticFieldConfig.OrderNOByMonthCacheList)) <= 0)
+            var key = StaticFieldConfig.OrderNOByMonthCacheList + tableName;
+            //if (!(await redis.KeyExistsAsync(key, Redis.KeyOperatorEnum.LIST)) && (await redis.ListLengthAsync(key)) <= 0)
             //    return SnowFlakeHelper.NewID().ToString();
             //获取单号
-            var no = await redis.ListLeftPopAsync(StaticFieldConfig.OrderNOByMonthCacheList);
+            var no = await redis.ListLeftPopAsync(key);
             //拼接单号
-            return DateTime.Now.ToString("yyMM") + new Random().Next(100000, 999999) + no;
+            return DateTime.Now.ToString("yyMM") + no;
         }
 
 

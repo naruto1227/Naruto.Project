@@ -17,5 +17,10 @@ namespace Fate.Domain.Model.Entities
         /// 日期
         /// </summary>
         public int Date { get; set; }
+
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public string TableName { get; set; }
     }
 }

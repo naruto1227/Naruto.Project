@@ -54,12 +54,12 @@ namespace Fate.Common.Config
         /// <summary>
         /// 按天单号的缓存的集合
         /// </summary>
-        public const string OrderNOByDayCacheList = "ordernodaylist";
+        public static string OrderNOByDayCacheList = "orderno:" + Convert.ToInt32(DateTime.Now.ToString("yyMMdd")) + "_" + "day_";
 
         /// <summary>
         /// 按月单号的缓存的集合
         /// </summary>
-        public const string OrderNOByMonthCacheList = "ordernomonthlist";
+        public static string OrderNOByMonthCacheList = "orderno:" + Convert.ToInt32(DateTime.Now.ToString("yyMM")) + "_" + "month_";
 
         /// <summary>
         /// 当单号达到多少数量的时候 往单号的集合添加数据
@@ -69,5 +69,9 @@ namespace Fate.Common.Config
         /// 单号追加时的最大的数量
         /// </summary>
         public const int OrderNOMaxLength = 10000;
+        /// <summary>
+        /// 初始的单号
+        /// </summary>
+        public const int FirstOrderNO = 10000000;
     }
 }
