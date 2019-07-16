@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Common.Repository.Mysql\Fate.Common.Repository.Mysql.csproj" />
   </ItemGroup>
 
 </Project>
