@@ -5,30 +5,27 @@ using System.Text;
 
 namespace Fate.Common.Infrastructure
 {
-   public class ConfigurationManage
+    public class ConfigurationManage
     {
+
+        private static IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
         private static IConfigurationSection _appSection = null;
 
         /// <summary>
          /// 获取配置信息
+        /// 
          /// </summary>
-        public static string GetAppSetting(string key)
+        /// <param name="isAppsetting">是否来自于AppSetting 节点 ，是的话值需填写AppSetting下的路径,否则的话写出全路径</param>
+        public static string GetValue(string key, bool isAppsetting = true)
         {
             string str = string.Empty;
-            if (_appSection.GetSection(key) != null)
-            {
-                str = _appSection.GetSection(key).Value;
-            }
-            return str;
-        }
-
-        /// <summary>
-        /// 设置访问配置信息 _appSection的初始值 
-        /// </summary>
-        /// <param name="section"></param>
-        public static void SetAppSetting(IConfigurationSection section)
-        {
-            _appSection = section;
+            if (isAppsetting)
+                key = "AppSetting:" + key;
+            var value = configuration.GetValue<string>(key);
+            if (string.IsNullOrWhiteSpace(value))
+                return "";
+            else
+                return str;
         }
     }
 }

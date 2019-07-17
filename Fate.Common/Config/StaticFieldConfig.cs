@@ -19,7 +19,7 @@ namespace Fate.Common.Config
             get
             {
                 //获取文件上传保存的地址
-                var uploadFilePath = ConfigurationManage.GetAppSetting("UploadFilePath");
+                var uploadFilePath = ConfigurationManage.GetValue("UploadFilePath");
                 //如果没有填写就默认 当前项目的根目录
                 if (string.IsNullOrWhiteSpace(uploadFilePath))
                     uploadFilePath = Directory.GetCurrentDirectory();
@@ -40,7 +40,7 @@ namespace Fate.Common.Config
             get
             {
                 //获取文件需要存放的文件夹名称
-                var lowerFolderPath = ConfigurationManage.GetAppSetting("LowerFolderPath");
+                var lowerFolderPath = ConfigurationManage.GetValue("LowerFolderPath");
                 if (string.IsNullOrWhiteSpace(lowerFolderPath))
                     lowerFolderPath = "UploadFile";
                 return lowerFolderPath;

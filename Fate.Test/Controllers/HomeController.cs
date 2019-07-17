@@ -127,5 +127,9 @@ namespace Fate.Test.Controllers
             var log = AutofacInit.Resolve<Fate.Common.NLog.NLogHelper>();
             log.Info("1");
         }
+
+        public void testConfig() {
+            ConfigurationManage.GetValue("RedisConfig:Connection");
+        }
     }
 }

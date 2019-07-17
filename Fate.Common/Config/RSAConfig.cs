@@ -22,7 +22,7 @@ namespace Fate.Common.Config
             get
             {
                 //获取配置的私钥的路径
-                var privateKey = ConfigurationManage.GetAppSetting("prk");
+                var privateKey = ConfigurationManage.GetValue("prk");
                 //如果不存在就默认保存在根目录
                 if (string.IsNullOrWhiteSpace(privateKey))
                 {
@@ -48,7 +48,7 @@ namespace Fate.Common.Config
             get
             {
                 //获取配置的公钥的路径
-                var publicKey = ConfigurationManage.GetAppSetting("puk");
+                var publicKey = ConfigurationManage.GetValue("puk");
                 //如果不存在就默认保存在根目录
                 if (string.IsNullOrWhiteSpace(publicKey))
                 {

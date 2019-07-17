@@ -17,13 +17,13 @@ namespace Fate.Common.Config
             {
                 //是否开启文件保护 默认开启 1 开启 0 关闭
                 var isOpenSecureFilePriv = 0;
-                int.TryParse(ConfigurationManage.GetAppSetting("MySqlBulkConfig:IsOpenSecureFilePriv"), out isOpenSecureFilePriv);
+                int.TryParse(ConfigurationManage.GetValue("MySqlBulkConfig:IsOpenSecureFilePriv"), out isOpenSecureFilePriv);
                 var path = "";
                 //开启的时候
                 if (isOpenSecureFilePriv == 1)
                 {
                     //获取输入的文件的存放地址
-                    var loadPath = ConfigurationManage.GetAppSetting("MySqlBulkConfig:MySqlLoadFilePath");
+                    var loadPath = ConfigurationManage.GetValue("MySqlBulkConfig:MySqlLoadFilePath");
                     if (string.IsNullOrWhiteSpace(loadPath))
                     {
                         throw new ArgumentNullException("mysql的批量导入的文件地址不能为空");

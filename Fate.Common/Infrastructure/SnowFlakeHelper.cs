@@ -68,7 +68,7 @@ namespace Fate.Common.Infrastructure
         static SnowFlakeHelper()
         {
             int wId = 0;
-            int.TryParse(ConfigurationManage.GetAppSetting("SnowFlakeConfig: WorkId"), out wId);
+            int.TryParse(ConfigurationManage.GetValue("SnowFlakeConfig: WorkId"), out wId);
             if (wId <= 0)
                 wId = 1;
             _workerId = wId;

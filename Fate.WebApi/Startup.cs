@@ -73,7 +73,6 @@ namespace Fate.WebApi
             //注入异常处理中间件
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
-            ConfigurationManage.SetAppSetting(Configuration.GetSection("AppSetting"));
         }
     }
 }

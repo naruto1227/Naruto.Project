@@ -17,7 +17,7 @@ namespace Fate.Common.Config
         {
             get
             {
-                var sendEmailAddress = ConfigurationManage.GetAppSetting("EmailConfig:SendEmailAddress");
+                var sendEmailAddress = ConfigurationManage.GetValue("EmailConfig:SendEmailAddress");
                 return sendEmailAddress;
             }
         }
@@ -28,7 +28,7 @@ namespace Fate.Common.Config
         {
             get
             {
-                var emailHost = ConfigurationManage.GetAppSetting("EmailConfig:EmailHost");
+                var emailHost = ConfigurationManage.GetValue("EmailConfig:EmailHost");
                 return emailHost;
             }
         }
@@ -39,7 +39,7 @@ namespace Fate.Common.Config
         {
             get
             {
-                var sendEmailCode = ConfigurationManage.GetAppSetting("EmailConfig:SendEmailCode");
+                var sendEmailCode = ConfigurationManage.GetValue("EmailConfig:SendEmailCode");
                 return sendEmailCode;
             }
         }
@@ -50,7 +50,7 @@ namespace Fate.Common.Config
         {
             get
             {
-                var emailPort = ConfigurationManage.GetAppSetting("EmailConfig:EmailPort");
+                var emailPort = ConfigurationManage.GetValue("EmailConfig:EmailPort");
                 var res = 0;
                 int.TryParse(emailPort,out res);
                 return res;
