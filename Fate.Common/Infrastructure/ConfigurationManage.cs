@@ -17,14 +17,13 @@ namespace Fate.Common.Infrastructure
         /// <param name="isAppsetting">是否来自于AppSetting 节点 ，是的话值需填写AppSetting下的路径,否则的话写出全路径</param>
         public static string GetValue(string key, bool isAppsetting = true)
         {
-            string str = string.Empty;
             if (isAppsetting)
                 key = "AppSetting:" + key;
             var value = configuration.GetValue<string>(key);
             if (string.IsNullOrWhiteSpace(value))
                 return "";
             else
-                return str;
+                return value;
         }
     }
 }
