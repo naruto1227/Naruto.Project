@@ -27,7 +27,7 @@ namespace Fate.Domain.Services
         public async Task add(IEntity info)
         {
             await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().AddAsync(new Fate.Domain.Model.Entities.setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
-            await unitOfWork.Respositiy<Model.Entities.test1>().AddAsync(new Model.Entities.test1() { Id = 1 });
+
             await unitOfWork.SaveChangeAsync();
         }
         /// <summary>

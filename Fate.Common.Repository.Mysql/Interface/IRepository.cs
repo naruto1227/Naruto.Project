@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
 using Fate.Domain.Model;
-namespace Fate.Common.Repository.Mysql
+namespace Fate.Common.Repository.Mysql.Interface
 {
     /// <summary>
     /// 数据访问仓库的接口

@@ -6,6 +6,7 @@ using Fate.Domain.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Fate.Common.Repository.Mysql.Interface;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork

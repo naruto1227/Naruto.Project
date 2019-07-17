@@ -7,22 +7,23 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Fate.Common.Repository.Mysql.Interface;
 
-namespace Fate.Common.Repository.Mysql
+namespace Fate.Common.Repository.Mysql.Base
 {
     /// <summary>
     /// 仓储的基类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class RepositoryBase<T> : IRepository<T> where T : class, IEntity
+    public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         /// <summary>
         /// 上下文
         /// </summary>
         protected DbContext repository { get; set; }
-        public RepositoryBase(DbContext _dbContext = null)
+        public Repository(DbContext _dbContext = null)
         {
-            this.repository = _dbContext;
+            repository = _dbContext;
         }
         /// <summary>
         /// 更改数据库

@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Fate.Common.Redis.IRedisManage;
-using Fate.Common.Redis.RedisManage;
 using Fate.Common.Redis.RedisConfig;
 using System.Reflection;
 using System.Linq;

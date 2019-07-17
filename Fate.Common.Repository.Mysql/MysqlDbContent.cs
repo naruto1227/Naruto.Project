@@ -14,7 +14,7 @@ namespace Fate.Common.Repository.Mysql
         {
 
         }
-        public DbSet<OrderNo> OrderNo { get; set; }
+        //public DbSet<OrderNo> OrderNo { get; set; }
         public DbSet<setting> setting { get; set; }
         public DbSet<test1> test1 { get; set; }
 

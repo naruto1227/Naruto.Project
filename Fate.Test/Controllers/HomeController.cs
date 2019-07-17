@@ -27,15 +27,13 @@ namespace Fate.Test.Controllers
         private IUnitOfWork unitOfWork;
         private IRedisOperationHelp redis;
         RSAHelper rSA;
-        IRepository<setting> repository;
-        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA, IRepository<setting> _repository)
+        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
         {
             setting = _setting;
             unitOfWork = _unitOfWork;
             redis = _redis;
             jsonResult = myJson;
             rSA = _rSA;
-            repository = _repository;
         }
         [HttpGet]
         public async Task test()
@@ -56,15 +54,11 @@ namespace Fate.Test.Controllers
         {
             List<setting> list = Common.Ioc.Core.AutofacInit.Resolve<List<setting>>();
             List<string> li = Common.Ioc.Core.AutofacInit.Resolve<List<string>>();
-            list.Remove(list[0]);
+            if (list.Count()>0)
+                list.Remove(list[0]);
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
         }
-        [HttpGet]
-        public async Task test2()
-        {
-            await repository.AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
-            await repository.SaveChangesAsync();
-        }
+
         /// <summary>
         /// 测试事件
         /// </summary>

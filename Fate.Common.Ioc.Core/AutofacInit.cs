@@ -26,8 +26,6 @@ namespace Fate.Common.Ioc.Core
             assemblies.Add(assembliesDomain);
             assemblies.Add(assemblyApp);
 
-            //仓储
-            Assembly assemblyMysql = Assembly.Load("Fate.Common.Repository.Mysql");
             //获取公共层的程序信息
             Assembly assemblyCommon = Assembly.Load("Fate.Common");
 
@@ -41,8 +39,6 @@ namespace Fate.Common.Ioc.Core
                 .Where(b => b.GetInterface("IAppServicesDependency") != null || b.GetInterface("IDomainServicesDependency") != null)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope(); //见上方说明
-            //为仓储设置lifttime 生命周期
-            builder.RegisterAssemblyTypes(assemblyMysql).Where(a => a.GetInterface("IRepositoryDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
             //注册公共层的接口
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
 

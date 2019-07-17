@@ -41,13 +41,15 @@ namespace Fate.Test
         {
             //注入上下文
             services.AddDbContext<MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             //注入redis仓储服务
             services.AddRedisRepository(options =>
             {
                 options.Connection = ConfigurationManage.GetValue("RedisConfig:Connection");
                 options.Password = ConfigurationManage.GetValue("RedisConfig:Password");
             });
+            //注入mysql仓储
+            services.AddMysqlRepositoryServer();
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
@@ -60,8 +62,6 @@ namespace Fate.Test
                 option.RequireHttpsMetadata = false;
                 option.Audience = "api";
             });
-            //注入仓储
-            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
 
             services.AddScoped(typeof(List<>));
 

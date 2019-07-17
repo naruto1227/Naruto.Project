@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Fate.Common.Repository.Mysql.Interface;
 using Fate.Domain.Model;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
