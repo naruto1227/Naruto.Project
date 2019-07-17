@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\我的\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj": {}
+    "D:\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj": {}
   },
   "projects": {
-    "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
+    "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
+        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
         "projectName": "Fate.Common.BaseRibbitMQ",
-        "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
+        "projectPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\obj\\",
+        "outputPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -76,14 +76,14 @@
         }
       }
     },
-    "F:\\我的\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj": {
+    "D:\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj",
+        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj",
         "projectName": "Fate.Common.CAP.Subscribe",
-        "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj",
+        "projectPath": "D:\\Fate.DDD\\Fate.Common.CAP.Subscribe\\Fate.Common.CAP.Subscribe.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\我的\\Fate.DDD\\Fate.Common.CAP.Subscribe\\obj\\",
+        "outputPath": "D:\\Fate.DDD\\Fate.Common.CAP.Subscribe\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -102,8 +102,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
-                "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj"
+              "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
+                "projectPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj"
               }
             }
           }

@@ -22,6 +22,7 @@ namespace Fate.Common.Redis
             //注入服务
             server.AddSingleton(typeof(IRedisBase), typeof(RedisBase));
             server.AddSingleton(typeof(IRedisOperationHelp), typeof(RedisOperationHelp));
+            server.AddSingleton<RedisConnectionHelp>();
             //配置参数
             server.Configure(options);
             return server;

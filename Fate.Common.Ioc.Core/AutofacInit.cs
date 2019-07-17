@@ -28,8 +28,6 @@ namespace Fate.Common.Ioc.Core
 
             //仓储
             Assembly assemblyMysql = Assembly.Load("Fate.Common.Repository.Mysql");
-            //redis
-            Assembly assemblyRedis = Assembly.Load("Fate.Common.Redis");
             //获取公共层的程序信息
             Assembly assemblyCommon = Assembly.Load("Fate.Common");
 
@@ -45,8 +43,6 @@ namespace Fate.Common.Ioc.Core
                 .InstancePerLifetimeScope(); //见上方说明
             //为仓储设置lifttime 生命周期
             builder.RegisterAssemblyTypes(assemblyMysql).Where(a => a.GetInterface("IRepositoryDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
-            //注册redis 单例模式
-            builder.RegisterAssemblyTypes(assemblyRedis).Where(a => a.GetInterface("IRedisDependency") != null).AsImplementedInterfaces().SingleInstance();
             //注册公共层的接口
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
 

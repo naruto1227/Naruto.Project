@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
+      "projectUniqueName": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
       "projectName": "Fate.Domain.Model",
-      "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
+      "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\obj\\",
+      "outputPath": "D:\\Fate.DDD\\Fate.Domain.Model\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

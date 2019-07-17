@@ -17,11 +17,13 @@ namespace Fate.Common.Extensions
         {
             builder.AddStackExchangeRedis(options =>
              {
+                 //获取配置信息
+                 var redisConnectionHelp = builder.Services.BuildServiceProvider().GetService<RedisConnectionHelp>();
                  options.Configuration.AllowAdmin = true;
-                 options.Configuration.Password = RedisConnectionHelp.RedisPassword;
-                 options.Configuration.DefaultDatabase = RedisConnectionHelp.RedisDefaultDataBase;
+                 options.Configuration.Password = redisConnectionHelp.RedisPassword;
+                 options.Configuration.DefaultDatabase = redisConnectionHelp.RedisDefaultDataBase;
                  options.Configuration.ConnectTimeout = 300;
-                 var redisConnectionConfigs = RedisConnectionHelp.RedisConnectionConfig.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                 var redisConnectionConfigs = redisConnectionHelp.RedisConnectionConfig.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                  if (redisConnectionConfigs == null && redisConnectionConfigs.Count() <= 0)
                  {
                      throw new ArgumentException("Redis配置错误");

@@ -16,12 +16,14 @@ namespace CP.Common.Infrastructure
         {
             return service.AddStackExchangeRedisCache(options =>
              {
+                 //获取配置信息
+                 var redisConnectionHelp = service.BuildServiceProvider().GetService<RedisConnectionHelp>();
                  options.ConfigurationOptions = new ConfigurationOptions();
                  options.ConfigurationOptions.AllowAdmin = true;
-                 options.ConfigurationOptions.Password = RedisConnectionHelp.RedisPassword;
-                 options.ConfigurationOptions.DefaultDatabase = RedisConnectionHelp.RedisDefaultDataBase;
+                 options.ConfigurationOptions.Password = redisConnectionHelp.RedisPassword;
+                 options.ConfigurationOptions.DefaultDatabase = redisConnectionHelp.RedisDefaultDataBase;
                  options.ConfigurationOptions.ConnectTimeout = 300;
-                 var redisConnectionConfigs = RedisConnectionHelp.RedisConnectionConfig.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                 var redisConnectionConfigs = redisConnectionHelp.RedisConnectionConfig.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                  if (redisConnectionConfigs == null && redisConnectionConfigs.Count() <= 0)
                  {
                      throw new ArgumentException("Redis配置错误");

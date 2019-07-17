@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 using System.Linq;
 using Fate.Common.Redis.RedisManage;
@@ -68,11 +67,11 @@ namespace Fate.Common.Redis.RedisConfig
             }
         }
 
-        private static ISubscriber sentinelsub;
+        private  ISubscriber sentinelsub;
         /// <summary>
         /// 缓存
         /// </summary>
-        private static readonly ConcurrentDictionary<string, ConnectionMultiplexer> Concache = new ConcurrentDictionary<string, ConnectionMultiplexer>();
+        private  readonly ConcurrentDictionary<string, ConnectionMultiplexer> Concache = new ConcurrentDictionary<string, ConnectionMultiplexer>();
 
         /// <summary>
         /// 单例获取

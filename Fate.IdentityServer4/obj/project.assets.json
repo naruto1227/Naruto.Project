@@ -5405,9 +5405,6 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Microsoft.Extensions.Configuration": "2.2.0",
-          "Microsoft.Extensions.Configuration.FileExtensions": "2.2.0",
-          "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0",
           "Microsoft.Extensions.Options": "2.2.0",
           "Newtonsoft.Json": "12.0.1",
@@ -14655,11 +14652,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+      "projectUniqueName": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
       "projectName": "Fate.IdentityServer4",
-      "projectPath": "F:\\我的\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+      "projectPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "F:\\我的\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
+      "outputPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14678,8 +14675,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
+            "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+              "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
             }
           }
         }

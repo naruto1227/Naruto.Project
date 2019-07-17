@@ -7,3 +7,12 @@ F:\我的\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common
 F:\我的\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.AssemblyInfo.cs
 F:\我的\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.dll
 F:\我的\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.pdb
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\bin\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.deps.json
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\bin\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.dll
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\bin\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.pdb
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.csprojAssemblyReference.cache
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.csproj.CoreCompileInputs.cache
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.AssemblyInfoInputs.cache
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.AssemblyInfo.cs
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.dll
+D:\Fate.DDD\Fate.Common.BaseRibbitMQ\obj\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.pdb

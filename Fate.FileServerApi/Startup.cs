@@ -49,9 +49,6 @@ namespace Fate.FileServerApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            //注入读取配置文件服务
-            ConfigurationManage.SetAppSetting(Configuration.GetSection("AppSetting"));
-           
             //定义一个文件夹的访问路径
             app.UseStaticFiles(new StaticFileOptions()
             {

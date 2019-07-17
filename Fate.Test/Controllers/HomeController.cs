@@ -46,6 +46,11 @@ namespace Fate.Test.Controllers
             throw new Fate.Common.Exceptions.NoAuthorizationException("111111111111111");
         }
 
+        public async Task testredis2()
+        {
+            await redis.ListRightPushAsync("1", new Random().Next(1000, 9999).ToString());
+        }
+
         [HttpGet]
         public async Task test33()
         {
@@ -78,7 +83,6 @@ namespace Fate.Test.Controllers
 
         public async Task RedisTest()
         {
-            await Fate.Common.Redis.RedisConfig.RedisConnectionHelp.RedisConnection.GetDatabase().HashSetAsync("1", "1", "1");
         }
 
         public async Task testEF()
@@ -128,7 +132,8 @@ namespace Fate.Test.Controllers
             log.Info("1");
         }
 
-        public void testConfig() {
+        public void testConfig()
+        {
             ConfigurationManage.GetValue("RedisConfig:Connection");
         }
     }

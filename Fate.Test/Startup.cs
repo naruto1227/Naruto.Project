@@ -21,6 +21,8 @@ using System.Text;
 using Fate.Common.Middleware;
 using Fate.Common.Repository.Mysql;
 using Fate.Domain.Model.Entities;
+using Fate.Common.Redis;
+using CP.Common.Infrastructure;
 
 namespace Fate.Test
 {
@@ -40,7 +42,13 @@ namespace Fate.Test
             //注入上下文
             services.AddDbContext<MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //services.AddSingleton(typeof(Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
+            //注入redis仓储服务
+            services.AddRedisRepository(options =>
+            {
+                options.Connection = ConfigurationManage.GetValue("RedisConfig:Connection");
+                options.Password = ConfigurationManage.GetValue("RedisConfig:Password");
+            });
+            services.AddDistributedRedisCache();
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {

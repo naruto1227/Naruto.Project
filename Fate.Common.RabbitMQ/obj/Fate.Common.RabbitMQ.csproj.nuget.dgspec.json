@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\我的\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj": {}
+    "D:\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj": {}
   },
   "projects": {
-    "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
+    "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
+        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
         "projectName": "Fate.Common.BaseRibbitMQ",
-        "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
+        "projectPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\obj\\",
+        "outputPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -76,14 +76,14 @@
         }
       }
     },
-    "F:\\我的\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj": {
+    "D:\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj",
+        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj",
         "projectName": "Fate.Common.RabbitMQ",
-        "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj",
+        "projectPath": "D:\\Fate.DDD\\Fate.Common.RabbitMQ\\Fate.Common.RabbitMQ.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\我的\\Fate.DDD\\Fate.Common.RabbitMQ\\obj\\",
+        "outputPath": "D:\\Fate.DDD\\Fate.Common.RabbitMQ\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -102,8 +102,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
-                "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj"
+              "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
+                "projectPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj"
               }
             }
           }

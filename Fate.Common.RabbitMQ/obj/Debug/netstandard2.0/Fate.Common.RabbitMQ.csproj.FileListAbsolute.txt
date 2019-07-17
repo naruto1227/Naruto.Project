@@ -10,3 +10,15 @@ F:\我的\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.Rab
 F:\我的\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.csproj.CopyComplete
 F:\我的\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.dll
 F:\我的\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.pdb
+D:\Fate.DDD\Fate.Common.RabbitMQ\bin\Debug\netstandard2.0\Fate.Common.RabbitMQ.deps.json
+D:\Fate.DDD\Fate.Common.RabbitMQ\bin\Debug\netstandard2.0\Fate.Common.RabbitMQ.dll
+D:\Fate.DDD\Fate.Common.RabbitMQ\bin\Debug\netstandard2.0\Fate.Common.RabbitMQ.pdb
+D:\Fate.DDD\Fate.Common.RabbitMQ\bin\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.dll
+D:\Fate.DDD\Fate.Common.RabbitMQ\bin\Debug\netstandard2.0\Fate.Common.BaseRibbitMQ.pdb
+D:\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.csprojAssemblyReference.cache
+D:\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.csproj.CoreCompileInputs.cache
+D:\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.AssemblyInfoInputs.cache
+D:\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.AssemblyInfo.cs
+D:\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.csproj.CopyComplete
+D:\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.dll
+D:\Fate.DDD\Fate.Common.RabbitMQ\obj\Debug\netstandard2.0\Fate.Common.RabbitMQ.pdb
