@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Fate.Common.Repository.Mysql.Interface;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork: IUnitOfWork 
     {
         private readonly MysqlDbContent dbContext;
         public UnitOfWork(MysqlDbContent _dbContext)
