@@ -9,7 +9,6 @@ namespace Fate.Common.Infrastructure
     {
 
         private static IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-        private static IConfigurationSection _appSection = null;
 
         /// <summary>
          /// 获取配置信息
