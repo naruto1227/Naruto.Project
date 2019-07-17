@@ -242,7 +242,7 @@ namespace Fate.Common.Infrastructure
                         redis.KeyRemove(key, Redis.KeyOperatorEnum.List);
                     }
                     //凌晨的时候清理非今天的数据
-                    if (date.Hour < 5)
+                    if (date.Hour >= 2 && date.Hour <= 5)
                     {
                         //从容器中获取实例
                         var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
