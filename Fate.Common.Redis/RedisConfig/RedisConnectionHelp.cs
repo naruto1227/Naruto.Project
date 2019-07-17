@@ -6,43 +6,67 @@ using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 using System.Linq;
 using Fate.Common.Redis.RedisManage;
+using Fate.Common.Redis.IRedisManage;
+using Microsoft.Extensions.Options;
 
 namespace Fate.Common.Redis.RedisConfig
 {
     /// <summary>
     /// redis 缓存链接
     /// </summary>
-    public class RedisConnectionHelp
+    public class RedisConnectionHelp :IRedisDependency
     {
-        private static IConfigurationRoot ConfigurationManage = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-        private static readonly object Locker = new object();
-        private static ConnectionMultiplexer _instance;
+        private readonly object Locker = new object();
+        private ConnectionMultiplexer _instance;
+        /// <summary>
+        /// 获取redis的参数
+        /// </summary>
+        private IOptions<RedisOptions> options;
+        public RedisConnectionHelp(IOptions<RedisOptions> _options)
+        {
+            options = _options;
+        }
         /// <summary>
         /// redis密码
         /// </summary>
-        public static string RedisPassword = ConfigurationManage.GetSection("AppSetting:RedisConfig:Password").Value;
-        /// <summary>
-        /// 默认访问存储库
-        /// </summary>
-        public static int RedisDefaultDataBase
+        public string RedisPassword
         {
             get
             {
-                var dataBase = 0;
-                var dataBase2 = ConfigurationManage.GetSection("AppSetting:RedisConfig:DefaultDataBase").Value;
-                int.TryParse(dataBase2, out dataBase);
-                return dataBase;
+                return options.Value != null ? options.Value.Password : "";
+            }
+        }
+        /// <summary>
+        /// 默认访问存储库
+        /// </summary>
+        public int RedisDefaultDataBase
+        {
+            get
+            {
+                return options.Value != null ? options.Value.DefaultDataBase : 0;
             }
         }
         /// <summary>
         /// redis连接字符串
         /// </summary>
-        public static string RedisConnectionConfig = ConfigurationManage.GetSection("AppSetting:RedisConfig:Connection").Value;
+        public string RedisConnectionConfig
+        {
+            get
+            {
+                return options.Value != null ? options.Value.Connection : "";
+            }
+        }
 
         /// <summary>
         /// 是否开启哨兵模式 1 开启
         /// </summary>
-        private static string IsOpenSentinel = ConfigurationManage.GetSection("AppSetting:RedisConfig:IsOpenSentinel").Value;
+        private string IsOpenSentinel
+        {
+            get
+            {
+                return options.Value != null ? options.Value.IsOpenSentinel.ToString() : "";
+            }
+        }
 
         private static ISubscriber sentinelsub;
         /// <summary>
@@ -53,7 +77,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// <summary>
         /// 单例获取
         /// </summary>
-        public static ConnectionMultiplexer RedisConnection
+        public ConnectionMultiplexer RedisConnection
         {
             get
             {
@@ -79,7 +103,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// 先从缓存中获取 再从配置读取
         /// </summary>
         /// <returns></returns>
-        private static ConnectionMultiplexer GetFromCache()
+        private ConnectionMultiplexer GetFromCache()
         {
             //判断缓存中是否存在
             if (!Concache.ContainsKey(RedisConnectionConfig))
@@ -92,7 +116,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <returns></returns>
 
-        private static ConnectionMultiplexer GetManager()
+        private ConnectionMultiplexer GetManager()
         {
             ConfigurationOptions configurationOptions = new ConfigurationOptions()
             {
@@ -139,10 +163,10 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static void OpenSentinelManager(ConfigurationOptions sentineloptions = null)
+        private void OpenSentinelManager(ConfigurationOptions sentineloptions = null)
         {
             //获取哨兵地址
-            List<string> sentinelConfig = ConfigurationManage.GetSection("AppSetting:RedisConfig:RedisSentinelIp").Value?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList() ?? new List<string>();
+            List<string> sentinelConfig = options.Value.RedisSentinelIp?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList() ?? new List<string>();
             //哨兵节点
             sentinelConfig.ForEach(a =>
             {
@@ -172,7 +196,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void MuxerConfigurationChanged(object sender, EndPointEventArgs e)
+        private void MuxerConfigurationChanged(object sender, EndPointEventArgs e)
         {
             Console.WriteLine("Configuration changed: " + e.EndPoint);
         }
@@ -182,7 +206,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void MuxerErrorMessage(object sender, RedisErrorEventArgs e)
+        private void MuxerErrorMessage(object sender, RedisErrorEventArgs e)
         {
             Console.WriteLine("ErrorMessage: " + e.Message);
         }
@@ -192,7 +216,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void MuxerConnectionRestored(object sender, ConnectionFailedEventArgs e)
+        private void MuxerConnectionRestored(object sender, ConnectionFailedEventArgs e)
         {
             Console.WriteLine("ConnectionRestored: " + e.EndPoint);
         }
@@ -202,7 +226,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void MuxerConnectionFailed(object sender, ConnectionFailedEventArgs e)
+        private void MuxerConnectionFailed(object sender, ConnectionFailedEventArgs e)
         {
             Console.WriteLine("重新连接：Endpoint failed: " + e.EndPoint + ", " + e.FailureType + (e.Exception == null ? "" : (", " + e.Exception.Message)));
         }
@@ -212,7 +236,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void MuxerHashSlotMoved(object sender, HashSlotMovedEventArgs e)
+        private void MuxerHashSlotMoved(object sender, HashSlotMovedEventArgs e)
         {
             Console.WriteLine("HashSlotMoved:NewEndPoint" + e.NewEndPoint + ", OldEndPoint" + e.OldEndPoint);
         }
@@ -222,7 +246,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void MuxerInternalError(object sender, InternalErrorEventArgs e)
+        private void MuxerInternalError(object sender, InternalErrorEventArgs e)
         {
             Console.WriteLine("InternalError:Message" + e.Exception.Message);
         }

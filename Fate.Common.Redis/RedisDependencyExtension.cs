@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using Fate.Common.Redis.IRedisManage;
 using Fate.Common.Redis.RedisManage;
+using Fate.Common.Redis.RedisConfig;
+
 namespace Fate.Common.Redis
 {
     /// <summary>
@@ -15,10 +17,13 @@ namespace Fate.Common.Redis
         /// 注入redis仓储
         /// </summary>
         /// <returns></returns>
-        public static IServiceCollection AddRedisRepository(this IServiceCollection server)
+        public static IServiceCollection AddRedisRepository(this IServiceCollection server, Action<RedisOptions> options)
         {
+            //注入服务
             server.AddSingleton(typeof(IRedisBase), typeof(RedisBase));
             server.AddSingleton(typeof(IRedisOperationHelp), typeof(RedisOperationHelp));
+            //配置参数
+            server.Configure(options);
             return server;
         }
     }

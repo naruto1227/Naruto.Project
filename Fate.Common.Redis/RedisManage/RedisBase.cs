@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Net;
+using Fate.Common.Redis.RedisConfig;
 
 namespace Fate.Common.Redis.RedisManage
 {
@@ -14,19 +15,23 @@ namespace Fate.Common.Redis.RedisManage
     /// </summary>
     public class RedisBase : IRedisManage.IRedisBase
     {
-
+        private RedisConnectionHelp redisConnectionHelp;
+        public RedisBase(RedisConnectionHelp _redisConnectionHelp)
+        {
+            redisConnectionHelp = _redisConnectionHelp;
+        }
         public IDatabase redisDataBase
         {
             get
             {
-                return RedisConfig.RedisConnectionHelp.RedisConnection.GetDatabase();
+                return redisConnectionHelp.RedisConnection.GetDatabase();
             }
         }
         public ConnectionMultiplexer RedisConnection
         {
             get
             {
-                return RedisConfig.RedisConnectionHelp.RedisConnection;
+                return redisConnectionHelp.RedisConnection;
             }
         }
 

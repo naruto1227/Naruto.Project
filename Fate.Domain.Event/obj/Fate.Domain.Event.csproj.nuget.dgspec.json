@@ -121,6 +121,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

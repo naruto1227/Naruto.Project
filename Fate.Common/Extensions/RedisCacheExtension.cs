@@ -4,6 +4,7 @@ using StackExchange.Redis;
 using System;
 using System.Linq;
 using Fate.Common.Redis.RedisConfig;
+
 namespace CP.Common.Infrastructure
 {
     /// <summary>

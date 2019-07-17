@@ -21,6 +21,7 @@ using System.Text;
 using Fate.Common.Middleware;
 using Fate.Common.Repository.Mysql;
 using Fate.Domain.Model.Entities;
+
 namespace Fate.Test
 {
     public class Startup

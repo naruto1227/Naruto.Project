@@ -1,0 +1,6 @@
+F:\我的\Fate.DDD\Fate.FileServerApi\obj\Debug\netcoreapp2.2\Fate.FileServerApi.csprojAssemblyReference.cache
+F:\我的\Fate.DDD\Fate.FileServerApi\obj\Debug\netcoreapp2.2\Fate.FileServerApi.csproj.CoreCompileInputs.cache
+F:\我的\Fate.DDD\Fate.FileServerApi\obj\Debug\netcoreapp2.2\Fate.FileServerApi.RazorAssemblyInfo.cache
+F:\我的\Fate.DDD\Fate.FileServerApi\obj\Debug\netcoreapp2.2\Fate.FileServerApi.RazorAssemblyInfo.cs
+F:\我的\Fate.DDD\Fate.FileServerApi\obj\Debug\netcoreapp2.2\Fate.FileServerApi.AssemblyInfoInputs.cache
+F:\我的\Fate.DDD\Fate.FileServerApi\obj\Debug\netcoreapp2.2\Fate.FileServerApi.AssemblyInfo.cs
