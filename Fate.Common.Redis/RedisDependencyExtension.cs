@@ -5,6 +5,8 @@ using System.Text;
 using Fate.Common.Redis.IRedisManage;
 using Fate.Common.Redis.RedisManage;
 using Fate.Common.Redis.RedisConfig;
+using System.Reflection;
+using System.Linq;
 
 namespace Fate.Common.Redis
 {
@@ -19,10 +21,29 @@ namespace Fate.Common.Redis
         /// <returns></returns>
         public static IServiceCollection AddRedisRepository(this IServiceCollection server, Action<RedisOptions> options)
         {
-            //注入服务
-            server.AddSingleton(typeof(IRedisBase), typeof(RedisBase));
-            server.AddSingleton(typeof(IRedisOperationHelp), typeof(RedisOperationHelp));
-            server.AddSingleton<RedisConnectionHelp>();
+            //获取当前层的所有的类型
+            var types = Assembly.Load(Assembly.GetAssembly(typeof(RedisDependencyExtension)).GetName()).GetTypes();
+            //获取需要通过接口的实现来依赖注入的类型
+            var iTypes = types.Where(a => a.GetInterface("IRedisDependency") != null);
+            if (iTypes != null && iTypes.Count() > 0)
+            {
+                iTypes.Where(a=>a.IsClass).ToList().ForEach(item =>
+                {
+                    var interfaceClassName = "I" + item.Name;
+                    //获取接口的类型
+                    var interfaceClass = iTypes.Where(a => a.Name == interfaceClassName).FirstOrDefault();
+                    if (interfaceClass != null)
+                    {
+                        server.AddSingleton(interfaceClass, item);
+                    }
+                });
+            }
+            //注册类的实例
+            types.Where(a => a.GetInterface("IRedisClassDependency") != null).ToList().ForEach(item =>
+            {
+                server.AddSingleton(item);
+            });
+
             //配置参数
             server.Configure(options);
             return server;

@@ -13,7 +13,7 @@ namespace Fate.Common.Redis.RedisConfig
     /// <summary>
     /// redis 缓存链接
     /// </summary>
-    public class RedisConnectionHelp :IRedisDependency
+    public class RedisConnectionHelp : IRedisClassDependency
     {
         private readonly object Locker = new object();
         private ConnectionMultiplexer _instance;
