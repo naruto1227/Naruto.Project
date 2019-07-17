@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {}
+    "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {}
   },
   "projects": {
-    "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
+    "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
+        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
         "projectName": "Fate.Common.BaseRibbitMQ",
-        "projectPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
+        "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\Fate.Common.BaseRibbitMQ.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\obj\\",
+        "outputPath": "F:\\我的\\Fate.DDD\\Fate.Common.BaseRibbitMQ\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

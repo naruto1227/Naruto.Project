@@ -53,11 +53,15 @@ namespace Fate.Common.Config
 
         /// <summary>
         /// 按天单号的缓存的集合
+        /// (加上日期做为缓存key 防止 单号在定时器没有更新的时候出现今天获取昨天的单号的数据 造成重复)
+        /// (非重要更新务轻易更改此key(如需更改 请同时更改清理单号中的替换规则))
         /// </summary>
         public static string OrderNOByDayCacheList = "orderno:" + Convert.ToInt32(DateTime.Now.ToString("yyMMdd")) + "_" + "day_";
 
         /// <summary>
         /// 按月单号的缓存的集合
+        /// (加上日期做为缓存key 防止 单号在定时器没有更新的时候出现1号获取上月的单号的数据 造成重复)
+        /// (非重要更新务轻易更改此key(如需更改 请同时更改清理单号中的替换规则))
         /// </summary>
         public static string OrderNOByMonthCacheList = "orderno:" + Convert.ToInt32(DateTime.Now.ToString("yyMM")) + "_" + "month_";
 

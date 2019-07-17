@@ -90,12 +90,11 @@ namespace Fate.Common.Infrastructure
                 foreach (var item in OrderNOConfig.TableNameList)
                 {
                     #region 生成单号
-                    //验证当天的 单号是否生成 如果没有生成的话 就删除 缓存中的单号key
-                    var key = StaticFieldConfig.OrderNOByDayCacheList + item;//缓存的key
-                    if (!unitOfWork.Respositiy<OrderNo>().Where(a => a.Date == date && a.TableName.Equals(item)).Any())
-                        redis.KeyRemove(key, Redis.KeyOperatorEnum.List);
+                    //缓存的key
+                    var key = StaticFieldConfig.OrderNOByDayCacheList + item;
+
                     //验证缓存中的key的数量 是否达到最小约束
-                    else if (DayLength(item) > StaticFieldConfig.OrderNOMinLength)
+                    if (DayLength(item) > StaticFieldConfig.OrderNOMinLength)
                         return;
                     //从数据库中获取最后的一个单号
                     var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.NO).FirstOrDefault();
@@ -147,12 +146,10 @@ namespace Fate.Common.Infrastructure
                 //遍历表名
                 foreach (var item in OrderNOConfig.TableNameList)
                 {
-                    //在1号的时候 验证当月的 单号是否生成 如果没有生成的话 就删除 缓存中的单号key
-                    var key = StaticFieldConfig.OrderNOByMonthCacheList + item;//缓存的key
-                    if (DateTime.Now.Day == 1 && !unitOfWork.Respositiy<OrderNo>().Where(a => a.Date == date && a.TableName.Equals(item)).Any())
-                        redis.KeyRemove(key, Redis.KeyOperatorEnum.List);
+                    //缓存的key
+                    var key = StaticFieldConfig.OrderNOByMonthCacheList + item;
                     //验证缓存中的key的数量 是否达到最小约束
-                    else if (MonthLength(item) > StaticFieldConfig.OrderNOMinLength)
+                    if (MonthLength(item) > StaticFieldConfig.OrderNOMinLength)
                         return;
                     //从数据库中获取最后的一个单号
                     var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.NO).FirstOrDefault();
@@ -194,13 +191,10 @@ namespace Fate.Common.Infrastructure
         /// </summary>
         public async Task<string> GenerateOrderNOByDay(string tableName = default)
         {
-            ////验证是否开启缓存 如果没有开启的话 就用雪花算法生成单号
-            //if (!StaticFieldConfig.IsOpenReids)
-            //    return SnowFlakeHelper.NewID().ToString();
-            ////当缓存中的单号没有的话 就读取雪花算法的单号
+            //当缓存中的单号没有的话 就读取雪花算法的单号
             var key = StaticFieldConfig.OrderNOByDayCacheList + tableName;
-            //if (!(await redis.KeyExistsAsync(key, Redis.KeyOperatorEnum.LIST)) && (await redis.ListLengthAsync(key)) <= 0)
-            //    return SnowFlakeHelper.NewID().ToString();
+            if (!(await redis.KeyExistsAsync(key, Redis.KeyOperatorEnum.List)) && (await redis.ListLengthAsync(key)) <= 0)
+                return SnowFlakeHelper.NewID().ToString();
             //获取单号
             var no = await redis.ListLeftPopAsync(key);
             //拼接单号
@@ -212,13 +206,10 @@ namespace Fate.Common.Infrastructure
         /// </summary>
         public async Task<string> GenerateOrderNOByMonth(string tableName = default)
         {
-            ////验证是否开启缓存 如果没有开启的话 就用雪花算法生成单号
-            //if (!StaticFieldConfig.IsOpenReids)
-            //    return SnowFlakeHelper.NewID().ToString();
-            ////当缓存中的单号没有的话 就读取雪花算法的单号
+            //当缓存中的单号没有的话 就读取雪花算法的单号
             var key = StaticFieldConfig.OrderNOByMonthCacheList + tableName;
-            //if (!(await redis.KeyExistsAsync(key, Redis.KeyOperatorEnum.LIST)) && (await redis.ListLengthAsync(key)) <= 0)
-            //    return SnowFlakeHelper.NewID().ToString();
+            if (!(await redis.KeyExistsAsync(key, Redis.KeyOperatorEnum.List)) && (await redis.ListLengthAsync(key)) <= 0)
+                return SnowFlakeHelper.NewID().ToString();
             //获取单号
             var no = await redis.ListLeftPopAsync(key);
             //拼接单号
@@ -242,20 +233,26 @@ namespace Fate.Common.Infrastructure
                     {
                         //从容器中获取实例
                         var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
-                        //获取上月的日期
-                        var upDate = Convert.ToInt32(date.AddMonths(-1).ToString("yyMM"));
-                        unitOfWork.Respositiy<OrderNo>().Delete(a => a.Date == upDate);
+                        //获取
+                        var nowDate = Convert.ToInt32(date.ToString("yyMM"));
+                        unitOfWork.Respositiy<OrderNo>().Delete(a => a.Date != nowDate);
                         unitOfWork.SaveChanges();
+                        //移除缓存
+                        string key = StaticFieldConfig.OrderNOByMonthCacheList.Replace(nowDate.ToString(), date.AddMonths(-1).ToString("yyMM"));
+                        redis.KeyRemove(key, Redis.KeyOperatorEnum.List);
                     }
                     //凌晨的时候清理非今天的数据
                     if (date.Hour < 5)
                     {
                         //从容器中获取实例
                         var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
-                        //获取昨天的日期
-                        var upDate = Convert.ToInt32(date.AddDays(-1).ToString("yyMMdd"));
-                        unitOfWork.Respositiy<OrderNo>().Delete(a => a.Date == upDate);
+                        //获取
+                        var nowDate = Convert.ToInt32(date.ToString("yyMMdd"));
+                        unitOfWork.Respositiy<OrderNo>().Delete(a => a.Date != nowDate);
                         unitOfWork.SaveChanges();
+                        //移除缓存
+                        string key = StaticFieldConfig.OrderNOByDayCacheList.Replace(nowDate.ToString(), date.AddDays(-1).ToString("yyMMdd"));
+                        redis.KeyRemove(key, Redis.KeyOperatorEnum.List);
                     }
                 }
             }
