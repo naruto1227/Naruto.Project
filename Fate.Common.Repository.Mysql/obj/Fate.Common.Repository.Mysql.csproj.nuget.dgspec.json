@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {}
+    "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {}
   },
   "projects": {
-    "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
+    "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
+        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
         "projectName": "Fate.Common.Repository.Mysql",
-        "projectPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
+        "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\obj\\",
+        "outputPath": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -30,8 +30,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-                "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
+              "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
+                "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
               }
             }
           }
@@ -61,6 +61,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",
@@ -80,14 +84,14 @@
         }
       }
     },
-    "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
+    "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
+        "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
         "projectName": "Fate.Domain.Model",
-        "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
+        "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Fate.DDD\\Fate.Domain.Model\\obj\\",
+        "outputPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

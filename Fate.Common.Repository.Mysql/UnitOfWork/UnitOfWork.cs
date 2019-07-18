@@ -7,14 +7,18 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Fate.Common.Repository.Mysql.Interface;
+using Microsoft.Extensions.Options;
+using Fate.Common.Repository.Mysql.Base;
+
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
-    public class UnitOfWork: IUnitOfWork 
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly MysqlDbContent dbContext;
-        public UnitOfWork(MysqlDbContent _dbContext)
+        private readonly DbContext dbContext;
+
+        public UnitOfWork(IOptions<EFOptions> _options, IServiceProvider _service)
         {
-            dbContext = _dbContext;
+            dbContext = _service.GetService(_options.Value.DbContextType) as DbContext;
         }
 
         /// <summary>

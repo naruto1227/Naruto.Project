@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Fate.Common.Repository.Mysql.Base;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore;
 namespace Fate.Common.Repository.Mysql
 {
 
@@ -15,7 +16,7 @@ namespace Fate.Common.Repository.Mysql
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMysqlRepositoryServer(this IServiceCollection services)
+        public static IServiceCollection AddMysqlRepositoryServer<TContext>(this IServiceCollection services) where TContext : DbContext
         {
             //获取当前层的所有的类型
             var types = Assembly.Load(Assembly.GetAssembly(typeof(RepositoryExtensions)).GetName()).GetTypes();
@@ -34,7 +35,24 @@ namespace Fate.Common.Repository.Mysql
                     }
                 });
             }
+
+            //配置ef上下文
+            services.Configure(UseEntityFramework<TContext>());
             return services;
+        }
+
+        /// <summary>
+        /// 注入ef上下文的类型
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        private static Action<EFOptions> UseEntityFramework<TContext>() where TContext : DbContext
+        {
+            Action<EFOptions> action = (options) =>
+            {
+                options.DbContextType = typeof(TContext);
+            };
+            return action;
         }
     }
 }

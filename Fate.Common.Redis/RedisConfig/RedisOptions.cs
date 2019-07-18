@@ -9,7 +9,7 @@ namespace Fate.Common.Redis.RedisConfig
         /// <summary>
         /// redis的连接地址多个逗号隔开
         /// </summary>
-        public string Connection { get; set; } = "127.0.0.1:6349";
+        public string Connection { get; set; } = "127.0.0.1:6379";
 
         /// <summary>
         /// Redis的默认存储库

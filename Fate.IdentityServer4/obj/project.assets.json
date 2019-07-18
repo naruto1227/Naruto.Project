@@ -5426,6 +5426,7 @@
           "Microsoft.Extensions.Configuration": "2.2.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "2.2.0",
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
+          "Microsoft.Extensions.Options": "2.2.0",
           "Pomelo.EntityFrameworkCore.MySql": "2.2.0"
         },
         "compile": {
@@ -14652,11 +14653,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
       "projectName": "Fate.IdentityServer4",
-      "projectPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
+      "projectPath": "F:\\我的\\Fate.DDD\\Fate.IdentityServer4\\Fate.IdentityServer4.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
+      "outputPath": "F:\\我的\\Fate.DDD\\Fate.IdentityServer4\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14675,8 +14676,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
             }
           }
         }

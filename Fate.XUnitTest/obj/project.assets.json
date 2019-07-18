@@ -4215,6 +4215,7 @@
           "Microsoft.Extensions.Configuration": "2.2.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "2.2.0",
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
+          "Microsoft.Extensions.Options": "2.2.0",
           "Pomelo.EntityFrameworkCore.MySql": "2.2.0"
         },
         "compile": {
@@ -12135,11 +12136,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
+      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
       "projectName": "Fate.XUnitTest",
-      "projectPath": "D:\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
+      "projectPath": "F:\\我的\\Fate.DDD\\Fate.XUnitTest\\Fate.XUnitTest.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\Fate.DDD\\Fate.XUnitTest\\obj\\",
+      "outputPath": "F:\\我的\\Fate.DDD\\Fate.XUnitTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12158,29 +12159,29 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Application\\Fate.Application.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Ioc.Core\\Fate.Common.Ioc.Core.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Redis\\Fate.Common.Redis.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common\\Fate.Common.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Event\\Fate.Domain.Event.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
             },
-            "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain\\Fate.Domain.csproj"
             }
           }
         }

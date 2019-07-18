@@ -2966,6 +2966,7 @@
       "Microsoft.Extensions.Configuration >= 2.2.0",
       "Microsoft.Extensions.Configuration.FileExtensions >= 2.2.0",
       "Microsoft.Extensions.Configuration.Json >= 2.2.0",
+      "Microsoft.Extensions.Options >= 2.2.0",
       "NETStandard.Library >= 2.0.3",
       "Pomelo.EntityFrameworkCore.MySql >= 2.2.0"
     ]
@@ -2977,11 +2978,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
+      "projectUniqueName": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
       "projectName": "Fate.Common.Repository.Mysql",
-      "projectPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
+      "projectPath": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\Fate.Common.Repository.Mysql.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\Fate.DDD\\Fate.Common.Repository.Mysql\\obj\\",
+      "outputPath": "F:\\我的\\Fate.DDD\\Fate.Common.Repository.Mysql\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3000,8 +3001,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
-              "projectPath": "D:\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
+            "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj": {
+              "projectPath": "F:\\我的\\Fate.DDD\\Fate.Domain.Model\\Fate.Domain.Model.csproj"
             }
           }
         }
@@ -3028,6 +3029,10 @@
             "version": "[2.2.0, )"
           },
           "Microsoft.Extensions.Configuration.Json": {
+            "target": "Package",
+            "version": "[2.2.0, )"
+          },
+          "Microsoft.Extensions.Options": {
             "target": "Package",
             "version": "[2.2.0, )"
           },

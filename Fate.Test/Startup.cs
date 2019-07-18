@@ -49,7 +49,7 @@ namespace Fate.Test
                 options.Password = ConfigurationManage.GetValue("RedisConfig:Password");
             });
             //注入mysql仓储
-            services.AddMysqlRepositoryServer();
+            services.AddMysqlRepositoryServer<MysqlDbContent>();
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
