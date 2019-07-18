@@ -1,4 +1,15 @@
 #过滤
+/.vs/
+/Fate.Common.BaseRibbitMQ/obj/
+/Fate.Common.BaseRibbitMQ/bin/
+/Fate.FileServerApi/obj/
+/Fate.FileServerApi/bin/
+/Fate.Common.CAP.Subscribe/obj/
+/Fate.Common.CAP.Subscribe/bin/
+/Fate.Common.RabbitMQ/bin/
+/Fate.Common.RabbitMQ/obj/
+/Fate.TimeServer/obj/
+/Fate.TimeServer/bin/
 /Fate.Application/obj/
 /Fate.Common/obj/
 /Fate.Common.Ioc.Core/obj/
@@ -23,5 +34,3 @@
 /Fate.Test/bin/
 /Fate.WebApi/bin/
 /Fate.XUnitTest/bin/
-/.vs/
-*.dll
