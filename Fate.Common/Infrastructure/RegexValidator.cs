@@ -156,7 +156,8 @@ namespace Fate.Common.Infrastructure
         /// </summary>  
         /// <param name="input">待验证的字符串</param>  
         /// <returns>是否匹配</returns>  
-        public static bool IsIntegerAndEnglishCharacter_(string input) {
+        public static bool IsIntegerAndEnglishCharacter_(string input)
+        {
             string pattern = @"^\w+$";
             return IsMatch(input, pattern);
         }
@@ -171,7 +172,17 @@ namespace Fate.Common.Infrastructure
             string pattern = @"^[\u4e00-\u9fa5]+$";
             return IsMatch(input, pattern);
         }
-
+        /// <summary>  
+        /// 验证包含汉字数量  
+        /// </summary>  
+        /// <param name="input">待验证的字符串</param>  
+        /// <returns>是否匹配</returns>  
+        public static int IsChineseCharacterCount(string input)
+        {
+            string pattern = @"[\u4e00-\u9fa5]";
+            Regex regex = new Regex(pattern);
+            return regex.Matches(input).Count;
+        }
         /// <summary>  
         /// 验证数字长度范围（数字前端的0计长度）  
         /// [若要验证固定长度，可传入相同的两个长度数值]  

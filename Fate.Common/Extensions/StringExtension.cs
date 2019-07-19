@@ -300,5 +300,30 @@ namespace Fate.Common.Extensions
             }
         }
         #endregion
+
+        /// <summary>
+        /// 获取字符串长度。与string.Length不同的是，该方法将中文作 2 个字符计算。
+        /// </summary>
+        /// <param name="str">目标字符串</param>
+        /// <returns></returns>
+        public static int GetLength(this string str)
+        {
+            if (str == null || str.Length == 0) { return 0; }
+
+            int l = str.Length;
+            int realLen = l;
+
+            #region 计算长度
+            int clen = 0;//当前长度
+            while (clen < l)
+            {
+                //每遇到一个中文，则将实际长度加一。
+                if ((int)str[clen] > 128) { realLen++; }
+                clen++;
+            }
+            #endregion
+
+            return realLen;
+        }
     }
 }
