@@ -13,5 +13,14 @@ namespace Fate.Common.Repository.Mysql.Base
         /// </summary>
         public Type DbContextType { get; set; }
 
+        /// <summary>
+        /// 读写连接字符串的key
+        /// </summary>
+        public string WriteReadConnectionName { get; set; }
+
+        /// <summary>
+        /// 只读的连接字符串的key
+        /// </summary>
+        public string ReadOnlyConnectionName { get; set; }
     }
 }
