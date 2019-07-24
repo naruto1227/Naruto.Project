@@ -12,11 +12,11 @@ namespace Fate.Common.Repository.Mysql
     public static class RepositoryExtensions
     {
         /// <summary>
-        /// 注入mysql仓储服务
+        /// 注入mysql仓储服务(依赖注入)
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMysqlRepositoryServer<TContext>(this IServiceCollection services) where TContext : DbContext
+        public static IServiceCollection AddMysqlRepositoryServer(this IServiceCollection services)
         {
             //获取当前层的所有的类型
             var types = Assembly.Load(Assembly.GetAssembly(typeof(RepositoryExtensions)).GetName()).GetTypes();
@@ -35,24 +35,25 @@ namespace Fate.Common.Repository.Mysql
                     }
                 });
             }
-
-            //配置ef上下文
-            services.Configure(UseEntityFramework<TContext>());
             return services;
         }
 
         /// <summary>
-        /// 注入ef上下文的类型
+        /// 注入上下文的实例类型
         /// </summary>
-        /// <param name="services"></param>
+        /// <typeparam name="TContext">上下文</typeparam>
+
+        /// <typeparam name="TEFOptions">上下文参数的实例类型</typeparam>
         /// <returns></returns>
-        private static Action<EFOptions> UseEntityFramework<TContext>() where TContext : DbContext
+        public static IServiceCollection AddRepositoryEFOptionServer<TContext, TEFOptions>(this IServiceCollection services, Action<TEFOptions> action) where TEFOptions : EFOptions, new() where TContext : DbContext
         {
-            Action<EFOptions> action = (options) =>
-            {
-                options.DbContextType = typeof(TContext);
-            };
-            return action;
+            //获取参数
+            TEFOptions options = new TEFOptions();
+            action?.Invoke(options);
+
+            services.AddDbContext<TContext>(options?.ConfigureDbContext);
+            services.Configure(action);
+            return services;
         }
     }
 }

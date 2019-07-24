@@ -24,6 +24,8 @@ using Fate.Domain.Model.Entities;
 using Fate.Common.Redis;
 using CP.Common.Infrastructure;
 using Fate.Common.BaseRibbitMQ;
+using Fate.Common.Repository.Mysql.Base;
+
 namespace Fate.Test
 {
     public class Startup
@@ -49,7 +51,14 @@ namespace Fate.Test
                 options.Password = ConfigurationManage.GetValue("RedisConfig:Password");
             });
             //注入mysql仓储
-            services.AddMysqlRepositoryServer<MysqlDbContent>();
+            services.AddMysqlRepositoryServer();
+
+            services.AddRepositoryEFOptionServer<MysqlDbContent, EFOptions>(options =>
+            {
+                options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
+                options.ReadOnlyConnectionName = Configuration.GetConnectionString("MysqlConnection");
+                options.DbContextType = typeof(MysqlDbContent);
+            });
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {

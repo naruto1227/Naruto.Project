@@ -9,6 +9,10 @@ namespace Fate.Common.Repository.Mysql.Base
     public class EFOptions
     {
         /// <summary>
+        /// 上下文的配置
+        /// </summary>
+        public Action<DbContextOptionsBuilder> ConfigureDbContext { get; set; }
+        /// <summary>
         /// ef实体的类型
         /// </summary>
         public Type DbContextType { get; set; }
