@@ -15,9 +15,10 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext dbContext;
-
+        private IOptions<EFOptions> options;
         public UnitOfWork(IOptions<EFOptions> _options, IServiceProvider _service)
         {
+            options = _options;
             dbContext = _service.GetService(_options.Value.DbContextType) as DbContext;
         }
 
@@ -79,14 +80,10 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public async Task ChangeReadOnlyConnection()
         {
-            //获取配置文件
-            var config = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-            //获取只读的连接字符串
-            var connection = config.GetConnectionString("ReadOnlyMySqlConnection");
-            if (connection == null)
+            if (options?.Value?.ReadOnlyConnectionName == null)
                 throw new ApplicationException("数据库只读连接字符串不能为空");
             //获取连接字符串的数组 多个用|分割开
-            var connections = connection.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+            var connections = options?.Value?.ReadOnlyConnectionName.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
             if (connections == null || connections.Count() <= 0)
                 throw new ApplicationException("数据库只读连接字符串不能为空");
             //随机数

@@ -41,7 +41,7 @@ namespace Fate.Test.Controllers
             redis.StringSet("zhang", "haibo");
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
             jsonResult.msg = "helloword";
-            throw new Fate.Common.Exceptions.NoAuthorizationException("111111111111111");
+            //throw new Fate.Common.Exceptions.NoAuthorizationException("111111111111111");
         }
 
         public async Task testredis2()

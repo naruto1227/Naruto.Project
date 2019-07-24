@@ -97,7 +97,7 @@ namespace Fate.Common.Infrastructure
                     if (DayLength(item) > StaticFieldConfig.OrderNOMinLength)
                         return;
                     //从数据库中获取最后的一个单号
-                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.NO).FirstOrDefault();
+                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.No).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.No).FirstOrDefault();
                     //获取集合实例
                     List<OrderNo> addLi = service.ServiceProvider.GetRequiredService<List<OrderNo>>();
                     if (addLi.Count() > 0)
@@ -110,7 +110,7 @@ namespace Fate.Common.Infrastructure
                     {
                         resNO++;
                         var orderNO = service.ServiceProvider.GetRequiredService<OrderNo>();
-                        orderNO.NO = resNO;
+                        orderNO.No = resNO;
                         orderNO.Date = date;
                         orderNO.TableName = item;
                         //添加数据到数据库
@@ -124,7 +124,7 @@ namespace Fate.Common.Infrastructure
                         if (res > 0)
                         {
                             //追加到缓存
-                            redis.ListRightPush(key, addLi.Select(a => a.NO).ToList());
+                            redis.ListRightPush(key, addLi.Select(a => a.No).ToList());
                         }
                     }
                     #endregion
@@ -152,7 +152,7 @@ namespace Fate.Common.Infrastructure
                     if (MonthLength(item) > StaticFieldConfig.OrderNOMinLength)
                         return;
                     //从数据库中获取最后的一个单号
-                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.NO).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.NO).FirstOrDefault();
+                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.No).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.No).FirstOrDefault();
                     //获取集合实例
                     List<OrderNo> addLi = service.ServiceProvider.GetRequiredService<List<OrderNo>>();
                     if (addLi.Count() > 0)
@@ -165,7 +165,7 @@ namespace Fate.Common.Infrastructure
                     {
                         resNO++;
                         var orderNO = service.ServiceProvider.GetRequiredService<OrderNo>();
-                        orderNO.NO = resNO;
+                        orderNO.No = resNO;
                         orderNO.Date = date;
                         orderNO.TableName = item;
                         //添加数据到数据库
@@ -179,7 +179,7 @@ namespace Fate.Common.Infrastructure
                         if (res > 0)
                         {
                             //追加到缓存
-                            redis.ListRightPush(key, addLi.Select(a => a.NO).ToList());
+                            redis.ListRightPush(key, addLi.Select(a => a.No).ToList());
                         }
                     }
                 }

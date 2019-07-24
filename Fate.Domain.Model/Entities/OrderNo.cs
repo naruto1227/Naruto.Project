@@ -12,7 +12,7 @@ namespace Fate.Domain.Model.Entities
         /// <summary>
         /// 单号
         /// </summary>
-        public long NO { get; set; }
+        public long No { get; set; }
         /// <summary>
         /// 日期
         /// </summary>
