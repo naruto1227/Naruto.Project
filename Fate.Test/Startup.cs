@@ -41,9 +41,6 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            //注入上下文
-            services.AddDbContext<MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
-
             //注入redis仓储服务
             services.AddRedisRepository(options =>
             {
