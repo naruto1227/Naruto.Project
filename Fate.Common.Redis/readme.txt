@@ -1,0 +1,1 @@
+﻿1.使用此层服务，只需要 在Startup 注入 RedisDependencyExtension  中的扩展方法，配置redis的参数

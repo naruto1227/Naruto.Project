@@ -1,0 +1,1 @@
+﻿1.如需使用此层的数据访问，需要将RepositoryExtensions方法中的两个扩展方法，注入到Startup中，并配置参数
