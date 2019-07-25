@@ -22,9 +22,17 @@ namespace Fate.Common.Ioc.Core
             Assembly assembliesDomain = Assembly.Load("Fate.Domain");
             //appcation 服务所在的程序
             Assembly assemblyApp = Assembly.Load("Fate.Application");
-            List<Assembly> assemblies = new List<Assembly>();
-            assemblies.Add(assembliesDomain);
-            assemblies.Add(assemblyApp);
+
+            //自动注册领域服务层接口
+            builder.RegisterAssemblyTypes(assembliesDomain)
+                .Where(b => b.GetInterface("IDomainServicesDependency") != null)
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope(); //见上方说明
+
+            //自动注册应用层接口
+            builder.RegisterAssemblyTypes(assemblyApp)
+                .Where(b => b.GetInterface("IAppServicesDependency") != null)
+                .InstancePerLifetimeScope(); //见上方说明
 
             //获取公共层的程序信息
             Assembly assemblyCommon = Assembly.Load("Fate.Common");
@@ -34,11 +42,8 @@ namespace Fate.Common.Ioc.Core
             //注入领域事件
             Assembly assemblyEvent = Assembly.Load("Fate.Domain.Event");
 
-            //自动注册接口
-            builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(b => b.GetInterface("IAppServicesDependency") != null || b.GetInterface("IDomainServicesDependency") != null)
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope(); //见上方说明
+
+
             //注册公共层的接口
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
 

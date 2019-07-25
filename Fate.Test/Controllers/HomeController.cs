@@ -14,6 +14,7 @@ using Fate.Common.Ioc.Core;
 using Fate.Common.Infrastructure;
 using Fate.Common.Repository.Mysql;
 using StackExchange.Redis;
+using Fate.Application.Services;
 
 namespace Fate.Test.Controllers
 {
@@ -23,11 +24,11 @@ namespace Fate.Test.Controllers
     public class Home1Controller : ControllerBase
     {
         MyJsonResult jsonResult;
-        ISettingApp setting;
+        SettingApp setting;
         private IUnitOfWork unitOfWork;
         private IRedisOperationHelp redis;
         RSAHelper rSA;
-        public Home1Controller(ISettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
+        public Home1Controller(SettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
         {
             setting = _setting;
             unitOfWork = _unitOfWork;

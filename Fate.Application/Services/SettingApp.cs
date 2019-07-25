@@ -7,7 +7,7 @@ using Fate.Domain.Model;
 using Fate.Domain.Interface;
 namespace Fate.Application.Services
 {
-    public class SettingApp : ISettingApp
+    public class SettingApp : IAppServicesDependency
     {
         private ISetting setting;
         public SettingApp(ISetting _setting)
@@ -24,7 +24,8 @@ namespace Fate.Application.Services
             await setting.EventTest();
         }
 
-        public async Task testEF() {
+        public async Task testEF()
+        {
             await setting.testEF();
         }
     }

@@ -8,14 +8,15 @@ using Newtonsoft.Json;
 using Fate.Common.Repository.Mysql;
 using Fate.Application.Interface;
 using Fate.Common.Repository.Mysql.UnitOfWork;
+using Fate.Application.Services;
 
 namespace Fate.WebApi.Controllers
 {
     public class HomeController : BaseController
     {
-        ISettingApp setting;
+        SettingApp setting;
 
-        public HomeController(ISettingApp _setting)
+        public HomeController(SettingApp _setting)
         {
             setting = _setting;
          
