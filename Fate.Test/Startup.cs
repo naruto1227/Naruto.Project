@@ -57,7 +57,6 @@ namespace Fate.Test
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
                 options.ReadOnlyConnectionName = Configuration.GetConnectionString("MysqlConnection");
-                options.DbContextType = typeof(MysqlDbContent);
             });
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>

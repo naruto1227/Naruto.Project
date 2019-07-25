@@ -52,7 +52,13 @@ namespace Fate.Common.Repository.Mysql
             action?.Invoke(options);
 
             services.AddDbContext<TContext>(options?.ConfigureDbContext);
-            services.Configure(action);
+            services.Configure<TEFOptions>(option =>
+            {
+                option.ConfigureDbContext = options?.ConfigureDbContext;
+                option.DbContextType = options?.DbContextType ?? typeof(TContext);
+                option.ReadOnlyConnectionName = options?.ReadOnlyConnectionName;
+                option.WriteReadConnectionName = options?.WriteReadConnectionName;
+            });
             return services;
         }
     }

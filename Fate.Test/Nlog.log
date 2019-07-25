@@ -3531,3 +3531,67 @@ File name: 'Mysql.Data, Culture=neutral, PublicKeyToken=null'
 
 
 2019-07-24 16:22:40.6041 Info FileTarget: Pattern {#} is missing in ArchiveFileName `F:\我的\Fate.DDD\Fate.Test\bin\Debug\netcoreapp2.2\Logs\Error\2019-07-24.log` (Fallback to dynamic wildcard)
+2019-07-25 09:49:58.1812 Info Message Template Auto Format enabled
+2019-07-25 09:49:58.1908 Info Loading assembly: NLog.Web.AspNetCore
+2019-07-25 09:49:58.3163 Info Adding target FileTarget(Name=info-file)
+2019-07-25 09:49:58.3163 Info Adding target FileTarget(Name=error-file)
+2019-07-25 09:49:58.3163 Info Adding target FileTarget(Name=debug-file)
+2019-07-25 09:49:58.3163 Info Adding target FileTarget(Name=trace-file)
+2019-07-25 09:49:58.3163 Info Adding target FileTarget(Name=fatal-file)
+2019-07-25 09:49:58.3375 Info Adding target DatabaseTarget(Name=database-file)
+2019-07-25 09:49:58.3375 Info Adding target NullTarget(Name=blackhole)
+2019-07-25 09:49:58.4799 Info Found 102 configuration items
+2019-07-25 09:49:58.7606 Error DatabaseTarget(Name=database-file): Failed to create ConnectionType from DBProvider=MySql.Data.MySqlClient.MySqlConnection,Mysql.Data Exception: System.IO.FileNotFoundException: Could not load file or assembly 'Mysql.Data, Culture=neutral, PublicKeyToken=null'. 系统找不到指定的文件。
+File name: 'Mysql.Data, Culture=neutral, PublicKeyToken=null'
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMarkHandle stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName, ObjectHandleOnStack type, ObjectHandleOnStack keepalive)
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName)
+   at System.RuntimeType.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark)
+   at System.Type.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase)
+   at NLog.Targets.DatabaseTarget.SetConnectionType()
+   at NLog.Targets.DatabaseTarget.InitializeTarget()
+
+
+2019-07-25 09:49:58.7606 Error Database Target[database-file]: Error initializing target Exception: System.IO.FileNotFoundException: Could not load file or assembly 'Mysql.Data, Culture=neutral, PublicKeyToken=null'. 系统找不到指定的文件。
+File name: 'Mysql.Data, Culture=neutral, PublicKeyToken=null'
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMarkHandle stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName, ObjectHandleOnStack type, ObjectHandleOnStack keepalive)
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName)
+   at System.RuntimeType.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark)
+   at System.Type.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase)
+   at NLog.Targets.DatabaseTarget.SetConnectionType()
+   at NLog.Targets.DatabaseTarget.InitializeTarget()
+   at NLog.Targets.Target.Initialize(LoggingConfiguration configuration)
+
+
+2019-07-25 09:50:01.8318 Info FileTarget: Pattern {#} is missing in ArchiveFileName `F:\我的\Fate.DDD\Fate.Test\bin\Debug\netcoreapp2.2\Logs\Error\2019-07-25.log` (Fallback to dynamic wildcard)
+2019-07-25 09:50:58.8543 Info Message Template Auto Format enabled
+2019-07-25 09:50:58.8636 Info Loading assembly: NLog.Web.AspNetCore
+2019-07-25 09:50:59.1765 Info Adding target FileTarget(Name=info-file)
+2019-07-25 09:50:59.1765 Info Adding target FileTarget(Name=error-file)
+2019-07-25 09:50:59.1765 Info Adding target FileTarget(Name=debug-file)
+2019-07-25 09:50:59.1765 Info Adding target FileTarget(Name=trace-file)
+2019-07-25 09:50:59.1901 Info Adding target FileTarget(Name=fatal-file)
+2019-07-25 09:50:59.2239 Info Adding target DatabaseTarget(Name=database-file)
+2019-07-25 09:50:59.2239 Info Adding target NullTarget(Name=blackhole)
+2019-07-25 09:50:59.3407 Info Found 102 configuration items
+2019-07-25 09:50:59.5673 Error DatabaseTarget(Name=database-file): Failed to create ConnectionType from DBProvider=MySql.Data.MySqlClient.MySqlConnection,Mysql.Data Exception: System.IO.FileNotFoundException: Could not load file or assembly 'Mysql.Data, Culture=neutral, PublicKeyToken=null'. 系统找不到指定的文件。
+File name: 'Mysql.Data, Culture=neutral, PublicKeyToken=null'
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMarkHandle stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName, ObjectHandleOnStack type, ObjectHandleOnStack keepalive)
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName)
+   at System.RuntimeType.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark)
+   at System.Type.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase)
+   at NLog.Targets.DatabaseTarget.SetConnectionType()
+   at NLog.Targets.DatabaseTarget.InitializeTarget()
+
+
+2019-07-25 09:50:59.5673 Error Database Target[database-file]: Error initializing target Exception: System.IO.FileNotFoundException: Could not load file or assembly 'Mysql.Data, Culture=neutral, PublicKeyToken=null'. 系统找不到指定的文件。
+File name: 'Mysql.Data, Culture=neutral, PublicKeyToken=null'
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMarkHandle stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName, ObjectHandleOnStack type, ObjectHandleOnStack keepalive)
+   at System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName)
+   at System.RuntimeType.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark)
+   at System.Type.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase)
+   at NLog.Targets.DatabaseTarget.SetConnectionType()
+   at NLog.Targets.DatabaseTarget.InitializeTarget()
+   at NLog.Targets.Target.Initialize(LoggingConfiguration configuration)
+
+
+2019-07-25 09:51:36.1769 Info FileTarget: Pattern {#} is missing in ArchiveFileName `F:\我的\Fate.DDD\Fate.Test\bin\Debug\netcoreapp2.2\Logs\Error\2019-07-25.log` (Fallback to dynamic wildcard)
