@@ -40,12 +40,12 @@ namespace Fate.FileServerApi.Controllers
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, MultipartHeadersLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)]
         [RequestSizeLimit(int.MaxValue)]
-        public async Task<MyJsonResult> AddFile()
+        public async Task<MyJsonResult> AddFile([FromForm]IFormFileCollection files)
         {
             //测试时间
             Stopwatch stopwatch = Stopwatch.StartNew();
             stopwatch.Start();
-            IFormFileCollection files = Request.Form.Files;
+            //IFormFileCollection files = Request.Form.Files;
             if (files == null || files.Count <= 0)
             {
                 myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
