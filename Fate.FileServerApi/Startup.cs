@@ -15,6 +15,8 @@ using Fate.Common.Ioc.Core;
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Fate.Common.Options;
 
 namespace Fate.FileServerApi
 {
@@ -53,12 +55,12 @@ namespace Fate.FileServerApi
             // services.AddDirectoryBrowser();
             services.AddMvcCore().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            ApplicationContainer = AutofacInit.Injection(services,0);
+            ApplicationContainer = AutofacInit.Injection(services, 0);
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IOptions<FileUploadOptions> fileOptions)
         {
             if (env.IsDevelopment())
             {
@@ -67,17 +69,16 @@ namespace Fate.FileServerApi
             //定义一个文件夹的访问路径
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
-                RequestPath = "/" + StaticFieldConfig.FileRequestPathName,
+                FileProvider = new PhysicalFileProvider(fileOptions.Value.UploadFilePath),
+                RequestPath = fileOptions.Value.RequestPathName,
                 DefaultContentType = "application/x-msdownload",
                 ServeUnknownFileTypes = true
             });
             //启用目录浏览
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
-                FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
-                RequestPath = "/" + StaticFieldConfig.FileRequestPathName,
-
+                FileProvider = new PhysicalFileProvider(fileOptions.Value.UploadFilePath),
+                RequestPath = "/" + fileOptions.Value.RequestPathName,
             });
             app.Map("/api/values", options =>
             {

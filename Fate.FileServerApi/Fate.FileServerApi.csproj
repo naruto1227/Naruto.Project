@@ -17,6 +17,10 @@
     <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UploadFile\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/appveyor" /></VisualStudio></ProjectExtensions>
 
 </Project>

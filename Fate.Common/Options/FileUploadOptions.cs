@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -20,5 +21,9 @@ namespace Fate.Common.Options
         /// 文件的 存放地址 不填默认为根目录地址
         /// </summary>
         public string UploadFilePath { set; get; } = Path.Combine(Directory.GetCurrentDirectory(), "UploadFile");
+        /// <summary>
+        /// 请求的路经头
+        /// </summary>
+        public PathString RequestPathName { get; set; } = new PathString("/file");
     }
 }
