@@ -45,7 +45,7 @@ namespace Fate.FileServerApi
 
             services.UseFileOptions(options =>
             {
-
+                options.UploadFilePath = ConfigurationManage.GetValue("UploadFilePath");
             });
             // services.AddDirectoryBrowser();
             services.AddMvcCore().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
