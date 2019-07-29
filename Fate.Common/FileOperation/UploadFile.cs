@@ -4,18 +4,30 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using Fate.Common.Exceptions;
+using Fate.Common.Interface;
+using Microsoft.Extensions.Options;
+using Fate.Common.Options;
 
 namespace Fate.Common.FileOperation
 {
     /// <summary>
     /// 文件上传
     /// </summary>
-    public class UploadFile
+    public class UploadFile : ICommonClassSigleDependency
     {
         /// <summary>
-        /// 每次上传最大的buffer大小
+        /// 每次上传最大的buffer大小  1M=1000000
         /// </summary>
-        private static int BUFFER_COUNT = 15000000;//15M
+        private int BufferLength { get; set; }
+
+        /// <summary>
+        /// 构造注入
+        /// </summary>
+        /// <param name="_options"></param>
+        public UploadFile(IOptions<FileUploadOptions> _options)
+        {
+            BufferLength = _options.Value.BufferLength * 1000000;
+        }
 
         /// <summary>
         /// 处理单独一段本地数据上传至服务器的逻辑
@@ -45,11 +57,11 @@ namespace Fate.Common.FileOperation
             //获取当前流的长度
             long num = uploadFIleStream.Length;
             //获取循环的次数
-            int index = GetCycleNum(num, BUFFER_COUNT);
+            int index = GetCycleNum(num, BufferLength);
             //定义一个读取的总字节数
             int totalNum = 0;
             //定义一个读取的长度
-            int count = BUFFER_COUNT;
+            int count = BufferLength;
             for (int i = 0; i < index; i++)
             {
                 //当为最后一次的时候长度为最后的长度

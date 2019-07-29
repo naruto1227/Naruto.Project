@@ -6,21 +6,28 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Fate.Common.Interface;
+using Microsoft.Extensions.Options;
+using Fate.Common.Options;
+
 namespace Fate.Common.FileOperation
 {
     /// <summary>
     /// 文件的帮助类
     /// </summary>
-    public class FileHelper
+    public class FileHelper : ICommonClassSigleDependency
     {
         /// <summary>
         /// 获取文件写入的服务
         /// </summary>
         private UploadFile uploadFile;
 
-        public FileHelper(UploadFile upload)
+        private IOptions<FileUploadOptions> options;
+
+        public FileHelper(UploadFile _uploadFile, IOptions<FileUploadOptions> _options)
         {
-            uploadFile = upload;
+            uploadFile = _uploadFile;
+            options = _options;
         }
         /// <summary>
         /// 添加文件
@@ -30,7 +37,7 @@ namespace Fate.Common.FileOperation
         public async Task<string> AddFileAsync(IFormFile file)
         {
             //获取文件上传的根地址
-            string path = StaticFieldConfig.UploadFilePath;
+            string path = options.Value.UploadFilePath;
             //获取的时间的目录
             var time = DateTime.Now.ToString("yyyMMdd");
             //目录不存在就创建一个目录

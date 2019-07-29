@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Fate.Common.Redis.RedisConfig;
 
-namespace CP.Common.Infrastructure
+namespace Fate.Common.Extensions
 {
     /// <summary>
     /// 分布式缓存的扩展

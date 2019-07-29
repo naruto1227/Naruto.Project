@@ -10,6 +10,12 @@ using Microsoft.AspNetCore.Http.Features;
 using Fate.Common.Middleware;
 using Fate.Common.FileOperation;
 using Fate.Common.Config;
+using Fate.Common.Extensions;
+using Fate.Common.Ioc.Core;
+using System;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+
 namespace Fate.FileServerApi
 {
     public class Startup
@@ -21,8 +27,10 @@ namespace Fate.FileServerApi
 
         public IConfiguration Configuration { get; }
 
+        public IContainer ApplicationContainer { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddDirectoryBrowser();
             //设置文件 上传的 大小
@@ -37,9 +45,16 @@ namespace Fate.FileServerApi
             services.AddSingleton<FileHelper>();
             services.AddSingleton<UploadFile>();
             services.AddTransient<Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider>();
+
+            services.UseFileOptions(options =>
+            {
+
+            });
             // services.AddDirectoryBrowser();
             services.AddMvcCore().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            ApplicationContainer = AutofacInit.Injection(services,0);
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,15 +68,15 @@ namespace Fate.FileServerApi
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
-                RequestPath = "/"+ StaticFieldConfig.FileRequestPathName,
+                RequestPath = "/" + StaticFieldConfig.FileRequestPathName,
                 DefaultContentType = "application/x-msdownload",
-                 ServeUnknownFileTypes=true
+                ServeUnknownFileTypes = true
             });
             //启用目录浏览
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
                 FileProvider = new PhysicalFileProvider(StaticFieldConfig.UploadFilePath),
-                RequestPath = "/"+ StaticFieldConfig.FileRequestPathName,
+                RequestPath = "/" + StaticFieldConfig.FileRequestPathName,
 
             });
             app.Map("/api/values", options =>
