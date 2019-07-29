@@ -73,7 +73,7 @@ namespace Fate.Common.FileOperation
                 files.ToList().ForEach((item) =>
                {
                    //拼接文件存放的地址
-                   var file = Path.Combine(StaticFieldConfig.UploadFilePath, item);
+                   var file = Path.Combine(options.Value.UploadFilePath, item);
                    if (File.Exists(file))
                    {
                        File.Delete(file);

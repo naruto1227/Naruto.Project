@@ -13,6 +13,9 @@ using Fate.Common.Extensions;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Diagnostics;
 using Fate.Common.Exceptions;
+using Microsoft.Extensions.Options;
+using Fate.Common.Options;
+
 namespace Fate.FileServerApi.Controllers
 {
     /// <summary>
@@ -22,14 +25,16 @@ namespace Fate.FileServerApi.Controllers
     [ApiController]
     public class FileUploadController : ControllerBase
     {
+        private IOptions<FileUploadOptions> options;
         private MyJsonResult myJsonResult;
         private FileHelper _file;
         private FileExtensionContentTypeProvider provider;
-        public FileUploadController(MyJsonResult jsonResult, FileHelper fileHelper, FileExtensionContentTypeProvider _provider)
+        public FileUploadController(MyJsonResult jsonResult, FileHelper fileHelper, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options)
         {
             myJsonResult = jsonResult;
             _file = fileHelper;
             provider = _provider;
+            options = _options;
         }
         #region 新增文件
         /// <summary>
@@ -106,7 +111,7 @@ namespace Fate.FileServerApi.Controllers
             if (!file.Any() || file.ToString().IsNullOrEmpty())
                 throw new MyExceptions("请填写文件下载地址");
             //获取完整的文件地址
-            var path = Path.Combine(StaticFieldConfig.UploadFilePath, file);
+            var path = Path.Combine(options.Value.UploadFilePath, file);
             if (!System.IO.File.Exists(path))
                 throw new MyExceptions("需要下载的文件地址错误,找不到该文件");
             //获取文件的mime类型
