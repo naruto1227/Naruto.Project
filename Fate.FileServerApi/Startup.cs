@@ -35,12 +35,7 @@ namespace Fate.FileServerApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddDirectoryBrowser();
-            //设置文件 上传的 大小
-            services.Configure<FormOptions>(options =>
-            {
-                options.MultipartBodyLengthLimit = int.MaxValue;
-                options.ValueLengthLimit = int.MaxValue;
-            });
+
             //注入 返回的实体
             services.AddTransient<MyJsonResult>();
             //注入文件操作类
