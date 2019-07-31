@@ -20,17 +20,17 @@ namespace Fate.Common.Redis
             //获取当前层的所有的类型
             var types = Assembly.Load(Assembly.GetAssembly(typeof(RedisDependencyExtension)).GetName()).GetTypes();
             //获取需要通过接口的实现来依赖注入的类型
-            var iTypes = types.Where(a => a.GetInterface("IRedisDependency") != null);
-            if (iTypes != null && iTypes.Count() > 0)
+            var redisDependencyTypes = types.Where(a => a.GetInterface("IRedisDependency") != null);
+            if (redisDependencyTypes != null && redisDependencyTypes.Count() > 0)
             {
-                iTypes.Where(a=>a.IsClass).ToList().ForEach(item =>
+                //获取接口类型
+                redisDependencyTypes.Where(a => a.IsInterface).ToList().ForEach(item =>
                 {
-                    var interfaceClassName = "I" + item.Name;
-                    //获取接口的类型
-                    var interfaceClass = iTypes.Where(a => a.Name == interfaceClassName).FirstOrDefault();
-                    if (interfaceClass != null)
+                    //获取当前接口对应的 实现类
+                    var classType = redisDependencyTypes.Where(a => a.IsClass && a.GetInterface(item.Name) != null).FirstOrDefault();
+                    if (classType != null)
                     {
-                        server.AddSingleton(interfaceClass, item);
+                        server.AddScoped(item, classType);
                     }
                 });
             }

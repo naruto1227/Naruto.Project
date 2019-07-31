@@ -21,17 +21,16 @@ namespace Fate.Common.Repository.Mysql
             //获取当前层的所有的类型
             var types = Assembly.Load(Assembly.GetAssembly(typeof(RepositoryExtensions)).GetName()).GetTypes();
             //获取需要通过接口的实现来依赖注入的类型
-            var iTypes = types.Where(a => a.GetInterface("IRepositoryDependency") != null);
-            if (iTypes != null && iTypes.Count() > 0)
+            var repositoryDependencyTypes = types.Where(a => a.GetInterface("IRepositoryDependency") != null);
+            if (repositoryDependencyTypes != null && repositoryDependencyTypes.Count() > 0)
             {
-                iTypes.Where(a => a.IsClass).ToList().ForEach(item =>
+                repositoryDependencyTypes.Where(a => a.IsInterface).ToList().ForEach(item =>
                 {
-                    var interfaceClassName = "I" + item.Name;
-                    //获取接口的类型
-                    var interfaceClass = iTypes.Where(a => a.Name == interfaceClassName).FirstOrDefault();
-                    if (interfaceClass != null)
+                    //获取当前接口对应的 实现类
+                    var classType = repositoryDependencyTypes.Where(a => a.IsClass && a.GetInterface(item.Name) != null).FirstOrDefault();
+                    if (classType != null)
                     {
-                        services.AddScoped(interfaceClass, item);
+                        services.AddScoped(item, classType);
                     }
                 });
             }
