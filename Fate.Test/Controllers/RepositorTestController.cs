@@ -10,14 +10,16 @@ using Microsoft.AspNetCore.Mvc;
 using Fate.Common.Repository.Mysql.UnitOfWork;
 using System.Data;
 using Fate.Common.Extensions;
+using Fate.Common.Repository.Mysql;
+
 namespace Fate.Test.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class RepositorTestController : ControllerBase
     {
-        IUnitOfWork unit;
-        public RepositorTestController(IUnitOfWork ofWork)
+        IUnitOfWork<MysqlDbContent> unit;
+        public RepositorTestController(IUnitOfWork<MysqlDbContent> ofWork)
         {
             unit = ofWork;
         }

@@ -16,9 +16,9 @@ namespace Fate.Domain.Services
 {
     public class Setting : ISetting
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork<MysqlDbContent> unitOfWork;
         private RedisStoreEventBus redisStoreEventBus;
-        public Setting(IUnitOfWork _unitOfWork, RedisStoreEventBus _redisStoreEventBus)
+        public Setting(IUnitOfWork<MysqlDbContent> _unitOfWork, RedisStoreEventBus _redisStoreEventBus)
         {
             redisStoreEventBus = _redisStoreEventBus;
             unitOfWork = _unitOfWork;

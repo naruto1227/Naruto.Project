@@ -11,6 +11,8 @@ using Fate.Common.Config;
 using Fate.Common.NLog;
 using Fate.Common.Repository.Mysql.UnitOfWork;
 using Fate.Domain.Model.Entities;
+using Fate.Common.Options;
+using Microsoft.Extensions.Options;
 
 namespace Fate.Common.Infrastructure
 {
@@ -24,11 +26,15 @@ namespace Fate.Common.Infrastructure
         private IRedisOperationHelp redis;
         //定义获取服务的实例
         private IServiceProvider serviceProvider;
-        public OrderNoOperation(IRedisOperationHelp _reids, IServiceProvider _serviceProvider, NLogHelper _nLog)
+
+        private IOptions<OrderNoOptions> orderOptions;
+
+        public OrderNoOperation(IRedisOperationHelp _reids, IServiceProvider _serviceProvider, NLogHelper _nLog, IOptions<OrderNoOptions> _orderOptions)
         {
             redis = _reids;
             serviceProvider = _serviceProvider;
             nLog = _nLog;
+            orderOptions = _orderOptions;
         }
         /// <summary>
         /// 获取单号的数量
@@ -83,7 +89,7 @@ namespace Fate.Common.Infrastructure
             using (var service = serviceProvider.CreateScope())
             {
                 //从容器中获取实例
-                var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                var unitOfWork = service.ServiceProvider.GetRequiredService(orderOptions.Value.TUnitOfWorkType) as IUnitOfWork;
                 //获取当前日期
                 var date = Convert.ToInt32(DateTime.Now.ToString("yyMMdd"));
                 //遍历表名
@@ -140,7 +146,7 @@ namespace Fate.Common.Infrastructure
             using (var service = serviceProvider.CreateScope())
             {
                 //从容器中获取实例
-                var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                var unitOfWork = service.ServiceProvider.GetRequiredService(orderOptions.Value.TUnitOfWorkType) as IUnitOfWork; ;
                 //获取当前日期
                 var date = Convert.ToInt32(DateTime.Now.ToString("yyMM"));
                 //遍历表名
@@ -232,7 +238,7 @@ namespace Fate.Common.Infrastructure
                     if (date.Day < 5 && date.Hour < 5)
                     {
                         //从容器中获取实例
-                        var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                        var unitOfWork = service.ServiceProvider.GetRequiredService(orderOptions.Value.TUnitOfWorkType) as IUnitOfWork; ;
                         //获取
                         var nowDate = Convert.ToInt32(date.ToString("yyMM"));
                         unitOfWork.Respositiy<OrderNo>().Delete(a => a.Date != nowDate);

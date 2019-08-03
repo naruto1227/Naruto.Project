@@ -25,6 +25,8 @@ using Fate.Common.Redis;
 using CP.Common.Infrastructure;
 using Fate.Common.BaseRibbitMQ;
 using Fate.Common.Repository.Mysql.Base;
+using Fate.Common.Extensions;
+using Fate.Common.Options;
 
 namespace Fate.Test
 {
@@ -49,12 +51,16 @@ namespace Fate.Test
             });
             //注入mysql仓储
             services.AddMysqlRepositoryServer();
-
-            services.AddRepositoryEFOptionServer<MysqlDbContent, EFOptions>(options =>
+            //注入多个ef配置信息
+            services.AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
                 options.ReadOnlyConnectionName = Configuration.GetConnectionString("MysqlConnection");
+                //
+                options.UseEntityFramework<MysqlDbContent>(services);
             });
+            //使用单号
+            services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
@@ -77,8 +83,9 @@ namespace Fate.Test
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,IOptions<List<EFOptions>> options1)
         {
+ 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

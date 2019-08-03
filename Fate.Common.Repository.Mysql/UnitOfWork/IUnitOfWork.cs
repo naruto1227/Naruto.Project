@@ -4,10 +4,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Fate.Common.Repository.Mysql.Interface;
 using Fate.Domain.Model;
+using Microsoft.EntityFrameworkCore;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
-    public interface IUnitOfWork:IDisposable, IRepositoryDependency
-    {
+    public interface IUnitOfWork {
         /// <summary>
         /// 提交更改
         /// </summary>
@@ -48,4 +48,5 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         Task<int> ExecuteSqlAsync(string sql, params object[] _params);
     }
+
 }

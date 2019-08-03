@@ -44,21 +44,75 @@ namespace Fate.Common.Repository.Mysql
 
         /// <typeparam name="TEFOptions">上下文参数的实例类型</typeparam>
         /// <returns></returns>
-        public static IServiceCollection AddRepositoryEFOptionServer<TContext, TEFOptions>(this IServiceCollection services, Action<TEFOptions> action) where TEFOptions : EFOptions, new() where TContext : DbContext
-        {
-            //获取参数
-            TEFOptions options = new TEFOptions();
-            action?.Invoke(options);
+        //public static IServiceCollection AddRepositoryEFOptionServer<TContext, TEFOptions>(this IServiceCollection services, Action<TEFOptions> action) where TEFOptions : EFOptions, new() where TContext : DbContext
+        //{
+        //    //获取参数
+        //    TEFOptions options = new TEFOptions();
+        //    action?.Invoke(options);
 
-            services.AddDbContext<TContext>(options?.ConfigureDbContext);
-            services.Configure<TEFOptions>(option =>
+        //    services.AddDbContext<TContext>(options?.ConfigureDbContext);
+        //    services.Configure<TEFOptions>(option =>
+        //    {
+        //        option.ConfigureDbContext = options?.ConfigureDbContext;
+        //        option.DbContextType = options?.DbContextType ?? typeof(TContext);
+        //        option.ReadOnlyConnectionName = options?.ReadOnlyConnectionName;
+        //        option.WriteReadConnectionName = options?.WriteReadConnectionName;
+        //    });
+        //    return services;
+        //}
+
+        /// <summary>
+        /// 注入上下文的实例类型
+        /// </summary>
+        /// <returns></returns>
+        public static IServiceCollection AddRepositoryEFOptionServer(this IServiceCollection services, params Action<EFOptions>[] action)
+        {
+            if (action == null || action.Count() <= 0)
             {
-                option.ConfigureDbContext = options?.ConfigureDbContext;
-                option.DbContextType = options?.DbContextType ?? typeof(TContext);
-                option.ReadOnlyConnectionName = options?.ReadOnlyConnectionName;
-                option.WriteReadConnectionName = options?.WriteReadConnectionName;
+                throw new ArgumentNullException("值不能为空!");
+            }
+            //获取参数
+            List<EFOptions> options = new List<EFOptions>();
+
+            foreach (var item in action)
+            {
+                EFOptions eFOptions = new EFOptions();
+                item?.Invoke(eFOptions);
+                options.Add(eFOptions);
+            }
+            services.Configure<List<EFOptions>>(a =>
+            {
+                foreach (var item in options)
+                {
+                    a.Add(item);
+                }
             });
             return services;
+        }
+
+        /// <summary>
+        /// 注入EFCOre 上下文 (此参数配置需要放置在ConfigureDbContext后)
+        /// </summary>
+        /// <typeparam name="TDbContext"></typeparam>
+        /// <param name="eFOptions"></param>
+        public static void UseEntityFramework<TDbContext>(this EFOptions eFOptions, IServiceCollection services) where TDbContext : DbContext
+        {
+            if (services == null)
+                throw new ArgumentNullException("services 不能为空!");
+            if (eFOptions == null)
+                throw new ArgumentNullException("值不能为空!");
+            if (eFOptions.ConfigureDbContext == null)
+                throw new ArgumentNullException("请先配置上下文的类型ConfigureDbContext!");
+            //添加master 主库的上下文
+            services.AddDbContext<TDbContext>(eFOptions.ConfigureDbContext);
+            if (eFOptions.DbContextType == null)
+                eFOptions.DbContextType = typeof(TDbContext); //获取上下文的实例
+            //获取master主库的连接字符串
+            if (string.IsNullOrWhiteSpace(eFOptions.WriteReadConnectionName))
+            {
+                var dbContent = services.BuildServiceProvider().GetRequiredService<TDbContext>();
+                eFOptions.WriteReadConnectionName = dbContent.Database.GetDbConnection().ConnectionString;
+            }
         }
     }
 }

@@ -25,10 +25,10 @@ namespace Fate.Test.Controllers
     {
         MyJsonResult jsonResult;
         SettingApp setting;
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork<MysqlDbContent> unitOfWork;
         private IRedisOperationHelp redis;
         RSAHelper rSA;
-        public Home1Controller(SettingApp _setting, IUnitOfWork _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
+        public Home1Controller(SettingApp _setting, IUnitOfWork<MysqlDbContent> _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
         {
             setting = _setting;
             unitOfWork = _unitOfWork;
