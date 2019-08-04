@@ -6,6 +6,9 @@ using System.Text;
 using Fate.Common.Repository.Mysql.Base;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Fate.Common.Repository.Mysql.Interceptor;
+using System.Diagnostics;
+
 namespace Fate.Common.Repository.Mysql
 {
 
@@ -34,6 +37,7 @@ namespace Fate.Common.Repository.Mysql
                     }
                 });
             }
+
             return services;
         }
 
@@ -87,6 +91,10 @@ namespace Fate.Common.Repository.Mysql
                     a.Add(item);
                 }
             });
+            //注入拦截器
+            services.AddScoped<EFCommandInterceptor>();
+            services.AddScoped<EFDiagnosticListener>();
+            DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
             return services;
         }
 

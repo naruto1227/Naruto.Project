@@ -17,10 +17,16 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
     {
         private readonly DbContext dbContext;
         private IOptions<List<EFOptions>> options;
+        private string WriteReadConnectionName;
         public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service)
         {
             options = _options;
-            dbContext = _service.GetService(typeof(TDbContext)) as DbContext;
+            //获取上下文类型
+            var dbContextType = typeof(TDbContext);
+            //获取当前的上下文
+            dbContext = _service.GetService(dbContextType) as DbContext;
+            //获取主库的连接
+            WriteReadConnectionName = _options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault()?.WriteReadConnectionName;
         }
 
         /// <summary>
@@ -28,6 +34,8 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// </summary>
         public void BeginTransaction()
         {
+            //事务开启更改连接字符串为主库master的连接字符串
+            dbContext.Database.GetDbConnection().ConnectionString = WriteReadConnectionName;
             dbContext.Database.BeginTransaction();
         }
         /// <summary>
@@ -81,7 +89,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public async Task ChangeReadOnlyConnection()
         {
-            if (options?.Value.Where(a=>a.DbContextType==typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionName == null)
+            if (options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionName == null)
                 throw new ApplicationException("数据库只读连接字符串不能为空");
             //获取连接字符串的数组 多个用|分割开
             var connections = options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionName.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);

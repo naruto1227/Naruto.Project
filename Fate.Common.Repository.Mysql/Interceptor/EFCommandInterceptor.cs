@@ -11,6 +11,9 @@ using System.Linq;
 
 namespace Fate.Common.Repository.Mysql.Interceptor
 {
+    /// <summary>
+    /// EF命令的跟踪
+    /// </summary>
     public class EFCommandInterceptor : IObserver<KeyValuePair<string, object>>
     {
         public bool isSumbitTran = false;
@@ -37,27 +40,27 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                 //如果是主动开启事务 
                 if (value.Key == RelationalEventId.TransactionStarted.Name && isSumbitTran == false)
                 {
-                    //获取当前事务连接信息
-                    var connec = ((IDbConnection)((TransactionEventData)value.Value).Transaction.Connection);
-                    //获取连接的库的信息
-                    var database = connec.Database;
-                    //获取当前连接对应的ef配置连接信息
-                    var info = options.Value.Where(a => a.WriteReadConnectionName.ToLower().Contains($"database={database}") || a.ReadOnlyConnectionName.ToLower().Contains($"database={database}")).FirstOrDefault();
-                    if (info == null)
-                    {
-                        throw new ArgumentNullException("找不到EF配置连接信息!");
-                    }
-                    if (connec.State == ConnectionState.Open)
-                    {
-                        connec.Close();
-                    }
-                    //更改为主库的连接字符串
-                    connec.ConnectionString = info.WriteReadConnectionName;
-                    //
-                    if (connec.State == ConnectionState.Closed)
-                    {
-                        connec.Open();
-                    }
+                    ////获取当前事务连接信息
+                    //var connec = ((IDbConnection)((TransactionEventData)value.Value).Transaction.Connection);
+                    ////获取连接的库的信息
+                    //var database = connec.Database;
+                    ////获取当前连接对应的ef配置连接信息
+                    //var info = options.Value.Where(a => a.WriteReadConnectionName.ToLower().Contains($"database={database}") || a.ReadOnlyConnectionName.ToLower().Contains($"database={database}")).FirstOrDefault();
+                    //if (info == null)
+                    //{
+                    //    throw new ArgumentNullException("找不到EF配置连接信息!");
+                    //}
+                    //if (connec.State == ConnectionState.Open)
+                    //{
+                    //    connec.Close();
+                    //}
+                    ////更改为主库的连接字符串
+                    //connec.ConnectionString = info.WriteReadConnectionName;
+                    ////
+                    //if (connec.State == ConnectionState.Closed)
+                    //{
+                    //    connec.Open();
+                    //}
                     isSumbitTran = true;
                 }
                 //验证是否追踪到的是efcore 的 savechange

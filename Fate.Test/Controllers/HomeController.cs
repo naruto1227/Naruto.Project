@@ -50,11 +50,11 @@ namespace Fate.Test.Controllers
         [HttpGet]
         public async Task tran()
         {
-          //  unitOfWork.BeginTransaction();
+           unitOfWork.BeginTransaction();
             //await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
             await unitOfWork.Respositiy<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
             await unitOfWork.SaveChangeAsync();
-            //unitOfWork.CommitTransaction();
+            unitOfWork.CommitTransaction();
 
         }
 
