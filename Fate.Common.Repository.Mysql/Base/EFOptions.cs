@@ -23,7 +23,7 @@ namespace Fate.Common.Repository.Mysql.Base
         internal string WriteReadConnectionName { get; set; }
 
         /// <summary>
-        /// 只读的连接字符串的key(必填)
+        /// 只读的连接字符串的key(必填) 多个 | 分开
         /// </summary>
         public string ReadOnlyConnectionName { get; set; }
 

@@ -15,6 +15,7 @@ using Fate.Common.Infrastructure;
 using Fate.Common.Repository.Mysql;
 using StackExchange.Redis;
 using Fate.Application.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fate.Test.Controllers
 {
@@ -39,10 +40,22 @@ namespace Fate.Test.Controllers
         [HttpGet]
         public async Task test()
         {
+
             redis.StringSet("zhang", "haibo");
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
             jsonResult.msg = "helloword";
             //throw new Fate.Common.Exceptions.NoAuthorizationException("111111111111111");
+        }
+
+        [HttpGet]
+        public async Task tran()
+        {
+          //  unitOfWork.BeginTransaction();
+            //await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
+            await unitOfWork.Respositiy<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
+            await unitOfWork.SaveChangeAsync();
+            //unitOfWork.CommitTransaction();
+
         }
 
         public async Task testredis2()
@@ -55,7 +68,7 @@ namespace Fate.Test.Controllers
         {
             List<setting> list = Common.Ioc.Core.AutofacInit.Resolve<List<setting>>();
             List<string> li = Common.Ioc.Core.AutofacInit.Resolve<List<string>>();
-            if (list.Count()>0)
+            if (list.Count() > 0)
                 list.Remove(list[0]);
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
         }

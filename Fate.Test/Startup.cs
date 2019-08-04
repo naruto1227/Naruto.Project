@@ -27,6 +27,8 @@ using Fate.Common.BaseRibbitMQ;
 using Fate.Common.Repository.Mysql.Base;
 using Fate.Common.Extensions;
 using Fate.Common.Options;
+using Fate.Common.Repository.Mysql.Interceptor;
+using System.Diagnostics;
 
 namespace Fate.Test
 {
@@ -75,7 +77,9 @@ namespace Fate.Test
             });
 
             services.AddScoped(typeof(List<>));
-
+            services.AddScoped<EFCommandInterceptor>();
+            services.AddScoped<EFDiagnosticListener>();
+            DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
@@ -83,9 +87,9 @@ namespace Fate.Test
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,IOptions<List<EFOptions>> options1)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<List<EFOptions>> options1)
         {
- 
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
