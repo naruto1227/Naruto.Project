@@ -10,7 +10,9 @@ using Fate.Common.Repository.Mysql.Interface;
 using Microsoft.Extensions.Options;
 using Fate.Common.Repository.Mysql.Base;
 using System.Collections.Generic;
-
+using System.Diagnostics;
+using Fate.Common.Repository.Mysql.Interceptor;
+using Microsoft.Extensions.DependencyInjection;
 namespace Fate.Common.Repository.Mysql.UnitOfWork
 {
     public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext> where TDbContext : DbContext
@@ -27,6 +29,8 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             dbContext = _service.GetService(dbContextType) as DbContext;
             //获取主库的连接
             WriteReadConnectionName = _options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault()?.WriteReadConnectionString;
+
+            DiagnosticListener.AllListeners.Subscribe(_service.GetService<EFDiagnosticListener>());
         }
 
         /// <summary>

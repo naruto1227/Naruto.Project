@@ -18,11 +18,32 @@ namespace Fate.Common.Repository.Mysql.Interceptor
     /// </summary>
     public class EFCommandInterceptor : IObserver<KeyValuePair<string, object>>
     {
-        public bool isSumbitTran = false;
+        /// <summary>
+        /// 是否开启事务
+        /// </summary>
+        private bool isSumbitTran = false;
+        /// <summary>
+        /// EF的参数配置信息
+        /// </summary>
         private IOptions<List<EFOptions>> options;
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly object _lock = new object();
+        /// <summary>
+        /// 上下文的信息
+        /// </summary>
+        private Type dbContextType { get; set; }
 
+        /// <summary>
+        /// 是否当前的连接为读库的还是主库的 true 为从库 false 为主库
+        /// </summary>
+        private bool isSlaveOrMaster = false;
 
+        /// <summary>
+        /// 构造函数注入
+        /// </summary>
+        /// <param name="_options"></param>
         public EFCommandInterceptor(IOptions<List<EFOptions>> _options)
         {
             options = _options;
@@ -41,38 +62,18 @@ namespace Fate.Common.Repository.Mysql.Interceptor
         {
             lock (_lock)
             {
-                //如果是主动开启事务 
-                if (value.Key == RelationalEventId.TransactionStarted.Name && isSumbitTran == false)
+                //上下文注册的时候
+                if (value.Key == CoreEventId.ContextInitialized.Name)
                 {
-
-                    #region old zhanghaibo 2019-08-05
-                    ////获取当前事务连接信息
-                    //var connec = ((IDbConnection)((TransactionEventData)value.Value).Transaction.Connection);
-                    ////获取连接的库的信息
-                    //var database = connec.Database;
-                    ////获取当前连接对应的ef配置连接信息
-                    //var info = options.Value.Where(a => a.WriteReadConnectionName.ToLower().Contains($"database={database}") || a.ReadOnlyConnectionName.ToLower().Contains($"database={database}")).FirstOrDefault();
-                    //if (info == null)
-                    //{
-                    //    throw new ArgumentNullException("找不到EF配置连接信息!");
-                    //}
-                    //if (connec.State == ConnectionState.Open)
-                    //{
-                    //    connec.Close();
-                    //}
-                    ////更改为主库的连接字符串
-                    //connec.ConnectionString = info.WriteReadConnectionName;
-                    ////
-                    //if (connec.State == ConnectionState.Closed)
-                    //{
-                    //    connec.Open();
-                    //}
-                    #endregion
-
+                    dbContextType = ((ContextInitializedEventData)value.Value).ContextOptions.ContextType;
+                }
+                //如果是主动开启事务 
+                else if (value.Key == RelationalEventId.TransactionStarted.Name && isSumbitTran == false)
+                {
                     isSumbitTran = true;
                 }
                 //验证是否追踪到的是efcore 的 savechange
-                else if (value.Key == CoreEventId.SaveChangesStarting.Name && isSumbitTran == false)
+                else if (value.Key == CoreEventId.SaveChangesStarting.Name && isSumbitTran == false && isSlaveOrMaster)
                 {
                     var dbContext = ((DbContextEventData)value.Value).Context;
 
@@ -82,26 +83,26 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                     }
 
                     //获取只读的连接字符串
-                    dbContext.Database.GetDbConnection().ConnectionString = options.Value.Where(a => a.DbContextType == dbContext.GetType()).FirstOrDefault().WriteReadConnectionString;
+                    dbContext.Database.GetDbConnection().ConnectionString = options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault().WriteReadConnectionString;
 
                     //更改连接的状态
                     if (dbContext.Database.GetDbConnection().State == ConnectionState.Closed)
                     {
                         dbContext.Database.GetDbConnection().Open();
                     }
+                    //修改从库的连接状态为主库
+                    isSlaveOrMaster = false;
                 }
                 //跟踪执行脚本
-                else if (value.Key == RelationalEventId.CommandExecuting.Name && isSumbitTran == false)
+                else if (value.Key == RelationalEventId.CommandExecuting.Name && isSumbitTran == false && isSlaveOrMaster == false)
                 {
                     var command = ((CommandEventData)value.Value).Command;
                     if (command.CommandText.StartsWith("SELECT"))
                     {
                         //获取当前连接信息
                         var connec = command.Connection;
-                        //获取使用的库
-                        var database = connec.Database.ToLower();
                         //获取当前连接对应的ef配置连接信息
-                        var info = options.Value.Where(a => a.WriteReadConnectionString.ToLower().Contains($"database={database}")).FirstOrDefault();
+                        var info = options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault();
                         if (info == null)
                         {
                             throw new ArgumentNullException("找不到EF配置连接信息!");
@@ -113,11 +114,15 @@ namespace Fate.Common.Repository.Mysql.Interceptor
 
                         //更改为从库的连接字符串
                         var connections = SlaveConnection(info.DbContextType);
+                        //更新连接字符串
+                        connec.ConnectionString = connections;
                         //
                         if (connec.State == ConnectionState.Closed)
                         {
                             connec.Open();
                         }
+                        //修改连接状态为从库的
+                        isSlaveOrMaster = true;
                     }
                 }
                 //上下文释放之后 并且状态还为处于事务的 状态
@@ -125,6 +130,7 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                 {
                     //更改状态为未开启事务的状态
                     isSumbitTran = false;
+                    isSlaveOrMaster = false;
                 }
             }
         }

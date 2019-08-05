@@ -108,7 +108,7 @@ namespace Fate.Common.Repository.Mysql
             //注入拦截器
             services.AddScoped<EFCommandInterceptor>();
             services.AddScoped<EFDiagnosticListener>();
-            DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
+            //DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
             //注入后台服务
             services.AddHostedService<MasterSlaveHostServer>();
             return services;

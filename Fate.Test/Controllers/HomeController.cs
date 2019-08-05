@@ -70,6 +70,14 @@ namespace Fate.Test.Controllers
             await unitOfWork.SaveChangeAsync();
             //unitOfWork.RollBackTransaction();
         }
+        public async Task tran3()
+        {
+            //unitOfWork.BeginTransaction();
+            await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
+
+            var str = await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
+            //unitOfWork.RollBackTransaction();
+        }
         public async Task test5()
         {
             await unitOfWork.ChangeDataBase("test2");
