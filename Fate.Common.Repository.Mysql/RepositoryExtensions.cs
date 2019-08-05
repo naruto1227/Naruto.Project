@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Fate.Common.Repository.Mysql.Interceptor;
 using System.Diagnostics;
+using Fate.Common.Repository.Mysql.HostServer;
 
 namespace Fate.Common.Repository.Mysql
 {
@@ -83,6 +84,19 @@ namespace Fate.Common.Repository.Mysql
                 EFOptions eFOptions = new EFOptions();
                 item?.Invoke(eFOptions);
                 options.Add(eFOptions);
+                //验证
+                if (eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0)
+                {
+                    eFOptions.ReadOnlyConnectionString = new string[] { eFOptions.WriteReadConnectionString };
+                }
+                //写如连接字符串的线程安全集合
+                List<SlaveDbConnection> slaveDbConnections = new List<SlaveDbConnection>();
+                eFOptions.ReadOnlyConnectionString.ToList().ForEach(readItem =>
+                {
+                    var items = readItem.ToLower().Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                    slaveDbConnections.Add(new SlaveDbConnection() { ConnectionString = readItem, IsAvailable = true, HostName = items.Where(a => a.Contains("datasource")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1], Port = Convert.ToInt32(items.Where(a => a.Contains("port")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1]) });
+                });
+                SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnections);
             }
             services.Configure<List<EFOptions>>(a =>
             {
@@ -95,6 +109,8 @@ namespace Fate.Common.Repository.Mysql
             services.AddScoped<EFCommandInterceptor>();
             services.AddScoped<EFDiagnosticListener>();
             DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
+            //注入后台服务
+            services.AddHostedService<MasterSlaveHostServer>();
             return services;
         }
 

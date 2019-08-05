@@ -9,6 +9,8 @@ using Microsoft.Extensions.Options;
 using Fate.Common.Repository.Mysql.Base;
 using System.Linq;
 using Fate.Common.Redis.IRedisManage;
+using System.Net.Sockets;
+using System.Collections.Concurrent;
 
 namespace Fate.Common.Repository.Mysql.Interceptor
 {
@@ -21,11 +23,10 @@ namespace Fate.Common.Repository.Mysql.Interceptor
         private IOptions<List<EFOptions>> options;
         private readonly object _lock = new object();
 
-        private IRedisOperationHelp redis;
-        public EFCommandInterceptor(IOptions<List<EFOptions>> _options, IRedisOperationHelp _redis)
+
+        public EFCommandInterceptor(IOptions<List<EFOptions>> _options)
         {
             options = _options;
-            redis = _redis;
         }
         public void OnCompleted()
         {
@@ -89,9 +90,6 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                     {
                         dbContext.Database.GetDbConnection().Open();
                     }
-
-                    //测试
-                    redis.ListRightPush("command","1");
                 }
                 //跟踪执行脚本
                 else if (value.Key == RelationalEventId.CommandExecuting.Name && isSumbitTran == false)
@@ -113,16 +111,14 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                         {
                             connec.Close();
                         }
+
                         //更改为从库的连接字符串
-                        connec.ConnectionString = info.ReadOnlyConnectionString.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                        var connections = SlaveConnection(info.DbContextType);
                         //
                         if (connec.State == ConnectionState.Closed)
                         {
                             connec.Open();
                         }
-
-                        //测试
-                        redis.ListRightPush("command2", "1");
                     }
                 }
                 //上下文释放之后 并且状态还为处于事务的 状态
@@ -133,5 +129,28 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                 }
             }
         }
+
+        /// <summary>
+        /// 获取从库的连接字符串( 读取规则，当所有的从库无法使用的时候读取返回主库的连接字符串)
+        /// </summary>
+        /// <param name="dbContextType"></param>
+        /// <returns></returns>
+        private string SlaveConnection(Type dbContextType)
+        {
+            //获取从库的信息
+            var slaveInfo = SlavePools.slaveConnec.Where(a => a.Key == dbContextType).Select(a => a.Value).FirstOrDefault().Where(a => a.IsAvailable).OrderBy(a => Guid.NewGuid()).FirstOrDefault();
+            if (slaveInfo == null)
+            {
+                return options.Value.Where(a => a.DbContextType == dbContextType).Select(a => a.WriteReadConnectionString).FirstOrDefault();
+            }
+            //进行心跳检查
+            var isBeat = SlavePools.HeartBeatCheck(dbContextType, slaveInfo);
+            if (isBeat == false)
+            {
+                return SlaveConnection(dbContextType);
+            }
+            return slaveInfo.ConnectionString;
+        }
+
     }
 }
