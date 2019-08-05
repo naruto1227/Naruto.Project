@@ -29,7 +29,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             dbContext = _service.GetService(dbContextType) as DbContext;
             //获取主库的连接
             WriteReadConnectionName = _options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault()?.WriteReadConnectionString;
-
+            //订阅跟踪记录
             DiagnosticListener.AllListeners.Subscribe(_service.GetService<EFDiagnosticListener>());
         }
 
