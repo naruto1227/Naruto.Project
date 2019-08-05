@@ -8,7 +8,6 @@ using System.Data;
 using Microsoft.Extensions.Options;
 using Fate.Common.Repository.Mysql.Base;
 using System.Linq;
-using Fate.Common.Redis.IRedisManage;
 using System.Net.Sockets;
 using System.Collections.Concurrent;
 
