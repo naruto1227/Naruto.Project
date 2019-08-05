@@ -20,12 +20,12 @@ namespace Fate.Common.Repository.Mysql.Base
         /// <summary>
         /// 读写连接字符串的key ()
         /// </summary>
-        internal string WriteReadConnectionName { get; set; }
+        internal string WriteReadConnectionString { get; set; }
 
         /// <summary>
         /// 只读的连接字符串的key(必填) 多个 | 分开
         /// </summary>
-        public string ReadOnlyConnectionName { get; set; }
+        public string ReadOnlyConnectionString { get; set; }
 
     }
 }

@@ -26,7 +26,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             //获取当前的上下文
             dbContext = _service.GetService(dbContextType) as DbContext;
             //获取主库的连接
-            WriteReadConnectionName = _options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault()?.WriteReadConnectionName;
+            WriteReadConnectionName = _options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault()?.WriteReadConnectionString;
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public async Task ChangeReadOnlyConnection()
         {
-            if (options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionName == null)
+            if (options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionString == null)
                 throw new ApplicationException("数据库只读连接字符串不能为空");
             //获取连接字符串的数组 多个用|分割开
-            var connections = options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionName.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+            var connections = options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionString.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
             if (connections == null || connections.Count() <= 0)
                 throw new ApplicationException("数据库只读连接字符串不能为空");
             //随机数

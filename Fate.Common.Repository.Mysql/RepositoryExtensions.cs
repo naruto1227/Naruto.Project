@@ -116,10 +116,10 @@ namespace Fate.Common.Repository.Mysql
             if (eFOptions.DbContextType == null)
                 eFOptions.DbContextType = typeof(TDbContext); //获取上下文的实例
             //获取master主库的连接字符串
-            if (string.IsNullOrWhiteSpace(eFOptions.WriteReadConnectionName))
+            if (string.IsNullOrWhiteSpace(eFOptions.WriteReadConnectionString))
             {
                 var dbContent = services.BuildServiceProvider().GetRequiredService<TDbContext>();
-                eFOptions.WriteReadConnectionName = dbContent.Database.GetDbConnection().ConnectionString;
+                eFOptions.WriteReadConnectionString = dbContent.Database.GetDbConnection().ConnectionString;
             }
         }
     }

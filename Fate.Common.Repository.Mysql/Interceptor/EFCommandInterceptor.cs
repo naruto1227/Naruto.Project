@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Fate.Common.Repository.Mysql.Base;
 using System.Linq;
 using Fate.Common.Redis.IRedisManage;
+
 namespace Fate.Common.Repository.Mysql.Interceptor
 {
     /// <summary>
@@ -81,13 +82,16 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                     }
 
                     //获取只读的连接字符串
-                    dbContext.Database.GetDbConnection().ConnectionString = options.Value.Where(a => a.DbContextType == dbContext.GetType()).FirstOrDefault().WriteReadConnectionName;
+                    dbContext.Database.GetDbConnection().ConnectionString = options.Value.Where(a => a.DbContextType == dbContext.GetType()).FirstOrDefault().WriteReadConnectionString;
 
                     //更改连接的状态
                     if (dbContext.Database.GetDbConnection().State == ConnectionState.Closed)
                     {
                         dbContext.Database.GetDbConnection().Open();
                     }
+
+                    //测试
+                    redis.ListRightPush("command","1");
                 }
                 //跟踪执行脚本
                 else if (value.Key == RelationalEventId.CommandExecuting.Name && isSumbitTran == false)
@@ -100,7 +104,7 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                         //获取使用的库
                         var database = connec.Database;
                         //获取当前连接对应的ef配置连接信息
-                        var info = options.Value.Where(a => a.WriteReadConnectionName.ToLower().Contains($"database={database}") || a.ReadOnlyConnectionName.ToLower().Contains($"database={database}")).FirstOrDefault();
+                        var info = options.Value.Where(a => a.WriteReadConnectionString.ToLower().Contains($"database={database}")).FirstOrDefault();
                         if (info == null)
                         {
                             throw new ArgumentNullException("找不到EF配置连接信息!");
@@ -110,12 +114,15 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                             connec.Close();
                         }
                         //更改为从库的连接字符串
-                        connec.ConnectionString = info.ReadOnlyConnectionName.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                        connec.ConnectionString = info.ReadOnlyConnectionString.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
                         //
                         if (connec.State == ConnectionState.Closed)
                         {
                             connec.Open();
                         }
+
+                        //测试
+                        redis.ListRightPush("command2", "1");
                     }
                 }
                 //上下文释放之后 并且状态还为处于事务的 状态

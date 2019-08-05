@@ -51,16 +51,15 @@ namespace Fate.Test
                 options.Connection = ConfigurationManage.GetValue("RedisConfig:Connection");
                 options.Password = ConfigurationManage.GetValue("RedisConfig:Password");
             });
-            //注入mysql仓储
-            services.AddMysqlRepositoryServer();
-            //注入多个ef配置信息
-            services.AddRepositoryEFOptionServer(options =>
+            //注入mysql仓储   //注入多个ef配置信息
+            services.AddMysqlRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
-                options.ReadOnlyConnectionName = Configuration.GetConnectionString("ReadMysqlConnection");
+                options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection");
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
             });
+
             //使用单号
             services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
             //注入一个mini版的mvc 不需要包含Razor
@@ -78,7 +77,7 @@ namespace Fate.Test
 
             services.AddScoped(typeof(List<>));
 
-           
+
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
