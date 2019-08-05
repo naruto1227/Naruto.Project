@@ -84,21 +84,16 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         }
 
         /// <summary>
-        /// 更改为只读连接字符串
+        /// 更改数据库的名字
         /// </summary>
         /// <returns></returns>
-        public async Task ChangeReadOnlyConnection()
+        public async Task ChangeDataBase(string dataBase)
         {
-            //if (options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionString == null)
-            //    throw new ApplicationException("数据库只读连接字符串不能为空");
-            ////获取连接字符串的数组 多个用|分割开
-            //var connections = options?.Value.Where(a => a.DbContextType == typeof(TDbContext)).FirstOrDefault()?.ReadOnlyConnectionString.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
-            //if (connections == null || connections.Count() <= 0)
-            //    throw new ApplicationException("数据库只读连接字符串不能为空");
-            ////随机数
-            //var random = new Random();
-            //dbContext.Database.GetDbConnection().ConnectionString = connections[random.Next(0, connections.Count() - 1)];
-            //await Task.FromResult(0).ConfigureAwait(false);
+            await Task.Run(() =>
+             {
+                 dbContext.Database.OpenConnection();
+                 dbContext.Database.GetDbConnection().ChangeDatabase(dataBase);
+             });
         }
 
         /// <summary>

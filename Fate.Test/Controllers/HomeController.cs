@@ -70,7 +70,11 @@ namespace Fate.Test.Controllers
             await unitOfWork.SaveChangeAsync();
             //unitOfWork.RollBackTransaction();
         }
-
+        public async Task test5()
+        {
+            await unitOfWork.ChangeDataBase("test2");
+            var str = await unitOfWork.Respositiy<test1>().AsQueryable().ToListAsync();
+        }
         public async Task testredis2()
         {
             await redis.ListRightPushAsync("1", new Random().Next(1000, 9999).ToString());

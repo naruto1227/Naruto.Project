@@ -36,10 +36,10 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         IRepository<T> Respositiy<T>() where T : class, IEntity;
 
         /// <summary>
-        /// 更改为只读连接字符串
+        /// 更改数据库
         /// </summary>
         /// <returns></returns>
-        Task ChangeReadOnlyConnection();
+        Task ChangeDataBase(string dataBase);
 
         /// <summary>
         /// 执行slq语句
