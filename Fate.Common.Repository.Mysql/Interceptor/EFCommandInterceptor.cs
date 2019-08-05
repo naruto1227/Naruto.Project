@@ -125,8 +125,8 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                         isSlaveOrMaster = true;
                     }
                 }
-                //上下文释放之后 并且状态还为处于事务的 状态
-                else if (value.Key == CoreEventId.ContextDisposed.Name && isSumbitTran)
+                //上下文释放之后 
+                else if (value.Key == CoreEventId.ContextDisposed.Name)
                 {
                     //更改状态为未开启事务的状态
                     isSumbitTran = false;
