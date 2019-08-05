@@ -57,7 +57,7 @@ namespace Fate.Test
             services.AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
-                options.ReadOnlyConnectionName = Configuration.GetConnectionString("MysqlConnection");
+                options.ReadOnlyConnectionName = Configuration.GetConnectionString("ReadMysqlConnection");
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
             });

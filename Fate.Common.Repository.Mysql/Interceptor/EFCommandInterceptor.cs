@@ -8,7 +8,7 @@ using System.Data;
 using Microsoft.Extensions.Options;
 using Fate.Common.Repository.Mysql.Base;
 using System.Linq;
-
+using Fate.Common.Redis.IRedisManage;
 namespace Fate.Common.Repository.Mysql.Interceptor
 {
     /// <summary>
@@ -19,9 +19,12 @@ namespace Fate.Common.Repository.Mysql.Interceptor
         public bool isSumbitTran = false;
         private IOptions<List<EFOptions>> options;
         private readonly object _lock = new object();
-        public EFCommandInterceptor(IOptions<List<EFOptions>> _options)
+
+        private IRedisOperationHelp redis;
+        public EFCommandInterceptor(IOptions<List<EFOptions>> _options, IRedisOperationHelp _redis)
         {
             options = _options;
+            redis = _redis;
         }
         public void OnCompleted()
         {
@@ -40,6 +43,8 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                 //如果是主动开启事务 
                 if (value.Key == RelationalEventId.TransactionStarted.Name && isSumbitTran == false)
                 {
+
+                    #region old zhanghaibo 2019-08-05
                     ////获取当前事务连接信息
                     //var connec = ((IDbConnection)((TransactionEventData)value.Value).Transaction.Connection);
                     ////获取连接的库的信息
@@ -61,6 +66,8 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                     //{
                     //    connec.Open();
                     //}
+                    #endregion
+
                     isSumbitTran = true;
                 }
                 //验证是否追踪到的是efcore 的 savechange
@@ -81,8 +88,8 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                     {
                         dbContext.Database.GetDbConnection().Open();
                     }
-                    isSumbitTran = true;
                 }
+                //跟踪执行脚本
                 else if (value.Key == RelationalEventId.CommandExecuting.Name && isSumbitTran == false)
                 {
                     var command = ((CommandEventData)value.Value).Command;
@@ -109,33 +116,14 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                         {
                             connec.Open();
                         }
-
-                        isSumbitTran = true;
                     }
                 }
-                //上下文释放之后 并且状态还为处于事物的 状态
+                //上下文释放之后 并且状态还为处于事务的 状态
                 else if (value.Key == CoreEventId.ContextDisposed.Name && isSumbitTran)
                 {
                     //更改状态为未开启事务的状态
                     isSumbitTran = false;
                 }
-            }
-        }
-        /// <summary>
-        /// 更改连接的状态
-        /// </summary>
-        /// <param name="dbConnection"></param>
-        private void ChangeConnectionStatus(IDbConnection dbConnection)
-        {
-            if (dbConnection.State == ConnectionState.Open)
-            {
-                dbConnection.Close();
-                return;
-            }
-            if (dbConnection.State == ConnectionState.Closed)
-            {
-                dbConnection.Open();
-                return;
             }
         }
     }
