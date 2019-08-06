@@ -101,8 +101,10 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                     {
                         //获取当前连接信息
                         var connec = command.Connection;
+                        //获取使用的库
+                        var database = connec.Database.ToLower();
                         //获取当前连接对应的ef配置连接信息
-                        var info = options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault();
+                        var info = options.Value.Where(a => a.WriteReadConnectionString.ToLower().Contains($"database={database}")).FirstOrDefault();
                         if (info == null)
                         {
                             throw new ArgumentNullException("找不到EF配置连接信息!");
