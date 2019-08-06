@@ -45,30 +45,6 @@ namespace Fate.Common.Repository.Mysql
         /// <summary>
         /// 注入上下文的实例类型
         /// </summary>
-        /// <typeparam name="TContext">上下文</typeparam>
-
-        /// <typeparam name="TEFOptions">上下文参数的实例类型</typeparam>
-        /// <returns></returns>
-        //public static IServiceCollection AddRepositoryEFOptionServer<TContext, TEFOptions>(this IServiceCollection services, Action<TEFOptions> action) where TEFOptions : EFOptions, new() where TContext : DbContext
-        //{
-        //    //获取参数
-        //    TEFOptions options = new TEFOptions();
-        //    action?.Invoke(options);
-
-        //    services.AddDbContext<TContext>(options?.ConfigureDbContext);
-        //    services.Configure<TEFOptions>(option =>
-        //    {
-        //        option.ConfigureDbContext = options?.ConfigureDbContext;
-        //        option.DbContextType = options?.DbContextType ?? typeof(TContext);
-        //        option.ReadOnlyConnectionName = options?.ReadOnlyConnectionName;
-        //        option.WriteReadConnectionName = options?.WriteReadConnectionName;
-        //    });
-        //    return services;
-        //}
-
-        /// <summary>
-        /// 注入上下文的实例类型
-        /// </summary>
         /// <returns></returns>
         public static IServiceCollection AddRepositoryEFOptionServer(this IServiceCollection services, params Action<EFOptions>[] action)
         {
@@ -85,18 +61,21 @@ namespace Fate.Common.Repository.Mysql
                 item?.Invoke(eFOptions);
                 options.Add(eFOptions);
                 //验证
-                if (eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0)
+                if (eFOptions.IsOpenMasterSlave && eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0)
                 {
-                    eFOptions.ReadOnlyConnectionString = new string[] { eFOptions.WriteReadConnectionString };
+                    throw new ArgumentException("检测到开启了读写分离但是未指定只读的连接字符串!");
                 }
-                //写如连接字符串的线程安全集合
-                List<SlaveDbConnection> slaveDbConnections = new List<SlaveDbConnection>();
-                eFOptions.ReadOnlyConnectionString.ToList().ForEach(readItem =>
+                //写入连接字符串的线程安全集合
+                if (eFOptions.IsOpenMasterSlave)
                 {
-                    var items = readItem.ToLower().Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-                    slaveDbConnections.Add(new SlaveDbConnection() { ConnectionString = readItem, IsAvailable = true, HostName = items.Where(a => a.Contains("datasource")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1], Port = Convert.ToInt32(items.Where(a => a.Contains("port")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1]) });
-                });
-                SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnections);
+                    List<SlaveDbConnection> slaveDbConnections = new List<SlaveDbConnection>();
+                    eFOptions.ReadOnlyConnectionString.ToList().ForEach(readItem =>
+                    {
+                        var items = readItem.ToLower().Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                        slaveDbConnections.Add(new SlaveDbConnection() { ConnectionString = readItem, IsAvailable = true, HostName = items.Where(a => a.Contains("datasource")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1], Port = Convert.ToInt32(items.Where(a => a.Contains("port")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1]) });
+                    });
+                    SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnections);
+                }
             }
             services.Configure<List<EFOptions>>(a =>
             {
@@ -131,12 +110,11 @@ namespace Fate.Common.Repository.Mysql
             services.AddDbContext<TDbContext>(eFOptions.ConfigureDbContext);
             if (eFOptions.DbContextType == null)
                 eFOptions.DbContextType = typeof(TDbContext); //获取上下文的实例
+
             //获取master主库的连接字符串
-            if (string.IsNullOrWhiteSpace(eFOptions.WriteReadConnectionString))
-            {
-                var dbContent = services.BuildServiceProvider().GetRequiredService<TDbContext>();
-                eFOptions.WriteReadConnectionString = dbContent.Database.GetDbConnection().ConnectionString;
-            }
+            var dbContent = services.BuildServiceProvider().GetRequiredService<TDbContext>();
+            eFOptions.WriteReadConnectionString = dbContent.Database.GetDbConnection().ConnectionString;
+
         }
     }
 }

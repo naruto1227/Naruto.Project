@@ -55,9 +55,10 @@ namespace Fate.Test
             services.AddMysqlRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
-                options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|"},StringSplitOptions.RemoveEmptyEntries);
+                options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
+                options.IsOpenMasterSlave = false;
             });
 
             //使用单号

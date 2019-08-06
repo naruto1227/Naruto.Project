@@ -23,9 +23,14 @@ namespace Fate.Common.Repository.Mysql.Base
         internal string WriteReadConnectionString { get; set; }
 
         /// <summary>
-        /// 只读的连接字符串的key(必填) 
+        /// 只读的连接字符串的key 当IsOpenMasterSlave为true时 必须设置
         /// </summary>
         public string[] ReadOnlyConnectionString { get; set; }
+
+        /// <summary>
+        /// 是否开启读写分离的操作 (默认不开启)
+        /// </summary>
+        public bool IsOpenMasterSlave { get; set; } = false;
 
     }
 }

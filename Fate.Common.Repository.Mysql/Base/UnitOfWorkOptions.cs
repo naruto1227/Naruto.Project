@@ -39,5 +39,10 @@ namespace Fate.Common.Repository.Mysql.Base
         /// </summary>
         public bool IsMandatory = false;
 
+        /// <summary>
+        /// 是否开启读写分离的操作 
+        /// </summary>
+        public bool IsOpenMasterSlave = false;
+
     }
 }

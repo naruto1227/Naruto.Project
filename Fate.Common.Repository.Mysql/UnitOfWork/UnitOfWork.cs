@@ -50,7 +50,10 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             //获取当前的上下文
             dbContext = _service.GetService(unitOfWorkOptions.DbContextType) as DbContext;
             //获取主库的连接
-            unitOfWorkOptions.WriteReadConnectionString = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault()?.WriteReadConnectionString;
+            var dbInfo = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault();
+            unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
+            //是否开启读写分离操作
+            unitOfWorkOptions.IsOpenMasterSlave = dbInfo.IsOpenMasterSlave;
         }
 
         /// <summary>
@@ -58,16 +61,19 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// </summary>
         public void BeginTransaction()
         {
-            //关闭连接
-            ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Closed);
-            //事务开启更改连接字符串为主库master的连接字符串
-            dbContext.Database.GetDbConnection().ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
-            //开启连接
-            ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open);
-
+            //验证是否开启读写分离
+            if (unitOfWorkOptions.IsOpenMasterSlave)
+            {
+                //关闭连接
+                ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Closed);
+                //事务开启更改连接字符串为主库master的连接字符串
+                dbContext.Database.GetDbConnection().ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
+                //开启连接
+                ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open);
+                //更改事务的状态
+                unitOfWorkOptions.IsSumbitTran = true;
+            }
             dbContext.Database.BeginTransaction();
-            //更改事务的状态
-            unitOfWorkOptions.IsSumbitTran = true;
         }
         /// <summary>
         /// 提交事务
@@ -75,7 +81,11 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public void CommitTransaction()
         {
             dbContext.Database.CommitTransaction();
-            unitOfWorkOptions.IsSumbitTran = false;
+            //验证是否开启读写分离
+            if (unitOfWorkOptions.IsOpenMasterSlave)
+            {
+                unitOfWorkOptions.IsSumbitTran = false;
+            }
         }
         /// <summary>
         /// 回滚事务
@@ -83,7 +93,11 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public void RollBackTransaction()
         {
             dbContext.Database.RollbackTransaction();
-            unitOfWorkOptions.IsSumbitTran = false;
+            //验证是否开启读写分离
+            if (unitOfWorkOptions.IsOpenMasterSlave)
+            {
+                unitOfWorkOptions.IsSumbitTran = false;
+            }
         }
 
         /// <summary>
@@ -92,6 +106,9 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public async Task ChangeReadOrWriteConnection(ReadWriteEnum readWriteEnum = ReadWriteEnum.Read)
         {
+            //验证是否开启读写分离
+            if (unitOfWorkOptions.IsOpenMasterSlave == false)
+                throw new ApplicationException("当前上下文未开启读写分离服务!");
             if (unitOfWorkOptions.IsSumbitTran)
                 throw new ApplicationException("无法在开启事务的时候执行读写库的更改!");
             await Task.Run(() =>
@@ -124,8 +141,9 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public async Task<int> SaveChangeAsync()
         {
+            //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
+            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
@@ -147,8 +165,9 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public int SaveChanges()
         {
+            //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
+            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
@@ -171,8 +190,9 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public IRepository<T> Respositiy<T>() where T : class, IEntity
         {
+            //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为主库的话 则 更改连接字符串为 从库的 
-            if (unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster == false && unitOfWorkOptions.IsMandatory == false)
+            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster == false && unitOfWorkOptions.IsMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
