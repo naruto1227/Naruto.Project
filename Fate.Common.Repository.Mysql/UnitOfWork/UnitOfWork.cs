@@ -51,8 +51,17 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// </summary>
         private string changeDataBaseName = default;
 
-        #endregion
+        /// <summary>
+        /// 是否已经强制更改数据库连接 
+        /// </summary>
+        private bool isMandatory = false;
 
+        #endregion
+        /// <summary>
+        /// 构造注入
+        /// </summary>
+        /// <param name="_options"></param>
+        /// <param name="_service"></param>
         public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service)
         {
             options = _options;
@@ -62,8 +71,6 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             dbContext = _service.GetService(dbContextType) as DbContext;
             //获取主库的连接
             WriteReadConnectionString = _options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault()?.WriteReadConnectionString;
-            ////订阅跟踪记录
-            //DiagnosticListener.AllListeners.Subscribe(_service.GetService<EFDiagnosticListener>());
         }
 
         /// <summary>
@@ -98,15 +105,38 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             dbContext.Database.RollbackTransaction();
             isSumbitTran = false;
         }
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        public void Dispose()
-        {
-            dbContext?.Dispose();
-            GC.SuppressFinalize(this);
-        }
 
+        /// <summary>
+        /// 强制更改为只读或者读写连接字符串
+        /// </summary>
+        /// <returns></returns>
+        public async Task ChangeReadOrWriteConnection(ReadWriteEnum readWriteEnum = ReadWriteEnum.Read)
+        {
+            if (isSumbitTran)
+                throw new ApplicationException("无法在开启事务的时候执行读写库的更改!");
+            await Task.Run(() =>
+            {
+                //获取连接信息
+                var connec = dbContext.Database.GetDbConnection();
+                //关闭连接
+                ChangeConnecState(connec, ConnectionState.Closed);
+                //读写
+                if (readWriteEnum == ReadWriteEnum.ReadWrite)
+                {
+                    //更改连接字符串
+                    connec.ConnectionString = WriteReadConnectionString;
+                }
+                //只读
+                else if (readWriteEnum == ReadWriteEnum.Read)
+                {
+                    connec.ConnectionString = SlaveConnection(dbContextType);
+                }
+                //打开连接
+                ChangeConnecState(connec, ConnectionState.Open);
+
+                isMandatory = true;
+            }).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// 异步提交
@@ -115,7 +145,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public async Task<int> SaveChangeAsync()
         {
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (isSumbitTran == false && isSlaveOrMaster)
+            if (isSumbitTran == false && isSlaveOrMaster && isMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
@@ -138,7 +168,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public int SaveChanges()
         {
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (isSumbitTran == false && isSlaveOrMaster)
+            if (isSumbitTran == false && isSlaveOrMaster && isMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
@@ -162,7 +192,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public IRepository<T> Respositiy<T>() where T : class, IEntity
         {
             //如果当前没有开启事务 并且 当前为主库的话 则 更改连接字符串为 从库的 
-            if (isSumbitTran == false && isSlaveOrMaster == false)
+            if (isSumbitTran == false && isSlaveOrMaster == false && isMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
@@ -204,6 +234,15 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <param name="_params"></param>
         /// <returns></returns>
         public async Task<int> ExecuteSqlAsync(string sql, params object[] _params) => await dbContext.Database.ExecuteSqlCommandAsync(sql, _params);
+
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public void Dispose()
+        {
+            dbContext?.Dispose();
+            GC.SuppressFinalize(this);
+        }
 
         #region base
 

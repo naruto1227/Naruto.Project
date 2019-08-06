@@ -72,11 +72,13 @@ namespace Fate.Test.Controllers
         }
         public async Task tran3()
         {
-            //unitOfWork.BeginTransaction();
+
+            unitOfWork.BeginTransaction();
+
             await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
 
             var str = await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
-            //unitOfWork.RollBackTransaction();
+            unitOfWork.RollBackTransaction();
         }
         public async Task test5()
         {
