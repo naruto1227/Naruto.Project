@@ -38,7 +38,7 @@ namespace Fate.Common.Repository.Mysql
                     }
                 });
             }
-
+            services.AddScoped<UnitOfWorkOptions>();
             return services;
         }
 

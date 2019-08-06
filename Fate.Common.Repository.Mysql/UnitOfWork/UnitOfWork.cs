@@ -20,41 +20,20 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
     public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext> where TDbContext : DbContext
     {
         #region  paramater
+
         /// <summary>
         /// 当前上下文
         /// </summary>
-        private readonly DbContext dbContext;
+        public readonly DbContext dbContext;
+
         /// <summary>
         /// 参数信息
         /// </summary>
         private IOptions<List<EFOptions>> options;
         /// <summary>
-        /// master 库的连接字符串
+        /// 工作单元参数
         /// </summary>
-        private string WriteReadConnectionString;
-        /// <summary>
-        /// 上下文的类型
-        /// </summary>
-        private Type dbContextType;
-        /// <summary>
-        /// 是否提交事务
-        /// </summary>
-        private bool isSumbitTran = false;
-
-        /// <summary>
-        /// 是否当前的连接为读库的还是主库的 true 为从库 false 为主库
-        /// </summary>
-        private bool isSlaveOrMaster = false;
-
-        /// <summary>
-        /// 更改的数据库的名字
-        /// </summary>
-        private string changeDataBaseName = default;
-
-        /// <summary>
-        /// 是否已经强制更改数据库连接 
-        /// </summary>
-        private bool isMandatory = false;
+        private UnitOfWorkOptions unitOfWorkOptions;
 
         #endregion
         /// <summary>
@@ -62,15 +41,16 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// </summary>
         /// <param name="_options"></param>
         /// <param name="_service"></param>
-        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service)
+        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions)
         {
             options = _options;
+            unitOfWorkOptions = _unitOfWorkOptions;
             //获取上下文类型
-            dbContextType = typeof(TDbContext);
+            unitOfWorkOptions.DbContextType = typeof(TDbContext);
             //获取当前的上下文
-            dbContext = _service.GetService(dbContextType) as DbContext;
+            dbContext = _service.GetService(unitOfWorkOptions.DbContextType) as DbContext;
             //获取主库的连接
-            WriteReadConnectionString = _options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault()?.WriteReadConnectionString;
+            unitOfWorkOptions.WriteReadConnectionString = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault()?.WriteReadConnectionString;
         }
 
         /// <summary>
@@ -81,13 +61,13 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
             //关闭连接
             ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Closed);
             //事务开启更改连接字符串为主库master的连接字符串
-            dbContext.Database.GetDbConnection().ConnectionString = WriteReadConnectionString;
+            dbContext.Database.GetDbConnection().ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
             //开启连接
             ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open);
 
             dbContext.Database.BeginTransaction();
             //更改事务的状态
-            isSumbitTran = true;
+            unitOfWorkOptions.IsSumbitTran = true;
         }
         /// <summary>
         /// 提交事务
@@ -95,7 +75,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public void CommitTransaction()
         {
             dbContext.Database.CommitTransaction();
-            isSumbitTran = false;
+            unitOfWorkOptions.IsSumbitTran = false;
         }
         /// <summary>
         /// 回滚事务
@@ -103,7 +83,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public void RollBackTransaction()
         {
             dbContext.Database.RollbackTransaction();
-            isSumbitTran = false;
+            unitOfWorkOptions.IsSumbitTran = false;
         }
 
         /// <summary>
@@ -112,7 +92,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public async Task ChangeReadOrWriteConnection(ReadWriteEnum readWriteEnum = ReadWriteEnum.Read)
         {
-            if (isSumbitTran)
+            if (unitOfWorkOptions.IsSumbitTran)
                 throw new ApplicationException("无法在开启事务的时候执行读写库的更改!");
             await Task.Run(() =>
             {
@@ -124,17 +104,17 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
                 if (readWriteEnum == ReadWriteEnum.ReadWrite)
                 {
                     //更改连接字符串
-                    connec.ConnectionString = WriteReadConnectionString;
+                    connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
                 }
                 //只读
                 else if (readWriteEnum == ReadWriteEnum.Read)
                 {
-                    connec.ConnectionString = SlaveConnection(dbContextType);
+                    connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
                 }
                 //打开连接
                 ChangeConnecState(connec, ConnectionState.Open);
 
-                isMandatory = true;
+                unitOfWorkOptions.IsMandatory = true;
             }).ConfigureAwait(false);
         }
 
@@ -145,19 +125,19 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public async Task<int> SaveChangeAsync()
         {
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (isSumbitTran == false && isSlaveOrMaster && isMandatory == false)
+            if (unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
                 ChangeConnecState(connec, ConnectionState.Closed);
                 //更改连接
-                connec.ConnectionString = WriteReadConnectionString;
+                connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
                 //开启连接
                 ChangeConnecState(connec, ConnectionState.Open);
                 //验证是否更改了数据库名
                 ChangeDataBase();
                 //更改连接的服务器为主库
-                isSlaveOrMaster = false;
+                unitOfWorkOptions.IsSlaveOrMaster = false;
             }
             return await dbContext.SaveChangesAsync();
         }
@@ -168,19 +148,19 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public int SaveChanges()
         {
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (isSumbitTran == false && isSlaveOrMaster && isMandatory == false)
+            if (unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
                 ChangeConnecState(connec, ConnectionState.Closed);
                 //更改连接
-                connec.ConnectionString = WriteReadConnectionString;
+                connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
                 //开启连接
                 ChangeConnecState(connec, ConnectionState.Open);
                 //验证是否更改了数据库名
                 ChangeDataBase();
                 //更改连接的服务器为主库
-                isSlaveOrMaster = false;
+                unitOfWorkOptions.IsSlaveOrMaster = false;
             }
             return dbContext.SaveChanges();
         }
@@ -192,19 +172,19 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         public IRepository<T> Respositiy<T>() where T : class, IEntity
         {
             //如果当前没有开启事务 并且 当前为主库的话 则 更改连接字符串为 从库的 
-            if (isSumbitTran == false && isSlaveOrMaster == false && isMandatory == false)
+            if (unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster == false && unitOfWorkOptions.IsMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
                 ChangeConnecState(connec, ConnectionState.Closed);
                 //更改连接
-                connec.ConnectionString = SlaveConnection(dbContextType);
+                connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
                 //开启连接
                 ChangeConnecState(connec, ConnectionState.Open);
                 //验证是否更改了数据库名
                 ChangeDataBase();
                 //更改连接的服务器为从库
-                isSlaveOrMaster = true;
+                unitOfWorkOptions.IsSlaveOrMaster = true;
             }
             //获取仓储服务（需先注入仓储集合，否则将报错）
             IRepository<T> repository = dbContext.GetService<IRepository<T>>();
@@ -223,7 +203,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
                  //开启连接
                  ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open);
                  dbContext.Database.GetDbConnection().ChangeDatabase(dataBase);
-                 changeDataBaseName = dataBase;
+                 unitOfWorkOptions.ChangeDataBaseName = dataBase;
              }).ConfigureAwait(false);
         }
 
@@ -294,13 +274,12 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <returns></returns>
         public void ChangeDataBase()
         {
-            if (!string.IsNullOrWhiteSpace(changeDataBaseName))
+            if (!string.IsNullOrWhiteSpace(unitOfWorkOptions.ChangeDataBaseName))
             {
                 ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open);
-                dbContext.Database.GetDbConnection().ChangeDatabase(changeDataBaseName);
+                dbContext.Database.GetDbConnection().ChangeDatabase(unitOfWorkOptions.ChangeDataBaseName);
             }
         }
-
         #endregion
     }
 }
