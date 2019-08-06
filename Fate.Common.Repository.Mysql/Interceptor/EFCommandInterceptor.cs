@@ -82,8 +82,8 @@ namespace Fate.Common.Repository.Mysql.Interceptor
                         dbContext.Database.GetDbConnection().Close();
                     }
 
-                    //获取只读的连接字符串
-                    dbContext.Database.GetDbConnection().ConnectionString = options.Value.Where(a => a.DbContextType == dbContextType).FirstOrDefault().WriteReadConnectionString;
+                    //获取读写的连接字符串
+                    dbContext.Database.GetDbConnection().ConnectionString = options.Value.Where(a => a.DbContextType == dbContext.GetType()).FirstOrDefault().WriteReadConnectionString;
 
                     //更改连接的状态
                     if (dbContext.Database.GetDbConnection().State == ConnectionState.Closed)
