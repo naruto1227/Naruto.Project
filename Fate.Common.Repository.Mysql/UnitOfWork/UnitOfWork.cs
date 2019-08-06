@@ -224,7 +224,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
                  ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open);
                  dbContext.Database.GetDbConnection().ChangeDatabase(dataBase);
                  changeDataBaseName = dataBase;
-             });
+             }).ConfigureAwait(false);
         }
 
         /// <summary>
