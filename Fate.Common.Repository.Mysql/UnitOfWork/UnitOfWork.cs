@@ -272,7 +272,7 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// 更改数据库的名字
         /// </summary>
         /// <returns></returns>
-        public void ChangeDataBase()
+        private void ChangeDataBase()
         {
             if (!string.IsNullOrWhiteSpace(unitOfWorkOptions.ChangeDataBaseName))
             {
