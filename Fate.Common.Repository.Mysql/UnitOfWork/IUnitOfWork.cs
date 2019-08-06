@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Fate.Common.Repository.Mysql.Base;
 using Fate.Common.Repository.Mysql.Interface;
 using Fate.Domain.Model;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,12 @@ namespace Fate.Common.Repository.Mysql.UnitOfWork
         /// <param name="sql"></param>
         /// <returns></returns>
         Task<int> ExecuteSqlAsync(string sql, params object[] _params);
+
+        /// <summary>
+        /// 强制更改为只读或者读写连接字符串
+        /// </summary>
+        /// <returns></returns>
+        Task ChangeReadOrWriteConnection(ReadWriteEnum readWriteEnum = ReadWriteEnum.ReadWrite);
     }
 
 }
