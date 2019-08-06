@@ -65,7 +65,7 @@ namespace Fate.Test.Controllers
             await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
             await unitOfWork.Respositiy<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
             await unitOfWork.SaveChangeAsync();
-            var str = await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
+            var str = await unitOfWork.Respositiy<test1>().AsQueryable().ToListAsync();
             await unitOfWork.Respositiy<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
             await unitOfWork.SaveChangeAsync();
             //unitOfWork.RollBackTransaction();
