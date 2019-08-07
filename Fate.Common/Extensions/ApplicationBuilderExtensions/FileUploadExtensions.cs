@@ -1,4 +1,4 @@
-﻿using CP.Common.Infrastructure.Middleware;
+﻿using Fate.Common.Middleware;
 using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Fate.Common.Options;
-using Fate.Common.Middleware;
 
 namespace Fate.Common.Extensions
 {
