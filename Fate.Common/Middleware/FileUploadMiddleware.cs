@@ -53,6 +53,7 @@ namespace Fate.Common.Middleware
         public async Task InvokeAsync(HttpContext httpContext)
         {
             httpContext.Response.ContentType = "application/json;charset=utf-8";
+            //检查当前的请求方式
             if (httpContext.Request.Method.Equals(HttpMethods.Post))
             {
                 //获取上传的文件
@@ -63,6 +64,7 @@ namespace Fate.Common.Middleware
                     myJsonResult.code = (int)MyJsonResultEnum.dataCode;
                     myJsonResult.msg = "请上传文件";
                     await httpContext.Response.WriteAsync(myJsonResult.ToJson());
+                    return;
                 }
                 var resPath = "";
                 foreach (var file in files)
@@ -80,7 +82,6 @@ namespace Fate.Common.Middleware
                     resPath = resPath.Substring(1, resPath.Length - 1);
                 }
                 myJsonResult.rows = resPath;
-
             }
             else
             {
