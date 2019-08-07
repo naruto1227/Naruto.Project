@@ -20,7 +20,8 @@ namespace Fate.Common.Extensions
         {
             FileUploadOptions fileUploadOptions = new FileUploadOptions();
             options?.Invoke(fileUploadOptions);
-
+            if (string.IsNullOrWhiteSpace(fileUploadOptions.UploadFilePath))
+                throw new ArgumentNullException("参数不能为空:"+nameof(fileUploadOptions.UploadFilePath));
             if (fileUploadOptions != null && !string.IsNullOrWhiteSpace(fileUploadOptions.UploadFilePath))
             {
                 if (!Directory.Exists(fileUploadOptions.UploadFilePath))
