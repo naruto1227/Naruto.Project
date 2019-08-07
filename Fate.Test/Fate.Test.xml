@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Fate.Test</name>
+    </assembly>
+    <members>
+        <member name="M:Fate.Test.Controllers.Home1Controller.EeventTest">
+            <summary>
+            测试事件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fate.Test.Controllers.Home1Controller.RedisTest">
+            <summary>
+            测试redis
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

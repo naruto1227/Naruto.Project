@@ -16,12 +16,21 @@ namespace Fate.Common.Extensions
         /// 配置文件上传的参数
         /// </summary>
         /// <returns></returns>
+        public static IServiceCollection UseFileOptions(this IServiceCollection services)
+        {
+            return services.UseFileOptions(options => { });
+        }
+
+        /// <summary>
+        /// 配置文件上传的参数
+        /// </summary>
+        /// <returns></returns>
         public static IServiceCollection UseFileOptions(this IServiceCollection services, Action<FileUploadOptions> options)
         {
             FileUploadOptions fileUploadOptions = new FileUploadOptions();
             options?.Invoke(fileUploadOptions);
             if (string.IsNullOrWhiteSpace(fileUploadOptions.UploadFilePath))
-                throw new ArgumentNullException("参数不能为空:"+nameof(fileUploadOptions.UploadFilePath));
+                throw new ArgumentNullException("参数不能为空:" + nameof(fileUploadOptions.UploadFilePath));
             if (fileUploadOptions != null && !string.IsNullOrWhiteSpace(fileUploadOptions.UploadFilePath))
             {
                 if (!Directory.Exists(fileUploadOptions.UploadFilePath))

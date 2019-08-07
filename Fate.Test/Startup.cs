@@ -29,6 +29,7 @@ using Fate.Common.Extensions;
 using Fate.Common.Options;
 using Fate.Common.Repository.Mysql.Interceptor;
 using System.Diagnostics;
+using System.IO;
 
 namespace Fate.Test
 {
@@ -63,6 +64,14 @@ namespace Fate.Test
 
             //使用单号
             services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() { Description = "api测试 ", Title = "测试", Version = "v1" });
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, "test.xml");
+                options.IncludeXmlComments(xmlPath);
+            });
+
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
@@ -101,6 +110,15 @@ namespace Fate.Test
             //注入一场处理中间件
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
+
+            app.UseSwagger(options => { });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.ShowExtensions();
+                options.EnableValidator(null);
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "test V1");
+            });
         }
     }
 }
