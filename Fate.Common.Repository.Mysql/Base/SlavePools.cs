@@ -17,6 +17,9 @@ namespace Fate.Common.Repository.Mysql.Base
     /// </summary>
     internal static class SlavePools
     {
+        /// <summary>
+        /// 存放可以上下文的从库的连接字符串的信息
+        /// </summary>
         internal static ConcurrentDictionary<Type, List<SlaveDbConnection>> slaveConnec = new ConcurrentDictionary<Type, List<SlaveDbConnection>>();
 
         /// <summary>
@@ -53,13 +56,13 @@ namespace Fate.Common.Repository.Mysql.Base
         /// </summary>
         internal static void TimerHeartBeatCheck()
         {
-            using (var tcpClient = new TcpClient())
+            if (slaveConnec != null && slaveConnec.Count() > 0)
             {
-                if (slaveConnec != null && slaveConnec.Count() > 0)
-                {
-                    slaveConnec.Select(a => a.Value).ToList().ForEach(itemList =>
+                slaveConnec.Select(a => a.Value).ToList().ForEach(itemList =>
+                  {
+                      itemList.ForEach(item =>
                       {
-                          itemList.ForEach(item =>
+                          using (var tcpClient = new TcpClient())
                           {
                               try
                               {
@@ -70,9 +73,9 @@ namespace Fate.Common.Repository.Mysql.Base
                               {
                                   item.IsAvailable = false;
                               }
-                          });
+                          }
                       });
-                }
+                  });
             }
         }
     }
