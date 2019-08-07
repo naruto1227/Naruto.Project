@@ -39,10 +39,6 @@ namespace Fate.FileServerApi
             //注入 返回的实体
             services.AddTransient<MyJsonResult>();
             //注入文件操作类
-            services.AddSingleton<FileHelper>();
-            services.AddSingleton<UploadFile>();
-            services.AddTransient<Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider>();
-
             services.UseFileOptions(options =>
             {
                 options.UploadFilePath = ConfigurationManage.GetValue("UploadFilePath");

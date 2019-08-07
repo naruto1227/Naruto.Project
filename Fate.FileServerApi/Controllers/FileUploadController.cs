@@ -53,7 +53,7 @@ namespace Fate.FileServerApi.Controllers
             //IFormFileCollection files = Request.Form.Files;
             if (files == null || files.Count <= 0)
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
+                myJsonResult.code = (int)MyJsonResultEnum.dataCode;
                 myJsonResult.msg = "请上传文件";
             }
             else

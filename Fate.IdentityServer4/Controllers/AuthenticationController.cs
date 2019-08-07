@@ -45,31 +45,31 @@ namespace Fate.IdentityServer4.Controllers
             #region 数据校验
             if (string.IsNullOrWhiteSpace(clientId))
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
+                myJsonResult.code = (int)MyJsonResultEnum.dataCode;
                 myJsonResult.msg = "客户id不能为空";
                 return Json(myJsonResult);
             }
             if (string.IsNullOrWhiteSpace(clientSecret))
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
+                myJsonResult.code = (int)MyJsonResultEnum.dataCode;
                 myJsonResult.msg = "客户密钥不能为空";
                 return Json(myJsonResult);
             }
             if (string.IsNullOrWhiteSpace(userName))
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
+                myJsonResult.code = (int)MyJsonResultEnum.dataCode;
                 myJsonResult.msg = "用户名不能为空";
                 return Json(myJsonResult);
             }
             if (string.IsNullOrWhiteSpace(password))
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
+                myJsonResult.code = (int)MyJsonResultEnum.dataCode;
                 myJsonResult.msg = "密码不能为空";
                 return Json(myJsonResult);
             }
             if (string.IsNullOrWhiteSpace(scope))
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.DATACODE;
+                myJsonResult.code = (int)MyJsonResultEnum.dataCode;
                 myJsonResult.msg = "授权范围不能为空";
                 return Json(myJsonResult);
             }
@@ -80,7 +80,7 @@ namespace Fate.IdentityServer4.Controllers
             var disco = await client.GetDiscoveryDocumentAsync(url);
             if (disco.IsError)
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.SERVERCODE;
+                myJsonResult.code = (int)MyJsonResultEnum.serverCode;
                 myJsonResult.msg = disco.Error;
                 return Json(myJsonResult);
             }
@@ -96,11 +96,11 @@ namespace Fate.IdentityServer4.Controllers
             });
             if (tokenResponse.IsError)
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.SERVERCODE;
+                myJsonResult.code = (int)MyJsonResultEnum.serverCode;
                 myJsonResult.msg = tokenResponse.Error;
                 return Json(myJsonResult);
             }
-            myJsonResult.code = (int)MyJsonResultCodeEnum.SUCCESSCODE;
+            myJsonResult.code = (int)MyJsonResultEnum.successCode;
             myJsonResult.rows = tokenResponse.Json;
             return Json(myJsonResult);
         }

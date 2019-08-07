@@ -58,7 +58,7 @@ namespace Fate.Common.Config
             }
             else
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.thirdError;
+                myJsonResult.code = (int)MyJsonResultEnum.thirdError;
                 myJsonResult.rows = res["errmsg"] != null ? res["errmsg"].ToString() : "";
             }
             return myJsonResult;
@@ -79,7 +79,7 @@ namespace Fate.Common.Config
             }
             else
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.thirdError;
+                myJsonResult.code = (int)MyJsonResultEnum.thirdError;
                 myJsonResult.rows = res["errmsg"] != null ? res["errmsg"].ToString() : "";
             }
             return myJsonResult;

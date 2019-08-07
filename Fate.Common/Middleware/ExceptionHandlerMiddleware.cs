@@ -44,13 +44,13 @@ namespace Fate.Common.Middleware
                 if (ex is MyExceptions || ex is ApplicationException)
                 {
                     //获取状态码
-                    myJsonResult.code = (int)MyJsonResultCodeEnum.CHECKCODE;
+                    myJsonResult.code = (int)MyJsonResultEnum.checkCode;
                     myJsonResult.msg = ex.Message;
                 }
                 else if (ex is Exception)
                 {
                     //获取状态码
-                    myJsonResult.code = (int)MyJsonResultCodeEnum.SERVERCODE;
+                    myJsonResult.code = (int)MyJsonResultEnum.serverCode;
                     myJsonResult.failMsg = ex.Message;
                     myJsonResult.msg = "请求异常";
                     //转换成错误的集合

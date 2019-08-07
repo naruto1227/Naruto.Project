@@ -109,7 +109,7 @@ namespace Fate.Common.Config
             AlipaySystemOauthTokenResponse response = await client.ExecuteAsync(request);
             if (response.AccessToken.IsNullOrEmpty())
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.thirdError;
+                myJsonResult.code = (int)MyJsonResultEnum.thirdError;
                 myJsonResult.failMsg = response.SubMsg;
                 return myJsonResult;
             }
@@ -134,7 +134,7 @@ namespace Fate.Common.Config
             //构建返回的结果
             if (response.Code != "10000")
             {
-                myJsonResult.code = (int)MyJsonResultCodeEnum.thirdError;
+                myJsonResult.code = (int)MyJsonResultEnum.thirdError;
                 myJsonResult.failMsg = response.SubMsg;
             }
             myJsonResult.rows = response;

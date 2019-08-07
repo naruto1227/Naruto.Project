@@ -25,7 +25,7 @@ namespace Fate.Common.Infrastructure
         /// 返回成功的状态
         /// </summary>
 
-        public int code { get; set; } = (int)Enum.MyJsonResultCodeEnum.SUCCESSCODE;
+        public int code { get; set; } = (int)Enum.MyJsonResultEnum.successCode;
         /// <summary>
         /// 消息
         /// </summary>

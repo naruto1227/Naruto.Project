@@ -1,0 +1,93 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+using Fate.Common.Infrastructure;
+using Fate.Common.FileOperation;
+using Fate.Common.Options;
+using Fate.Common.Extensions;
+using Fate.Common.Enum;
+
+namespace Fate.Common.Middleware
+{
+    /// <summary>
+    /// 文件上传中间件
+    /// </summary>
+    public class FileUploadMiddleware
+    {
+        private MyJsonResult myJsonResult;
+        /// <summary>
+        /// 文件上传的帮助类
+        /// </summary>
+        private FileHelper _file;
+        /// <summary>
+        /// 扩展名的服务
+        /// </summary>
+        private FileExtensionContentTypeProvider provider;
+
+        /// <summary>
+        /// 文件上传的参数配置
+        /// </summary>
+        private IOptions<FileUploadOptions> options;
+
+        /// <summary>
+        /// 构造注入
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="_myJsonResult"></param>
+
+        public FileUploadMiddleware(RequestDelegate next, MyJsonResult _myJsonResult, FileHelper file, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options)
+        {
+            myJsonResult = _myJsonResult;
+            _file = file;
+            provider = _provider;
+            options = _options;
+        }
+
+        public async Task InvokeAsync(HttpContext httpContext)
+        {
+            httpContext.Response.ContentType = "application/json;charset=utf-8";
+            if (httpContext.Request.Method.Equals(HttpMethods.Post))
+            {
+                //获取上传的文件
+                var files = httpContext.Request.Form.Files;
+                //验证是否上传文件
+                if (files == null || files.Count() <= 0)
+                {
+                    myJsonResult.code = (int)MyJsonResultEnum.dataCode;
+                    myJsonResult.msg = "请上传文件";
+                    await httpContext.Response.WriteAsync(myJsonResult.ToJson());
+                }
+                var resPath = "";
+                foreach (var file in files)
+                {
+                    //上传文件
+                    var res = await _file.AddFileAsync(file);
+                    //判断文件是否上传成功
+                    if (!res.IsNullOrEmpty())
+                    {
+                        resPath += "," + res;
+                    }
+                }
+                if (!resPath.IsNullOrEmpty())
+                {
+                    resPath = resPath.Substring(1, resPath.Length - 1);
+                }
+                myJsonResult.rows = resPath;
+
+            }
+            else
+            {
+                myJsonResult.code = (int)MyJsonResultEnum.noFound;
+                myJsonResult.msg = "不支持的请求方式";
+            }
+            await httpContext.Response.WriteAsync(myJsonResult.ToJson());
+        }
+    }
+}

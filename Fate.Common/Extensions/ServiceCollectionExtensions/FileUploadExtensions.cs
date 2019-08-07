@@ -6,10 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Fate.Common.Options;
 using System.IO;
+using Fate.Common.FileOperation;
 
 namespace Fate.Common.Extensions
 {
-    public static class FileUploadExtensions
+    public static partial class FileUploadExtensions
     {
         /// <summary>
         /// 配置文件上传的参数
@@ -27,6 +28,10 @@ namespace Fate.Common.Extensions
                     Directory.CreateDirectory(fileUploadOptions.UploadFilePath);
                 }
             }
+            //注入文件操作类
+            services.AddSingleton<FileHelper>();
+            services.AddSingleton<UploadFile>();
+            services.AddTransient<Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider>();
             return services.Configure(options);
         }
     }
