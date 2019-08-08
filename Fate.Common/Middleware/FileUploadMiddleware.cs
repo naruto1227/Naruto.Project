@@ -37,17 +37,23 @@ namespace Fate.Common.Middleware
         private IOptions<FileUploadOptions> options;
 
         /// <summary>
+        /// 文件上传的返回结果
+        /// </summary>
+        private FileJsonResult fileResult;
+
+        /// <summary>
         /// 构造注入
         /// </summary>
         /// <param name="next"></param>
         /// <param name="_myJsonResult"></param>
 
-        public FileUploadMiddleware(RequestDelegate next, MyJsonResult _myJsonResult, FileHelper file, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options)
+        public FileUploadMiddleware(RequestDelegate next, MyJsonResult _myJsonResult, FileHelper file, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options, FileJsonResult _fileResult)
         {
             myJsonResult = _myJsonResult;
             _file = file;
             provider = _provider;
             options = _options;
+            fileResult = _fileResult;
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -81,7 +87,9 @@ namespace Fate.Common.Middleware
                 {
                     resPath = resPath.Substring(1, resPath.Length - 1);
                 }
-                myJsonResult.rows = resPath;
+                fileResult.src = resPath;
+                fileResult.requestName = options.Value.RequestPathName;
+                myJsonResult.rows = fileResult;
             }
             else
             {

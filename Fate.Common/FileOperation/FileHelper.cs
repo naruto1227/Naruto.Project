@@ -56,6 +56,8 @@ namespace Fate.Common.FileOperation
             {
                 resPath = "";
             }
+            else
+                resPath = "/" + resPath;
             return resPath;
         }
 
