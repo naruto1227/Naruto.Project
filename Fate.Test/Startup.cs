@@ -30,7 +30,6 @@ using Fate.Common.Options;
 using Fate.Common.Repository.Mysql.Interceptor;
 using System.Diagnostics;
 using System.IO;
-
 namespace Fate.Test
 {
     public class Startup
@@ -86,14 +85,20 @@ namespace Fate.Test
             });
 
             services.AddScoped(typeof(List<>));
-
+            services.UseFileOptions();
 
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
             return new AutofacServiceProvider(ApplicationContainer);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="loggerFactory"></param>
+        /// <param name="options1"></param>
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<List<EFOptions>> options1)
         {
@@ -103,6 +108,7 @@ namespace Fate.Test
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
+            app.UseFileUpload(new Microsoft.AspNetCore.Http.PathString("/file"));
             //配置NLog
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
             loggerFactory.AddNLog();//添加NLog
