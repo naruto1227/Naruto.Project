@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Fate.Domain.Model.Entities;
 
-namespace Fate.Common.Repository.Mysql
+namespace Fate.Common.Repository
 {
     public class MysqlDbContent : DbContext
     {

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Fate.Common.Repository.Mysql.Base;
+using Fate.Common.Repository.Base;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Fate.Common.Repository.Mysql.Interceptor;
+using Fate.Common.Repository.Interceptor;
 using System.Diagnostics;
-using Fate.Common.Repository.Mysql.HostServer;
+using Fate.Common.Repository.HostServer;
 
-namespace Fate.Common.Repository.Mysql
+namespace Fate.Common.Repository
 {
 
     public static class RepositoryExtensions

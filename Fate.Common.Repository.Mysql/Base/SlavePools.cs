@@ -10,7 +10,7 @@ using System.Data;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
 
-namespace Fate.Common.Repository.Mysql.Base
+namespace Fate.Common.Repository.Base
 {
     /// <summary>
     /// 存储 从库 slave 的连接字符串的集合

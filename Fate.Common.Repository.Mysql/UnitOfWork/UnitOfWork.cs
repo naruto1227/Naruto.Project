@@ -6,16 +6,16 @@ using Fate.Domain.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Fate.Common.Repository.Mysql.Interface;
+using Fate.Common.Repository.Interface;
 using Microsoft.Extensions.Options;
-using Fate.Common.Repository.Mysql.Base;
+using Fate.Common.Repository.Base;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Fate.Common.Repository.Mysql.Interceptor;
+using Fate.Common.Repository.Interceptor;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 
-namespace Fate.Common.Repository.Mysql.UnitOfWork
+namespace Fate.Common.Repository.UnitOfWork
 {
     public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext> where TDbContext : DbContext
     {

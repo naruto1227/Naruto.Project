@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Microsoft.Extensions.Options;
-using Fate.Common.Repository.Mysql.Base;
+using Fate.Common.Repository.Base;
 using System.Linq;
 using System.Net.Sockets;
 using System.Collections.Concurrent;
 
-namespace Fate.Common.Repository.Mysql.Interceptor
+namespace Fate.Common.Repository.Interceptor
 {
     /// <summary>
     /// EF命令的跟踪

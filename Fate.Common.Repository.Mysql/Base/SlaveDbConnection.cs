@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Repository.Mysql.Base
+namespace Fate.Common.Repository.Base
 {
     /// <summary>
     /// 从库的 连接字符串的配置

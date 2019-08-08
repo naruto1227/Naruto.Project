@@ -7,10 +7,10 @@ using Fate.Common.Ioc.Core;
 using Fate.Domain.Model.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Fate.Common.Repository.Mysql.UnitOfWork;
+using Fate.Common.Repository.UnitOfWork;
 using System.Data;
 using Fate.Common.Extensions;
-using Fate.Common.Repository.Mysql;
+using Fate.Common.Repository;
 
 namespace Fate.Test.Controllers
 {

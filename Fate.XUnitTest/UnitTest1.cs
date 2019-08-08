@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Fate.Domain.Model.Entities;
 using System.Diagnostics;
 using Fate.Common.Ioc.Core;
-using Fate.Common.Repository.Mysql;
+using Fate.Common.Repository;
 using System.Data;
 using Fate.Common.NPOI;
 using System.IO;

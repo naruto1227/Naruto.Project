@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fate.Web", "Fate.Web", "{7A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Domain.Model", "Fate.Domain.Model\Fate.Domain.Model.csproj", "{46C9B1BA-8894-4750-AE32-BB23347FDEB2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Repository.Mysql", "Fate.Common.Repository.Mysql\Fate.Common.Repository.Mysql.csproj", "{BEA4927B-44B2-45BD-958E-7CCCFDDE5C32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Repository", "Fate.Common.Repository.Mysql\Fate.Common.Repository.csproj", "{BEA4927B-44B2-45BD-958E-7CCCFDDE5C32}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Test", "Fate.Test\Fate.Test.csproj", "{C2EC54CF-FF2C-4160-8B64-A12C4952AFF1}"
 EndProject
@@ -41,13 +41,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.TimeServer", "Fate.Tim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.RabbitMQ", "Fate.Common.RabbitMQ\Fate.Common.RabbitMQ.csproj", "{557F9335-37E5-4BA9-AE6F-E978000CF708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Common.BaseRibbitMQ", "Fate.Common.BaseRibbitMQ\Fate.Common.BaseRibbitMQ.csproj", "{BD062578-3359-452C-A9F8-21F79153CF09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.BaseRibbitMQ", "Fate.Common.BaseRibbitMQ\Fate.Common.BaseRibbitMQ.csproj", "{BD062578-3359-452C-A9F8-21F79153CF09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQ", "RabbitMQ", "{405D7187-152B-463F-87FB-62864E291CAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3575B4A0-B3E0-4982-9D79-E863DE07D1FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Common.CAP.Subscribe", "Fate.Common.CAP.Subscribe\Fate.Common.CAP.Subscribe.csproj", "{30FF0F4D-01A9-47EE-BA4D-A830C6425097}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.CAP.Subscribe", "Fate.Common.CAP.Subscribe\Fate.Common.CAP.Subscribe.csproj", "{30FF0F4D-01A9-47EE-BA4D-A830C6425097}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

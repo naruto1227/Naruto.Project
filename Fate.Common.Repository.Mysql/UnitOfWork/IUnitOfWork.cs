@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Repository.Mysql.Base;
-using Fate.Common.Repository.Mysql.Interface;
+using Fate.Common.Repository.Base;
+using Fate.Common.Repository.Interface;
 using Fate.Domain.Model;
 using Microsoft.EntityFrameworkCore;
-namespace Fate.Common.Repository.Mysql.UnitOfWork
+namespace Fate.Common.Repository.UnitOfWork
 {
     public interface IUnitOfWork {
         /// <summary>

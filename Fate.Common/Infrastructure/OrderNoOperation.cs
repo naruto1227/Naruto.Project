@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Fate.Common.Interface;
 using Fate.Common.Config;
 using Fate.Common.NLog;
-using Fate.Common.Repository.Mysql.UnitOfWork;
+using Fate.Common.Repository.UnitOfWork;
 using Fate.Domain.Model.Entities;
 using Fate.Common.Options;
 using Microsoft.Extensions.Options;

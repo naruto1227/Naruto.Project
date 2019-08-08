@@ -1,11 +1,11 @@
 ﻿using Fate.Domain.Model;
-using Fate.Common.Repository.Mysql;
+using Fate.Common.Repository;
 using Fate.Domain.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Repository.Mysql.UnitOfWork;
+using Fate.Common.Repository.UnitOfWork;
 using Fate.Domain.Event;
 using Fate.Domain.Event.Infrastructure;
 using Fate.Domain.Event.Events;

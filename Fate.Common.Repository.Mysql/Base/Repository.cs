@@ -7,9 +7,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Fate.Common.Repository.Mysql.Interface;
+using Fate.Common.Repository.Interface;
 
-namespace Fate.Common.Repository.Mysql.Base
+namespace Fate.Common.Repository.Base
 {
     /// <summary>
     /// 仓储的基类

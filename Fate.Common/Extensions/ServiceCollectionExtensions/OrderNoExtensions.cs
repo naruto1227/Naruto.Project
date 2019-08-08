@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Fate.Common.Options;
-using Fate.Common.Repository.Mysql.UnitOfWork;
+using Fate.Common.Repository.UnitOfWork;
 
 namespace Fate.Common.Extensions
 {

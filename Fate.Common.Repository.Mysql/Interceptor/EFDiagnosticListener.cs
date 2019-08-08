@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-namespace Fate.Common.Repository.Mysql.Interceptor
+namespace Fate.Common.Repository.Interceptor
 {
     public class EFDiagnosticListener : IObserver<DiagnosticListener>
     {

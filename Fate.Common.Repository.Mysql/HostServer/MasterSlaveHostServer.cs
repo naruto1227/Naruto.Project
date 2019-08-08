@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Fate.Common.Repository.Mysql.Base;
+using Fate.Common.Repository.Base;
 
-namespace Fate.Common.Repository.Mysql.HostServer
+namespace Fate.Common.Repository.HostServer
 {
     internal class MasterSlaveHostServer : IHostedService
     {

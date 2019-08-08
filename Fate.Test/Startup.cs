@@ -13,21 +13,21 @@ using Autofac;
 
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Fate.Common.Repository.Mysql.UnitOfWork;
+using Fate.Common.Repository.UnitOfWork;
 using Fate.Common.Infrastructure;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using System.Text;
 using Fate.Common.Middleware;
-using Fate.Common.Repository.Mysql;
+using Fate.Common.Repository;
 using Fate.Domain.Model.Entities;
 using Fate.Common.Redis;
 using CP.Common.Infrastructure;
 using Fate.Common.BaseRibbitMQ;
-using Fate.Common.Repository.Mysql.Base;
+using Fate.Common.Repository.Base;
 using Fate.Common.Extensions;
 using Fate.Common.Options;
-using Fate.Common.Repository.Mysql.Interceptor;
+using Fate.Common.Repository.Interceptor;
 using System.Diagnostics;
 using System.IO;
 namespace Fate.Test
