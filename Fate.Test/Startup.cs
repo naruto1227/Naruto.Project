@@ -30,6 +30,9 @@ using Fate.Common.Options;
 using Fate.Common.Repository.Interceptor;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
+
 namespace Fate.Test
 {
     public class Startup
@@ -45,6 +48,12 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //注入响应压缩的服务
+            services.AddResponseCompression();
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Fastest;
+            });
             //注入redis仓储服务
             services.AddRedisRepository(options =>
             {
@@ -107,14 +116,19 @@ namespace Fate.Test
             {
                 app.UseDeveloperExceptionPage();
             }
+            //注入一场处理中间件
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             app.UseAuthentication();
+
+            app.UseResponseCompression();
+
             app.UseFileUpload(new Microsoft.AspNetCore.Http.PathString("/file"));
             //配置NLog
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
             loggerFactory.AddNLog();//添加NLog
             env.ConfigureNLog("nlog.config");//读取Nlog配置文件
-            //注入一场处理中间件
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             app.UseMvc();
 
             app.UseSwagger(options => { });

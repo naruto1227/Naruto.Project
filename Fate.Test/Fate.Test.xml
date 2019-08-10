@@ -16,5 +16,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Fate.Test.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Options.IOptions{System.Collections.Generic.List{Fate.Common.Repository.Base.EFOptions}})">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+            <param name="options1"></param>
+        </member>
     </members>
 </doc>
