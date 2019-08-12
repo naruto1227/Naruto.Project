@@ -32,8 +32,6 @@ namespace Fate.Common.Repository.Base
         /// <returns></returns>
         public Task ChangeDBConnection(string connectionName)
         {
-            var config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build();
-            repository.Database.GetDbConnection().ConnectionString = config.GetConnectionString(connectionName);
             return Task.FromResult(0);
         }
         /// <summary>
