@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Description>Redis的仓储封装</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
