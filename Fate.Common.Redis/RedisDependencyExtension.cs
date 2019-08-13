@@ -7,7 +7,9 @@ using System.Linq;
 namespace Fate.Common.Redis
 {
     /// <summary>
-    ///缓存的依赖注入
+    /// 张海波
+    /// 2019.08.13
+    /// redis缓存的依赖注入
     /// </summary>
     public static class RedisDependencyExtension
     {

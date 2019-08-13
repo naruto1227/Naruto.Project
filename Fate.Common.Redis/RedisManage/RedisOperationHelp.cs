@@ -8,6 +8,8 @@ using System.Linq;
 namespace Fate.Common.Redis.RedisManage
 {
     /// <summary>
+    /// 张海波
+    /// 2019.08.13
     /// redis操作封装类
     /// </summary>
     public class RedisOperationHelp : IRedisOperationHelp

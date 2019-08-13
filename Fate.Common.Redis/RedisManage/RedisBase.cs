@@ -11,6 +11,8 @@ using Fate.Common.Redis.RedisConfig;
 namespace Fate.Common.Redis.RedisManage
 {
     /// <summary>
+    /// 张海波
+    /// 2019.08.13
     /// redis 访问的基类
     /// </summary>
     public class RedisBase : IRedisManage.IRedisBase

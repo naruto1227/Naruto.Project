@@ -13,6 +13,8 @@ using MySql.Data.MySqlClient;
 namespace Fate.Common.Repository.Base
 {
     /// <summary>
+    /// 张海波
+    /// 2019.08.13
     /// 存储 从库 slave 的连接字符串的集合
     /// </summary>
     internal static class SlavePools

@@ -6,6 +6,11 @@ using System.Text;
 
 namespace Fate.Common.Repository.Base
 {
+    /// <summary>
+    /// 张海波
+    /// 2019.08.13
+    /// EF上下文参数配置
+    /// </summary>
     public class EFOptions
     {
         /// <summary>

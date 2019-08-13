@@ -5,6 +5,8 @@ using System.Text;
 namespace Fate.Common.Repository.Base
 {
     /// <summary>
+    /// 张海波
+    /// 2019.08.13
     /// 从库的 连接字符串的配置
     /// </summary>
     public class SlaveDbConnection

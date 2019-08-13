@@ -11,7 +11,9 @@ using Microsoft.Extensions.Options;
 namespace Fate.Common.Redis.RedisConfig
 {
     /// <summary>
-    /// redis 缓存链接
+    /// 张海波
+    /// 2019.08.13
+    /// redis缓存链接
     /// </summary>
     public class RedisConnectionHelp : IRedisClassDependency
     {

@@ -12,6 +12,8 @@ using Fate.Common.Repository.Interface;
 namespace Fate.Common.Repository.Base
 {
     /// <summary>
+    /// 张海波
+    /// 2019.08.13
     /// 仓储的基类
     /// </summary>
     /// <typeparam name="T"></typeparam>

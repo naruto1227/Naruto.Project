@@ -6,6 +6,8 @@ using System.Text;
 namespace Fate.Common.Repository.Base
 {
     /// <summary>
+    /// 张海波
+    /// 2019.08.13
     /// 工作单元的参数
     /// </summary>
     public class UnitOfWorkOptions

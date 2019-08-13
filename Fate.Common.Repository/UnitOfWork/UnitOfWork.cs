@@ -17,6 +17,11 @@ using System.Data;
 
 namespace Fate.Common.Repository.UnitOfWork
 {
+    /// <summary>
+    /// 张海波
+    /// 2019.08.13
+    /// 工作单元的统一入口
+    /// </summary>
     public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext> where TDbContext : DbContext
     {
         #region  paramater
