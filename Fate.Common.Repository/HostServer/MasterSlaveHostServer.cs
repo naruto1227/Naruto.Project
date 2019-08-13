@@ -10,6 +10,11 @@ using Fate.Common.Repository.Base;
 
 namespace Fate.Common.Repository.HostServer
 {
+    /// <summary>
+    /// 张海波
+    /// 2019.08.13
+    /// 后台服务 检查从库的状态
+    /// </summary>
     internal class MasterSlaveHostServer : IHostedService
     {
 
