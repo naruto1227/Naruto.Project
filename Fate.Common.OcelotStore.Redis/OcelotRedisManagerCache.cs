@@ -7,9 +7,10 @@ using Fate.Common.Redis.IRedisManage;
 namespace Fate.Common.OcelotStore.Redis
 {
     /// <summary>
-    /// Ocelot 使用redis来操作缓存数据
+    /// 张海波
+    /// 2019.08.13
+    /// Ocelot 使用redis来操作缓存数据  z注册 singleton
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class OcelotRedisManagerCache<T> : IOcelotCache<T> where T : class
     {
         /// <summary>
@@ -20,7 +21,7 @@ namespace Fate.Common.OcelotStore.Redis
         /// <summary>
         /// 存储的缓存的前缀
         /// </summary>
-        private readonly string prefix = "_ocelotrediscache";
+        private readonly string prefix = "ocelotrediscache:";
 
         /// <summary>
         /// 构造注入
@@ -80,7 +81,11 @@ namespace Fate.Common.OcelotStore.Redis
         /// <returns></returns>
         public T Get(string key, string region)
         {
-            throw new NotImplementedException();
+            if (!redis.KeyExists(prefix + key))
+            {
+                return default;
+            }
+            return redis.StringGet<T>(prefix + key);
         }
     }
 }
