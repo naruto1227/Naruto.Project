@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.OcelotStore.Redis
+namespace Fate.Common.OcelotStore.EFCore
 {
     public class CacheOptions
     {

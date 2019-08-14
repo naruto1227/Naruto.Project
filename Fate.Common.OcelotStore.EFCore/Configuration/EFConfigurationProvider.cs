@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Fate.Common.OcelotStore.Redis
+namespace Fate.Common.OcelotStore.EFCore
 {
     /// <summary>
     /// 张海波
