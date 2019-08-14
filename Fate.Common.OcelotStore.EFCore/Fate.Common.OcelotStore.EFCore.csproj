@@ -8,4 +8,8 @@
     <PackageReference Include="Ocelot" Version="13.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Common.Repository\Fate.Common.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
