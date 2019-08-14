@@ -32,6 +32,8 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 namespace Fate.Test
 {
@@ -48,6 +50,7 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+          
             //注入响应压缩的服务
             services.AddResponseCompression();
             services.Configure<GzipCompressionProviderOptions>(options =>
@@ -97,6 +100,8 @@ namespace Fate.Test
             services.UseFileOptions();
 
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
+
+            services.AddOcelot().AddRedisCache();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
             return new AutofacServiceProvider(ApplicationContainer);
@@ -128,7 +133,7 @@ namespace Fate.Test
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
             loggerFactory.AddNLog();//添加NLog
             env.ConfigureNLog("nlog.config");//读取Nlog配置文件
-
+            app.UseOcelot().Wait();
             app.UseMvc();
 
             app.UseSwagger(options => { });

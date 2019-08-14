@@ -83,7 +83,10 @@ namespace Fate.Common.OcelotStore.Redis
                 }
             }
         }
-
+        /// <summary>
+        /// 抛出错误消息
+        /// </summary>
+        /// <param name="config"></param>
         private static void ThrowToStopOcelotStarting(Response config)
         {
             throw new Exception($"无法启动，错误信息: {string.Join(",", config.Errors.Select(x => x.ToString()))}");

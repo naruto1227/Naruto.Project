@@ -21,7 +21,7 @@ namespace Fate.Common.OcelotStore.Redis
         /// <summary>
         /// 存储的缓存的前缀
         /// </summary>
-        private readonly string prefix = "ocelotrediscache:";
+        private readonly string prefix = "ocelotcache:";
 
         /// <summary>
         /// 构造注入

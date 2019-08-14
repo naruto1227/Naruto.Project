@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Fate.Common.OcelotStore.Redis
 {
@@ -20,20 +21,22 @@ namespace Fate.Common.OcelotStore.Redis
         /// 获取配置的缓存服务
         /// </summary>
         private readonly IOcelotCache<FileConfiguration> _cache;
-        /// <summary>
-        /// 配置的key
-        /// </summary>
-        private readonly string prefixKey = "redisconfiguration";
 
         private static readonly object _lock = new object();
+
+        /// <summary>
+        /// 获取配置的参数
+        /// </summary>
+        private IOptions<CacheOptions> options;
 
         /// <summary>
         /// 构造注入
         /// </summary>
         /// <param name="cache"></param>
-        public RedisConfigurationRepository(IOcelotCache<FileConfiguration> cache)
+        public RedisConfigurationRepository(IOcelotCache<FileConfiguration> cache, IOptions<CacheOptions> _options)
         {
             _cache = cache;
+            options = _options;
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace Fate.Common.OcelotStore.Redis
             FileConfiguration fileConfiguration;
             lock (_lock)
             {
-                fileConfiguration = _cache.Get(prefixKey, default);
+                fileConfiguration = _cache.Get(options.Value.CacheKey, default);
             }
             return Task.FromResult<Response<FileConfiguration>>(new OkResponse<FileConfiguration>(fileConfiguration));
         }
@@ -58,7 +61,7 @@ namespace Fate.Common.OcelotStore.Redis
         {
             lock (_lock)
             {
-                _cache.AddAndDelete(prefixKey, fileConfiguration, TimeSpan.FromHours(6), "");
+                _cache.AddAndDelete(options.Value.CacheKey, fileConfiguration, TimeSpan.FromHours(6), "");
             }
             return Task.FromResult((Response)new OkResponse());
         }
