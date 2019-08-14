@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Fate.Domain.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 
-using Fate.Domain.Model.Entities;
+//using Fate.Domain.Model.Entities;
 
-namespace Fate.Common.Repository
+namespace Fate.Domain.Model
 {
     public class MysqlDbContent : DbContext
     {

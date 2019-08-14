@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
-using Fate.Domain.Model;
+using Fate.Common.Base.Model;
 namespace Fate.Common.Repository.Interface
 {
     /// <summary>

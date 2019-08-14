@@ -19,6 +19,8 @@ using NLog.Web;
 using System.Text;
 using Fate.Common.Middleware;
 using Fate.Common.Repository;
+using Fate.Domain.Model;
+
 namespace Fate.WebApi
 {
     public class Startup
@@ -35,7 +37,7 @@ namespace Fate.WebApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //注入上下文
-            services.AddDbContext<Fate.Common.Repository.MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
+            services.AddDbContext<MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
            // services.AddSingleton(typeof(Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>

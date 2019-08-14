@@ -1,4 +1,4 @@
-﻿using Fate.Domain.Model;
+﻿using Fate.Common.Base.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

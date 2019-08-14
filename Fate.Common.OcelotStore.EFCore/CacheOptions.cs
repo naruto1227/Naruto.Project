@@ -1,4 +1,5 @@
-﻿using Fate.Common.Redis.RedisConfig;
+﻿
+using Fate.Common.Repository.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,8 +14,8 @@ namespace Fate.Common.OcelotStore.Redis
         public string CacheKey { get; set; } = "ocelot";
 
         /// <summary>
-        /// redis的参数配置
+        /// ef的参数配置
         /// </summary>
-        public Action<RedisOptions> RedisOptions { get; set; } = null;
+        public Action<EFOptions> EFOptions { get; set; } = null;
     }
 }

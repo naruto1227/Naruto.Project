@@ -11,6 +11,7 @@ using Fate.Common.Repository.UnitOfWork;
 using System.Data;
 using Fate.Common.Extensions;
 using Fate.Common.Repository;
+using Fate.Domain.Model;
 
 namespace Fate.Test.Controllers
 {

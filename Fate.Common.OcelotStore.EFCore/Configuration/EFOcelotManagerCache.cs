@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Fate.Common.Redis.IRedisManage;
+
 
 namespace Fate.Common.OcelotStore.Redis
 {

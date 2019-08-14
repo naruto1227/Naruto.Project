@@ -16,6 +16,7 @@ using Fate.Common.Repository;
 using StackExchange.Redis;
 using Fate.Application.Services;
 using Microsoft.EntityFrameworkCore;
+using Fate.Domain.Model;
 
 namespace Fate.Test.Controllers
 {

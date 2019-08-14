@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
+    <ProjectReference Include="..\Fate.Common.Base.Model\Fate.Common.Base.Model.csproj" />
   </ItemGroup>
 
 </Project>
