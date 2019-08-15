@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fate.Common.OcelotStore.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Microsoft.Extensions.Options;
+using Ocelot.Cache;
+using Ocelot.Configuration.File;
+
 namespace Fate.Test.Ocelot
 {
     public class Startup
@@ -30,14 +35,17 @@ namespace Fate.Test.Ocelot
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.MapWhen(content => content.Request.Path.StartsWithSegments("/test"), build =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                var ocelotCache = build.ApplicationServices.GetService<IOcelotCache<FileConfiguration>>();
+                ocelotCache.ClearRegion("ocelotef");
+                EFConfigurationProvider.Get(build);
+                //build.UseMiddleware<testmidware>();
+            });
+            await app.UseOcelot();
 
-            app.UseOcelot().Wait();
         }
     }
 }
