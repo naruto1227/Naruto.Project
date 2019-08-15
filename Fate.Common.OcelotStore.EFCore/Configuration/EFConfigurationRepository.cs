@@ -17,7 +17,7 @@ namespace Fate.Common.OcelotStore.EFCore
     /// <summary>
     /// 张海波
     /// 2019.08.13
-    /// 实现从Redis操作配置信息
+    /// 实现从数据库操作配置信息
     /// </summary>
     public class EFConfigurationRepository : IFileConfigurationRepository
     {
