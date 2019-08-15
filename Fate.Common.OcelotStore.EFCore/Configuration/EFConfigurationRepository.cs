@@ -72,7 +72,7 @@ namespace Fate.Common.OcelotStore.EFCore
             lock (_lock)
             {
                 SetFileConfiguration(fileConfiguration);
-                _cache.AddAndDelete(options.Value.CacheKey, fileConfiguration, TimeSpan.FromHours(6), options.Value.CacheKey);
+                _cache.AddAndDelete(options.Value.CacheKey, fileConfiguration, TimeSpan.FromSeconds(120), options.Value.CacheKey);
             }
             return Task.FromResult((Response)new OkResponse());
         }

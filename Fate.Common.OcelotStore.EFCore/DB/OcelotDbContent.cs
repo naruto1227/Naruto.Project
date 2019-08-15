@@ -20,5 +20,16 @@ namespace Fate.Common.OcelotStore.EFCore
 
         public DbSet<OcelotConfiguration> OcelotConfiguration { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OcelotConfiguration>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                   .HasName("PRIMARY");
+                entity.Property(e => e.Id).HasColumnType("varchar(255)");
+
+                entity.Property(e => e.Config).HasColumnType("longtext");
+            });
+        }
     }
 }

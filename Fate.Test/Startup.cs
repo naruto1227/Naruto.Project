@@ -102,7 +102,6 @@ namespace Fate.Test
 
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
 
-            //services.AddOcelot().AddRedisCache();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
             return new AutofacServiceProvider(ApplicationContainer);
@@ -134,7 +133,7 @@ namespace Fate.Test
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
             loggerFactory.AddNLog();//添加NLog
             env.ConfigureNLog("nlog.config");//读取Nlog配置文件
-            //app.UseOcelot().Wait();
+
             app.UseMvc();
 
             app.UseSwagger(options => { });

@@ -9,9 +9,9 @@ namespace Fate.Common.OcelotStore.EFCore
     public class CacheOptions
     {
         /// <summary>
-        /// 存储的redis中的key （默认为 ocelot）
+        /// 存储的缓存中的key （默认为 ocelotef）
         /// </summary>
-        public string CacheKey { get; set; } = "ocelot";
+        internal string CacheKey { get; set; } = "ocelotef";
 
         /// <summary>
         /// ef的参数配置

@@ -40,9 +40,7 @@ namespace Ocelot.DependencyInjection
             {
                 ocelotBuilder.Services.AddMysqlRepositoryServer();
             }
-
-            var li = ocelotBuilder.Services.BuildServiceProvider().GetRequiredService<IOptions<List<EFOptions>>>();
-            li.Value?.Add(eFOptions);
+            //注入仓储
             ocelotBuilder.Services.AddRepositoryEFOptionServer(ocelot =>
             {
                 ocelot.ConfigureDbContext = eFOptions.ConfigureDbContext;

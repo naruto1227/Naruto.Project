@@ -61,7 +61,7 @@ namespace Fate.Common.Repository
                 item?.Invoke(eFOptions);
                 options.Add(eFOptions);
                 //验证
-                if (eFOptions.IsOpenMasterSlave && eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0)
+                if (eFOptions.IsOpenMasterSlave && (eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0))
                 {
                     throw new ArgumentException("检测到开启了读写分离但是未指定只读的连接字符串!");
                 }
