@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
     <ProjectReference Include="..\Fate.Common.Repository\Fate.Common.Repository.csproj" />
   </ItemGroup>
 

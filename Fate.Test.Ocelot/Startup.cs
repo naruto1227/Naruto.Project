@@ -33,6 +33,11 @@ namespace Fate.Test.Ocelot
             services.AddOcelot().AddEFCache(options =>
             {
                 options.EFOptions = ef => ef.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("OcelotMysqlConnection"));
+                options.RedisOptions = redis =>
+                {
+                    redis.Connection = "127.0.0.1:6379";
+                    redis.DefaultDataBase = 2;
+                };
             });
             //替换自带的DI
             ContainerBuilder builder = new ContainerBuilder();

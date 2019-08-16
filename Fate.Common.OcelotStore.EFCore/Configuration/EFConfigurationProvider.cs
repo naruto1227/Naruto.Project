@@ -26,11 +26,11 @@ namespace Fate.Common.OcelotStore.EFCore
         public static OcelotMiddlewareConfigurationDelegate Get = async builder =>
         {
             //获取服务
-            //获取配置服务的仓储
+            //获取所有配置服务的仓储
             var fileConfigRepository = builder.ApplicationServices.GetService<IFileConfigurationRepository>();
-            //获取创建配置的服务
+            //获取创建配置的服务(创建一个基本的配置数据 包含路由等数据 让其将数据 传递到 IInternalConfigurationRepository 中)
             var configCreator = builder.ApplicationServices.GetService<IInternalConfigurationCreator>();
-            //获取
+            //当前接口的作用是网关的每次调用 都会从其中获取路由的数据
             var configRepository = builder.ApplicationServices.GetService<IInternalConfigurationRepository>();
 
             await SetFileConfigInDataBase(builder, fileConfigRepository, configCreator, configRepository);
@@ -44,7 +44,7 @@ namespace Fate.Common.OcelotStore.EFCore
         /// <param name="internalConfigCreator"></param>
         /// <param name="internalConfigRepo"></param>
         /// <returns></returns>
-        private static async Task SetFileConfigInDataBase(IApplicationBuilder builder,
+        internal static async Task SetFileConfigInDataBase(IApplicationBuilder builder,
             IFileConfigurationRepository fileConfigRepo,
             IInternalConfigurationCreator internalConfigCreator, IInternalConfigurationRepository internalConfigRepo)
         {
