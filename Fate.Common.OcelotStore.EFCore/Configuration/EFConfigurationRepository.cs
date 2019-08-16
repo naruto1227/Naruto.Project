@@ -11,6 +11,7 @@ using Fate.Common.Repository.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fate.Common.OcelotStore.EFCore
 {
@@ -87,7 +88,7 @@ namespace Fate.Common.OcelotStore.EFCore
                 //获取工作单元
                 var unitOfWork = services.ServiceProvider.GetRequiredService<IUnitOfWork<OcelotDbContent>>();
                 //从数据库读取
-                var info = unitOfWork.Respositiy<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).FirstOrDefault();
+                var info = unitOfWork.Respositiy<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).AsNoTracking().FirstOrDefault();
 
                 return JsonConvert.DeserializeObject<FileConfiguration>(info.Config);
             }
@@ -104,7 +105,7 @@ namespace Fate.Common.OcelotStore.EFCore
                 //获取工作单元
                 var unitOfWork = services.ServiceProvider.GetRequiredService<IUnitOfWork<OcelotDbContent>>();
                 //从数据库读取
-                var info = unitOfWork.Respositiy<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).FirstOrDefault();
+                var info = unitOfWork.Respositiy<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).AsNoTracking().FirstOrDefault();
                 if (info != null)
                 {
                     unitOfWork.Respositiy<OcelotConfiguration>().Update(a => a.Id == info.Id, (item) =>
