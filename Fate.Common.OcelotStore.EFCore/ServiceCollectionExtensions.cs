@@ -15,6 +15,7 @@ using Fate.Common.Repository;
 using Fate.Common.Repository.Base;
 using Microsoft.Extensions.Options;
 using Fate.Common.Redis;
+using Fate.Common.Redis.IRedisManage;
 
 namespace Ocelot.DependencyInjection
 {
@@ -50,8 +51,17 @@ namespace Ocelot.DependencyInjection
                 ocelot.UseEntityFramework<OcelotDbContent>(ocelotBuilder.Services);
                 ocelot.IsOpenMasterSlave = eFOptions.IsOpenMasterSlave;
             });
-            //注入redis仓储
-            ocelotBuilder.Services.AddRedisRepository(cacheOptions.RedisOptions);
+            //检验是否注入redis仓储
+            if (ocelotBuilder.Services.BuildServiceProvider().GetService<IRedisOperationHelp>() == null)
+            {
+                if (cacheOptions.RedisOptions == null)
+                {
+                    throw new ArgumentNullException(nameof(cacheOptions.RedisOptions));
+                }
+                //注入redis仓储
+                ocelotBuilder.Services.AddRedisRepository(cacheOptions.RedisOptions);
+            }
+
             //更改扩展方式
             ocelotBuilder.Services.RemoveAll(typeof(IFileConfigurationRepository));
             ocelotBuilder.Services.RemoveAll(typeof(IInternalConfigurationRepository));

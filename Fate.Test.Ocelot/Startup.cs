@@ -39,6 +39,7 @@ namespace Fate.Test.Ocelot
                     redis.DefaultDataBase = 2;
                 };
             });
+            
             //替换自带的DI
             ContainerBuilder builder = new ContainerBuilder();
             builder.Populate(services);
