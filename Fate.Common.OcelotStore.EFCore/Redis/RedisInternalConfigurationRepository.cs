@@ -30,7 +30,7 @@ namespace Fate.Common.OcelotStore.EFCore
         /// <summary>
         /// 存储到redis的缓存key
         /// </summary>
-        private readonly string RedisCacheKey = "InternalConfiguration";
+        private readonly string RedisCacheKey = "Ocelot:InternalConfiguration";
 
         private IServiceProvider serviceProvider;
 
