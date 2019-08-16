@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fate.Common.Ioc.Core\Fate.Common.Ioc.Core.csproj" />
     <ProjectReference Include="..\Fate.Common.OcelotStore.EFCore\Fate.Common.OcelotStore.EFCore.csproj" />
   </ItemGroup>
 

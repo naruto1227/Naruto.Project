@@ -14,6 +14,8 @@ using Ocelot.Middleware;
 using Microsoft.Extensions.Options;
 using Ocelot.Cache;
 using Ocelot.Configuration.File;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Fate.Test.Ocelot
 {
@@ -26,24 +28,23 @@ namespace Fate.Test.Ocelot
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddOcelot().AddEFCache(options =>
             {
                 options.EFOptions = ef => ef.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("OcelotMysqlConnection"));
             });
+            //替换自带的DI
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.Populate(services);
+            return new AutofacServiceProvider(builder.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.MapWhen(content => content.Request.Path.StartsWithSegments("/test"), build =>
-            {
-                var ocelotCache = build.ApplicationServices.GetService<IOcelotCache<FileConfiguration>>();
-                ocelotCache.ClearRegion("ocelotef");
-                EFConfigurationProvider.Get(build);
-                //build.UseMiddleware<testmidware>();
-            });
+            //调用此中间件 重新设置网关的配置信息
+            app.ResetEFConfiguration(new PathString("/test"));
             await app.UseOcelot();
 
         }
