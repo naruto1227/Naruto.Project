@@ -19,6 +19,9 @@ namespace Fate.Common.OcelotStore.EFCore
         /// </summary>
         public Action<EFOptions> EFOptions { get; set; } = null;
 
+        /// <summary>
+        /// redis的参数配置
+        /// </summary>
         public Action<RedisOptions> RedisOptions { get; set; } = null;
     }
 }
