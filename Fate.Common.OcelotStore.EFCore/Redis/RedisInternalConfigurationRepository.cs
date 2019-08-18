@@ -75,7 +75,7 @@ namespace Fate.Common.OcelotStore.EFCore
                     //当前接口的作用是网关的每次调用 都会从其中获取路由的数据
                     var configRepository = serviceProvider.GetService<IInternalConfigurationRepository>();
 
-                    EFConfigurationProvider.SetFileConfigInDataBase(null, fileConfigRepository, configCreator, configRepository);
+                    EFConfigurationProvider.SetFileConfigInDataBase(fileConfigRepository, configCreator, configRepository);
                     //重新获取数据
                     internalConfiguration = redis.StringGet<InternalConfiguration>(RedisCacheKey);
                 }
