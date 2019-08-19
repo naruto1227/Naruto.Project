@@ -1,5 +1,8 @@
 1.使用的时候需要将参数中的缓存和数据库注入
-2.默认的配置存储在系统内存中的缓存时间为2分钟
+2.默认的配置存储在系统内存中的缓存时间为2分钟（后期需要删除掉）
 3.ocelot的基本配置的数据存储在redis缓存中，如果更新的时候需注意有个两分钟的时间差
 4.当数据不存在的时候默认从数据库查询数据 追加到缓存中
 5.系统重新启动的时候默认从数据库中读取数据
+6.FileConfiguration为ocelot的存储配置的实体(他的对应的持久化接口为IFileConfigurationRepository，如需更改持久化的方式 重新实现继承IFileConfigurationRepository再依赖注入即可)
+7.InternalConfiguration为ocelot的获取基本配置的实体 ，该实体继承与IInternalConfiguration，
+	IInternalConfigurationRepository 为该实体的持久化层，每次的ocelot的访问都会调用此接口获取基本配置信息（如需更改持久化重新实现IInternalConfigurationRepository 接口即可，然后依赖注入）
