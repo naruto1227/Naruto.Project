@@ -20,6 +20,7 @@ using System.Text;
 using Fate.Common.Middleware;
 using Fate.Common.Repository;
 using Fate.Domain.Model;
+using Fate.Common.Ioc.Core;
 
 namespace Fate.WebApi
 {
@@ -38,14 +39,15 @@ namespace Fate.WebApi
         {
             //注入上下文
             services.AddDbContext<MysqlDbContent>(option => option.UseMySql(Configuration.GetConnectionString("MysqlConnection")));
-           // services.AddSingleton(typeof(Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
+            // services.AddSingleton(typeof(Fate.Domain.Event.Infrastructure.IEventBus), typeof(Fate.Domain.Event.Infrastructure.EventBus));
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
                 option.Filters.Add(typeof(Fate.Common.Filters.TokenAuthorizationAttribute));
             }).AddAuthorization().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //注入api授权服务
-            services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option => {
+            services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
+            {
                 option.Authority = "http://localhost:54717";
                 option.RequireHttpsMetadata = false;
                 option.Audience = "api";
@@ -53,7 +55,7 @@ namespace Fate.WebApi
 
             services.AddScoped(typeof(List<>));
             //替换自带的di 转换为autofac 注入程序集
-            ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.Injection(services);
+            ApplicationContainer = services.ConvertToAutofac();
             return new AutofacServiceProvider(this.ApplicationContainer);
         }
 

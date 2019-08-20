@@ -46,7 +46,7 @@ namespace Fate.FileServerApi
             // services.AddDirectoryBrowser();
             services.AddMvcCore().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            ApplicationContainer = AutofacInit.Injection(services, 0);
+            ApplicationContainer = services.ConvertToAutofac(0);
             return new AutofacServiceProvider(ApplicationContainer);
         }
 

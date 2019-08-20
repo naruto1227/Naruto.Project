@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Fate.Common.Ioc.Core
 {
-    public class AutofacInit
+    public static class AutofacInit
     {
         private static IContainer container;
         private static ContainerBuilder builder;
@@ -17,7 +17,7 @@ namespace Fate.Common.Ioc.Core
         /// <param name="services"></param>
         /// <param name="isDependencyMainType">是否注入主要的类型 0 不需要</param>
         /// <returns></returns>
-        public static IContainer Injection(IServiceCollection services, int isDependencyMainType = 1)
+        public static IContainer ConvertToAutofac(this IServiceCollection services, int isDependencyMainType = 1)
         {
             builder = new ContainerBuilder();
             //InstancePerLifetimeScope：同一个Lifetime生成的对象是同一个实例
