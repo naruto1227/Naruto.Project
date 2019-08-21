@@ -1,11 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ocelot.Provider.Consul" Version="13.5.2" />
+    <PackageReference Include="Consul" Version="0.7.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ServiceDiscovery\" />
+    <Folder Include="ServiceRegister\" />
+    <Folder Include="KVRepository\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Options\" />
   </ItemGroup>
 
 </Project>
