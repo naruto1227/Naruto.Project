@@ -30,6 +30,7 @@ namespace Fate.Commom.Consul.ServiceRegister
         /// <returns></returns>
         public Task<WriteResult> ServiceRegister(RegisterConfiguration registerConfiguration)
         {
+            //健康检查
             var httpCheck = new AgentServiceCheck()
             {
                 DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(10),//服务启动多久后注册
@@ -39,7 +40,13 @@ namespace Fate.Commom.Consul.ServiceRegister
                 Timeout = TimeSpan.FromSeconds(5)
             };
 
-            var serverId = "asdsa" + Guid.NewGuid().ToString();
+            //服务id
+            var serverId = "";
+
+            if (!string.IsNullOrWhiteSpace(registerConfiguration.ServerId))
+                serverId = registerConfiguration.ServerId;
+            else
+                serverId = registerConfiguration.ServerName + "-" + Guid.NewGuid().ToString().Replace("-", "");
 
             var registration = new AgentServiceRegistration()
             {
@@ -51,6 +58,16 @@ namespace Fate.Commom.Consul.ServiceRegister
                 Tags = registerConfiguration.Tags.ToArray()//添加 urlprefix-/servicename 格式的 tag 标签，以便 Fabio 识别
             };
             return consulClient.Agent.ServiceRegister(registration);
+        }
+
+        /// <summary>
+        /// 取消服务
+        /// </summary>
+        /// <param name="serverId">服务id</param>
+        /// <returns></returns>
+        public Task<WriteResult> ServiceDeregister(string serverId)
+        {
+            return consulClient.Agent.ServiceDeregister(serverId);
         }
     }
 }

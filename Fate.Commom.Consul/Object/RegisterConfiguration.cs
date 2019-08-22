@@ -25,8 +25,9 @@ namespace Fate.Commom.Consul.Object
         public IPEndPoint Address { get; set; }
 
         public IEnumerable<string> Tags { get; set; }
-
+        /// <summary>
+        /// 服务id
+        /// </summary>
         public string ServerId { get; set; }
-
     }
 }

@@ -19,5 +19,12 @@ namespace Fate.Commom.Consul.ServiceRegister
         /// </summary>
         /// <returns></returns>
         Task<WriteResult> ServiceRegister(RegisterConfiguration registerConfiguration);
+
+        /// <summary>
+        /// 取消服务
+        /// </summary>
+        /// <param name="serverId">服务id</param>
+        /// <returns></returns>
+        Task<WriteResult> ServiceDeregister(string serverId);
     }
 }
