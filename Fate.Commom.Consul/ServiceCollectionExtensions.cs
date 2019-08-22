@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Fate.Commom.Consul.ServiceRegister;
+using Fate.Commom.Consul.ServiceDiscovery;
 
 namespace Fate.Commom.Consul
 {
@@ -18,7 +19,10 @@ namespace Fate.Commom.Consul
         public static IServiceCollection AddConsul(this IServiceCollection services, Action<ConsulClientOptions> option)
         {
             services.TryAddSingleton(typeof(IConsulClientFactory), typeof(DefaultConsulClientFactory));
-            services.TryAddScoped(typeof(IServiceRegisterManage), typeof(DefaultServiceRegisterManage));
+            services.TryAddSingleton(typeof(IServiceRegisterManage), typeof(DefaultServiceRegisterManage));
+
+            services.TryAddSingleton(typeof(IServiceDiscoveryManage), typeof(DefaultServiceDiscoveryManage));
+
             services.Configure(option);
             return services;
         }
