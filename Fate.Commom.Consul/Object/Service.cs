@@ -23,7 +23,7 @@ namespace Fate.Commom.Consul.Object
         /// </summary>
         public string Version { get; }
         /// <summary>
-        /// 
+        ///  标签
         /// </summary>
         public IEnumerable<string> Tags { get; }
         /// <summary>

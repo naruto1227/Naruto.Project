@@ -6,14 +6,14 @@
 
   <ItemGroup>
     <PackageReference Include="Consul" Version="0.7.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ServiceDiscovery\" />
-    <Folder Include="ServiceRegister\" />
     <Folder Include="KVRepository\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Options\" />
   </ItemGroup>
 
 </Project>
