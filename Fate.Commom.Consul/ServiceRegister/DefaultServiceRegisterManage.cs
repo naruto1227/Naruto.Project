@@ -19,9 +19,11 @@ namespace Fate.Commom.Consul.ServiceRegister
     {
         private readonly IConsulClient consulClient;
 
-        public DefaultServiceRegisterManage(IConsulClientFactory _consulClient, IOptions<ConsulClientOptions> option)
+        private readonly IHostingEnvironment env;
+        public DefaultServiceRegisterManage(IConsulClientFactory _consulClient, IOptions<ConsulClientOptions> option, IHostingEnvironment _env)
         {
             consulClient = _consulClient.Get(option?.Value);
+            env = _env;
         }
         /// <summary>
         /// 服务注册
@@ -49,7 +51,7 @@ namespace Fate.Commom.Consul.ServiceRegister
             if (!string.IsNullOrWhiteSpace(registerConfiguration.ServerId))
                 serverId = registerConfiguration.ServerId;
             else
-                serverId = registerConfiguration.ServerName + "-" + Guid.NewGuid().ToString().Replace("-", "");
+                serverId = env.ApplicationName + "-" + Guid.NewGuid().ToString().Replace("-", "");
 
             var registration = new AgentServiceRegistration()
             {
