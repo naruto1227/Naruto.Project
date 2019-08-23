@@ -45,6 +45,7 @@ namespace Fate.XUnitTest
             for (int i = 0; i < 1000; i++)
             {
 
+                Thread.Sleep(100000);
                 Thread thread = new Thread(() =>
                 {
                     var client2 = consulClients.FirstOrDefault();
