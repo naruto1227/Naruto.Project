@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fate.Application\Fate.Application.csproj" />
+    <ProjectReference Include="..\Fate.Commom.Consul\Fate.Commom.Consul.csproj" />
     <ProjectReference Include="..\Fate.Common.Ioc.Core\Fate.Common.Ioc.Core.csproj" />
     <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
     <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />

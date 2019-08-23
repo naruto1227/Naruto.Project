@@ -106,14 +106,6 @@ namespace Fate.Test
             services.UseFileOptions();
 
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
-
-            services.AddConsul(options =>
-            {
-                options.Port = 8521;
-                options.Scheme = SchemeEnum.Http;
-            });
-            services.UseServiceRegister(new Commom.Consul.Object.RegisterConfiguration() {  ServerName=" ceshi", TcpHealthCheck=new IPEndPoint(IPAddress.Parse("192.168.18.171"),5000), Address= new IPEndPoint(IPAddress.Parse("192.168.18.171"), 5000)});
-
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.ConvertToAutofac(services);
             return new AutofacServiceProvider(ApplicationContainer);
