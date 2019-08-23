@@ -30,12 +30,15 @@ namespace Fate.Commom.Consul.ServiceRegister
         /// <returns></returns>
         public Task<WriteResult> ServiceRegister(RegisterConfiguration registerConfiguration)
         {
+            if (registerConfiguration == null)
+                throw new ArgumentNullException(nameof(registerConfiguration));
+
             //健康检查
             var httpCheck = new AgentServiceCheck()
             {
                 DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(10),//服务启动多久后注册
                 Interval = TimeSpan.FromSeconds(10),//健康检查时间间隔，或者称为心跳间隔
-                TCP = registerConfiguration.TcpHealthCheck,
+                TCP = registerConfiguration.TcpHealthCheck?.ToString(),
                 Status = HealthStatus.Passing,
                 Timeout = TimeSpan.FromSeconds(5)
             };
@@ -53,9 +56,9 @@ namespace Fate.Commom.Consul.ServiceRegister
                 Check = httpCheck,
                 ID = serverId,
                 Name = registerConfiguration.ServerName,
-                Address = registerConfiguration.Address.Address.ToString(),
+                Address = registerConfiguration.Address?.Address.ToString(),
                 Port = registerConfiguration.Address.Port,
-                Tags = registerConfiguration.Tags.ToArray()//添加 urlprefix-/servicename 格式的 tag 标签，以便 Fabio 识别
+                Tags = registerConfiguration.Tags?.ToArray()//添加 urlprefix-/servicename 格式的 tag 标签，以便 Fabio 识别
             };
             return consulClient.Agent.ServiceRegister(registration);
         }

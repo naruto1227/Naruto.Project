@@ -17,7 +17,7 @@ namespace Fate.Commom.Consul.Object
         /// <summary>
         /// tcp的健康检查地址
         /// </summary>
-        public string TcpHealthCheck { get; set; }
+        public IPEndPoint TcpHealthCheck { get; set; }
 
         /// <summary>
         /// 服务发现时用于访问的地址

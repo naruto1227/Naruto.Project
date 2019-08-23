@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Fate.Commom.Consul.ServiceRegister;
 using Fate.Commom.Consul.ServiceDiscovery;
+using Fate.Commom.Consul.KVRepository;
+using Fate.Commom.Consul.Object;
 
 namespace Fate.Commom.Consul
 {
@@ -22,9 +24,18 @@ namespace Fate.Commom.Consul
             services.TryAddSingleton(typeof(IServiceRegisterManage), typeof(DefaultServiceRegisterManage));
 
             services.TryAddSingleton(typeof(IServiceDiscoveryManage), typeof(DefaultServiceDiscoveryManage));
-
+            services.TryAddSingleton(typeof(IKVRepository), typeof(DefaultKVRepository));
             services.Configure(option);
             return services;
+        }
+        /// <summary>
+        /// 服务注册
+        /// </summary>
+        /// <param name="consul"></param>
+        public static void UseServiceRegister(this IServiceCollection services, RegisterConfiguration registerConfiguration)
+        {
+            var serviceRegisterManage = services.BuildServiceProvider().GetRequiredService<IServiceRegisterManage>();
+            serviceRegisterManage.ServiceRegister(registerConfiguration);
         }
     }
 }

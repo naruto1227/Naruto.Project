@@ -35,6 +35,11 @@ using System.IO.Compression;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Fate.Domain.Model;
+using Fate.Commom.Consul;
+using Fate.Commom.Consul.ServiceRegister;
+using Fate.Commom.Consul.ServiceDiscovery;
+using Fate.Commom.Consul.KVRepository;
+using System.Net;
 
 namespace Fate.Test
 {
@@ -51,7 +56,7 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-          
+
             //注入响应压缩的服务
             services.AddResponseCompression();
             services.Configure<GzipCompressionProviderOptions>(options =>
@@ -101,6 +106,13 @@ namespace Fate.Test
             services.UseFileOptions();
 
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
+
+            services.AddConsul(options =>
+            {
+                options.Port = 8521;
+                options.Scheme = SchemeEnum.Http;
+            });
+            services.UseServiceRegister(new Commom.Consul.Object.RegisterConfiguration() {  ServerName=" ceshi", TcpHealthCheck=new IPEndPoint(IPAddress.Parse("192.168.18.171"),5000), Address= new IPEndPoint(IPAddress.Parse("192.168.18.171"), 5000)});
 
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.ConvertToAutofac(services);

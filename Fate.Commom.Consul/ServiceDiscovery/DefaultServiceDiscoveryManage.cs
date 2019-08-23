@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Net;
+using Fate.Commom.Consul.Extensions;
 
 namespace Fate.Commom.Consul.ServiceDiscovery
 {
@@ -28,8 +29,7 @@ namespace Fate.Commom.Consul.ServiceDiscovery
         /// <returns></returns>
         public async Task<IEnumerable<Service>> ServerDiscovery(string serverName)
         {
-            if (string.IsNullOrEmpty(serverName))
-                throw new ArgumentNullException(nameof(serverName));
+            serverName.IsNull();
             //获取结果
             var result = await consulClient.Health.Service(serverName);
             if (result == null)
@@ -55,13 +55,14 @@ namespace Fate.Commom.Consul.ServiceDiscovery
         /// </summary>
         /// <param name="serverName">服务名称</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Service>> ServerDiscovery(string serverName,string tag)
+        public async Task<IEnumerable<Service>> ServerDiscovery(string serverName, string tag)
         {
-            if (string.IsNullOrEmpty(serverName))
-                throw new ArgumentNullException(nameof(serverName));
+            serverName.IsNull();
+            tag.IsNull();
+
             //获取结果
             var result = await consulClient.Health.Service(serverName, tag);
-            if (result==null)
+            if (result == null)
             {
                 return default;
             }

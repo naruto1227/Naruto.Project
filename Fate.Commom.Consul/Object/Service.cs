@@ -18,10 +18,10 @@ namespace Fate.Commom.Consul.Object
         /// 服务名称
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// 版本
-        /// </summary>
-        public string Version { get; set; }
+        ///// <summary>
+        ///// 版本
+        ///// </summary>
+        //public string Version { get; set; }
         /// <summary>
         ///  标签
         /// </summary>

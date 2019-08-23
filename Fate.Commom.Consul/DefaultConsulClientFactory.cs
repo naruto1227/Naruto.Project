@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.ObjectPool;
 
 namespace Fate.Commom.Consul
 {
@@ -13,6 +14,13 @@ namespace Fate.Commom.Consul
     /// </summary>
     public class DefaultConsulClientFactory : IConsulClientFactory
     {
+        //private readonly ObjectPool<ConsulClient> objectPool;
+
+        public DefaultConsulClientFactory()
+        {
+            //objectPool = new DefaultObjectPool<ConsulClient>();
+            //objectPool.Return(null);
+        }
         /// <summary>
         /// 获取consul客户端
         /// </summary>
@@ -20,14 +28,20 @@ namespace Fate.Commom.Consul
         /// <returns></returns>
         public IConsulClient Get(ConsulClientOptions configuration)
         {
-            return new ConsulClient(option =>
-            {
-                option.Address = new Uri(configuration.Scheme.ToString() + $"://{configuration.Host}:{configuration.Port}");
-                if (!string.IsNullOrWhiteSpace(configuration.Token))
-                {
-                    option.Token = configuration.Token;
-                }
-            });
+            //if (objectPool.Get() != null)
+            //{
+            //    return objectPool.Get();
+            //}
+            var consulClient = new ConsulClient(option =>
+             {
+                 option.Address = new Uri(configuration.Scheme.ToString() + $"://{configuration.Host}:{configuration.Port}");
+                 if (!string.IsNullOrWhiteSpace(configuration.Token))
+                 {
+                     option.Token = configuration.Token;
+                 }
+             });
+            //objectPool.Return(consulClient);
+            return consulClient;
         }
     }
 }
