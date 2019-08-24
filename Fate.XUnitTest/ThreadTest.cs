@@ -61,7 +61,7 @@ namespace Fate.XUnitTest
 
 
         [Fact]
-        public void unitofWork()
+        public async Task unitofWork()
         {
 
             //注入mysql仓储   //注入多个ef配置信息
@@ -71,23 +71,34 @@ namespace Fate.XUnitTest
                 options.ReadOnlyConnectionString = "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;".Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
-                options.IsOpenMasterSlave = false;
+                options.IsOpenMasterSlave = true;
             });
 
 
-            var unitOfWork = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var iserverPri = services.BuildServiceProvider();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
-
-                Thread thread = new Thread(() =>
+                Thread thread = new Thread(async () =>
                 {
-                    unitOfWork.Respositiy<setting>().Add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
-                    unitOfWork.SaveChanges();
+                    using (var server = iserverPri.CreateScope())
+                    {
+                        var unitOfWork = server.ServiceProvider.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+                        await unitOfWork.ChangeReadOrWriteConnection(Common.Repository.Base.ReadWriteEnum.ReadWrite);
+                        await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
+                        await unitOfWork.Respositiy<setting>().AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+                        await unitOfWork.SaveChangeAsync();
+                    }
                 });
                 thread.IsBackground = true;
                 thread.Start();
             }
+            stopwatch.Stop();
+
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+
         }
 
     }

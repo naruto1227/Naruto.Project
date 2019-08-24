@@ -12,6 +12,7 @@ using System.Data;
 using Fate.Common.Extensions;
 using Fate.Common.Repository;
 using Fate.Domain.Model;
+using System.Threading;
 
 namespace Fate.Test.Controllers
 {
@@ -24,7 +25,7 @@ namespace Fate.Test.Controllers
         {
             unit = ofWork;
         }
-        public IActionResult test()
+        public async Task<IActionResult> test()
         {
             List<setting> settings = new List<setting>();
             for (int i = 0; i < 1000; i++)
@@ -32,8 +33,9 @@ namespace Fate.Test.Controllers
                 settings.Add(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             }
             Stopwatch stopwatch = Stopwatch.StartNew();
-            unit.Respositiy<setting>().BulkAddAsync(settings);
-            unit.SaveChanges();
+            await unit.Respositiy<setting>().BulkAddAsync(settings);
+            Thread.Sleep(1000);
+            await unit.SaveChangeAsync();
             stopwatch.Stop();
             return new JsonResult(new { stopwatch.ElapsedMilliseconds });
         }
