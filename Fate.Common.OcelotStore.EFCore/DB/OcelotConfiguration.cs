@@ -17,8 +17,21 @@ namespace Fate.Common.OcelotStore.EFCore
         /// </summary>
         public string Id { get; set; }
         /// <summary>
-        /// ocelot的配置信息
+        /// ocelot的路由
         /// </summary>
-        public string Config { get; set; }
+        public string ReRoutes { get; set; }
+
+        /// <summary>
+        /// 自定义路由（暂时用不到）
+        /// </summary>
+        public string DynamicReRoutes { get; set; }
+        /// <summary>
+        /// 请求聚合
+        /// </summary>
+        public string Aggregates { get; set; }
+        /// <summary>
+        /// 全局配置
+        /// </summary>
+        public string GlobalConfiguration { get; set; }
     }
 }

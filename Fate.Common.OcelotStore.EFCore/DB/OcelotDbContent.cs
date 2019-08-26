@@ -28,7 +28,10 @@ namespace Fate.Common.OcelotStore.EFCore
                    .HasName("PRIMARY");
                 entity.Property(e => e.Id).HasColumnType("varchar(255)");
 
-                entity.Property(e => e.Config).HasColumnType("longtext");
+                entity.Property(e => e.ReRoutes).HasColumnType("longtext");
+                entity.Property(e => e.DynamicReRoutes).HasColumnType("longtext");
+                entity.Property(e => e.Aggregates).HasColumnType("longtext");
+                entity.Property(e => e.GlobalConfiguration).HasColumnType("longtext");
             });
         }
     }

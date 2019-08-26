@@ -89,8 +89,7 @@ namespace Fate.Common.OcelotStore.EFCore
                 var unitOfWork = services.ServiceProvider.GetRequiredService<IUnitOfWork<OcelotDbContent>>();
                 //从数据库读取
                 var info = unitOfWork.Respositiy<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).AsNoTracking().FirstOrDefault();
-
-                return JsonConvert.DeserializeObject<FileConfiguration>(info.Config);
+                return JsonConvert.DeserializeObject<FileConfiguration>("{'ReRoutes':"+info.ReRoutes+ ",'DynamicReRoutes':"+info.DynamicReRoutes+ ",'Aggregates':"+info.Aggregates+ ",'GlobalConfiguration':"+info.GlobalConfiguration+"}");
             }
         }
 
@@ -110,12 +109,15 @@ namespace Fate.Common.OcelotStore.EFCore
                 {
                     unitOfWork.Respositiy<OcelotConfiguration>().Update(a => a.Id == info.Id, (item) =>
                     {
-                        item.Config = JsonConvert.SerializeObject(fileConfiguration);
+                        item.ReRoutes = JsonConvert.SerializeObject(fileConfiguration.ReRoutes);
+                        item.DynamicReRoutes = JsonConvert.SerializeObject(fileConfiguration.DynamicReRoutes);
+                        item.GlobalConfiguration = JsonConvert.SerializeObject(fileConfiguration.GlobalConfiguration);
+                        item.Aggregates = JsonConvert.SerializeObject(fileConfiguration.Aggregates);
                         return item;
                     });
                 }
                 else
-                    unitOfWork.Respositiy<OcelotConfiguration>().Add(new OcelotConfiguration() { Config = JsonConvert.SerializeObject(fileConfiguration), Id = Guid.NewGuid().ToString().Replace("-", "") });
+                    unitOfWork.Respositiy<OcelotConfiguration>().Add(new OcelotConfiguration() { ReRoutes = JsonConvert.SerializeObject(fileConfiguration.ReRoutes), Aggregates = JsonConvert.SerializeObject(fileConfiguration.Aggregates), DynamicReRoutes = JsonConvert.SerializeObject(fileConfiguration.DynamicReRoutes), GlobalConfiguration = JsonConvert.SerializeObject(fileConfiguration.GlobalConfiguration), Id = Guid.NewGuid().ToString().Replace("-", "") });
 
                 unitOfWork.SaveChanges();
             }
