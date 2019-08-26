@@ -30,7 +30,9 @@ namespace Fate.Test.Ocelot
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddOcelot().AddEFCache(options =>
+            services.AddSingleton<Test2DefinedAggregator>();
+            services.AddOcelot() 
+                .AddEFCache(options =>
             {
                 options.EFOptions = ef => ef.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("OcelotMysqlConnection"));
                 options.RedisOptions = redis =>
@@ -38,8 +40,8 @@ namespace Fate.Test.Ocelot
                     redis.Connection = "127.0.0.1:6379";
                     redis.DefaultDataBase = 2;
                 };
-            });
-            
+            }).AddSingletonDefinedAggregator<Test2DefinedAggregator>();//添加一个聚合器 用于请求聚合的时候
+
             //替换自带的DI
             ContainerBuilder builder = new ContainerBuilder();
             builder.Populate(services);
