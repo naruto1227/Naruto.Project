@@ -16,6 +16,8 @@ using Ocelot.Cache;
 using Ocelot.Configuration.File;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Fate.Common.Repository.UnitOfWork;
+using Fate.Common.OcelotStore.EFCore.DB;
 
 namespace Fate.Test.Ocelot
 {
@@ -31,7 +33,7 @@ namespace Fate.Test.Ocelot
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<Test2DefinedAggregator>();
-            services.AddOcelot() 
+            services.AddOcelot()
                 .AddEFCache(options =>
             {
                 options.EFOptions = ef => ef.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("OcelotMysqlConnection"));

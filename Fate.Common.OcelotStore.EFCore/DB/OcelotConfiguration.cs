@@ -8,7 +8,7 @@ namespace Fate.Common.OcelotStore.EFCore
     /// <summary>
     /// 张海波
     /// 2019-08-14
-    /// ocelot的数据存放表
+    /// ocelot的数据存放表 (数据的汇总表)
     /// </summary>
     public class OcelotConfiguration : IEntity
     {
