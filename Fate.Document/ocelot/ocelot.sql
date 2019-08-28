@@ -53,6 +53,7 @@ drop table if exists `OcelotServiceDiscoveryProvider`;
 create table `OcelotServiceDiscoveryProvider`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    `Host`                 varchar(50) comment '服务发现的主机',
    `Port`                 int(11) not null comment '服务发现的 端口',
    Type                 varchar(50) comment '服务发现的类型 默认 使用Consul',
@@ -72,6 +73,7 @@ drop table if exists `OcelotRateLimitRule`;
 create table `OcelotRateLimitRule`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    IsReRouteOrGlobal    int(2) not null comment '当前记录是 路由节点下面的 还是 全局配置节点下的 0 路由节点 1 全局配置节点  2 自定义路由节点',
    ClientWhitelist      varchar(255) comment '客户端白名单 (多个逗号分隔)',
    EnableRateLimiting   bit(1) not null comment '是否启用限流',
@@ -90,6 +92,7 @@ drop table if exists `OcelotHttpHandlerOptions`;
 create table `OcelotHttpHandlerOptions`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    IsReRouteOrGlobal    int(2) not null comment '当前记录是 路由节点下面的 还是 全局配置节点下的 0 路由节点 1 全局配置节点 ',
    AllowAutoRedirect    bit(1) not null,
    UseCookieContainer   bit(1) not null,
@@ -107,6 +110,7 @@ drop table if exists `OcelotQoSOptions`;
 create table `OcelotQoSOptions`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    IsReRouteOrGlobal    int(2) not null comment ' 当前记录是 路由节点下面的 还是 全局配置节点下的 0 路由节点 1 全局配置节点 ',
    ExceptionsAllowedBeforeBreaking int(11) not null comment '允许多少个异常请求',
    DurationOfBreak      int(11) not null comment ' 熔断的时间，单位为秒',
@@ -139,6 +143,7 @@ drop table if exists OcelotLoadBalancer;
 create table `OcelotLoadBalancer`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    IsReRouteOrGlobal    int(2) not null comment '当前记录是 路由节点下面的 还是 全局配置节点下的 0 路由节点 1 全局配置节点 ',
    Type                 varchar(50) comment '负载均衡 的类型',
    `Key`                  varchar(255),
@@ -170,6 +175,7 @@ drop table if exists `OcelotAggregateReRouteConfig`;
 create table `OcelotAggregateReRouteConfig`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    ReRouteKey           varchar(255) comment '路由key',
    Parameter            varchar(255),
    JsonPath             varchar(255),
@@ -185,6 +191,7 @@ drop table if exists `OcelotHeaderTransform`;
 create table `OcelotHeaderTransform`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    IsUpOrDown           int(2) not null comment '改变的是上游的值 还是 下游的值 0 上游 1 下游响应',
    Header               varchar(255) comment '请求头',
    `Value`                varchar(300) comment '需要替换的值',
@@ -200,6 +207,7 @@ drop table if exists `OcelotDictionaryClaims`;
 create table `OcelotDictionaryClaims`
 (
    Id                   int(11) not null auto_increment,
+		ParentId            int(11) comment '父节点的id',
    Type                 int(2) not null comment '存放的字典的类型  0 AddHeadersToRequest  1 AddClaimsToRequest 2 RouteClaimsRequirement 3   AddQueriesToRequest',
    `Key`                  varchar(255) comment '关键字',
    `Value`                varchar(300) comment '值',
@@ -215,6 +223,7 @@ drop table if exists `OcelotAuthenticationOption`;
 create table `OcelotAuthenticationOption`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    AuthenticationProviderKey varchar(150),
    AllowedScopes        varchar(255) comment '允许的范围 多个参数逗号分隔',
    primary key (Id)
@@ -229,6 +238,7 @@ drop table if exists `OcelotCacheOptions`;
 create table `OcelotCacheOptions`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    TtlSeconds           int(11) not null,
    Region               varchar(150),
    primary key (Id)
@@ -243,6 +253,7 @@ drop table if exists `OcelotSecurityOptions`;
 create table `OcelotSecurityOptions`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    IPAllowedList        longtext comment ' 允许的ip （多个逗号分隔）',
    IPBlockedList        longtext comment ' 禁用的ip （多个逗号分隔）',
    primary key (Id)
@@ -257,6 +268,7 @@ drop table if exists `OcelotHostAndPort`;
 create table `OcelotHostAndPort`
 (
    Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
    `Host`                 varchar(50) comment '主机',
    `Port`                 int(11) not null comment '端口',
    primary key (Id)

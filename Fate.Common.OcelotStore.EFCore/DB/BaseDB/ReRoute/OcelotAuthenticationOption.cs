@@ -19,6 +19,10 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// 父节点的id
+        /// </summary>
+        public int ParentId { get; set; }
+        /// <summary>
         /// 
         /// </summary>
         public string AuthenticationProviderKey { get; set; }

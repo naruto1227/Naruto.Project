@@ -13,6 +13,10 @@ namespace Fate.Common.OcelotStore.EFCore.DB
     {
         public int Id { get; set; }
         /// <summary>
+        /// 父节点的id
+        /// </summary>
+        public int ParentId { get; set; }
+        /// <summary>
         /// 路由key
         /// </summary>
         public string ReRouteKey { get; set; }

@@ -17,6 +17,10 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// 父节点的id
+        /// </summary>
+        public int ParentId { get; set; }
+        /// <summary>
         /// 当前记录是 路由节点下面的 还是 全局配置节点下的 0 路由节点 1 全局配置节点  2 自定义路由节点
         /// </summary>
         public int IsReRouteOrGlobal { get; set; }
