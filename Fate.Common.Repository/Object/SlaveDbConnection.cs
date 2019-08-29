@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Repository.Base
+namespace Fate.Common.Repository.Object
 {
     /// <summary>
     /// 张海波

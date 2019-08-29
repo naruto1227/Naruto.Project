@@ -24,7 +24,7 @@ using Fate.Domain.Model.Entities;
 using Fate.Common.Redis;
 using CP.Common.Infrastructure;
 using Fate.Common.BaseRibbitMQ;
-using Fate.Common.Repository.Base;
+using Fate.Common.Repository.Object;
 using Fate.Common.Extensions;
 using Fate.Common.Options;
 using Fate.Common.Repository.Interceptor;

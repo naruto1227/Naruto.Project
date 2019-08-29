@@ -10,7 +10,7 @@ using System.Data;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
 
-namespace Fate.Common.Repository.Base
+namespace Fate.Common.Repository.Object
 {
     /// <summary>
     /// 张海波

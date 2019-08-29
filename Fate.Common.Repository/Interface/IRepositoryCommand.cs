@@ -1,30 +1,20 @@
-﻿using System;
+﻿using Fate.Common.Base.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Linq.Expressions;
-using Fate.Common.Base.Model;
+
 namespace Fate.Common.Repository.Interface
 {
     /// <summary>
-    /// 数据访问仓库的接口
+    /// 张海波
+    /// 2019-08-29
+    /// 仓储的增删改的 接口层
     /// </summary>
-    public interface IRepository<T> : IDisposable, IRepositoryDependency where T : IEntity
+    public interface IRepositoryCommand<T> : IRepositoryDependency where T : IEntity 
     {
-        /// <summary>
-        /// 更改数据库
-        /// </summary>
-        /// <param name="connectionName"></param>
-        /// <returns></returns>
-        Task ChangeDBConnection(string connectionName);
-        /// <summary>
-        /// 更改上下文
-        /// </summary>
-        /// <param name="dbContext"></param>
-        /// <returns></returns>
-        Task ChangeDbContext(DbContext dbContext);
         #region 异步
         /// <summary>
         /// 新增
@@ -72,14 +62,8 @@ namespace Fate.Common.Repository.Interface
         /// <returns></returns>
         Task BulkAddAsync(IEnumerable<T> entities);
 
-        /// <summary>
-        /// 获取单条记录
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        Task<T> FindAsync(Expression<Func<T, bool>> condition);
         #endregion
-        
+
         #region 同步
         /// <summary>
         /// 添加数据
@@ -128,33 +112,6 @@ namespace Fate.Common.Repository.Interface
         /// <returns></returns>
         void BulkUpdate(params T[] entities);
 
-        /// <summary>
-        /// 获取单条记录
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        T Find(Expression<Func<T, bool>> condition);
-        #endregion
-
-        #region 查询
-        /// <summary>
-        /// sql语句查询
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<T> QuerySqlAsync(string sql, params object[] _params);
-        /// <summary>
-        /// 查询所有数据
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        IQueryable<T> AsQueryable();
-
-        /// <summary>
-        /// 根据条件查询
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        IQueryable<T> Where(Expression<Func<T, bool>> condition);
         #endregion
     }
 }

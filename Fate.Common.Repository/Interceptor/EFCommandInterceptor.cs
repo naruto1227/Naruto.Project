@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Microsoft.Extensions.Options;
-using Fate.Common.Repository.Base;
+using Fate.Common.Repository.Object;
 using System.Linq;
 using System.Net.Sockets;
 using System.Collections.Concurrent;

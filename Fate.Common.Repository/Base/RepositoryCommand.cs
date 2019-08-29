@@ -1,50 +1,23 @@
 ﻿using Fate.Common.Base.Model;
-using Microsoft.EntityFrameworkCore;
+using Fate.Common.Repository.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Fate.Common.Repository.Interface;
+using System.Linq;
 
 namespace Fate.Common.Repository.Base
 {
-    /// <summary>
-    /// 张海波
-    /// 2019.08.13
-    /// 仓储的基类
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class Repository<T> : IRepository<T> where T : class, IEntity
+    public class RepositoryCommand<T> : IRepositoryCommand<T> where T : class, IEntity
     {
-        /// <summary>
-        /// 上下文
-        /// </summary>
-        protected DbContext repository { get; set; }
-        public Repository(DbContext _dbContext = null)
+
+        private DbContext repository;
+
+        public RepositoryCommand(IRepositoryFactory factory)
         {
-            repository = _dbContext;
-        }
-        /// <summary>
-        /// 更改数据库
-        /// </summary>
-        /// <param name="connectionName"></param>
-        /// <returns></returns>
-        public Task ChangeDBConnection(string connectionName)
-        {
-            return Task.FromResult(0);
-        }
-        /// <summary>
-        /// 更改上下文
-        /// </summary>
-        /// <param name="dbContext"></param>
-        /// <returns></returns>
-        public Task ChangeDbContext(DbContext dbContext)
-        {
-            repository = dbContext;
-            return Task.FromResult(0);
+            repository = factory.Get();
         }
         #region 异步
         /// <summary>
@@ -84,12 +57,6 @@ namespace Fate.Common.Repository.Base
                 repository.Set<T>().RemoveRange(entities);
             }).ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// 保存
-        /// </summary>
-        /// <returns></returns>
-        public async Task<int> SaveChangesAsync() => await repository.SaveChangesAsync();
         /// <summary>
         /// 更新单条实体
         /// </summary>
@@ -130,7 +97,7 @@ namespace Fate.Common.Repository.Base
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public Task<T> FindAsync(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefaultAsync();
+        private Task<T> FindAsync(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefaultAsync();
 
         #endregion
 
@@ -197,44 +164,20 @@ namespace Fate.Common.Repository.Base
         /// <param name="entities"></param>
         /// <returns></returns>
         public void BulkUpdate(params T[] entities) => repository.Set<T>().UpdateRange(entities);
+
+        #endregion
+
         /// <summary>
         /// 获取单条记录
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public T Find(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefault();
-        #endregion
-
-        #region 查询
-
-        /// <summary>
-        ///获取所有数据
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        public IQueryable<T> AsQueryable() => repository.Set<T>().AsQueryable();
-
+        private T Find(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefault();
         /// <summary>
         /// 根据条件查询
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public IQueryable<T> Where(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).AsQueryable();
-        /// <summary>
-        /// sql语句查询
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<T> QuerySqlAsync(string sql, params object[] _params) => repository.Set<T>().FromSql(sql, _params);
-
-        #endregion
-
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        public void Dispose()
-        {
-            repository?.Dispose();
-            GC.SuppressFinalize(this);
-        }
+        private IQueryable<T> Where(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).AsQueryable();
     }
 }

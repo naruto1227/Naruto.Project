@@ -1,6 +1,6 @@
 ﻿
 using Fate.Common.Redis.RedisConfig;
-using Fate.Common.Repository.Base;
+using Fate.Common.Repository.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;

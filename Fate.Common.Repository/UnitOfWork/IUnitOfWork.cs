@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Repository.Base;
+using Fate.Common.Repository.Object;
 using Fate.Common.Repository.Interface;
 using Fate.Common.Base.Model;
 using Microsoft.EntityFrameworkCore;
 namespace Fate.Common.Repository.UnitOfWork
 {
-    public interface IUnitOfWork {
+    public interface IUnitOfWork
+    {
         /// <summary>
         /// 提交更改
         /// </summary>
@@ -35,6 +36,21 @@ namespace Fate.Common.Repository.UnitOfWork
         void RollBackTransaction();
 
         IRepository<T> Respositiy<T>() where T : class, IEntity;
+
+
+        /// <summary>
+        /// 执行 查询的操作
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        IRepositoryQuery<T> Query<T>() where T : class, IEntity;
+
+        /// <summary>
+        /// 执行增删改的操作
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        IRepositoryCommand<T> Command<T>() where T : class, IEntity;
 
         /// <summary>
         /// 更改数据库

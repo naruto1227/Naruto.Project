@@ -12,7 +12,7 @@ using Ocelot.Configuration.Repository;
 using Fate.Common.OcelotStore.EFCore;
 using Fate.Common.Repository.UnitOfWork;
 using Fate.Common.Repository;
-using Fate.Common.Repository.Base;
+using Fate.Common.Repository.Object;
 using Microsoft.Extensions.Options;
 using Fate.Common.Redis;
 using Fate.Common.Redis.IRedisManage;
