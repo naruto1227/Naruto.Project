@@ -55,7 +55,9 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         //{
         //    get { return new List<string> { "Get" }; }
         //}
+        #region 误删
 
         public virtual IList<OcelotAggregateReRouteConfig> OcelotAggregateReRouteConfigs { get; set; }
+        #endregion
     }
 }

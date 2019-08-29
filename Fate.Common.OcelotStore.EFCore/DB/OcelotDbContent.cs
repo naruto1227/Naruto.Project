@@ -65,6 +65,8 @@ namespace Fate.Common.OcelotStore.EFCore
                 entity.Property(e => e.UpstreamHost).HasColumnType("varchar(255)");
                 entity.Property(e => e.UpstreamHttpMethod).HasColumnType("varchar(100)");
                 entity.Property(e => e.UpstreamPathTemplate).HasColumnType("varchar(100)");
+
+                entity.Ignore("OcelotAggregateReRouteConfigs");
             });
 
             modelBuilder.Entity<OcelotAggregateReRouteConfig>(entity =>
@@ -117,6 +119,7 @@ namespace Fate.Common.OcelotStore.EFCore
                 entity.Property(e => e.BaseUrl).HasColumnType("varchar(255)");
                 entity.Property(e => e.DownstreamScheme).HasColumnType("varchar(20)");
                 entity.Property(e => e.RequestIdKey).HasColumnType("varchar(50)");
+                entity.Ignore("OcelotServiceDiscoveryProvider").Ignore("OcelotLoadBalancer").Ignore("OcelotQoSOptions").Ignore("OcelotRateLimitRule").Ignore("OcelotHttpHandlerOptions");
             });
 
 
@@ -214,6 +217,16 @@ namespace Fate.Common.OcelotStore.EFCore
                 entity.Property(e => e.UpstreamHttpMethod).HasColumnType("varchar(150)");
                 entity.Property(e => e.UpstreamPathTemplate).HasColumnType("varchar(150)");
 
+                entity.Ignore("OcelotHostAndPorts");
+                entity.Ignore("OcelotLoadBalancer");
+                entity.Ignore("OcelotAuthenticationOption");
+                entity.Ignore("OcelotDictionaryClaims");
+                entity.Ignore("OcelotHeaderTransform");
+                entity.Ignore("OcelotHttpHandlerOptions");
+
+                entity.Ignore("OcelotQoSOptions");
+                entity.Ignore("OcelotRateLimitRule");
+                entity.Ignore("OcelotSecurityOptions");
             });
 
             modelBuilder.Entity<OcelotSecurityOptions>(entity =>

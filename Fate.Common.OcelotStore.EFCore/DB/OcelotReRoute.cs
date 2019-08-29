@@ -101,21 +101,22 @@ namespace Fate.Common.OcelotStore.EFCore.DB
 
         //public Dictionary<string, string> AddQueriesToRequest { get; set; }
 
+        #region 误删
 
         public virtual IList<OcelotHostAndPort> OcelotHostAndPorts { get; set; }
 
-        public virtual IList<OcelotLoadBalancer> OcelotLoadBalancer { get; set; }
+        public virtual OcelotLoadBalancer OcelotLoadBalancer { get; set; }
 
-        public virtual IList<OcelotAuthenticationOption> OcelotAuthenticationOption { get; set; }
+        public virtual OcelotAuthenticationOption OcelotAuthenticationOption { get; set; }
 
         public virtual IList<OcelotDictionaryClaims> OcelotDictionaryClaims { get; set; }
 
         public virtual IList<OcelotHeaderTransform> OcelotHeaderTransform { get; set; }
-        public virtual IList<OcelotHttpHandlerOptions> OcelotHttpHandlerOptions { get; set; }
-        public virtual IList<OcelotQoSOptions> OcelotQoSOptions { get; set; }
-        public virtual IList<OcelotRateLimitRule> OcelotRateLimitRule { get; set; }
-        public virtual IList<OcelotSecurityOptions> OcelotSecurityOptions { get; set; }
+        public virtual OcelotHttpHandlerOptions OcelotHttpHandlerOptions { get; set; }
+        public virtual OcelotQoSOptions OcelotQoSOptions { get; set; }
+        public virtual OcelotRateLimitRule OcelotRateLimitRule { get; set; }
+        public virtual OcelotSecurityOptions OcelotSecurityOptions { get; set; }
 
-
+        #endregion
     }
 }
