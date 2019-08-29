@@ -102,5 +102,20 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         //public Dictionary<string, string> AddQueriesToRequest { get; set; }
 
 
+        public virtual IList<OcelotHostAndPort> OcelotHostAndPorts { get; set; }
+
+        public virtual IList<OcelotLoadBalancer> OcelotLoadBalancer { get; set; }
+
+        public virtual IList<OcelotAuthenticationOption> OcelotAuthenticationOption { get; set; }
+
+        public virtual IList<OcelotDictionaryClaims> OcelotDictionaryClaims { get; set; }
+
+        public virtual IList<OcelotHeaderTransform> OcelotHeaderTransform { get; set; }
+        public virtual IList<OcelotHttpHandlerOptions> OcelotHttpHandlerOptions { get; set; }
+        public virtual IList<OcelotQoSOptions> OcelotQoSOptions { get; set; }
+        public virtual IList<OcelotRateLimitRule> OcelotRateLimitRule { get; set; }
+        public virtual IList<OcelotSecurityOptions> OcelotSecurityOptions { get; set; }
+
+
     }
 }

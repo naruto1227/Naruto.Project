@@ -8,6 +8,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
 {
     /// <summary>
     /// 服务发现的实体配置
+    /// 单条记录
     /// </summary>
     [Table("OcelotServiceDiscoveryProvider")]
     public class OcelotServiceDiscoveryProvider : Base.Model.IEntity

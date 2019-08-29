@@ -36,5 +36,16 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         //public FileLoadBalancerOptions LoadBalancerOptions { get; set; }
 
         //public FileHttpHandlerOptions HttpHandlerOptions { get; set; }
+
+
+        public virtual IList<OcelotServiceDiscoveryProvider> OcelotServiceDiscoveryProvider { get; set; }
+
+        public virtual IList<OcelotLoadBalancer> OcelotLoadBalancer { get; set; }
+
+        public virtual IList<OcelotQoSOptions> OcelotQoSOptions { get; set; }
+
+        public virtual IList<OcelotRateLimitRule> OcelotRateLimitRule { get; set; }
+
+        public virtual IList<OcelotHttpHandlerOptions> OcelotHttpHandlerOptions { get; set; }
     }
 }

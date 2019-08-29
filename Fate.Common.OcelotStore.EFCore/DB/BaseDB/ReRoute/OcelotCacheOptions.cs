@@ -8,6 +8,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
     /// <summary>
     /// 缓存的配置
     /// Ocelot可以对下游请求结果进行缓存 ，目前缓存的功能还不是很强大。它主要是依赖于CacheManager 来实现的，我们只需要在路由下添加以下配置即可
+    /// 单条记录
     /// </summary>
     [Table("OcelotCacheOptions")]
     public class OcelotCacheOptions : Base.Model.IEntity

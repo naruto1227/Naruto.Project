@@ -55,5 +55,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         //{
         //    get { return new List<string> { "Get" }; }
         //}
+
+        public virtual IList<OcelotAggregateReRouteConfig> OcelotAggregateReRouteConfigs { get; set; }
     }
 }

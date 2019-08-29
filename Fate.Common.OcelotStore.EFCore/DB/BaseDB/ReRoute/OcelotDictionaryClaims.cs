@@ -7,7 +7,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
 {
     [Table("OcelotDictionaryClaims")]
     /// <summary>
-    /// 
+    /// 字典的配置
     /// </summary>
     public class OcelotDictionaryClaims : Base.Model.IEntity
     {
