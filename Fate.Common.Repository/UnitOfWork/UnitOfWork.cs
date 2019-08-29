@@ -152,22 +152,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public async Task<int> SaveChangeAsync()
         {
-            //验证是否开启读写分离
-            //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
-            {
-                var connec = dbContext.Value.Database.GetDbConnection();
-                //关闭连接
-                ChangeConnecState(connec, ConnectionState.Closed);
-                //更改连接
-                connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
-                //开启连接
-                ChangeConnecState(connec, ConnectionState.Open);
-                //验证是否更改了数据库名
-                ChangeDataBase();
-                //更改连接的服务器为主库
-                unitOfWorkOptions.IsSlaveOrMaster = false;
-            }
+            SetMasterConnec();
             return await dbContext.Value.SaveChangesAsync();
         }
         /// <summary>
@@ -176,22 +161,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public int SaveChanges()
         {
-            //验证是否开启读写分离
-            //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
-            {
-                var connec = dbContext.Value.Database.GetDbConnection();
-                //关闭连接
-                ChangeConnecState(connec, ConnectionState.Closed);
-                //更改连接
-                connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
-                //开启连接
-                ChangeConnecState(connec, ConnectionState.Open);
-                //验证是否更改了数据库名
-                ChangeDataBase();
-                //更改连接的服务器为主库
-                unitOfWorkOptions.IsSlaveOrMaster = false;
-            }
+            SetMasterConnec();
             return dbContext.Value.SaveChanges();
         }
         /// <summary>
@@ -202,7 +172,7 @@ namespace Fate.Common.Repository.UnitOfWork
         public IRepository<T> Respositiy<T>() where T : class, IEntity
         {
 
-            SetMasterSlaveConnec();
+            SetSlaveConnec();
 
             //获取仓储服务（需先注入仓储集合，否则将报错）
             IRepository<T> repository = dbContext.Value.GetService<IRepository<T>>();
@@ -217,7 +187,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public IRepositoryQuery<T> Query<T>() where T : class, IEntity
         {
-            SetMasterSlaveConnec();
+            SetSlaveConnec();
 
             IRepositoryQuery<T> repository = dbContext.Value.GetService<IRepositoryQuery<T>>();
             return repository;
@@ -230,7 +200,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public IRepositoryCommand<T> Command<T>() where T : class, IEntity
         {
-            SetMasterSlaveConnec();
+            SetSlaveConnec();
 
             IRepositoryCommand<T> repository = dbContext.Value.GetService<IRepositoryCommand<T>>();
             return repository;
@@ -269,9 +239,9 @@ namespace Fate.Common.Repository.UnitOfWork
 
         #region base
         /// <summary>
-        /// 设置主库从库的连接
+        /// 设置从库的连接
         /// </summary>
-        private void SetMasterSlaveConnec()
+        private void SetSlaveConnec()
         {
             //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为主库的话 则 更改连接字符串为 从库的 
@@ -288,6 +258,27 @@ namespace Fate.Common.Repository.UnitOfWork
                 ChangeDataBase();
                 //更改连接的服务器为从库
                 unitOfWorkOptions.IsSlaveOrMaster = true;
+            }
+        }
+        /// <summary>
+        /// 设置主库的 连接
+        /// </summary>
+        private void SetMasterConnec() {
+            //验证是否开启读写分离
+            //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
+            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
+            {
+                var connec = dbContext.Value.Database.GetDbConnection();
+                //关闭连接
+                ChangeConnecState(connec, ConnectionState.Closed);
+                //更改连接
+                connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
+                //开启连接
+                ChangeConnecState(connec, ConnectionState.Open);
+                //验证是否更改了数据库名
+                ChangeDataBase();
+                //更改连接的服务器为主库
+                unitOfWorkOptions.IsSlaveOrMaster = false;
             }
         }
 
