@@ -28,12 +28,12 @@ namespace Fate.Test.Controllers
         public async Task<IActionResult> test()
         {
             List<setting> settings = new List<setting>();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1000000; i++)
             {
                 settings.Add(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             }
             Stopwatch stopwatch = Stopwatch.StartNew();
-            await unit.Respositiy<setting>().BulkAddAsync(settings);
+            await unit.Command<setting>().BulkAddAsync(settings);
             Thread.Sleep(1000);
             await unit.SaveChangeAsync();
             stopwatch.Stop();

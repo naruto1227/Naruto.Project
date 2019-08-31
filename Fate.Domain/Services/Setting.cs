@@ -27,7 +27,7 @@ namespace Fate.Domain.Services
 
         public async Task add(IEntity info)
         {
-            await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().AddAsync(new Fate.Domain.Model.Entities.setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+            await unitOfWork.Command<Fate.Domain.Model.Entities.setting>().AddAsync(new Fate.Domain.Model.Entities.setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
 
             await unitOfWork.SaveChangeAsync();
         }
@@ -54,9 +54,9 @@ namespace Fate.Domain.Services
         {
             //await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().DeleteAsync(a=>a.Id==1);
 
-            var info = await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().FindAsync(a => a.Id == 6);
+            var info = await unitOfWork.Query<Fate.Domain.Model.Entities.setting>().FindAsync(a => a.Id == 6);
             info.Contact = "sssssssssss";
-            await unitOfWork.Respositiy<Fate.Domain.Model.Entities.setting>().UpdateAsync(info);
+            await unitOfWork.Command<Fate.Domain.Model.Entities.setting>().UpdateAsync(info);
             await unitOfWork.SaveChangeAsync();
         }
     }

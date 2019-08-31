@@ -13,6 +13,7 @@ using Fate.Common.Repository.UnitOfWork;
 using Fate.Domain.Model.Entities;
 using Fate.Common.Options;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fate.Common.Infrastructure
 {
@@ -103,7 +104,7 @@ namespace Fate.Common.Infrastructure
                     if (DayLength(item) > StaticFieldConfig.OrderNOMinLength)
                         return;
                     //从数据库中获取最后的一个单号
-                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.No).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.No).FirstOrDefault();
+                    var resNO = unitOfWork.Query<OrderNo>().AsQueryable().AsNoTracking().OrderByDescending(a => a.Date).ThenByDescending(a => a.No).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.No).FirstOrDefault();
                     //获取集合实例
                     List<OrderNo> addLi = service.ServiceProvider.GetRequiredService<List<OrderNo>>();
                     if (addLi.Count() > 0)
@@ -125,7 +126,7 @@ namespace Fate.Common.Infrastructure
                     if (addLi != null && addLi.Count() > 0)
                     {
                         //追加到数据库
-                        unitOfWork.Respositiy<OrderNo>().BulkAdd(addLi);
+                        unitOfWork.Command<OrderNo>().BulkAdd(addLi);
                         var res = unitOfWork.SaveChanges();
                         if (res > 0)
                         {
@@ -158,7 +159,7 @@ namespace Fate.Common.Infrastructure
                     if (MonthLength(item) > StaticFieldConfig.OrderNOMinLength)
                         return;
                     //从数据库中获取最后的一个单号
-                    var resNO = unitOfWork.Respositiy<OrderNo>().AsQueryable().OrderByDescending(a => a.Date).ThenByDescending(a => a.No).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.No).FirstOrDefault();
+                    var resNO = unitOfWork.Query<OrderNo>().AsQueryable().AsNoTracking().OrderByDescending(a => a.Date).ThenByDescending(a => a.No).Where(a => a.Date == date && a.TableName.Equals(item)).Select(a => a.No).FirstOrDefault();
                     //获取集合实例
                     List<OrderNo> addLi = service.ServiceProvider.GetRequiredService<List<OrderNo>>();
                     if (addLi.Count() > 0)
@@ -180,7 +181,7 @@ namespace Fate.Common.Infrastructure
                     if (addLi != null && addLi.Count() > 0)
                     {
                         //追加到数据库
-                        unitOfWork.Respositiy<OrderNo>().BulkAdd(addLi);
+                        unitOfWork.Command<OrderNo>().BulkAdd(addLi);
                         var res = unitOfWork.SaveChanges();
                         if (res > 0)
                         {
@@ -241,7 +242,7 @@ namespace Fate.Common.Infrastructure
                         var unitOfWork = service.ServiceProvider.GetRequiredService(orderOptions.Value.TUnitOfWorkType) as IUnitOfWork; ;
                         //获取
                         var nowDate = Convert.ToInt32(date.ToString("yyMM"));
-                        unitOfWork.Respositiy<OrderNo>().Delete(a => a.Date != nowDate);
+                        unitOfWork.Command<OrderNo>().Delete(a => a.Date != nowDate);
                         unitOfWork.SaveChanges();
                         //移除缓存
                         string key = StaticFieldConfig.OrderNOByMonthCacheList.Replace(nowDate.ToString(), date.AddMonths(-1).ToString("yyMM"));
@@ -254,7 +255,7 @@ namespace Fate.Common.Infrastructure
                         var unitOfWork = service.ServiceProvider.GetRequiredService<IUnitOfWork>();
                         //获取
                         var nowDate = Convert.ToInt32(date.ToString("yyMMdd"));
-                        unitOfWork.Respositiy<OrderNo>().Delete(a => a.Date != nowDate);
+                        unitOfWork.Command<OrderNo>().Delete(a => a.Date != nowDate);
                         unitOfWork.SaveChanges();
                         //移除缓存
                         string key = StaticFieldConfig.OrderNOByDayCacheList.Replace(nowDate.ToString(), date.AddDays(-1).ToString("yyMMdd"));

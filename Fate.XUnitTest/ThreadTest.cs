@@ -82,8 +82,8 @@ namespace Fate.XUnitTest
                  {
                      var unitOfWork = server.ServiceProvider.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
                      await unitOfWork.ChangeReadOrWriteConnection(Common.Repository.Object.ReadWriteEnum.ReadWrite);
-                     await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
-                     await unitOfWork.Respositiy<setting>().AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+                     await unitOfWork.Query<setting>().AsQueryable().ToListAsync();
+                     await unitOfWork.Command<setting>().AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
                      await unitOfWork.SaveChangeAsync();
                  }
              });

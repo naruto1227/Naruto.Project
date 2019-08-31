@@ -26,8 +26,8 @@ namespace Fate.XUnitTest
         IServiceCollection services = new ServiceCollection();
 
         private DbContext dbContex;
-        [Fact]
-        public async Task Test()
+
+        public RepositoryTest()
         {
             services.AddScoped(typeof(IRepositoryFactory), typeof(RepositoryFactory));
             //注入mysql仓储   //注入多个ef配置信息
@@ -39,6 +39,11 @@ namespace Fate.XUnitTest
                 options.UseEntityFramework<MysqlDbContent>(services);
                 options.IsOpenMasterSlave = true;
             });
+        }
+        [Fact]
+        public async Task Test()
+        {
+
             var iserverPri = services.BuildServiceProvider();
 
             //var u0k = iserverPri.GetRequiredService<MysqlDbContent>();
@@ -54,7 +59,25 @@ namespace Fate.XUnitTest
             var u0k = iserverPri.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var res = await u0k.Query<setting>().AsQueryable().FirstOrDefaultAsync();
         }
+        [Fact]
+        public async Task bulkAdd()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            ConcurrentQueue<setting> settings1 = new ConcurrentQueue<setting>();
 
+            Parallel.For(0, 10000, (item) =>
+            {
+                settings1.Enqueue(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+            });
+            await unit.Command<setting>().BulkAddAsync(settings1);
+            await unit.SaveChangeAsync();
+        }
+        [Fact]
+        public async Task Query()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+           await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+        }
     }
 
 

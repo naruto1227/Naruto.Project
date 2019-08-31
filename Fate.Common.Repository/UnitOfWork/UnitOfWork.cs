@@ -40,9 +40,10 @@ namespace Fate.Common.Repository.UnitOfWork
         /// </summary>
         private UnitOfWorkOptions unitOfWorkOptions;
 
+        private IRepositoryFactory repositoryFactory;
         #endregion
 
-        private IRepositoryFactory repositoryFactory;
+
 
         /// <summary>
         /// 构造注入
@@ -57,15 +58,15 @@ namespace Fate.Common.Repository.UnitOfWork
             unitOfWorkOptions.DbContextType = typeof(TDbContext);
             //获取当前的上下文
             dbContext = new Lazy<DbContext>(() => _service.GetService(unitOfWorkOptions.DbContextType) as DbContext);
-            //设置上下文工厂
-            repositoryFactory = _repositoryFactory;
-            repositoryFactory.Set(dbContext?.Value);
-
             //获取主库的连接
             var dbInfo = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault();
             unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
             //是否开启读写分离操作
             unitOfWorkOptions.IsOpenMasterSlave = dbInfo.IsOpenMasterSlave;
+
+            //设置上下文工厂
+            repositoryFactory = _repositoryFactory;
+            repositoryFactory.Set(dbContext?.Value);
         }
         /// <summary>
         /// 开始事务
@@ -164,21 +165,21 @@ namespace Fate.Common.Repository.UnitOfWork
             SetMasterConnec();
             return dbContext.Value.SaveChanges();
         }
-        /// <summary>
-        /// 仓储服务的入口
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public IRepository<T> Respositiy<T>() where T : class, IEntity
-        {
+        ///// <summary>
+        ///// 仓储服务的入口
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <returns></returns>
+        //public IRepository<T> Respositiy<T>() where T : class, IEntity
+        //{
 
-            SetSlaveConnec();
+        //    SetSlaveConnec();
 
-            //获取仓储服务（需先注入仓储集合，否则将报错）
-            IRepository<T> repository = dbContext.Value.GetService<IRepository<T>>();
-            repository.ChangeDbContext(dbContext.Value);
-            return repository;
-        }
+        //    //获取仓储服务（需先注入仓储集合，否则将报错）
+        //    IRepository<T> repository = dbContext.Value.GetService<IRepository<T>>();
+        //    repository.ChangeDbContext(dbContext.Value);
+        //    return repository;
+        //}
 
         /// <summary>
         /// 执行 查询的操作

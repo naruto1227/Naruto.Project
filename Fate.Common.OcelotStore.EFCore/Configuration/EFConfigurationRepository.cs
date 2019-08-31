@@ -88,7 +88,7 @@ namespace Fate.Common.OcelotStore.EFCore
                 //获取工作单元
                 var unitOfWork = services.ServiceProvider.GetRequiredService<IUnitOfWork<OcelotDbContent>>();
                 //从数据库读取
-                var info = unitOfWork.Respositiy<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).AsNoTracking().FirstOrDefault();
+                var info = unitOfWork.Query<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).AsNoTracking().FirstOrDefault();
                 return JsonConvert.DeserializeObject<FileConfiguration>("{'ReRoutes':"+info.ReRoutes+ ",'DynamicReRoutes':"+info.DynamicReRoutes+ ",'Aggregates':"+info.Aggregates+ ",'GlobalConfiguration':"+info.GlobalConfiguration+"}");
             }
         }
@@ -104,10 +104,10 @@ namespace Fate.Common.OcelotStore.EFCore
                 //获取工作单元
                 var unitOfWork = services.ServiceProvider.GetRequiredService<IUnitOfWork<OcelotDbContent>>();
                 //从数据库读取
-                var info = unitOfWork.Respositiy<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).AsNoTracking().FirstOrDefault();
+                var info = unitOfWork.Query<OcelotConfiguration>().Where(a => 1 == 1).OrderBy(a => a.Id).AsNoTracking().FirstOrDefault();
                 if (info != null)
                 {
-                    unitOfWork.Respositiy<OcelotConfiguration>().Update(a => a.Id == info.Id, (item) =>
+                    unitOfWork.Command<OcelotConfiguration>().Update(a => a.Id == info.Id, (item) =>
                     {
                         item.ReRoutes = JsonConvert.SerializeObject(fileConfiguration.ReRoutes);
                         item.DynamicReRoutes = JsonConvert.SerializeObject(fileConfiguration.DynamicReRoutes);
@@ -117,7 +117,7 @@ namespace Fate.Common.OcelotStore.EFCore
                     });
                 }
                 else
-                    unitOfWork.Respositiy<OcelotConfiguration>().Add(new OcelotConfiguration() { ReRoutes = JsonConvert.SerializeObject(fileConfiguration.ReRoutes), Aggregates = JsonConvert.SerializeObject(fileConfiguration.Aggregates), DynamicReRoutes = JsonConvert.SerializeObject(fileConfiguration.DynamicReRoutes), GlobalConfiguration = JsonConvert.SerializeObject(fileConfiguration.GlobalConfiguration), Id = Guid.NewGuid().ToString().Replace("-", "") });
+                    unitOfWork.Command<OcelotConfiguration>().Add(new OcelotConfiguration() { ReRoutes = JsonConvert.SerializeObject(fileConfiguration.ReRoutes), Aggregates = JsonConvert.SerializeObject(fileConfiguration.Aggregates), DynamicReRoutes = JsonConvert.SerializeObject(fileConfiguration.DynamicReRoutes), GlobalConfiguration = JsonConvert.SerializeObject(fileConfiguration.GlobalConfiguration), Id = Guid.NewGuid().ToString().Replace("-", "") });
 
                 unitOfWork.SaveChanges();
             }

@@ -35,7 +35,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// </summary>
         void RollBackTransaction();
 
-        IRepository<T> Respositiy<T>() where T : class, IEntity;
+        //IRepository<T> Respositiy<T>() where T : class, IEntity;
 
 
         /// <summary>

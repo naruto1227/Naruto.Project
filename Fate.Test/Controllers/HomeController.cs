@@ -53,7 +53,7 @@ namespace Fate.Test.Controllers
         {
             unitOfWork.BeginTransaction();
             //await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
-            await unitOfWork.Respositiy<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
+            await unitOfWork.Command<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
             await unitOfWork.SaveChangeAsync();
             unitOfWork.CommitTransaction();
 
@@ -63,11 +63,11 @@ namespace Fate.Test.Controllers
         public async Task tran2()
         {
             //unitOfWork.BeginTransaction();
-            await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
-            await unitOfWork.Respositiy<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
+            await unitOfWork.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            await unitOfWork.Command<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
             await unitOfWork.SaveChangeAsync();
-            var str = await unitOfWork.Respositiy<test1>().AsQueryable().ToListAsync();
-            await unitOfWork.Respositiy<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
+            var str = await unitOfWork.Query<test1>().AsQueryable().AsNoTracking().ToListAsync();
+            await unitOfWork.Command<test1>().AddAsync(new test1() { Id = Convert.ToInt32(DateTime.Now.ToString("ffffff")) });
             await unitOfWork.SaveChangeAsync();
             //unitOfWork.RollBackTransaction();
         }
@@ -76,15 +76,15 @@ namespace Fate.Test.Controllers
 
             unitOfWork.BeginTransaction();
 
-            await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
+            await unitOfWork.Query<setting>().AsQueryable().ToListAsync();
 
-            var str = await unitOfWork.Respositiy<setting>().AsQueryable().ToListAsync();
+            var str = await unitOfWork.Query<setting>().AsQueryable().ToListAsync();
             unitOfWork.RollBackTransaction();
         }
         public async Task test5()
         {
             await unitOfWork.ChangeDataBase("test2");
-            var str = await unitOfWork.Respositiy<test1>().AsQueryable().ToListAsync();
+            var str = await unitOfWork.Query<test1>().AsQueryable().ToListAsync();
         }
         public async Task testredis2()
         {
