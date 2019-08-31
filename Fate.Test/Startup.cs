@@ -76,7 +76,7 @@ namespace Fate.Test
                 options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
-                options.IsOpenMasterSlave = false;
+                options.IsOpenMasterSlave = true;
             });
 
             //使用单号

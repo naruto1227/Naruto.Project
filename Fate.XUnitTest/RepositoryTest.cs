@@ -76,7 +76,49 @@ namespace Fate.XUnitTest
         public async Task Query()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-           await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+        }
+
+        [Fact]
+        public async Task ChangeDataBase()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            await unit.ChangeDataBase("test1");
+
+            var str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+           await unit.SaveChangeAsync();
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            await unit.ChangeDataBase("test");
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
+
+        }
+
+        [Fact]
+        public async Task WriteRead()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+            await unit.SaveChangeAsync();
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
+
+        }
+        [Fact]
+        public async Task Tran()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+           // await unit.ChangeDataBase("test1");
+            unit.BeginTransaction();
+
+            var str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+            await unit.SaveChangeAsync();
+            //str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            //await unit.ChangeDataBase("test");
+            //str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            unit.CommitTransaction();
         }
     }
 

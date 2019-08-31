@@ -39,7 +39,9 @@ namespace Fate.Common.Repository.UnitOfWork
         /// 工作单元参数
         /// </summary>
         private UnitOfWorkOptions unitOfWorkOptions;
-
+        /// <summary>
+        /// 上下文工厂
+        /// </summary>
         private IRepositoryFactory repositoryFactory;
         #endregion
 
@@ -76,12 +78,16 @@ namespace Fate.Common.Repository.UnitOfWork
             //验证是否开启读写分离
             if (unitOfWorkOptions.IsOpenMasterSlave)
             {
-                //关闭连接
-                ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Closed);
-                //事务开启更改连接字符串为主库master的连接字符串
-                dbContext.Value.Database.GetDbConnection().ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
-                //开启连接
-                ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
+                //验证当前的上下文的连接字符串是否与 主库的连接字符串相等 不相等则改变
+                if (!dbContext.Value.Database.GetDbConnection().ConnectionString.Equals(unitOfWorkOptions.WriteReadConnectionString))
+                {
+                    //关闭连接
+                    ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Closed);
+                    //事务开启更改连接字符串为主库master的连接字符串
+                    dbContext.Value.Database.GetDbConnection().ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
+                    //开启连接
+                    ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
+                }
                 //更改事务的状态
                 unitOfWorkOptions.IsSumbitTran = true;
             }
@@ -165,21 +171,6 @@ namespace Fate.Common.Repository.UnitOfWork
             SetMasterConnec();
             return dbContext.Value.SaveChanges();
         }
-        ///// <summary>
-        ///// 仓储服务的入口
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <returns></returns>
-        //public IRepository<T> Respositiy<T>() where T : class, IEntity
-        //{
-
-        //    SetSlaveConnec();
-
-        //    //获取仓储服务（需先注入仓储集合，否则将报错）
-        //    IRepository<T> repository = dbContext.Value.GetService<IRepository<T>>();
-        //    repository.ChangeDbContext(dbContext.Value);
-        //    return repository;
-        //}
 
         /// <summary>
         /// 执行 查询的操作
@@ -201,7 +192,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public IRepositoryCommand<T> Command<T>() where T : class, IEntity
         {
-            SetSlaveConnec();
+            //SetSlaveConnec();
 
             IRepositoryCommand<T> repository = dbContext.Value.GetService<IRepositoryCommand<T>>();
             return repository;
@@ -214,9 +205,9 @@ namespace Fate.Common.Repository.UnitOfWork
         {
             await Task.Run(() =>
              {
-                 //开启连接
-                 ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
-                 dbContext.Value.Database.GetDbConnection().ChangeDatabase(dataBase);
+                 ////开启连接
+                 //ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
+                 //dbContext.Value.Database.GetDbConnection().ChangeDatabase(dataBase);
                  unitOfWorkOptions.ChangeDataBaseName = dataBase;
              }).ConfigureAwait(false);
         }
@@ -227,7 +218,11 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public async Task<int> ExecuteSqlAsync(string sql, params object[] _params) => await dbContext.Value.Database.ExecuteSqlCommandAsync(sql, _params);
+        public async Task<int> ExecuteSqlAsync(string sql, params object[] _params)
+        {
+            SetMasterConnec();
+            return await dbContext.Value.Database.ExecuteSqlCommandAsync(sql, _params);
+        }
 
         /// <summary>
         /// 释放资源
@@ -255,16 +250,17 @@ namespace Fate.Common.Repository.UnitOfWork
                 connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
                 //开启连接
                 ChangeConnecState(connec, ConnectionState.Open);
-                //验证是否更改了数据库名
-                ChangeDataBase();
                 //更改连接的服务器为从库
                 unitOfWorkOptions.IsSlaveOrMaster = true;
             }
+            //验证是否更改了数据库名
+            ChangeDataBase();
         }
         /// <summary>
         /// 设置主库的 连接
         /// </summary>
-        private void SetMasterConnec() {
+        private void SetMasterConnec()
+        {
             //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
             if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
@@ -276,11 +272,11 @@ namespace Fate.Common.Repository.UnitOfWork
                 connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
                 //开启连接
                 ChangeConnecState(connec, ConnectionState.Open);
-                //验证是否更改了数据库名
-                ChangeDataBase();
                 //更改连接的服务器为主库
                 unitOfWorkOptions.IsSlaveOrMaster = false;
             }
+            //验证是否更改了数据库名
+            ChangeDataBase();
         }
 
         /// <summary>
