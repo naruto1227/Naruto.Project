@@ -142,7 +142,8 @@ namespace Fate.Common.Repository.UnitOfWork
                 }
                 //打开连接
                 ChangeConnecState(connec, ConnectionState.Open);
-
+                //连接更改重新验证是否更改了数据库名
+                ChangeDataBase();
                 unitOfWorkOptions.IsMandatory = true;
             }).ConfigureAwait(false);
         }

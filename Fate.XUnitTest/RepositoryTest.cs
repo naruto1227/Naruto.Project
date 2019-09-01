@@ -76,7 +76,10 @@ namespace Fate.XUnitTest
         public async Task Query()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-            await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            //
+            await unit.ChangeReadOrWriteConnection(Common.Repository.Object.ReadWriteEnum.Read);
+            await unit.ChangeDataBase("test1");
+            var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
         }
 
         [Fact]
@@ -87,7 +90,7 @@ namespace Fate.XUnitTest
 
             var str = await unit.Query<setting>().AsQueryable().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
-           await unit.SaveChangeAsync();
+            await unit.SaveChangeAsync();
             str = await unit.Query<setting>().AsQueryable().ToListAsync();
             await unit.ChangeDataBase("test");
             str = await unit.Query<setting>().AsQueryable().ToListAsync();
@@ -109,7 +112,7 @@ namespace Fate.XUnitTest
         public async Task Tran()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-           
+
             unit.BeginTransaction();
             await unit.ChangeDataBase("test1");
             var str = await unit.Query<setting>().AsQueryable().ToListAsync();
