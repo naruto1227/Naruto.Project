@@ -264,7 +264,7 @@ namespace Fate.Common.OcelotStore.EFCore
                 entity.Property(e => e.Id).HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.ClientIdHeader).HasColumnType("varchar(255)");
-                entity.Property(e => e.DisableRateLimitHeaders).HasColumnType("bit");
+                entity.Property(e => e.DisableRateLimitHeaders).HasColumnType("bit(1)");
 
                 entity.Property(e => e.HttpStatusCode).HasColumnType("int(11)");
                 entity.Property(e => e.QuotaExceededMessage).HasColumnType("varchar(255)");
