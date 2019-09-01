@@ -26,6 +26,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         public int IsReRouteOrGlobal { get; set; }
         /// <summary>
         /// 客户端白名单 (多个逗号分隔)
+        /// 一个字符串数组，在请求头中包含ClientId=xxx的请求不受限流控制，其中ClientId这个key可以修改，xxx表示配置的白名单。
         /// </summary>
         public string ClientWhitelist { get; set; }
 

@@ -274,3 +274,21 @@ create table `OcelotHostAndPort`
    primary key (Id)
 )
 ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+drop table if exists `OcelotRateLimitOptions`;
+
+/*==============================================================*/
+/* Table: OcelotRateLimitRule                                   */
+/*==============================================================*/
+create table `OcelotRateLimitOptions`
+(
+   Id                   int(11) not null auto_increment,
+	ParentId            int(11) comment '父节点的id',
+   ClientIdHeader      varchar(255) comment '修改在请求头中传递的ClientId 头 的key',
+   DisableRateLimitHeaders   bit(1) not null comment '是否启用限流的头',
+   QuotaExceededMessage               varchar(255) comment '限流返回的消息提示',
+RateLimitCounterPrefix      varchar(255) comment '',
+   HttpStatusCode       int(11) comment '响应的http状态码',
+   primary key (Id)
+)
+ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;

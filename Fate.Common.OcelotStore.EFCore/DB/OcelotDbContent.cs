@@ -39,6 +39,7 @@ namespace Fate.Common.OcelotStore.EFCore
         public DbSet<OcelotSecurityOptions> OcelotSecurityOptions { get; set; }
         public DbSet<OcelotServiceDiscoveryProvider> OcelotServiceDiscoveryProvider { get; set; }
 
+        public DbSet<OcelotRateLimitOptions> OcelotRateLimitOptions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OcelotConfiguration>(entity =>
@@ -119,7 +120,7 @@ namespace Fate.Common.OcelotStore.EFCore
                 entity.Property(e => e.BaseUrl).HasColumnType("varchar(255)");
                 entity.Property(e => e.DownstreamScheme).HasColumnType("varchar(20)");
                 entity.Property(e => e.RequestIdKey).HasColumnType("varchar(50)");
-                entity.Ignore("OcelotServiceDiscoveryProvider").Ignore("OcelotLoadBalancer").Ignore("OcelotQoSOptions").Ignore("OcelotRateLimitRule").Ignore("OcelotHttpHandlerOptions");
+                entity.Ignore("OcelotServiceDiscoveryProvider").Ignore("OcelotLoadBalancer").Ignore("OcelotQoSOptions").Ignore("OcelotRateLimitOptions").Ignore("OcelotHttpHandlerOptions");
             });
 
 
@@ -256,6 +257,20 @@ namespace Fate.Common.OcelotStore.EFCore
                 entity.Property(e => e.Token).HasColumnType("varchar(300)");
                 entity.Property(e => e.Type).HasColumnType("varchar(50)");
             });
+            modelBuilder.Entity<OcelotRateLimitOptions>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                   .HasName("PRIMARY");
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.ParentId).HasColumnType("int(11)");
+                entity.Property(e => e.ClientIdHeader).HasColumnType("varchar(255)");
+                entity.Property(e => e.DisableRateLimitHeaders).HasColumnType("bit");
+
+                entity.Property(e => e.HttpStatusCode).HasColumnType("int(11)");
+                entity.Property(e => e.QuotaExceededMessage).HasColumnType("varchar(255)");
+                entity.Property(e => e.RateLimitCounterPrefix).HasColumnType("varchar(255)");
+            });
+            
         }
     }
 }

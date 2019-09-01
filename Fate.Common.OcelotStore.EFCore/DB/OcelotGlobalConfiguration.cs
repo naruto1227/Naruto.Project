@@ -43,7 +43,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
 
         public virtual OcelotQoSOptions OcelotQoSOptions { get; set; }
 
-        public virtual OcelotRateLimitRule OcelotRateLimitRule { get; set; }
+        public virtual OcelotRateLimitOptions OcelotRateLimitOptions { get; set; }
 
         public virtual OcelotHttpHandlerOptions OcelotHttpHandlerOptions { get; set; }
         #endregion
