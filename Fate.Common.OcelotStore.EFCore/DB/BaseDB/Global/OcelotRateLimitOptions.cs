@@ -22,7 +22,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         /// <summary>
         /// 修改在请求头中传递的ClientId 头 的key
         /// </summary>
-        public string ClientIdHeader { get; set; }
+        public string ClientIdHeader { get; set; } = "ClientId";
         /// <summary>
         /// 限流返回的消息提示
         /// </summary>
@@ -30,7 +30,7 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         /// <summary>
         /// 
         /// </summary>
-        public string RateLimitCounterPrefix { get; set; }
+        public string RateLimitCounterPrefix { get; set; } = "ocelot";
         /// <summary>
         /// 是否启用限流的头
         /// </summary>
@@ -38,6 +38,6 @@ namespace Fate.Common.OcelotStore.EFCore.DB
         /// <summary>
         /// 响应的http状态码
         /// </summary>
-        public int HttpStatusCode { get; set; }
+        public int HttpStatusCode { get; set; } = 429;
     }
 }
