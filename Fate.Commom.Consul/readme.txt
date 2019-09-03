@@ -1,0 +1,2 @@
+﻿1.如需使用consul服务 ，请注入ServiceCollectionExtensions中的AddConsul扩展方法
+2.如需在启动的时候 进行consul服务注册，紧接着使用UseServiceRegister方法来注入
