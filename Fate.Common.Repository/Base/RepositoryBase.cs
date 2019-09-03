@@ -28,6 +28,26 @@ namespace Fate.Common.Repository.Object
             repository = _dbContext;
         }
         ///// <summary>
+        /////获取所有数据
+        ///// </summary>
+        ///// <typeparam name="TEntity"></typeparam>
+        ///// <returns></returns>
+        //public IQueryable<T> AsQueryable(string tableName = "")
+        //{
+        //    if (repository.Model.FindEntityType(typeof(T)).Relational() is RelationalEntityTypeAnnotations relational2)
+        //    {
+
+        //    }
+        //    if (!string.IsNullOrWhiteSpace(tableName))
+        //    {
+        //        if (repository.Model.FindEntityType(typeof(T)).Relational() is RelationalEntityTypeAnnotations relational)
+        //        {
+        //            relational.TableName = tableName;
+        //        }
+        //    }
+        //    return repository.Set<T>().AsQueryable();
+        //}
+        ///// <summary>
         ///// 更改数据库
         ///// </summary>
         ///// <param name="connectionName"></param>

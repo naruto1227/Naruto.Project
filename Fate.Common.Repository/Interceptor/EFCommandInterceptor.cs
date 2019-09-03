@@ -94,7 +94,7 @@ namespace Fate.Common.Repository.Interceptor
                     isSlaveOrMaster = false;
                 }
                 //跟踪执行脚本
-                else if (value.Key == RelationalEventId.CommandExecuting.Name && isSumbitTran == false && isSlaveOrMaster == false)
+                else if (value.Key == RelationalEventId.CommandExecuting.Name )
                 {
                     var command = ((CommandEventData)value.Value).Command;
                     if (command.CommandText.StartsWith("SELECT"))

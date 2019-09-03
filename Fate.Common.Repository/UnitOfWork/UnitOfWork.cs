@@ -66,7 +66,7 @@ namespace Fate.Common.Repository.UnitOfWork
 
             //设置上下文工厂
             repositoryFactory = _repositoryFactory;
-            repositoryFactory.Set(dbContext?.Value);
+            repositoryFactory.Set(unitOfWorkOptions?.DbContextType, dbContext?.Value);
         }
         /// <summary>
         /// 开始事务
@@ -175,8 +175,7 @@ namespace Fate.Common.Repository.UnitOfWork
         public IRepositoryQuery<T> Query<T>() where T : class, IEntity
         {
             SetSlave();
-
-            IRepositoryQuery<T> repository = dbContext.Value.GetService<IRepositoryQuery<T>>();
+            IRepositoryQuery<T> repository = dbContext.Value.GetService<IRepositoryQuery<T, TDbContext>>();
             return repository;
         }
 
@@ -188,7 +187,7 @@ namespace Fate.Common.Repository.UnitOfWork
         public IRepositoryCommand<T> Command<T>() where T : class, IEntity
         {
             //SetSlaveConnec();
-            IRepositoryCommand<T> repository = dbContext.Value.GetService<IRepositoryCommand<T>>();
+            IRepositoryCommand<T> repository = dbContext.Value.GetService<IRepositoryCommand<T, TDbContext>>();
             return repository;
         }
         /// <summary>

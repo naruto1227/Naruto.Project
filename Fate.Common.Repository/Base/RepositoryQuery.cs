@@ -14,14 +14,14 @@ namespace Fate.Common.Repository.Base
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class RepositoryQuery<T> : IRepositoryQuery<T> where T : class, IEntity 
+    public class RepositoryQuery<T, TDbContext> : IRepositoryQuery<T, TDbContext> where T : class, IEntity where TDbContext : DbContext
     {
 
         private DbContext repository;
 
         public RepositoryQuery(IRepositoryFactory factory)
         {
-            repository = factory.Get();
+            repository = factory.Get<TDbContext>();
         }
         #region 查询
 

@@ -10,14 +10,14 @@ using System.Linq;
 
 namespace Fate.Common.Repository.Base
 {
-    public class RepositoryCommand<T> : IRepositoryCommand<T> where T : class, IEntity
+    public class RepositoryCommand<T, TDbContext> : IRepositoryCommand<T, TDbContext> where T : class, IEntity where TDbContext:DbContext
     {
 
         private DbContext repository;
 
         public RepositoryCommand(IRepositoryFactory factory)
         {
-            repository = factory.Get();
+            repository = factory.Get<TDbContext>();
         }
         #region 异步
         /// <summary>

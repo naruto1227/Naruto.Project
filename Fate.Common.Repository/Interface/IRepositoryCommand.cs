@@ -8,12 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fate.Common.Repository.Interface
 {
+    public interface IRepositoryCommand<T, TDbContext> : IRepositoryCommand<T>, IRepositoryDependency where T : IEntity where TDbContext : DbContext
+    {
+
+    }
     /// <summary>
     /// 张海波
     /// 2019-08-29
     /// 仓储的增删改的 接口层
     /// </summary>
-    public interface IRepositoryCommand<T> : IRepositoryDependency where T : IEntity 
+    public interface IRepositoryCommand<T> : IRepositoryDependency where T : IEntity
     {
         #region 异步
         /// <summary>

@@ -13,9 +13,18 @@ namespace Fate.Common.Repository.Interface
     /// </summary>
     public interface IRepositoryFactory : IRepositoryDependency
     {
-        void Set(DbContext dbContext);
-
-        DbContext Get();
+        /// <summary>
+        /// 设置上下文的类型
+        /// </summary>
+        /// <param name="DbContextType"></param>
+        /// <param name="dbContext"></param>
+        bool Set(Type DbContextType, DbContext dbContext);
+        /// <summary>
+        /// 获取指定的上下文
+        /// </summary>
+        /// <param name="DbContextType"></param>
+        /// <returns></returns>
+        DbContext Get<TDbContext>() where TDbContext : DbContext;
 
     }
 }
