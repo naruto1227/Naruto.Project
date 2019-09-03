@@ -46,6 +46,7 @@ namespace Fate.Common.Repository.Base
         {
             _dbContexts?.Clear();
             _dbContexts = null;
+            GC.SuppressFinalize(this);
         }
     }
 }
