@@ -23,14 +23,14 @@ namespace Fate.Common.Repository.Base
         /// </summary>
         /// <param name="DbContextType"></param>
         /// <param name="dbContext"></param>
-        public bool Set(Type DbContextType, DbContext dbContext)
+        public void Set(Type DbContextType, DbContext dbContext)
         {
             if (DbContextType == null)
                 throw new ArgumentNullException(nameof(DbContextType));
             if (dbContext == null)
                 throw new ArgumentNullException(nameof(dbContext));
 
-            return _dbContexts.TryAdd(DbContextType, dbContext);
+            _dbContexts.AddOrUpdate(DbContextType, dbContext, (k, oldvalue) => dbContext);
         }
         /// <summary>
         /// 获取上下文

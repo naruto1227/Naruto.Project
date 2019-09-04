@@ -18,7 +18,7 @@ namespace Fate.Common.Repository.Interface
         /// </summary>
         /// <param name="DbContextType"></param>
         /// <param name="dbContext"></param>
-        bool Set(Type DbContextType, DbContext dbContext);
+        void Set(Type DbContextType, DbContext dbContext);
         /// <summary>
         /// 获取指定的上下文
         /// </summary>
