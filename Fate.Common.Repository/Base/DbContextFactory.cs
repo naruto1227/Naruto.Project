@@ -10,11 +10,11 @@ using System.Collections.Concurrent;
 namespace Fate.Common.Repository.Base
 {
 
-    public class RepositoryFactory : IRepositoryFactory, IDisposable
+    public class DbContextFactory : IDbContextFactory, IDisposable
     {
         public ConcurrentDictionary<Type, DbContext> _dbContexts { get; set; }
 
-        public RepositoryFactory()
+        public DbContextFactory()
         {
             _dbContexts = new ConcurrentDictionary<Type, DbContext>();
         }

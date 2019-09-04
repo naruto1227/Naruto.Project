@@ -11,7 +11,7 @@ namespace Fate.Common.Repository.Interface
     /// 2019-08-30
     /// 获取或者设置上下文
     /// </summary>
-    public interface IRepositoryFactory : IRepositoryDependency
+    public interface IDbContextFactory : IRepositoryDependency
     {
         /// <summary>
         /// 设置上下文的类型

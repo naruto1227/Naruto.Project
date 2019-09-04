@@ -39,10 +39,11 @@ namespace Fate.Common.Repository.UnitOfWork
         /// 工作单元参数
         /// </summary>
         private UnitOfWorkOptions unitOfWorkOptions;
+
         /// <summary>
-        /// 上下文工厂
+        /// 
         /// </summary>
-        private IRepositoryFactory repositoryFactory;
+        private readonly IServiceProvider service;
         #endregion
 
         /// <summary>
@@ -50,14 +51,16 @@ namespace Fate.Common.Repository.UnitOfWork
         /// </summary>
         /// <param name="_options"></param>
         /// <param name="_service"></param>
-        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IRepositoryFactory _repositoryFactory)
+        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IDbContextFactory _repositoryFactory)
         {
             options = _options;
             unitOfWorkOptions = _unitOfWorkOptions;
             //获取上下文类型
             unitOfWorkOptions.DbContextType = typeof(TDbContext);
+            //获取上下文
+            var _dbContext = _service.GetService(unitOfWorkOptions.DbContextType) as DbContext;
             //获取当前的上下文
-            dbContext = new Lazy<DbContext>(() => _service.GetService(unitOfWorkOptions.DbContextType) as DbContext);
+            dbContext = new Lazy<DbContext>(() => _dbContext);
             //获取主库的连接
             var dbInfo = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault();
             unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
@@ -65,8 +68,9 @@ namespace Fate.Common.Repository.UnitOfWork
             unitOfWorkOptions.IsOpenMasterSlave = dbInfo.IsOpenMasterSlave;
 
             //设置上下文工厂
-            repositoryFactory = _repositoryFactory;
-            repositoryFactory.Set(unitOfWorkOptions?.DbContextType, dbContext?.Value);
+            _repositoryFactory.Set(unitOfWorkOptions?.DbContextType, dbContext?.Value);
+
+            service = _service;
         }
         /// <summary>
         /// 开始事务
@@ -175,7 +179,7 @@ namespace Fate.Common.Repository.UnitOfWork
         public IRepositoryQuery<T> Query<T>() where T : class, IEntity
         {
             SetSlave();
-            IRepositoryQuery<T> repository = dbContext.Value.GetService<IRepositoryQuery<T, TDbContext>>();
+            IRepositoryQuery<T> repository = service.GetService<IRepositoryQuery<T, TDbContext>>();
             return repository;
         }
 
@@ -187,7 +191,7 @@ namespace Fate.Common.Repository.UnitOfWork
         public IRepositoryCommand<T> Command<T>() where T : class, IEntity
         {
             //SetSlaveConnec();
-            IRepositoryCommand<T> repository = dbContext.Value.GetService<IRepositoryCommand<T, TDbContext>>();
+            IRepositoryCommand<T> repository = service.GetService<IRepositoryCommand<T, TDbContext>>();
             return repository;
         }
         /// <summary>

@@ -19,7 +19,7 @@ namespace Fate.Common.Repository.Base
 
         private DbContext repository;
 
-        public RepositoryQuery(IRepositoryFactory factory)
+        public RepositoryQuery(IDbContextFactory factory)
         {
             repository = factory.Get<TDbContext>();
         }
