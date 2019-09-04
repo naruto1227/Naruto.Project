@@ -33,8 +33,8 @@ namespace Fate.XUnitTest
             //注入mysql仓储   //注入多个ef配置信息
             services.AddMysqlRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;");
-                options.ReadOnlyConnectionString = "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;".Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3310;UserId=hai;Password=hai123;Charset=utf8;");
+                options.ReadOnlyConnectionString = "Database=test;DataSource=127.0.0.1;Port=3311;UserId=hairead;Password=hai123;Charset=utf8;".Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
                 options.IsOpenMasterSlave = true;

@@ -23,6 +23,16 @@ namespace Fate.Common.Repository.Base
         {
             repository = factory.Get<TDbContext>();
         }
+        /// <summary>
+        /// 更改仓储的上下文
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <returns></returns>
+        public Task ChangeDbContext(DbContext dbContext)
+        {
+            repository = dbContext;
+            return Task.FromResult(0);
+        }
         #region 查询
 
         /// <summary>
