@@ -20,17 +20,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for cap.published
 -- ----------------------------
-DROP TABLE IF EXISTS `cap.published`;
-CREATE TABLE `cap.published`  (
-  `Id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `Name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `Content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `Retries` int(11) NULL DEFAULT NULL,
-  `Added` datetime(0) NOT NULL,
-  `ExpiresAt` datetime(0) NULL DEFAULT NULL,
-  `StatusName` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `Version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`Id`) USING BTREE
+create table `cap.published`
+(
+   Id                   varchar(255) not null,
+   Name                 varchar(200) not null comment '交换机名称',
+   Content              longtext  comment '内容',
+   Retries              int  comment '重试次数',
+   Added                datetime comment '添加时间',
+   ExpiresAt            datetime  comment '过期时间',
+   StatusName           varchar(30)  comment '发送的状态',
+   Version              varchar(50)  comment '版本',
+   primary key (Id)
 ) ENGINE = InnoDB AUTO_INCREMENT = 147 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
