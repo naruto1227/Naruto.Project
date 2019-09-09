@@ -25,7 +25,7 @@ namespace Fate.XUnitTest
                 dt.Rows.Add(dr);
             }
 
-            ExportHelper.ToExcel(dt,new string[] { "列一"},"result",Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test.xls"));
+            ExportHelper.ToExcel(dt, new string[] { "列一" }, "result", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.xls"));
         }
     }
 }
