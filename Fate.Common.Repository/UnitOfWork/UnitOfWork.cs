@@ -14,6 +14,7 @@ using System.Diagnostics;
 using Fate.Common.Repository.Interceptor;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Fate.Common.Repository.UnitOfWork
 {
@@ -44,7 +45,13 @@ namespace Fate.Common.Repository.UnitOfWork
         /// 
         /// </summary>
         private readonly IServiceProvider service;
+
+        /// <summary>
+        /// 上下文事务
+        /// </summary>
+        private IDbContextTransaction dbContextTransaction;
         #endregion
+
 
         /// <summary>
         /// 构造注入
@@ -89,7 +96,27 @@ namespace Fate.Common.Repository.UnitOfWork
                 //更改事务的状态
                 unitOfWorkOptions.IsSumbitTran = true;
             }
-            dbContext.Value.Database.BeginTransaction();
+            dbContextTransaction = dbContext.Value.Database.BeginTransaction();
+        }
+
+        /// <summary>
+        /// 开始事务
+        /// </summary>
+        public async Task BeginTransactionAsync()
+        {
+            //验证是否开启读写分离
+            if (unitOfWorkOptions.IsOpenMasterSlave)
+            {
+                //验证当前是否为主库
+                if (unitOfWorkOptions.IsSlaveOrMaster)
+                {
+                    //设置连接为主库
+                    SetMasterConnection();
+                }
+                //更改事务的状态
+                unitOfWorkOptions.IsSumbitTran = true;
+            }
+            dbContextTransaction =await dbContext.Value.Database.BeginTransactionAsync();
         }
         /// <summary>
         /// 提交事务
@@ -229,6 +256,7 @@ namespace Fate.Common.Repository.UnitOfWork
         public void Dispose()
         {
             dbContext.Value?.Dispose();
+            dbContextTransaction?.Dispose();
             GC.SuppressFinalize(this);
         }
 

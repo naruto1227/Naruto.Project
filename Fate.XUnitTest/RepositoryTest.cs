@@ -33,11 +33,11 @@ namespace Fate.XUnitTest
             //注入mysql仓储   //注入多个ef配置信息
             services.AddMysqlRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3310;UserId=hai;Password=hai123;Charset=utf8;");
-                options.ReadOnlyConnectionString = "Database=test;DataSource=127.0.0.1;Port=3311;UserId=hairead;Password=hai123;Charset=utf8;".Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;");
+
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
-                options.IsOpenMasterSlave = true;
+                options.IsOpenMasterSlave = false;
             });
         }
         [Fact]
@@ -121,6 +121,19 @@ namespace Fate.XUnitTest
             //str = await unit.Query<setting>().AsQueryable().ToListAsync();
             //await unit.ChangeDataBase("test");
             //str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            unit.CommitTransaction();
+        }
+
+        [Fact]
+        public async Task Tran2()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+
+            await unit.BeginTransactionAsync();
+
+            await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+
+            await unit.SaveChangeAsync();
             unit.CommitTransaction();
         }
     }

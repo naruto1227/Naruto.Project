@@ -27,6 +27,12 @@ namespace Fate.Common.Repository.UnitOfWork
         void BeginTransaction();
 
         /// <summary>
+        /// 异步开始事务
+        /// </summary>
+        /// <returns></returns>
+        Task BeginTransactionAsync();
+
+        /// <summary>
         /// 提交事务
         /// </summary>
         void CommitTransaction();
