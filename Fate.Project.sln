@@ -63,7 +63,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Test.Ocelot", "Fate.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consul", "Consul", "{B9E1ECBD-967F-453E-B9CB-61BABA799568}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Commom.Consul", "Fate.Commom.Consul\Fate.Commom.Consul.csproj", "{C9058225-186D-46D1-9CCD-713AB9C48989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Commom.Consul", "Fate.Commom.Consul\Fate.Commom.Consul.csproj", "{C9058225-186D-46D1-9CCD-713AB9C48989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Common.Configuration", "Fate.Common.Configuration\Fate.Common.Configuration.csproj", "{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,6 +161,10 @@ Global
 		{C9058225-186D-46D1-9CCD-713AB9C48989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9058225-186D-46D1-9CCD-713AB9C48989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9058225-186D-46D1-9CCD-713AB9C48989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +197,7 @@ Global
 		{FBBABB8E-8EC7-4B92-9287-DCB0463459A6} = {28527CF0-C1A2-45F9-8934-339FD8914EC1}
 		{B9E1ECBD-967F-453E-B9CB-61BABA799568} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 		{C9058225-186D-46D1-9CCD-713AB9C48989} = {B9E1ECBD-967F-453E-B9CB-61BABA799568}
+		{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}
