@@ -10,7 +10,7 @@ namespace Fate.Common.Ioc.Core
     public static class AutofacInit
     {
         private static IContainer container;
-        private static ContainerBuilder builder;
+        //private static ContainerBuilder builder;
         /// <summary>
         /// 
         /// </summary>
@@ -19,7 +19,7 @@ namespace Fate.Common.Ioc.Core
         /// <returns></returns>
         public static IContainer ConvertToAutofac(this IServiceCollection services, int isDependencyMainType = 1)
         {
-            builder = new ContainerBuilder();
+            ContainerBuilder builder = new ContainerBuilder();
             //InstancePerLifetimeScope：同一个Lifetime生成的对象是同一个实例
             //SingleInstance：单例模式，每次调用，都会使用同一个实例化的对象；每次都用同一个对象；
             //InstancePerDependency：默认模式，每次调用，都会重新实例化对象；每次请求都创建一个新的对象；
@@ -70,26 +70,26 @@ namespace Fate.Common.Ioc.Core
             return container;
         }
         #region 当前方法注册需要类与接口的一一对应
-        /// <summary>
-        /// 注册类到容器
-        /// </summary>
-        /// <typeparam name="T">类</typeparam>
-        /// <typeparam name="IT">当前类所继承的接口</typeparam>
-        public static void RegisterType<T, IT>(LiftTimeEnum liftTimeEnum = LiftTimeEnum.InstancePerDependency) where T : class where IT : class
-        {
-            if (liftTimeEnum == LiftTimeEnum.SingleInstance)
-            {
-                builder.RegisterType<T>().As<IT>().SingleInstance();
-            }
-            else if (liftTimeEnum == LiftTimeEnum.InstancePerLifetimeScope)
-            {
-                builder.RegisterType<T>().As<IT>().InstancePerLifetimeScope();
-            }
-            else
-            {
-                builder.RegisterType<T>().As<IT>();
-            }
-        }
+        ///// <summary>
+        ///// 注册类到容器
+        ///// </summary>
+        ///// <typeparam name="T">类</typeparam>
+        ///// <typeparam name="IT">当前类所继承的接口</typeparam>
+        //public static void RegisterType<T, IT>(LiftTimeEnum liftTimeEnum = LiftTimeEnum.InstancePerDependency) where T : class where IT : class
+        //{
+        //    if (liftTimeEnum == LiftTimeEnum.SingleInstance)
+        //    {
+        //        builder.RegisterType<T>().As<IT>().SingleInstance();
+        //    }
+        //    else if (liftTimeEnum == LiftTimeEnum.InstancePerLifetimeScope)
+        //    {
+        //        builder.RegisterType<T>().As<IT>().InstancePerLifetimeScope();
+        //    }
+        //    else
+        //    {
+        //        builder.RegisterType<T>().As<IT>();
+        //    }
+        //}
         /// <summary>
         /// 控制反转
         /// </summary>
@@ -100,29 +100,41 @@ namespace Fate.Common.Ioc.Core
         {
             return container.Resolve<IT>();
         }
+
+        /// <summary>
+        /// 控制反转 返回一个作用域范围的生命周期
+        /// </summary>
+        /// <typeparam name="T">类所继承的接口</typeparam>
+        /// <returns></returns>
+
+        public static IT ResolveByScope<IT>() where IT : class
+        {
+            var lifetimeScope = container.BeginLifetimeScope();
+            return lifetimeScope.Resolve<IT>();
+        }
         #endregion
 
         #region 通过name注册
-        /// <summary>
-        /// 注册类到容器 通过key
-        /// </summary>
-        /// <typeparam name="T">类</typeparam>
-        /// <typeparam name="IT">当前类所继承的接口</typeparam>
-        public static void RegisterTypeByKeyName<T, IT>(AutoFacInitByKeyEnum autoFacInitByKeyEnum, LiftTimeEnum liftTimeEnum = LiftTimeEnum.InstancePerDependency) where T : class where IT : class
-        {
-            if (liftTimeEnum == LiftTimeEnum.SingleInstance)
-            {
-                builder.RegisterType<T>().Keyed<IT>(autoFacInitByKeyEnum).SingleInstance();
-            }
-            else if (liftTimeEnum == LiftTimeEnum.InstancePerLifetimeScope)
-            {
-                builder.RegisterType<T>().Keyed<IT>(autoFacInitByKeyEnum).InstancePerLifetimeScope();
-            }
-            else
-            {
-                builder.RegisterType<T>().Keyed<IT>(autoFacInitByKeyEnum);
-            }
-        }
+        ///// <summary>
+        ///// 注册类到容器 通过key
+        ///// </summary>
+        ///// <typeparam name="T">类</typeparam>
+        ///// <typeparam name="IT">当前类所继承的接口</typeparam>
+        //public static void RegisterTypeByKeyName<T, IT>(AutoFacInitByKeyEnum autoFacInitByKeyEnum, LiftTimeEnum liftTimeEnum = LiftTimeEnum.InstancePerDependency) where T : class where IT : class
+        //{
+        //    if (liftTimeEnum == LiftTimeEnum.SingleInstance)
+        //    {
+        //        builder.RegisterType<T>().Keyed<IT>(autoFacInitByKeyEnum).SingleInstance();
+        //    }
+        //    else if (liftTimeEnum == LiftTimeEnum.InstancePerLifetimeScope)
+        //    {
+        //        builder.RegisterType<T>().Keyed<IT>(autoFacInitByKeyEnum).InstancePerLifetimeScope();
+        //    }
+        //    else
+        //    {
+        //        builder.RegisterType<T>().Keyed<IT>(autoFacInitByKeyEnum);
+        //    }
+        //}
 
         public static IT ResolveByKeyName<IT>(AutoFacInitByKeyEnum autoFacInitByKeyEnum) where IT : class
         {
