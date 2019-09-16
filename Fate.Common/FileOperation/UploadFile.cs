@@ -13,7 +13,7 @@ namespace Fate.Common.FileOperation
     /// <summary>
     /// 文件上传
     /// </summary>
-    public class UploadFile : ICommonClassSigleDependency
+    public class UploadFile : IUploadFile
     {
         /// <summary>
         /// 每次上传最大的buffer大小  1M=1000000

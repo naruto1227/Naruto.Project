@@ -40,9 +40,13 @@ namespace Fate.Common.Config
         public const string DingDingLoginQrCodeUrl = "https://oapi.dingtalk.com/connect/qrconnect?appid={0}&response_type=code&scope=snsapi_login&state={1}&redirect_uri={2}";
 
         private MyJsonResult myJsonResult;
-        public DingDingConfig(MyJsonResult myJson)
+
+        private readonly IHttpRequest httpRequest;
+
+        public DingDingConfig(MyJsonResult myJson, IHttpRequest _httpRequest)
         {
             myJsonResult = myJson;
+            httpRequest = _httpRequest;
         }
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace Fate.Common.Config
         /// </summary>
         public async Task<MyJsonResult> GetTokenAsync()
         {
-            var res = await HttpWebRequest.DoGetAsync(string.Format(DingDingAccessTokenUrl, DingDingAppkey, DingDingAppSecret));
+            var res = await httpRequest.DoGetAsync(string.Format(DingDingAccessTokenUrl, DingDingAppkey, DingDingAppSecret));
             if (res != null && res["errcode"].ToString().Equals("0"))
             {
                 var token = res["access_token"] != null ? res["access_token"].ToString() : "";
@@ -71,7 +75,7 @@ namespace Fate.Common.Config
         /// <returns></returns>
         public async Task<MyJsonResult> GetUserInfoAsync(string token, string code)
         {
-            var res = await HttpWebRequest.DoPostAsync(string.Format(DingDingGetUserInfoUrl, token), new StringContent("{ \"tmp_auth_code\": \"" + code + "\"}"), null, null, PostContentTypeEnum.JSON);
+            var res = await httpRequest.DoPostAsync(string.Format(DingDingGetUserInfoUrl, token), new StringContent("{ \"tmp_auth_code\": \"" + code + "\"}"), null, null, PostContentTypeEnum.JSON);
             if (res != null && res["errcode"].ToString().Equals("0"))
             {
                 var userinfo = res["user_info"] != null ? res["user_info"].ToString() : "";

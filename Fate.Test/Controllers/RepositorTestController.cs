@@ -62,7 +62,7 @@ namespace Fate.Test.Controllers
                 dt.Rows.Add(dr);
             }
             Stopwatch stopwatch = Stopwatch.StartNew();
-            await dt.BulkLoadAsync();
+            await dt.BulkLoadAsync("");
             stopwatch.Stop();
             return new JsonResult(new { stopwatch.ElapsedMilliseconds });
         }

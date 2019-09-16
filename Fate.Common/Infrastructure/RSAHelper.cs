@@ -15,7 +15,7 @@ namespace Fate.Common.Infrastructure
     /// </summary>
     public class RSAHelper : ICommonClassSigleDependency
     {
-        private IRedisOperationHelp redis;
+        private readonly IRedisOperationHelp redis;
         public RSAHelper(IRedisOperationHelp redisOperationHelp)
         {
             redis = redisOperationHelp;

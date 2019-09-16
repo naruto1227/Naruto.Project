@@ -23,8 +23,8 @@ namespace Fate.Common.Infrastructure
     /// </summary>
     public class OrderNoOperation : ICommonClassSigleDependency
     {
-        private NLogHelper nLog;
-        private IRedisOperationHelp redis;
+        private readonly NLogHelper nLog;
+        private readonly IRedisOperationHelp redis;
         //定义获取服务的实例
         private IServiceProvider serviceProvider;
 

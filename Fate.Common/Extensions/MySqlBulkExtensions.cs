@@ -12,26 +12,24 @@ namespace Fate.Common.Extensions
 {
     public static class MySqlBulkExtensions
     {
-        private static IConfigurationRoot config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
         /// <summary>
         /// 批量导入
         /// </summary>
         /// <param name="_mySqlConnection"></param>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static async Task<int> BulkLoadAsync(this DataTable table)
+        public static async Task<int> BulkLoadAsync(this DataTable table, string connectionString)
         {
             var res = 0;
             var path = "";
             if (table != null && table.Rows.Count > 0)
             {
                 //获取连接地址
-                var connection = config.GetConnectionString("MysqlConnection");
-                if (string.IsNullOrWhiteSpace(connection))
+                if (string.IsNullOrWhiteSpace(connectionString))
                     throw new ArgumentNullException("mysql连接地址不能为空");
-                using (MySqlConnection _mySqlConnection = new MySqlConnection(connection))
+                using (MySqlConnection _mySqlConnection = new MySqlConnection(connectionString))
                 {
-                    path = table.ToCsv();
+                    path = await table.ToCsvAsync();
                     MySqlTransaction mySqlTransaction = null;
                     try
                     {

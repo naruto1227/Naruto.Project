@@ -65,6 +65,12 @@ namespace Fate.Common.Ioc.Core
             //注册公共层(单例模式)
             builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonClassSigleDependency") != null).SingleInstance();
 
+            //注册公共层单例
+            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonSingleDependency") != null).AsImplementedInterfaces().SingleInstance();
+
+            //注册公共层作用域
+            builder.RegisterAssemblyTypes(assemblyCommon).Where(a => a.GetInterface("ICommonScopeDependency") != null).AsImplementedInterfaces().InstancePerLifetimeScope();
+
             builder.Populate(services);
             container = builder.Build();
             return container;

@@ -20,11 +20,11 @@ namespace Fate.Common.FileOperation
         /// <summary>
         /// 获取文件写入的服务
         /// </summary>
-        private UploadFile uploadFile;
+        private IUploadFile uploadFile;
 
         private IOptions<FileUploadOptions> options;
 
-        public FileHelper(UploadFile _uploadFile, IOptions<FileUploadOptions> _options)
+        public FileHelper(IUploadFile _uploadFile, IOptions<FileUploadOptions> _options)
         {
             uploadFile = _uploadFile;
             options = _options;

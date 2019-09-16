@@ -4,50 +4,74 @@ using System.Text;
 using NLog;
 using NLog.Web.AspNetCore;
 using Fate.Common.Interface;
+using Fate.Common.Infrastructure;
+using System.Threading.Tasks;
 
 namespace Fate.Common.NLog
 {
     /// <summary>
     /// 写日志
     /// </summary>
-    public class NLogHelper : ICommonClassSigleDependency
+    public class NLogHelper : ILog
     {
         /// <summary>
-        /// 
+        /// 初始化
         /// </summary>
-        private static Logger logger = LogManager.GetCurrentClassLogger();
-
+        private readonly Logger logger;
         public NLogHelper()
         {
-        }
-        /// <summary>
-        /// 写入一个基本信息消息
-        /// </summary>
-        /// <param name="message"></param>
-        public void Info(string message)
-        {
-            logger.Info(message);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="message"></param>
-        public void Debug(string message)
-        {
-            logger.Debug(message);
+            logger = LogManager.GetCurrentClassLogger();
         }
 
-        public void Error(string message)
+        /// <summary>
+        /// 一般提示
+        /// </summary>
+
+        public Task Info(string message)
         {
-            logger.Error(message);
+            return Task.Run(() =>
+            {
+                logger.Info(message);
+            });
         }
-        public void Trace(string message)
+        /// <summary>
+        /// 重大错误提示
+        /// </summary>
+        /// <param name="message"></param>
+        public Task Error(string message)
         {
-            logger.Trace(message);
+            return Task.Run(() =>
+            {
+                logger.Error(message);
+            });
         }
-        public void Fatal(string message)
+
+        /// <summary>
+        /// bug
+        /// </summary>
+        /// <param name="message"></param>
+        public Task Debug(string message)
         {
-            logger.Fatal(message);
+            return Task.Run(() =>
+            {
+                logger.Debug(message);
+            });
+        }
+
+        public Task Trace(string message)
+        {
+            return Task.Run(() =>
+            {
+                logger.Trace(message);
+            });
+        }
+
+        public Task Fatal(string message)
+        {
+            return Task.Run(() =>
+            {
+                logger.Fatal(message);
+            });
         }
     }
 }
