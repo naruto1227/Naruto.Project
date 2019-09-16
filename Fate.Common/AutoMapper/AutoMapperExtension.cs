@@ -15,6 +15,8 @@ namespace Fate.Common.AutoMapper
     /// </summary>
     public static class AutoMapperExtension
     {
+        private readonly static object _lock = new object();
+
         /// <summary>
         /// 传输一个对象
         /// </summary>
@@ -24,10 +26,13 @@ namespace Fate.Common.AutoMapper
         public static T MapperTo<T>(this object soure, string[] ignores = null) where T : class
         {
             if (soure == null)
-                return null;
-            Mapper.Reset();
-            Mapper.Initialize(a => a.CreateMap(soure.GetType(), typeof(T)).IgnoreAllExisting(ignores));
-            return Mapper.Map<T>(soure);
+                return default;
+            lock (_lock)
+            {
+                Mapper.Reset();
+                Mapper.Initialize(a => a.CreateMap(soure.GetType(), typeof(T)).IgnoreAllExisting(ignores));
+                return Mapper.Map<T>(soure);
+            }
         }
         /// <summary>
         /// 为已经存在的对象进行automapper
@@ -36,10 +41,13 @@ namespace Fate.Common.AutoMapper
         public static T MapperTo<T>(this object obj, T result, string[] ignores = null) where T : class
         {
             if (obj == null)
-                return default(T);
-            Mapper.Reset();
-            Mapper.Initialize(a => a.CreateMap(obj.GetType().UnderlyingSystemType, typeof(T)).IgnoreAllExisting(ignores));
-            return (T)Mapper.Map(obj, result, obj.GetType().UnderlyingSystemType, typeof(T));
+                return default;
+            lock (_lock)
+            {
+                Mapper.Reset();
+                Mapper.Initialize(a => a.CreateMap(obj.GetType().UnderlyingSystemType, typeof(T)).IgnoreAllExisting(ignores));
+                return (T)Mapper.Map(obj, result, obj.GetType().UnderlyingSystemType, typeof(T));
+            }
         }
         /// <summary>
         /// 传输一个集合
@@ -50,7 +58,7 @@ namespace Fate.Common.AutoMapper
         public static List<T> MapperTo<T>(this IEnumerable soure) where T : class
         {
             if (soure == null)
-                return null;
+                return default;
             Mapper.Reset();
             foreach (var item in soure)
             {
@@ -68,7 +76,7 @@ namespace Fate.Common.AutoMapper
         public static List<T> MapTo<T>(this DataTable dt)
         {
             if (dt == null || dt.Rows.Count == 0)
-                return default(List<T>);
+                return default;
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<IDataReader, List<T>>());
             var mapper = config.CreateMapper();
@@ -82,7 +90,7 @@ namespace Fate.Common.AutoMapper
         /// <returns></returns>
         public static DataTable MapTo<T>(this IEnumerable<T> list)
         {
-            if (list == null) return default(DataTable);
+            if (list == null) return default;
 
             //创建属性的集合
             List<PropertyInfo> pList = new List<PropertyInfo>();
