@@ -3,6 +3,7 @@ using System;
 using Fate.Common.Redis.RedisConfig;
 using System.Reflection;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace Fate.Common.Redis
 {
@@ -13,11 +14,13 @@ namespace Fate.Common.Redis
     /// </summary>
     public static class RedisDependencyExtension
     {
+
         /// <summary>
-        /// 注入redis仓储
+        /// 注入redis服务
         /// </summary>
+        /// <param name="server"></param>
         /// <returns></returns>
-        public static IServiceCollection AddRedisRepository(this IServiceCollection server, Action<RedisOptions> options)
+        internal static IServiceCollection AddRedisService(this IServiceCollection server)
         {
             //获取当前层的所有的类型
             var types = Assembly.Load(Assembly.GetAssembly(typeof(RedisDependencyExtension)).GetName()).GetTypes();
@@ -41,9 +44,32 @@ namespace Fate.Common.Redis
             {
                 server.AddSingleton(item);
             });
+            return server;
+        }
 
+        /// <summary>
+        /// 注入redis仓储
+        /// </summary>
+        /// <returns></returns>
+        public static IServiceCollection AddRedisRepository(this IServiceCollection server, Action<RedisOptions> options)
+        {
+            //注入服务
+            server.AddRedisService();
             //配置参数
             server.Configure(options);
+            return server;
+        }
+
+        /// <summary>
+        /// 注入redis仓储
+        /// </summary>
+        /// <returns></returns>
+        public static IServiceCollection AddRedisRepository(this IServiceCollection server, IConfiguration config)
+        {
+            //注入服务
+            server.AddRedisService();
+            //配置参数
+            server.Configure<RedisOptions>(config);
             return server;
         }
     }
