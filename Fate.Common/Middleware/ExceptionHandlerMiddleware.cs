@@ -54,7 +54,7 @@ namespace Fate.Common.Middleware
                     myJsonResult.failMsg = ex.Message;
                     myJsonResult.msg = "请求异常";
                     //转换成错误的集合
-                    nLog.Error("\n错误消息：" + ex.ToString().Trim() + "\n");//记录日志
+                    await nLog.Error("\n错误消息：" + ex.ToString().Trim() + "\n");//记录日志
                 }
 
                 await HandleExceptionAsync(context, myJsonResult);
@@ -69,6 +69,7 @@ namespace Fate.Common.Middleware
 
         private static Task HandleExceptionAsync(HttpContext context, MyJsonResult jsonResult)
         {
+            context.Response.StatusCode = 500;
             context.Response.ContentType = "application/json;charset=utf-8";
             return context.Response.WriteAsync(JsonConvert.SerializeObject(jsonResult));
         }
