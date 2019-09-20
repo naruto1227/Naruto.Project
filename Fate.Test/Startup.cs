@@ -107,7 +107,7 @@ namespace Fate.Test
 
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集
-            ApplicationContainer = Fate.Common.Ioc.Core.AutofacInit.ConvertToAutofac(services);
+            ApplicationContainer = Fate.Common.Ioc.Core.AutofacDI.ConvertToAutofac(services);
             return new AutofacServiceProvider(ApplicationContainer);
         }
         /// <summary>

@@ -94,8 +94,8 @@ namespace Fate.Test.Controllers
         [HttpGet]
         public async Task test33()
         {
-            List<setting> list = Common.Ioc.Core.AutofacInit.Resolve<List<setting>>();
-            List<string> li = Common.Ioc.Core.AutofacInit.Resolve<List<string>>();
+            List<setting> list = Common.Ioc.Core.AutofacDI.Resolve<List<setting>>();
+            List<string> li = Common.Ioc.Core.AutofacDI.Resolve<List<string>>();
             if (list.Count() > 0)
                 list.Remove(list[0]);
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
@@ -145,7 +145,7 @@ namespace Fate.Test.Controllers
 
         public void model()
         {
-            var str = AutofacInit.Resolve<setting>();
+            var str = AutofacDI.Resolve<setting>();
         }
 
         public string subTest()
@@ -164,7 +164,7 @@ namespace Fate.Test.Controllers
         public void testlog()
         {
 
-            var log = AutofacInit.Resolve<Fate.Common.NLog.NLogHelper>();
+            var log = AutofacDI.Resolve<Fate.Common.NLog.NLogHelper>();
             log.Info("1");
         }
 

@@ -31,7 +31,7 @@ namespace Fate.WebApi.Controllers
         /// <returns></returns>
         public TResult AutofacResolve<TResult>() where TResult : class
         {
-            return AutofacInit.Resolve<TResult>();
+            return AutofacDI.Resolve<TResult>();
         }
     }
 }

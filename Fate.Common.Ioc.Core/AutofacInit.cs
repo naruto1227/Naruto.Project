@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Fate.Common.Ioc.Core
 {
-    public static class AutofacInit
+    public static class AutofacDI
     {
         private static IContainer container;
         //private static ContainerBuilder builder;
