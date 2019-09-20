@@ -30,5 +30,16 @@ namespace Fate.Common.Redis.RedisConfig
         /// </summary>
         public string RedisSentinelIp { get; set; }
 
+        /// <summary>
+        /// 连接超时时间 单位毫秒 默认 300ms
+        /// </summary>
+        public int ConnectTimeout { get; set; } = 300;
+
+        /// <summary>
+        /// 异步超时时间 单位毫秒 默认5s
+        /// </summary>
+
+        public int AsyncTimeout { get; set; } = 5000;
+
     }
 }

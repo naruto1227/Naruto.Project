@@ -68,12 +68,33 @@ namespace Fate.Common.Redis.RedisConfig
                 return options.Value != null ? options.Value.IsOpenSentinel.ToString() : "";
             }
         }
+        /// <summary>
+        /// 连接超时时间
+        /// </summary>
+        public int DefaultConnectTimeout
+        {
+            get
+            {
+                return options.Value != null ? options.Value.ConnectTimeout : 300;
+            }
+        }
 
-        private  ISubscriber sentinelsub;
+        /// <summary>
+        /// 异步超时时间
+        /// </summary>
+        public int DefaultAsyncTimeout
+        {
+            get
+            {
+                return options.Value != null ? options.Value.AsyncTimeout : 5000;
+            }
+        }
+
+        private ISubscriber sentinelsub;
         /// <summary>
         /// 缓存
         /// </summary>
-        private  readonly ConcurrentDictionary<string, ConnectionMultiplexer> Concache = new ConcurrentDictionary<string, ConnectionMultiplexer>();
+        private readonly ConcurrentDictionary<string, ConnectionMultiplexer> Concache = new ConcurrentDictionary<string, ConnectionMultiplexer>();
 
         /// <summary>
         /// 单例获取
@@ -124,7 +145,9 @@ namespace Fate.Common.Redis.RedisConfig
                 AllowAdmin = true,
                 Password = RedisPassword,
                 DefaultDatabase = RedisDefaultDataBase,
-                ConnectTimeout = 300,
+                ConnectTimeout = DefaultConnectTimeout,
+                AbortOnConnectFail = false,
+                AsyncTimeout = DefaultAsyncTimeout
             };
             if (string.IsNullOrWhiteSpace(RedisConnectionConfig))
             {
