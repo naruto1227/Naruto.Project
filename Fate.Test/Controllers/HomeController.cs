@@ -134,7 +134,7 @@ namespace Fate.Test.Controllers
 
         public void test22()
         {
-            rSA.CreateRSACache();
+            rSA.CreateRSACacheAsync();
         }
 
         public async Task sendEmail()

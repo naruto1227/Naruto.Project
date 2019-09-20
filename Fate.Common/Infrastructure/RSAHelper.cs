@@ -8,6 +8,9 @@ using System.IO;
 using System.Xml;
 using Fate.Common.Redis.IRedisManage;
 using Fate.Common.Interface;
+using System.Threading.Tasks;
+using XC.RSAUtil;
+
 namespace Fate.Common.Infrastructure
 {
     /// <summary>
@@ -72,12 +75,12 @@ namespace Fate.Common.Infrastructure
         /// <summary>
         /// 写入RSA内容
         /// </summary>
-        public void CreateRSACache()
+        public async Task CreateRSACacheAsync()
         {
             using (var rsa = RSA.Create())
             {
-                redis.StringSet(RSAConfig.Cache_PublicKey, rsa.ToXml(false));
-                redis.StringSet(RSAConfig.Cache_PrivateKey, rsa.ToXml(true));
+                await redis.StringSetAsync(RSAConfig.Cache_PublicKey, rsa.ToXml(false));
+                await redis.StringSetAsync(RSAConfig.Cache_PrivateKey, rsa.ToXml(true));
             }
         }
 
@@ -86,15 +89,17 @@ namespace Fate.Common.Infrastructure
         /// </summary>
         /// <param name="enStr"></param>
         /// <returns></returns>
-        public string ToEncrypt(string enStr)
+        public async Task<string> ToEncryptAsync(string enStr)
         {
             using (var rsa = RSA.Create())
             {
-                if (string.IsNullOrWhiteSpace(redis.StringGet(RSAConfig.Cache_PublicKey)))
+                var pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
+                if (string.IsNullOrWhiteSpace(pubKey))
                 {
-                    CreateRSACache();
+                    await CreateRSACacheAsync();
+                    pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
                 }
-                rsa.FromXml(redis.StringGet(RSAConfig.Cache_PublicKey), false);
+                rsa.FromXml(pubKey, false);
                 //js端用 RSAEncryptionPadding 的Pkcs1
                 return Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes(enStr), RSAEncryptionPadding.OaepSHA256));
             }
@@ -104,13 +109,28 @@ namespace Fate.Common.Infrastructure
         /// </summary>
         /// <param name="deStr"></param>
         /// <returns></returns>
-        public string ToDecrypt(string deStr)
+        public async Task<string> ToDecrypt(string deStr)
         {
             using (var rsa = RSA.Create())
             {
-                rsa.FromXml(redis.StringGet(RSAConfig.Cache_PrivateKey), false);
+                rsa.FromXml(await redis.StringGetAsync(RSAConfig.Cache_PrivateKey), false);
                 return Encoding.UTF8.GetString((rsa.Decrypt(Convert.FromBase64String(deStr), RSAEncryptionPadding.OaepSHA256)));
             }
+        }
+
+        /// <summary>
+        /// 获取公钥的内容
+        /// </summary>
+        /// <returns></returns>
+        public async Task<string> GetPublicKeyStringAsync()
+        {
+            var pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
+            if (string.IsNullOrWhiteSpace(pubKey))
+            {
+                await CreateRSACacheAsync();
+                pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
+            }
+            return RsaKeyConvert.PublicKeyXmlToPem(pubKey);
         }
         #endregion
 
@@ -132,7 +152,7 @@ namespace Fate.Common.Infrastructure
             {
                 if (string.IsNullOrWhiteSpace(redis.StringGet(RSAConfig.Cache_PublicKey)))
                 {
-                    CreateRSACache();
+                    CreateRSACacheAsync();
                 }
                 xml = redis.StringGet(RSAConfig.Cache_PublicKey);
             }
