@@ -1,11 +1,10 @@
 ﻿
-using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using System;
 using System.Linq;
 using Fate.Common.Redis.RedisConfig;
 
-namespace Fate.Common.Extensions
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 分布式缓存的扩展

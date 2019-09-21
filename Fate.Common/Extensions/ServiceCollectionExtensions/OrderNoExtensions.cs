@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
+
 using Fate.Common.Options;
 using Fate.Common.Repository.UnitOfWork;
 
-namespace Fate.Common.Extensions
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class OrderNoExtensions
     {

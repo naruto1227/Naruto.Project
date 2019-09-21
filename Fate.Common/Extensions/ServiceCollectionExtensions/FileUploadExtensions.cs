@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Fate.Common.Options;
 using System.IO;
 using Fate.Common.FileOperation;
 
-namespace Fate.Common.Extensions
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static partial class FileUploadExtensions
     {

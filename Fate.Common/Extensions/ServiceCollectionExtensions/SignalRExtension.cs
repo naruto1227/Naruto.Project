@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.DependencyInjection;
+
 using System;
 
 using System.Linq;
 using Fate.Common.Redis.RedisConfig;
-namespace Fate.Common.Extensions
+namespace Microsoft.Extensions.DependencyInjection
 {
 
     public static class SignalRExtension
