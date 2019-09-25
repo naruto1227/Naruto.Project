@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Fate.Domain.Model;
 using Fate.Domain.Model.Entities;
 using System.Threading.Tasks;
+using Fate.Common.Repository.Interceptor;
 
 namespace Fate.XUnitTest
 {
@@ -33,15 +34,18 @@ namespace Fate.XUnitTest
             //注入mysql仓储   //注入多个ef配置信息
             services.AddMysqlRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;");
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;");
 
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
                 options.IsOpenMasterSlave = false;
             });
+            services.AddScoped<EFCommandInterceptor>();
+            services.AddScoped<EFDiagnosticListener>();
+            DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
         }
         [Fact]
-        public async Task Test()
+        public void Test()
         {
 
             var iserverPri = services.BuildServiceProvider();
@@ -57,7 +61,8 @@ namespace Fate.XUnitTest
             //var re2 = iserverPri.GetRequiredService<IRepositoryFactory>();
 
             var u0k = iserverPri.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-            var res = await u0k.Query<setting>().AsQueryable().FirstOrDefaultAsync();
+             u0k.Query<setting>().AsQueryable().OrderByExtension("Rule").ToList();
+            var res =  u0k.Query<setting>().AsQueryable().FirstOrDefault();
         }
         [Fact]
         public async Task bulkAdd()

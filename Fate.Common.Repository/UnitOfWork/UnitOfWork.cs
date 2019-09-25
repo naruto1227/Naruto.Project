@@ -322,7 +322,14 @@ namespace Fate.Common.Repository.UnitOfWork
         private string SlaveConnection(Type dbContextType)
         {
             //获取从库的信息
-            var slaveInfo = SlavePools.slaveConnec.Where(a => a.Key == dbContextType).Select(a => a.Value).FirstOrDefault().Where(a => a.IsAvailable).OrderBy(a => Guid.NewGuid()).FirstOrDefault();
+            var slaveList = SlavePools.slaveConnec.Where(a => a.Key == dbContextType).Select(a => a.Value).FirstOrDefault();
+
+            SlaveDbConnection slaveInfo = null;
+            if (slaveList != null && slaveList.Count() > 0)
+            {
+                slaveInfo = slaveList.Where(a => a.IsAvailable).OrderBy(a => Guid.NewGuid()).FirstOrDefault();
+            }
+
             if (slaveInfo == null)
             {
                 return options.Value.Where(a => a.DbContextType == dbContextType).Select(a => a.WriteReadConnectionString).FirstOrDefault();

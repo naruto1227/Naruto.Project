@@ -94,7 +94,7 @@ namespace Fate.Common.Repository.Interceptor
                     isSlaveOrMaster = false;
                 }
                 //跟踪执行脚本
-                else if (value.Key == RelationalEventId.CommandExecuting.Name )
+                else if (value.Key == RelationalEventId.CommandExecuting.Name)
                 {
                     var command = ((CommandEventData)value.Value).Command;
                     if (command.CommandText.StartsWith("SELECT"))
@@ -145,7 +145,15 @@ namespace Fate.Common.Repository.Interceptor
         private string SlaveConnection(Type dbContextType)
         {
             //获取从库的信息
-            var slaveInfo = SlavePools.slaveConnec.Where(a => a.Key == dbContextType).Select(a => a.Value).FirstOrDefault().Where(a => a.IsAvailable).OrderBy(a => Guid.NewGuid()).FirstOrDefault();
+            var slaveList = SlavePools.slaveConnec.Where(a => a.Key == dbContextType).Select(a => a.Value).FirstOrDefault();
+
+            SlaveDbConnection slaveInfo = null;
+
+            if (slaveList != null && slaveList.Count() > 0)
+            {
+                slaveInfo = slaveList.Where(a => a.IsAvailable).OrderBy(a => Guid.NewGuid()).FirstOrDefault();
+            }
+
             if (slaveInfo == null)
             {
                 return options.Value.Where(a => a.DbContextType == dbContextType).Select(a => a.WriteReadConnectionString).FirstOrDefault();
