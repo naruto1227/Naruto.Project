@@ -22,14 +22,5 @@ namespace Fate.Common.Mapper.Attributes
 
         public bool ReverseMap { get; set; } = false;
 
-        public AutoInjectDtoAttribute()
-        {
-
-        }
-        public AutoInjectDtoAttribute(Type soureType, Type targetType)
-        {
-            SoureType = soureType;
-            TargetType = targetType;
-        }
     }
 }

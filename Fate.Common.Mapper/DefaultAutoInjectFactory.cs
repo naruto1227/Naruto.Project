@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using Fate.Common.Mapper.Attributes;
 
+using System.Linq.Expressions;
 namespace Fate.Common.Mapper
 {
     /// <summary>
