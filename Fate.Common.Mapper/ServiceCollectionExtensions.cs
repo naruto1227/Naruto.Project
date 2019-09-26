@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
                 }
             }
-            , typeof(ServiceCollectionExtensions));
+            , typesParams);
         }
     }
 }
