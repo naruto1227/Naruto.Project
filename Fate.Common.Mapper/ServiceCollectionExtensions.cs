@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services"></param>
         /// <param name="typesParams"></param>
         /// <returns></returns>
-        public static IServiceCollection RegisterMapper(this IServiceCollection services, params Type[] typesParams)
+        public static IServiceCollection AddRegisterMapper(this IServiceCollection services, params Type[] typesParams)
         {
 
             services.AddTransient(typeof(IAutoInjectFactory), typeof(DefaultAutoInjectFactory));
