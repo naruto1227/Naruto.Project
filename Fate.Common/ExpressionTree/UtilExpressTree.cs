@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Fate.Common.Repository
+namespace Fate.Common.ExpressionTree
 {
     /// <summary>
     /// 表达式树的 扩展

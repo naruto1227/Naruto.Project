@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="Email\" />
+    <Folder Include="ExpressionTree\" />
   </ItemGroup>
 
   <ItemGroup>
