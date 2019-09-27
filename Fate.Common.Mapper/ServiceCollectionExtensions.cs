@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// 注册实体映射关系
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="typesParams"></param>
+        /// <param name="typesParams">传递当前需要实现映射的层的一个对象的Type即可</param>
         /// <returns></returns>
         public static IServiceCollection AddRegisterMapper(this IServiceCollection services, params Type[] typesParams)
         {

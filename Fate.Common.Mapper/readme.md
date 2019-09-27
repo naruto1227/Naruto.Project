@@ -1,5 +1,6 @@
+># 实体映射需要引用Fate.Common.Mapper层
+>> ## 需要在StartUp中注入AddRegisterMapper ,包含一个参数<b>typesParams</b>（传递当前需要实现映射的层的一个对象的Type即可,每个层只需要传递一个type）
 ># 1.自动化批量注入映射关系
->* ## 所有需要实现属性自动注册的层需要引用Fate.Common.Mapper层
 >* ## 特性讲解
 >>   1. <b>AutoInjectDtoAttribute</b> 标记当前Dto 为自动注入映射关系的对象  
 >><sub>1.1. 字段讲解</sub>
