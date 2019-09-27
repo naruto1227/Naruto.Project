@@ -23,6 +23,8 @@ namespace Fate.Common.Mapper
         /// <returns></returns>
         public T MapperTo<T>(object soure) where T : class
         {
+            if (soure == null)
+                return default;
             return mapper.Map<T>(soure);
         }
         /// <summary>
@@ -34,6 +36,8 @@ namespace Fate.Common.Mapper
         /// <returns></returns>
         public T MapperTo<T>(object soure, T result) where T : class
         {
+            if (soure == null)
+                return default;
             return (T)mapper.Map(soure, result, soure.GetType().UnderlyingSystemType, result.GetType());
         }
         /// <summary>
@@ -44,6 +48,8 @@ namespace Fate.Common.Mapper
         /// <returns></returns>
         public Task<List<T>> MapperToList<T>(object soure) where T : class
         {
+            if (soure == null)
+                return default;
             return Task.Run(() => mapper.Map<List<T>>(soure));
         }
     }

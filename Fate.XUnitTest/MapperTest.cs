@@ -14,18 +14,22 @@ namespace Fate.XUnitTest
     public class TestDto
     {
         public int MyProperty { get; set; }
+        [AutoInjectIgnore]
+        public int MyProperty2 { get; set; }
     }
 
     public class TestDto2
     {
         public int MyProperty { get; set; }
+
+        public int MyProperty2 { get; set; }
     }
 
     public class MyProFile : Profile
     {
         public MyProFile()
         {
-            CreateMap(typeof(TestDto), typeof(TestDto2));
+            CreateMap(typeof(TestDto), typeof(TestDto));
         }
     }
     public class MapperTest
@@ -45,8 +49,8 @@ namespace Fate.XUnitTest
                 var mapper = service.ServiceProvider.GetRequiredService<IEntityMapper>();
 
                 var res = mapper.MapperTo<TestDto2>(new TestDto() { MyProperty = 1 });
-                mapper.MapperTo(new TestDto() { MyProperty = 2 }, res);
-
+               var res3= mapper.MapperTo(new TestDto() { MyProperty = 2,MyProperty2=123123 }, res);
+                var res2 = mapper.MapperTo<TestDto>(new TestDto() { MyProperty = 123123 });
             }
         }
     }
