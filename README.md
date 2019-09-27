@@ -11,7 +11,7 @@
 > 8. <b>Fate.Common.Ioc.Core</b>使用Autofac替换原有的Unity依赖注入.
 > 9. <b>Fate.Common.Mapper</b>使用的AutoMapper进行实体映射。
 > 10. <b>Fate.Domain.Event</b>实现领域服务的事件总线，底板使用的Redis作为数据存储，缓存订阅的事件
-> 11 <b>Fate.Domain</b>领域层，业务的核心层，负责需求的书写
+> 11. <b>Fate.Domain</b>领域层，业务的核心层，负责需求的书写
 > 12. <b>Fate.Domain.Model</b>领域实体层
 > 13. <b>Fate.Application</b>应用层
 > 14. <b>Fate.Common</b>基础设施层
