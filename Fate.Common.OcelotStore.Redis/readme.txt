@@ -1,1 +1,0 @@
-﻿1.此扩展是将ocelot的配置数据存放在redis中，实际的开发环境推荐使用Fate.Common.OcelotStore.EFCore 层来扩展ocelot的存储

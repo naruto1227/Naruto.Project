@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Fate.Commom.Consul.ServiceRegister;
 using Fate.Commom.Consul.ServiceDiscovery;
 using Fate.Commom.Consul.KVRepository;
 using Fate.Commom.Consul.Object;
+using Fate.Commom.Consul;
 
-namespace Fate.Commom.Consul
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿
 using System;
 using Fate.Common.Redis.RedisConfig;
 using System.Reflection;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 
-namespace Fate.Common.Redis
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 张海波

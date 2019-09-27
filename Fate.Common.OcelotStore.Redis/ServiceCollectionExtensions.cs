@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Fate.Common.OcelotStore.Redis;
-using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ocelot;
 using Ocelot.Cache;
@@ -10,7 +10,9 @@ using Ocelot.Configuration.File;
 using Ocelot.Configuration.Repository;
 using Fate.Common.Redis;
 using Fate.Common.Redis.IRedisManage;
-namespace Ocelot.DependencyInjection
+using Ocelot.DependencyInjection;
+
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 依赖注入

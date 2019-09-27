@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using DotNetCore.CAP;
 
-namespace Fate.Common.BaseRibbitMQ
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// CAP.RabbitMQ 的配置服务

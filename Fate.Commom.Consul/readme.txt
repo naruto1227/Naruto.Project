@@ -1,3 +1,0 @@
-﻿1.如需使用consul服务 ，请注入ServiceCollectionExtensions中的AddConsul扩展方法
-2.如需在启动的时候 进行consul服务注册，紧接着使用UseServiceRegister方法来注入
-3.此扩展实现了consul的服务发现，服务注册，数据存储，对应的接口为IServiceDiscoveryManage，IServiceRegisterManage，IKVRepository，如需扩展请替换接口的实现即可

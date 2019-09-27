@@ -4,13 +4,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Fate.Common.Repository.Object;
-using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.EntityFrameworkCore;
 using Fate.Common.Repository.Interceptor;
 using System.Diagnostics;
 using Fate.Common.Repository.HostServer;
 
-namespace Fate.Common.Repository
+namespace Microsoft.Extensions.DependencyInjection
 {
 
     public static class RepositoryExtensions

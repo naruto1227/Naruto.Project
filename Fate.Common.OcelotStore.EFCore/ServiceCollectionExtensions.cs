@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Ocelot;
-using Ocelot.Cache;
-using Ocelot.Configuration.File;
 using Ocelot.Configuration.Repository;
 
 using Fate.Common.OcelotStore.EFCore;
 using Fate.Common.Repository.UnitOfWork;
 using Fate.Common.Repository;
 using Fate.Common.Repository.Object;
-using Microsoft.Extensions.Options;
 using Fate.Common.Redis;
 using Fate.Common.Redis.IRedisManage;
+using Ocelot.DependencyInjection;
 
-namespace Ocelot.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 依赖注入

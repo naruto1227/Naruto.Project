@@ -1,39 +1,17 @@
-﻿# MyProject
+﻿# Fate.Project 
+> 本框架采用的.Net Core 2.2 的框架,用的DDD的思想，实现了Redis,EFCore,Consul,Ocelot,Mapper,AutoFac,RabbitMQ,IdentityServer4的一套分布式快速开发的框架.
 
-#### 介绍
-{**以下是码云平台说明，您可以替换此简介**
-码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
-
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
-
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)1
+> 1. <b>Fate.Commom.Consul</b>实现了consul的服务发现和服务注册，还有数据的仓储.
+> 2. <b>Fate.Common.Redis</b>使用<b>StackExchange.Redis</b>实现对Redis访问层的封装，客户端支持集群的配置。
+> 3. <b>Fate.Common.Repository</b>使用EFCore来实现了数据库访问的封装，支持工作单元，仓储，分库，多上下文模式，支持一主多从配置.
+> 4. <b>Fate.Common.OcelotStore.EFCore</b>是对Ocelot的原来网关的扩展，改变原有的从文件中读取配置的方法，替换成数据库中读取配置信息，然后将数据存储到Redis缓存中。
+> 5. <b>Fate.Common.OcelotStore.Redis</b>是对Ocelot的原有网关的扩展，将数据存储到Redis缓存中.
+> 6. <b>Fate.Common.BaseRibbitMQ</b>和<b>Fate.Common.CAP.Subscribe</b>共同实现发布订阅.异步消息队列
+> 7. <b>Fate.Common.Configuration</b>是对Core原有的配置信息获取进行扩展，改成成数据库读取配置信息.(目前未完成)
+> 8. <b>Fate.Common.Ioc.Core</b>使用Autofac替换原有的Unity依赖注入.
+> 9. <b>Fate.Common.Mapper</b>使用的AutoMapper进行实体映射。
+> 10. <b>Fate.Domain.Event</b>实现领域服务的事件总线，底板使用的Redis作为数据存储，缓存订阅的事件
+> 11 <b>Fate.Domain</b>领域层，业务的核心层，负责需求的书写
+> 12. <b>Fate.Domain.Model</b>领域实体层
+> 13. <b>Fate.Application</b>应用层
+> 14. <b>Fate.Common</b>基础设施层

@@ -1,3 +1,0 @@
-1.ILoadBalancerHouse接口实现从内存的字典中获取获取负载均衡的loadBalancer 对象
-2.ILoadBalancer实现负载均衡的算法
-3.ILoadBalancerFactory 根据consul的主机端口 获取服务发现的代理，然后根据负载均衡的类型获取对应的ILoadBalancer对象

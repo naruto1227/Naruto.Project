@@ -1,5 +1,0 @@
-﻿1.此层是实现RabbitMQ 发布消息的 服务
-2.需要现在Startup中注入CAPRabbitMQServicesExtensions 中的扩展方法
-3.需要使用发布消息的服务的层，引用此层即可
-4.此层不需要继承其他层的引用
-5.CapRoutekey 用来填写所有的路由的key来方便维护
