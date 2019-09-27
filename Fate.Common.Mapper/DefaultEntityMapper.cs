@@ -41,16 +41,29 @@ namespace Fate.Common.Mapper
             return (T)mapper.Map(soure, result, soure.GetType().UnderlyingSystemType, result.GetType());
         }
         /// <summary>
-        /// 传输一个集合
+        /// 异步传输一个集合
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="soure"></param>
         /// <returns></returns>
-        public Task<List<T>> MapperToList<T>(object soure) where T : class
+        public Task<List<T>> MapperToListAsync<T>(object soure) where T : class
         {
             if (soure == null)
                 return default;
             return Task.Run(() => mapper.Map<List<T>>(soure));
+        }
+
+        /// <summary>
+        /// 异步传输一个集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="soure"></param>
+        /// <returns></returns>
+        public List<T> MapperToList<T>(object soure) where T : class
+        {
+            if (soure == null)
+                return default;
+            return mapper.Map<List<T>>(soure);
         }
     }
 }

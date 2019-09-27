@@ -33,6 +33,14 @@ namespace Fate.Common.Mapper
         /// <typeparam name="T"></typeparam>
         /// <param name="soure"></param>
         /// <returns></returns>
-        Task<List<T>> MapperToList<T>(object soure) where T : class;
+        Task<List<T>> MapperToListAsync<T>(object soure) where T : class;
+
+        /// <summary>
+        /// 传输一个集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="soure"></param>
+        /// <returns></returns>
+        List<T> MapperToList<T>(object soure) where T : class;
     }
 }
