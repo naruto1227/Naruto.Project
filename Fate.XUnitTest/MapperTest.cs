@@ -49,8 +49,9 @@ namespace Fate.XUnitTest
                 var mapper = service.ServiceProvider.GetRequiredService<IEntityMapper>();
 
                 var res = mapper.MapperTo<TestDto2>(new TestDto() { MyProperty = 1 });
-               var res3= mapper.MapperTo(new TestDto() { MyProperty = 2,MyProperty2=123123 }, res);
+                var res3 = mapper.MapperTo(new TestDto() { MyProperty = 2, MyProperty2 = 123123 }, res);
                 var res2 = mapper.MapperTo<TestDto>(new TestDto() { MyProperty = 123123 });
+                var res4 = mapper.MapperToList<TestDto>(new List<TestDto>() { new TestDto { MyProperty = 123123 } });
             }
         }
     }
