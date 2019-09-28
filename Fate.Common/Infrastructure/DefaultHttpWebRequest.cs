@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 namespace Fate.Common.Infrastructure
 {
-    public class HttpWebRequest : IHttpRequest
+    public class DefaultHttpWebRequest : IHttpRequest
     {
 
         /// <summary>
@@ -18,9 +18,9 @@ namespace Fate.Common.Infrastructure
         /// </summary>
         private readonly IHttpClientFactory httpClientFactory;
 
-        private readonly ILogger<HttpWebRequest> logger;
+        private readonly ILogger<DefaultHttpWebRequest> logger;
 
-        public HttpWebRequest(IHttpClientFactory _httpClientFactory, ILogger<HttpWebRequest> _logger)
+        public DefaultHttpWebRequest(IHttpClientFactory _httpClientFactory, ILogger<DefaultHttpWebRequest> _logger)
         {
             httpClientFactory = _httpClientFactory;
             logger = _logger;
