@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Ioc.Core;
+using Fate.Common.AutofacDependencyInjection;
 using Fate.Common.Redis.IRedisManage;
 using Fate.Common.Redis.RedisConfig;
 using Newtonsoft.Json;

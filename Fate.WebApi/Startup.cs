@@ -20,7 +20,7 @@ using System.Text;
 using Fate.Common.Middleware;
 using Fate.Common.Repository;
 using Fate.Domain.Model;
-using Fate.Common.Ioc.Core;
+using Fate.Common.AutofacDependencyInjection;
 
 namespace Fate.WebApi
 {

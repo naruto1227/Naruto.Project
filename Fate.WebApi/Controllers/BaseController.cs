@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Fate.Common.Ioc.Core;
+using Fate.Common.AutofacDependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 namespace Fate.WebApi.Controllers

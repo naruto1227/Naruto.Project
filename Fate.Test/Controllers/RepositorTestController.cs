@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Fate.Common.Ioc.Core;
+using Fate.Common.AutofacDependencyInjection;
 using Fate.Domain.Model.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

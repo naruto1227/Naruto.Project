@@ -11,7 +11,7 @@ using Fate.Common.Middleware;
 using Fate.Common.FileOperation;
 using Fate.Common.Config;
 using Fate.Common.Extensions;
-using Fate.Common.Ioc.Core;
+using Fate.Common.AutofacDependencyInjection;
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;

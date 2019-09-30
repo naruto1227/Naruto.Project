@@ -5,7 +5,7 @@ using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
 using System.Linq;
 
-namespace Fate.Common.Ioc.Core
+namespace Fate.Common.AutofacDependencyInjection
 {
     public static class AutofacDI
     {

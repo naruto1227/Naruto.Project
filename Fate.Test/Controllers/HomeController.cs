@@ -10,7 +10,7 @@ using Fate.Common.Repository.UnitOfWork;
 using Fate.Common.Redis.IRedisManage;
 using Microsoft.AspNetCore.Authorization;
 using Fate.Domain.Model.Entities;
-using Fate.Common.Ioc.Core;
+using Fate.Common.AutofacDependencyInjection;
 using Fate.Common.Infrastructure;
 using Fate.Common.Repository;
 using StackExchange.Redis;
@@ -94,11 +94,11 @@ namespace Fate.Test.Controllers
         [HttpGet]
         public async Task test33()
         {
-            List<setting> list = Common.Ioc.Core.AutofacDI.Resolve<List<setting>>();
-            List<string> li = Common.Ioc.Core.AutofacDI.Resolve<List<string>>();
-            if (list.Count() > 0)
-                list.Remove(list[0]);
-            await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+            //List<setting> list = Common.Ioc.Core.AutofacDI.Resolve<List<setting>>();
+            //List<string> li = Common.Ioc.Core.AutofacDI.Resolve<List<string>>();
+            //if (list.Count() > 0)
+            //    list.Remove(list[0]);
+            //await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
         }
 
         /// <summary>

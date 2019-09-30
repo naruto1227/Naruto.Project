@@ -20,8 +20,8 @@ namespace Fate.Common.Middleware
         private readonly RequestDelegate next;
 
         private readonly MyJsonResult myJsonResult;
-        private NLogHelper nLog;
-        public ExceptionHandlerMiddleware(RequestDelegate request, MyJsonResult _myJsonResult, NLogHelper _nLog)
+        private ILog nLog;
+        public ExceptionHandlerMiddleware(RequestDelegate request, MyJsonResult _myJsonResult, ILog _nLog)
         {
             next = request;
             myJsonResult = _myJsonResult;

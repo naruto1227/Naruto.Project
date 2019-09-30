@@ -3,7 +3,7 @@ using Xunit;
 using System.Collections.Generic;
 using Fate.Domain.Model.Entities;
 using System.Diagnostics;
-using Fate.Common.Ioc.Core;
+using Fate.Common.AutofacDependencyInjection;
 using Fate.Common.Repository;
 using System.Data;
 using Fate.Common.NPOI;
