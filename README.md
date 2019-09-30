@@ -8,7 +8,7 @@
 > 5. <b>Fate.Common.OcelotStore.Redis</b>是对Ocelot的原有网关的扩展，将数据存储到Redis缓存中.
 > 6. <b>Fate.Common.BaseRibbitMQ</b>和<b>Fate.Common.CAP.Subscribe</b>共同实现发布订阅.异步消息队列
 > 7. <b>Fate.Common.Configuration</b>是对Core原有的配置信息获取进行扩展，改成成数据库读取配置信息.(目前未完成)
-> 8. <b>Fate.Common.Ioc.Core</b>使用Autofac替换原有的Unity依赖注入.
+> 8. <b>Fate.Common.AutofacDependencyInjection</b>使用Autofac替换原有的Unity依赖注入.
 > 9. <b>Fate.Common.Mapper</b>使用的AutoMapper进行实体映射。
 > 10. <b>Fate.Domain.Event</b>实现领域服务的事件总线，底板使用的Redis作为数据存储，缓存订阅的事件
 > 11. <b>Fate.Domain</b>领域层，业务的核心层，负责需求的书写
