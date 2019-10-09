@@ -9,6 +9,7 @@ using Fate.Common.Interface;
 using Fate.Common.Config;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace CP.Common.Infrastructure.Email
 {
@@ -30,7 +31,22 @@ namespace CP.Common.Infrastructure.Email
         /// <returns></returns>
         public async Task<int> SendMailAsync(string msgToEmail, string title, string content, string msgaddress = "")
         {
-            return await SendToEmail(msgToEmail, title, content, msgaddress);
+            if (msgToEmail == null)
+            {
+                throw new ArgumentNullException("收件人邮箱不能为空");
+            }
+            //获取数组
+            string[] msgToEmails = msgToEmail.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            if (msgToEmails == null || msgToEmails.Count() <= 0)
+            {
+                return 0;
+            }
+            var res = 0;
+            foreach (var item in msgToEmails)
+            {
+                res += await SendToEmail(item, title, content, msgaddress);
+            }
+            return res;
         }
         ///<summary>
         /// 发送邮件
