@@ -13,7 +13,7 @@ namespace Fate.Common.Interface
         /// <summary>
         /// 发送邮件
         /// </summary>
-        /// <param name="msgToEmail">收件人的地址</param>
+        /// <param name="msgToEmail">收件人的地址（多个地址逗号隔开）</param>
         /// <param name="title">标题</param>
         /// <param name="content">内容</param>
         /// <param name="html">html内容</param>
