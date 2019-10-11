@@ -22,7 +22,6 @@ using Fate.Common.Middleware;
 using Fate.Common.Repository;
 using Fate.Domain.Model.Entities;
 using Fate.Common.Redis;
-using CP.Common.Infrastructure;
 using Fate.Common.BaseRibbitMQ;
 using Fate.Common.Repository.Object;
 using Fate.Common.Extensions;
@@ -101,9 +100,10 @@ namespace Fate.Test
                 option.RequireHttpsMetadata = false;
                 option.Audience = "api";
             });
-
             services.AddScoped(typeof(List<>));
             services.UseFileOptions();
+            //邮箱服务
+            services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
 
             services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集

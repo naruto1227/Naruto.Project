@@ -17,6 +17,8 @@ using StackExchange.Redis;
 using Fate.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Fate.Domain.Model;
+using Fate.Common.Email;
+using Fate.Common.Interface;
 
 namespace Fate.Test.Controllers
 {
@@ -29,14 +31,17 @@ namespace Fate.Test.Controllers
         SettingApp setting;
         private IUnitOfWork<MysqlDbContent> unitOfWork;
         private IRedisOperationHelp redis;
+
+        private readonly IEmail email;
         RSAHelper rSA;
-        public Home1Controller(SettingApp _setting, IUnitOfWork<MysqlDbContent> _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
+        public Home1Controller(SettingApp _setting, IUnitOfWork<MysqlDbContent> _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA, IEmail _email)
         {
             setting = _setting;
             unitOfWork = _unitOfWork;
             redis = _redis;
             jsonResult = myJson;
             rSA = _rSA;
+            email = _email;
         }
         [HttpGet]
         public async Task test()
@@ -99,6 +104,8 @@ namespace Fate.Test.Controllers
             //if (list.Count() > 0)
             //    list.Remove(list[0]);
             //await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+
+
         }
 
         /// <summary>
@@ -139,8 +146,9 @@ namespace Fate.Test.Controllers
 
         public async Task sendEmail()
         {
-            Common.MailKit.EmailKit emailKi = new Common.MailKit.EmailKit();
-            await emailKi.SendEmailAsync("1635783721@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "D:\\360极速浏览器下载\\AdminLTE-2.4.5.zip");
+            //EmailKit emailKi = new EmailKit();
+            //await emailKi.SendEmailAsync("1635783721@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "D:\\360极速浏览器下载\\AdminLTE-2.4.5.zip");
+            await email.SendEmailAsync("1635783721@qq.com,1091675746@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "E:\\360极速浏览器下载\\chimp-master.zip");
         }
 
         public void model()

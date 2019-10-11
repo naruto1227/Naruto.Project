@@ -10,18 +10,23 @@ using Fate.Common.Config;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Microsoft.Extensions.Options;
+using Fate.Common.Options;
 
-namespace CP.Common.Infrastructure.Email
+namespace Fate.Common.Email
 {
     /// <summary>
     /// 邮件服务
     /// </summary>
-    public class Email : ICommonClassSigleDependency
+    public class Email : IEmail
     {
+        private readonly IOptions<EmailOptions> emailOptions;
+
         private readonly ILogger<Email> logger;
-        public Email(ILogger<Email> _logger)
+        public Email(ILogger<Email> _logger, IOptions<EmailOptions> _emailOptions)
         {
             logger = _logger;
+            emailOptions = _emailOptions;
         }
 
         /// <summary>
@@ -29,7 +34,7 @@ namespace CP.Common.Infrastructure.Email
         /// </summary>
         /// <param name="msgaddress">收件人地址</param>
         /// <returns></returns>
-        public async Task<int> SendMailAsync(string msgToEmail, string title, string content, string msgaddress = "")
+        public async Task<int> SendEmailAsync(string msgToEmail, string title, string content = "", string html = "", string msgPath = "")
         {
             if (msgToEmail == null)
             {
@@ -44,7 +49,7 @@ namespace CP.Common.Infrastructure.Email
             var res = 0;
             foreach (var item in msgToEmails)
             {
-                res += await SendToEmail(item, title, content, msgaddress);
+                res += await SendToEmail(item, title, content, msgPath);
             }
             return res;
         }
@@ -62,7 +67,7 @@ namespace CP.Common.Infrastructure.Email
         private async Task<int> SendToEmail(string msgToEmail, string title, string content, string msgaddress = "")
         {
             //发件人和收件人的邮箱地址
-            MailMessage mmsg = new MailMessage(EmailConfig.SendEmailAddress, msgToEmail);
+            MailMessage mmsg = new MailMessage(emailOptions.Value.EmailAddress, msgToEmail);
             //设置为HTML格式
             mmsg.IsBodyHtml = true;
             //邮件主题
@@ -86,7 +91,7 @@ namespace CP.Common.Infrastructure.Email
             using (SmtpClient client = new SmtpClient())//System.Net.Mail.SmtpClient
             {
                 //设置所需邮箱smtp服务器及支持的协议
-                client.Host = EmailConfig.EmailHost;
+                client.Host = emailOptions.Value.EmailHost;
                 //QQ邮箱使用ssl加密，需要设置SmtpClient.EnableSsl 属性为True表示“指定 SmtpClient 使用安全套接字层 (SSL) 加密连接。”
                 client.EnableSsl = true;
                 client.UseDefaultCredentials = false;
@@ -96,7 +101,7 @@ namespace CP.Common.Infrastructure.Email
                 await Task.Run(() =>
                 {
                     //通过用户名和授权码
-                    client.Credentials = new NetworkCredential(EmailConfig.SendEmailAddress, EmailConfig.SendEmailCode);  //System.Net.NetworkCredential
+                    client.Credentials = new NetworkCredential(emailOptions.Value.EmailAddress, emailOptions.Value.EmailCode);  //System.Net.NetworkCredential
                 });
                 try
                 {
@@ -108,7 +113,7 @@ namespace CP.Common.Infrastructure.Email
                 }
                 catch (Exception ex)
                 {
-                    logger.LogInformation(ex.ToString());
+                    logger.LogInformation($"邮箱发送错误:{ex.Message.ToString()}");
                     return 0;               //发送失败
                 }
                 finally
@@ -139,13 +144,13 @@ namespace CP.Common.Infrastructure.Email
                     disposition = data.ContentDisposition;
                     disposition.CreationDate = File.GetCreationTime(path[i]);
                     disposition.ModificationDate = File.GetLastWriteTime(path[i]);
-                    disposition.ReadDate = System.IO.File.GetLastAccessTime(path[i]);
+                    disposition.ReadDate = File.GetLastAccessTime(path[i]);
                     mmsg.Attachments.Add(data);
                 }
             }
             catch (Exception ex)
             {
-
+                logger.LogInformation($"邮箱发送-上传附件错误:{ex.Message.ToString()}");
             }
         }
 
