@@ -61,8 +61,8 @@ namespace Fate.XUnitTest
             //var re2 = iserverPri.GetRequiredService<IRepositoryFactory>();
 
             var u0k = iserverPri.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-             u0k.Query<setting>().AsQueryable().OrderByExtension("Rule").ToList();
-            var res =  u0k.Query<setting>().AsQueryable().FirstOrDefault();
+            u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
+            var res = u0k.Query<setting>().AsQueryable().FirstOrDefault();
         }
         [Fact]
         public async Task bulkAdd()
