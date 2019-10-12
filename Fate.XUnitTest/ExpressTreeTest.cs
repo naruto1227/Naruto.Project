@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Fate.Common.Repository.UnitOfWork;
 using Fate.Domain.Model.Entities;
 using ExpressionToString;
+using System.Reflection;
 
 namespace Fate.XUnitTest
 {
@@ -64,7 +65,6 @@ namespace Fate.XUnitTest
             var str = new { };
             var str2 = Expression.New(str.GetType());
             var res = str2.ToString("C#");
-
         }
 
     }
