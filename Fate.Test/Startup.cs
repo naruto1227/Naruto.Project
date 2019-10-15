@@ -39,6 +39,8 @@ using Fate.Commom.Consul.ServiceRegister;
 using Fate.Commom.Consul.ServiceDiscovery;
 using Fate.Commom.Consul.KVRepository;
 using System.Net;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using System.Reflection;
 
 namespace Fate.Test
 {
@@ -81,18 +83,11 @@ namespace Fate.Test
             //使用单号
             services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info() { Description = "api测试 ", Title = "测试", Version = "v1" });
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, "test.xml");
-                options.IncludeXmlComments(xmlPath);
-            });
-
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
                 option.Filters.Add(typeof(Fate.Common.Filters.TokenAuthorizationAttribute));
-            }).AddAuthorization().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }).AddAuthorization().AddJsonFormatters().AddConfigurationManagement().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //注入api授权服务
             services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
             {
@@ -140,14 +135,7 @@ namespace Fate.Test
 
             app.UseMvc();
 
-            app.UseSwagger(options => { });
 
-            app.UseSwaggerUI(options =>
-            {
-                options.ShowExtensions();
-                options.EnableValidator(null);
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "test V1");
-            });
         }
     }
 }
