@@ -50,7 +50,18 @@ namespace Fate.XUnitTest
                 settings1.Enqueue(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             });
 
-          await  redis.ListSetAsync<setting>("test",settings1.ToList());
+            await redis.ListSetAsync<setting>("test", settings1.ToList());
         }
+
+        [Fact]
+        public async Task Pub()
+        {
+            var redis = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
+            await redis.SubscribeAsync("test", (msg, value) =>
+             {
+                 Console.WriteLine(value);
+             });
+        }
+
     }
 }

@@ -166,7 +166,7 @@ namespace Fate.Test.Controllers
             redis.Subscribe("push", handler);
 
             ////发布
-            redis.Publish("push", "你好");
+            //redis.Publish("push", "你好");
             return "1";
         }
         public void testlog()

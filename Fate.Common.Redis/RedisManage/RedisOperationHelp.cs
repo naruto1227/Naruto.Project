@@ -1256,41 +1256,38 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        public Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
+        public async Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            subscriber.SubscribeAsync(chanel, handler);
-            return Task.CompletedTask;
+            await subscriber.SubscribeAsync(chanel, handler);
         }
         /// <summary>
         /// 发布消息
         /// </summary>
         /// <param name="channel">被订阅的name</param>
         /// <param name="message">需要传递的参数</param>
-        public Task<long> PublishAsync(RedisChannel channel, RedisValue message)
+        public async Task<long> PublishAsync(RedisChannel channel, RedisValue message)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            return subscriber.PublishAsync(channel, message);
+            return await subscriber.PublishAsync(channel, message);
         }
         /// <summary>
         /// 取消订阅
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        public Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
+        public async Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            subscriber.UnsubscribeAsync(chanel, handler);
-            return Task.CompletedTask;
+            await subscriber.UnsubscribeAsync(chanel, handler);
         }
         /// <summary>
         /// 取消所有的订阅
         /// </summary>
-        public Task UnsubscribeAllAsync()
+        public async Task UnsubscribeAllAsync()
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            subscriber.UnsubscribeAllAsync();
-            return Task.CompletedTask;
+            await subscriber.UnsubscribeAllAsync();
         }
         #endregion
         #endregion
