@@ -58,7 +58,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.Aggregator).HasColumnType("varchar(255)");
                 entity.Property(e => e.Priority).HasColumnType("int(5)");
                 entity.Property(e => e.ReRouteIsCaseSensitive).HasColumnType("bit(1)");
@@ -74,7 +74,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.JsonPath).HasColumnType("varchar(255)");
                 entity.Property(e => e.Parameter).HasColumnType("varchar(255)");
@@ -85,7 +85,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.AllowedScopes).HasColumnType("varchar(255)");
                 entity.Property(e => e.AuthenticationProviderKey).HasColumnType("varchar(150)");
@@ -95,7 +95,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.Region).HasColumnType("varchar(150)");
                 entity.Property(e => e.TtlSeconds).HasColumnType("int(11)");
@@ -105,7 +105,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.Key).HasColumnType("varchar(255)");
                 entity.Property(e => e.Value).HasColumnType("varchar(300)");
@@ -116,7 +116,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.BaseUrl).HasColumnType("varchar(255)");
                 entity.Property(e => e.DownstreamScheme).HasColumnType("varchar(20)");
                 entity.Property(e => e.RequestIdKey).HasColumnType("varchar(50)");
@@ -128,7 +128,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.Header).HasColumnType("varchar(255)");
                 entity.Property(e => e.IsUpOrDown).HasColumnType("int(2)");
@@ -139,7 +139,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.Host).HasColumnType("varchar(50)");
                 entity.Property(e => e.Port).HasColumnType("int(11)");
@@ -149,7 +149,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.AllowAutoRedirect).HasColumnType("bit(1)");
                 entity.Property(e => e.IsReRouteOrGlobal).HasColumnType("int(2)");
@@ -162,7 +162,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.Expiry).HasColumnType("int(11)");
                 entity.Property(e => e.IsReRouteOrGlobal).HasColumnType("int(2)");
@@ -174,7 +174,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.DurationOfBreak).HasColumnType("int(11)");
                 entity.Property(e => e.IsReRouteOrGlobal).HasColumnType("int(2)");
@@ -186,7 +186,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.ClientWhitelist).HasColumnType("varchar(255)");
                 entity.Property(e => e.IsReRouteOrGlobal).HasColumnType("int(2)");
@@ -199,7 +199,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.DangerousAcceptAnyServerCertificateValidator).HasColumnType("bit(1)");
                 entity.Property(e => e.DelegatingHandlers).HasColumnType("varchar(255)");
                 entity.Property(e => e.DownstreamPathTemplate).HasColumnType("varchar(255)");
@@ -234,7 +234,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.IPAllowedList).HasColumnType("longtext");
                 entity.Property(e => e.IPBlockedList).HasColumnType("longtext");
@@ -246,7 +246,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.ConfigurationKey).HasColumnType("varchar(255)");
                 entity.Property(e => e.Host).HasColumnType("varchar(50)");
@@ -261,7 +261,7 @@ namespace Fate.Common.OcelotStore.EFCore
             {
                 entity.HasKey(e => e.Id)
                    .HasName("PRIMARY");
-                entity.Property(e => e.Id).HasColumnType("int(11)");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnType("int(11)");
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.ClientIdHeader).HasColumnType("varchar(255)");
                 entity.Property(e => e.DisableRateLimitHeaders).HasColumnType("bit(1)");

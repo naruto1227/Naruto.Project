@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Configuration.Management.Controllers
+namespace Fate.Common.Configuration.Management.Dashboard.Controllers
 {
 
     /// <summary>
