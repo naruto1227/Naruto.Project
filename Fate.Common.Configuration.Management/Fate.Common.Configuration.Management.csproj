@@ -12,11 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dashboard\Views\" />
-    <Folder Include="Dashboard\Content\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Fate.Common.Repository\Fate.Common.Repository.csproj" />
   </ItemGroup>
 
