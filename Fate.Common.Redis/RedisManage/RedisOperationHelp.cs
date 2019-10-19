@@ -5,6 +5,9 @@ using StackExchange.Redis;
 using Fate.Common.Redis.IRedisManage;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.Extensions.Options;
+using Fate.Common.Redis.RedisConfig;
+
 namespace Fate.Common.Redis.RedisManage
 {
     /// <summary>
@@ -18,32 +21,42 @@ namespace Fate.Common.Redis.RedisManage
         /// <summary>
         /// 实例化连接
         /// </summary>
-        public RedisOperationHelp(IRedisBase _redisBase)
+        public RedisOperationHelp(IRedisBase _redisBase, IOptions<RedisOptions> options)
         {
             redisBase = _redisBase;
+            //初始化key的前缀
+            StringSysCustomKey = options.Value.RedisPrefix?.StringPrefixKey;
+            ListSysCustomKey = options.Value.RedisPrefix?.ListPrefixKey;
+            SetSysCustomKey = options.Value.RedisPrefix?.SetPrefixKey;
+            HashSysCustomKey = options.Value.RedisPrefix?.HashPrefixKey;
+            SortedSetCustomKey = options.Value.RedisPrefix?.SortedSetKey;
         }
         /// <summary>
         /// string的缓存前缀
         /// </summary>
-        private readonly string StringSysCustomKey = "string:";
+        private readonly string StringSysCustomKey;
         /// <summary>
         /// list的前缀
         /// </summary>
-        private readonly string ListSysCustomKey = "list:";
+        private readonly string ListSysCustomKey;
 
         /// <summary>
         /// set的前缀
         /// </summary>
-        private readonly string SetSysCustomKey = "ids:";
+        private readonly string SetSysCustomKey;
+        /// <summary>
+        /// hash的前缀
+        /// </summary>
+        private readonly string HashSysCustomKey;
+        /// <summary>
+        /// SortedSet 有序集合的前缀
+        /// </summary>
+        private readonly string SortedSetCustomKey;
 
         /// <summary>
         /// Store的前缀
         /// </summary>
         private readonly string StoreSysCustomKey = "urn:";
-        /// <summary>
-        /// hash的前缀
-        /// </summary>
-        private readonly string HashSysCustomKey = "hash:";
 
         #region list
         #region 同步
@@ -475,6 +488,14 @@ namespace Fate.Common.Redis.RedisManage
             {
                 key = SetSysCustomKey + key;
             }
+            else if (keyOperatorEnum == KeyOperatorEnum.Hash)
+            {
+                key = HashSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
+            {
+                key = SortedSetCustomKey + key;
+            }
             redisBase.DoSave(db => db.KeyDelete(key));
         }
 
@@ -496,6 +517,14 @@ namespace Fate.Common.Redis.RedisManage
             else if (keyOperatorEnum == KeyOperatorEnum.Set)
             {
                 key = SetSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.Hash)
+            {
+                key = HashSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
+            {
+                key = SortedSetCustomKey + key;
             }
             return redisBase.DoSave(db => db.KeyExists(key));
         }
@@ -520,6 +549,14 @@ namespace Fate.Common.Redis.RedisManage
             {
                 key = SetSysCustomKey + key;
             }
+            else if (keyOperatorEnum == KeyOperatorEnum.Hash)
+            {
+                key = HashSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
+            {
+                key = SortedSetCustomKey + key;
+            }
             return await redisBase.DoSave(db => db.KeyDeleteAsync(key));
         }
 
@@ -541,6 +578,14 @@ namespace Fate.Common.Redis.RedisManage
             {
                 key = SetSysCustomKey + key;
             }
+            else if (keyOperatorEnum == KeyOperatorEnum.Hash)
+            {
+                key = HashSysCustomKey + key;
+            }
+            else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
+            {
+                key = SortedSetCustomKey + key;
+            }
             return await redisBase.DoSave(db => db.KeyExistsAsync(key));
         }
         #endregion
@@ -558,7 +603,7 @@ namespace Fate.Common.Redis.RedisManage
         public bool SortedSetAdd<T>(string key, T value, double score)
         {
             var result = redisBase.ConvertJson(value);
-            return redisBase.DoSave(db => db.SortedSetAdd(key, result, score));
+            return redisBase.DoSave(db => db.SortedSetAdd(SortedSetCustomKey + key, result, score));
         }
         /// <summary>
         /// 获取SortedSet的数据
@@ -567,7 +612,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public T SortedSetGet<T>(string key, double score)
         {
-            var result = redisBase.DoSave(db => db.SortedSetRangeByScore(key, score));
+            var result = redisBase.DoSave(db => db.SortedSetRangeByScore(SortedSetCustomKey + key, score));
             return redisBase.ConvertObj<T>(result.ToString());
         }
         /// <summary>
@@ -577,7 +622,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public long SortedSetLength(string key)
         {
-            return redisBase.DoSave(db => db.SortedSetLength(key));
+            return redisBase.DoSave(db => db.SortedSetLength(SortedSetCustomKey + key));
         }
         /// <summary>
         /// 移除SortedSet
@@ -585,7 +630,7 @@ namespace Fate.Common.Redis.RedisManage
         public bool SortedSetRemove<T>(string key, T value)
         {
             var result = redisBase.ConvertJson(value);
-            return redisBase.DoSave(db => db.SortedSetRemove(key, result));
+            return redisBase.DoSave(db => db.SortedSetRemove(SortedSetCustomKey + key, result));
         }
         #endregion
 
@@ -600,7 +645,7 @@ namespace Fate.Common.Redis.RedisManage
         public async Task<bool> SortedSetAddAsync<T>(string key, T value, double score)
         {
             var result = redisBase.ConvertJson(value);
-            return await redisBase.DoSave(db => db.SortedSetAddAsync(key, result, score));
+            return await redisBase.DoSave(db => db.SortedSetAddAsync(SortedSetCustomKey + key, result, score));
         }
         /// <summary>
         /// 获取SortedSet的数据
@@ -609,7 +654,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public async Task<T> SortedSetGetAsync<T>(string key, double score)
         {
-            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(key, score));
+            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(SortedSetCustomKey + key, score));
             return redisBase.ConvertObj<T>(result.ToString());
         }
         /// <summary>
@@ -619,7 +664,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public async Task<long> SortedSetLengthAsync(string key)
         {
-            return await redisBase.DoSave(db => db.SortedSetLengthAsync(key));
+            return await redisBase.DoSave(db => db.SortedSetLengthAsync(SortedSetCustomKey + key));
         }
         /// <summary>
         /// 移除SortedSet
@@ -627,7 +672,7 @@ namespace Fate.Common.Redis.RedisManage
         public async Task<bool> SortedSetRemoveAsync<T>(string key, T value)
         {
             var result = redisBase.ConvertJson(value);
-            return await redisBase.DoSave(db => db.SortedSetRemoveAsync(key, result));
+            return await redisBase.DoSave(db => db.SortedSetRemoveAsync(SortedSetCustomKey + key, result));
         }
         #endregion
         #endregion
@@ -676,7 +721,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public string[] SetGet(string key)
         {
-            return redisBase.DoSave(db => db.SetMembers(key)).ToStringArray();
+            return redisBase.DoSave(db => db.SetMembers(SetSysCustomKey + key)).ToStringArray();
         }
         /// <summary>
         /// 新增
@@ -685,7 +730,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public bool SetAdd(string key, string value)
         {
-            return redisBase.DoSave(db => db.SetAdd(key, value));
+            return redisBase.DoSave(db => db.SetAdd(SetSysCustomKey + key, value));
         }
         /// <summary>
         /// 移除
@@ -695,7 +740,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public void SetRemove(string key, string value)
         {
-            redisBase.DoSave(db => db.SetRemove(key, value));
+            redisBase.DoSave(db => db.SetRemove(SetSysCustomKey + key, value));
         }
         #endregion
         #region 异步
@@ -741,7 +786,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public async Task<string[]> SetGetAsync(string key)
         {
-            return (await redisBase.DoSave(db => db.SetMembersAsync(key))).ToStringArray();
+            return (await redisBase.DoSave(db => db.SetMembersAsync(SetSysCustomKey + key))).ToStringArray();
         }
         /// <summary>
         /// 新增
@@ -750,7 +795,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public async Task<bool> SetAddAsync(string key, string value)
         {
-            return await redisBase.DoSave(db => db.SetAddAsync(key, value));
+            return await redisBase.DoSave(db => db.SetAddAsync(SetSysCustomKey + key, value));
         }
         /// <summary>
         /// 移除
@@ -760,7 +805,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public async Task<bool> SetRemoveAsync(string key, string value)
         {
-            return await redisBase.DoSave(db => db.SetRemoveAsync(key, value));
+            return await redisBase.DoSave(db => db.SetRemoveAsync(SetSysCustomKey + key, value));
         }
         #endregion
         #endregion

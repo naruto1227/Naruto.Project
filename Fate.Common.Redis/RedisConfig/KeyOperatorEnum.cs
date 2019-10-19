@@ -22,8 +22,13 @@ namespace Fate.Common.Redis
         /// </summary>
         Set,
         /// <summary>
+        /// 有序集合 类型
+        /// </summary>
+        SortedSet,
+        /// <summary>
         /// Hash 类型
         /// </summary>
         Hash,
+
     }
 }

@@ -16,6 +16,8 @@ namespace Fate.XUnitTest
     public class RedisTest
     {
         IServiceCollection services = new ServiceCollection();
+
+        private readonly IRedisOperationHelp redis;
         public RedisTest()
         {
             //注入redis仓储服务
@@ -23,6 +25,7 @@ namespace Fate.XUnitTest
             {
                 options.Connection = "127.0.0.1:6379";
             });
+            redis = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
         }
         [Fact]
         public void test()
@@ -42,7 +45,7 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task RedisTest1()
         {
-            var redis = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
+
             ConcurrentQueue<setting> settings1 = new ConcurrentQueue<setting>();
 
             Parallel.For(0, 1000000, (item) =>
@@ -56,11 +59,18 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Pub()
         {
-            var redis = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
+
             await redis.SubscribeAsync("test", (msg, value) =>
              {
                  Console.WriteLine(value);
              });
+        }
+
+        [Fact]
+        public async Task StringTest()
+        {
+            await redis.StringSetAsync("1","1");
+            await redis.StringGetAsync("1");
         }
 
     }

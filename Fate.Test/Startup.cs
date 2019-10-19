@@ -65,11 +65,7 @@ namespace Fate.Test
                 options.Level = CompressionLevel.Fastest;
             });
             //注入redis仓储服务
-            services.AddRedisRepository(options =>
-            {
-                options.Connection = ConfigurationManage.GetValue("RedisConfig:Connection");
-                options.Password = ConfigurationManage.GetValue("RedisConfig:Password");
-            });
+            services.AddRedisRepository(Configuration.GetSection("AppSetting:RedisConfig"));
             //注入mysql仓储   //注入多个ef配置信息
             services.AddMysqlRepositoryServer().AddRepositoryEFOptionServer(options =>
             {

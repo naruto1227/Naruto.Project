@@ -126,6 +126,7 @@ namespace Fate.Test.Controllers
 
         public async Task RedisTest()
         {
+            await redis.StringSetAsync("1", new Random().Next(1000, 9999).ToString());
         }
 
         public async Task testEF()

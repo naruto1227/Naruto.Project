@@ -7,6 +7,10 @@ namespace Fate.Common.Redis.RedisConfig
     public class RedisOptions
     {
         /// <summary>
+        /// redis的key的前缀配置
+        /// </summary>
+        public RedisPrefixKey RedisPrefix { get; set; } = new RedisPrefixKey();
+        /// <summary>
         /// redis的连接地址多个逗号隔开
         /// </summary>
         public string Connection { get; set; } = "127.0.0.1:6379";
