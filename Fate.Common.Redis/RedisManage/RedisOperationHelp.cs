@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Options;
 using Fate.Common.Redis.RedisConfig;
+using System.Linq.Expressions;
 
 namespace Fate.Common.Redis.RedisManage
 {
@@ -303,12 +304,12 @@ namespace Fate.Common.Redis.RedisManage
         {
             if (value == null || value.Count <= 0)
                 throw new ApplicationException("值不能为空");
-            RedisValue[] redisValues = new RedisValue[value.Count];
-            for (int i = 0; i < value.Count; i++)
+            List<RedisValue> redisValues = new List<RedisValue>();
+            value.ForEach(item =>
             {
-                redisValues[i] = redisBase.ConvertJson(value[i]);
-            }
-            return await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, redisValues));
+                redisValues.Add(redisBase.ConvertJson(item));
+            });
+            return await redisBase.DoSave(db => db.ListRightPushAsync(ListSysCustomKey + key, redisValues.ToArray()));
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -333,8 +334,11 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         public void StringSet(string key, string value, TimeSpan? expiry = default(TimeSpan?))
         {
-            key = StringSysCustomKey + key;
-            redisBase.DoSave(db => db.StringSet(key, value, expiry));
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            redisBase.DoSave(db => db.StringSet(StringSysCustomKey + key, value, expiry));
         }
         /// <summary>
         /// 保存对象
@@ -342,6 +346,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public void StringSet<T>(string key, T value, TimeSpan? expiry = default(TimeSpan?))
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             key = StringSysCustomKey + key;
             var res = redisBase.ConvertJson(value);
             redisBase.DoSave(db => db.StringSet(key, res, expiry));
@@ -353,6 +361,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public bool StringSet<T>(string key, List<T> value, TimeSpan? expiry = default(TimeSpan?))
         {
+            if (value == null || value.Count() <= 0)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             key = StringSysCustomKey + key;
             List<T> li = new List<T>();
             foreach (var item in value)
@@ -368,8 +380,7 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         public string StringGet(string key)
         {
-            key = StringSysCustomKey + key;
-            return redisBase.DoSave(db => db.StringGet(key));
+            return redisBase.DoSave(db => db.StringGet(StringSysCustomKey + key));
         }
 
         /// <summary>
@@ -378,9 +389,7 @@ namespace Fate.Common.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public T StringGet<T>(string key)
         {
-            key = StringSysCustomKey + key;
-            var value = redisBase.DoSave(db => db.StringGet(key));
-            return redisBase.ConvertObj<T>(value);
+            return redisBase.ConvertObj<T>(redisBase.DoSave(db => db.StringGet(StringSysCustomKey + key)));
         }
         #endregion
 
@@ -390,8 +399,11 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?))
         {
-            key = StringSysCustomKey + key;
-            return await redisBase.DoSave(db => db.StringSetAsync(key, value, expiry));
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            return await redisBase.DoSave(db => db.StringSetAsync(StringSysCustomKey + key, value, expiry));
         }
         /// <summary>
         /// 保存对象
@@ -399,9 +411,11 @@ namespace Fate.Common.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public async Task<bool> StringSetAsync<T>(string key, T value, TimeSpan? expiry = default(TimeSpan?))
         {
-            key = StringSysCustomKey + key;
-            var res = redisBase.ConvertJson(value);
-            return await redisBase.DoSave(db => db.StringSetAsync(key, res, expiry));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            return await redisBase.DoSave(db => db.StringSetAsync(StringSysCustomKey + key, redisBase.ConvertJson(value), expiry));
         }
 
         /// <summary>
@@ -410,14 +424,17 @@ namespace Fate.Common.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public async Task<bool> StringSetAsync<T>(string key, List<T> value, TimeSpan? expiry = default(TimeSpan?))
         {
+            if (value == null || value.Count() <= 0)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             key = StringSysCustomKey + key;
             List<T> li = new List<T>();
             foreach (var item in value)
             {
                 li.Add(item);
             }
-            var res = redisBase.ConvertJson(li);
-            return await redisBase.DoSave(db => db.StringSetAsync(key, res, expiry));
+            return await redisBase.DoSave(db => db.StringSetAsync(key, redisBase.ConvertJson(li), expiry));
         }
 
         /// <summary>
@@ -425,8 +442,7 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         public async Task<RedisValue> StringGetAsync(string key)
         {
-            key = StringSysCustomKey + key;
-            return await redisBase.DoSave(db => db.StringGetAsync(key));
+            return await redisBase.DoSave(db => db.StringGetAsync(StringSysCustomKey + key));
         }
 
         /// <summary>
@@ -602,6 +618,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public bool SortedSetAdd<T>(string key, T value, double score)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             var result = redisBase.ConvertJson(value);
             return redisBase.DoSave(db => db.SortedSetAdd(SortedSetCustomKey + key, result, score));
         }
@@ -629,6 +649,10 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         public bool SortedSetRemove<T>(string key, T value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             var result = redisBase.ConvertJson(value);
             return redisBase.DoSave(db => db.SortedSetRemove(SortedSetCustomKey + key, result));
         }
@@ -644,6 +668,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <returns></returns>
         public async Task<bool> SortedSetAddAsync<T>(string key, T value, double score)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             var result = redisBase.ConvertJson(value);
             return await redisBase.DoSave(db => db.SortedSetAddAsync(SortedSetCustomKey + key, result, score));
         }
@@ -671,6 +699,10 @@ namespace Fate.Common.Redis.RedisManage
         /// </summary>
         public async Task<bool> SortedSetRemoveAsync<T>(string key, T value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             var result = redisBase.ConvertJson(value);
             return await redisBase.DoSave(db => db.SortedSetRemoveAsync(SortedSetCustomKey + key, result));
         }
@@ -686,6 +718,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public bool SetAdd<T>(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             //反射实体的信息
             var type = typeof(T);
             string key = SetSysCustomKey + type.Name;
@@ -699,6 +735,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public bool SetRemove<T>(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             //反射实体的信息
             var type = typeof(T);
             string key = SetSysCustomKey + type.Name;
@@ -730,6 +770,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public bool SetAdd(string key, string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             return redisBase.DoSave(db => db.SetAdd(SetSysCustomKey + key, value));
         }
         /// <summary>
@@ -740,6 +784,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public void SetRemove(string key, string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             redisBase.DoSave(db => db.SetRemove(SetSysCustomKey + key, value));
         }
         #endregion
@@ -751,6 +799,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public async Task<bool> SetAddAsync<T>(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             //反射实体的信息
             var type = typeof(T);
             string key = SetSysCustomKey + type.Name;
@@ -764,6 +816,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public async Task<bool> SetRemoveAsync<T>(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             //反射实体的信息
             var type = typeof(T);
             string key = SetSysCustomKey + type.Name;
@@ -795,6 +851,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public async Task<bool> SetAddAsync(string key, string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             return await redisBase.DoSave(db => db.SetAddAsync(SetSysCustomKey + key, value));
         }
         /// <summary>
@@ -805,6 +865,10 @@ namespace Fate.Common.Redis.RedisManage
         /// <param name="value"></param>
         public async Task<bool> SetRemoveAsync(string key, string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             return await redisBase.DoSave(db => db.SetRemoveAsync(SetSysCustomKey + key, value));
         }
         #endregion
@@ -857,14 +921,13 @@ namespace Fate.Common.Redis.RedisManage
             string key = StoreSysCustomKey + name.ToLower() + ":";
             //获取id的属性
             System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Id");
-
             //获取id的值
-            var id = propertyInfo.GetValue(info, null);
+            var id = propertyInfo.GetValue(info,null);
+            //开启事务
             var tran = redisBase.DoSave(db => db.CreateTransaction());
             tran.SetAddAsync(SetSysCustomKey + type.Name, id.ToString());
             tran.StringSetAsync(key + id.ToString(), redisBase.ConvertJson(info));
             return tran.Execute();
-
         }
         ///// <summary>
         ///// 删除所有的
@@ -964,8 +1027,7 @@ namespace Fate.Common.Redis.RedisManage
             //获取类名
             var name = type.Name;
             string key = StoreSysCustomKey + name.ToLower() + ":";
-            //获取id的属性
-            System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Id");
+
             List<T> li = new List<T>();
             //获取id的集合
             var ids = SetGet<T>();
@@ -1028,6 +1090,17 @@ namespace Fate.Common.Redis.RedisManage
             }
             return li;
         }
+
+        ///// <summary>
+        ///// 获取字段的值
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //private object FuncPropertyId<T>(T value)
+        //{
+        //    return Expression.Lambda<Func<object>>(Expression.Convert(Expression.PropertyOrField(Expression.Constant(value), "Id"), typeof(object))).Compile()();
+        //}
         #endregion
 
         #region hash

@@ -60,5 +60,6 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="val"></param>
         /// <returns></returns>
         RedisKey[] ConvertRedisKeys(List<string> val);
+
     }
 }

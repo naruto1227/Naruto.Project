@@ -69,8 +69,20 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task StringTest()
         {
-            await redis.StringSetAsync("1","1");
+            await redis.StringSetAsync("1", "1");
             await redis.StringGetAsync("1");
+        }
+        [Fact]
+        public void Store()
+        {
+            redis.Store(new setting() { Description = "1" });
+            //List<setting> list = new List<setting>();
+            //for (int i = 0; i < 100000; i++)
+            //{
+            //    list.Add(new setting() { Id = i });
+            //}
+            //redis.StoreAll(list);
+           // redis.DeleteAll<setting>();
         }
 
     }
