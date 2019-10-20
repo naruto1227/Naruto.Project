@@ -17,8 +17,8 @@ namespace Fate.Common.Redis.RedisManage
     /// </summary>
     public class RedisBase : IRedisManage.IRedisBase
     {
-        private RedisConnectionHelp redisConnectionHelp;
-        public RedisBase(RedisConnectionHelp _redisConnectionHelp)
+        private IRedisConnectionHelp redisConnectionHelp;
+        public RedisBase(IRedisConnectionHelp _redisConnectionHelp)
         {
             redisConnectionHelp = _redisConnectionHelp;
         }
