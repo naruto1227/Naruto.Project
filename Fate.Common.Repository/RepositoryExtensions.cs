@@ -85,8 +85,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 }
             });
             //注入拦截器
-            services.AddScoped<EFCommandInterceptor>();
-            services.AddScoped<EFDiagnosticListener>();
+            //services.AddScoped<EFCommandInterceptor>();
+            //services.AddScoped<EFDiagnosticListener>();
             //DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
 
             //当从库有信息则执行定时服务
