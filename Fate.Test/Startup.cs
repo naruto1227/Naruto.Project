@@ -67,7 +67,7 @@ namespace Fate.Test
             //注入redis仓储服务
             services.AddRedisRepository(Configuration.GetSection("AppSetting:RedisConfig"));
             //注入mysql仓储   //注入多个ef配置信息
-            services.AddMysqlRepositoryServer().AddRepositoryEFOptionServer(options =>
+            services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
                 options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);

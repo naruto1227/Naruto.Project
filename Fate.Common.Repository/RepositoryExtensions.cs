@@ -16,11 +16,11 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class RepositoryExtensions
     {
         /// <summary>
-        /// 注入mysql仓储服务(依赖注入)
+        /// 注入仓储服务(依赖注入)
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMysqlRepositoryServer(this IServiceCollection services)
+        public static IServiceCollection AddRepositoryServer(this IServiceCollection services)
         {
             //获取当前层的所有的类型
             var types = Assembly.Load(Assembly.GetAssembly(typeof(RepositoryExtensions)).GetName()).GetTypes();

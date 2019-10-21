@@ -34,7 +34,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //验证仓储服务是否注册
             if (ocelotBuilder.Services.BuildServiceProvider().GetService<IUnitOfWork>() == null)
             {
-                ocelotBuilder.Services.AddMysqlRepositoryServer();
+                ocelotBuilder.Services.AddRepositoryServer();
             }
             //注入仓储
             ocelotBuilder.Services.AddRepositoryEFOptionServer(ocelot =>
