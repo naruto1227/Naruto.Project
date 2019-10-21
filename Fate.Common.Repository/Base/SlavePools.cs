@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,10 +6,6 @@ using System.Text;
 
 using System.Net.Sockets;
 using System.Linq;
-using System.Data;
-using System.Data.Common;
-using MySql.Data.MySqlClient;
-
 namespace Fate.Common.Repository.Object
 {
     /// <summary>
