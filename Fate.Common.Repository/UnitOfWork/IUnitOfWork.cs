@@ -11,6 +11,10 @@ namespace Fate.Common.Repository.UnitOfWork
     public interface IUnitOfWork
     {
         /// <summary>
+        /// 超时时间
+        /// </summary>
+        int CommandTimeout { set; }
+        /// <summary>
         /// 提交更改
         /// </summary>
         /// <returns></returns>

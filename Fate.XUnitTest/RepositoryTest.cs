@@ -35,10 +35,10 @@ namespace Fate.XUnitTest
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;");
-
+                options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;", "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent>(services);
-                options.IsOpenMasterSlave = false;
+                options.IsOpenMasterSlave = true;
             });
             services.AddScoped<EFCommandInterceptor>();
             services.AddScoped<EFDiagnosticListener>();
@@ -61,6 +61,10 @@ namespace Fate.XUnitTest
             //var re2 = iserverPri.GetRequiredService<IRepositoryFactory>();
 
             var u0k = iserverPri.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            u0k.CommandTimeout = 40;
+            u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
+            u0k.Command<setting>().Add(new setting() { Id = new Random().Next(100000, 999999) });
+            u0k.SaveChanges();
             u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
             var res = u0k.Query<setting>().AsQueryable().FirstOrDefault();
         }
@@ -91,6 +95,7 @@ namespace Fate.XUnitTest
         public async Task ChangeDataBase()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            unit.CommandTimeout = 40;
             await unit.ChangeDataBase("test1");
 
             var str = await unit.Query<setting>().AsQueryable().ToListAsync();

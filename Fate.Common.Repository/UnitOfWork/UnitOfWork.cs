@@ -76,9 +76,20 @@ namespace Fate.Common.Repository.UnitOfWork
 
             //设置上下文工厂
             _repositoryFactory.Set(unitOfWorkOptions?.DbContextType, dbContext?.Value);
-
             service = _service;
         }
+
+        /// <summary>
+        /// 超时时间
+        /// </summary>
+        public int CommandTimeout
+        {
+            set
+            {
+                dbContext.Value.Database.SetCommandTimeout(value);
+            }
+        }
+
         /// <summary>
         /// 开始事务
         /// </summary>
@@ -116,7 +127,7 @@ namespace Fate.Common.Repository.UnitOfWork
                 //更改事务的状态
                 unitOfWorkOptions.IsSumbitTran = true;
             }
-            dbContextTransaction =await dbContext.Value.Database.BeginTransactionAsync();
+            dbContextTransaction = await dbContext.Value.Database.BeginTransactionAsync();
         }
         /// <summary>
         /// 提交事务
@@ -282,7 +293,6 @@ namespace Fate.Common.Repository.UnitOfWork
                 //更改连接的服务器为从库
                 unitOfWorkOptions.IsSlaveOrMaster = true;
             }
-
         }
         /// <summary>
         /// 设置主库的 连接

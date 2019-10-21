@@ -101,30 +101,30 @@ namespace Fate.Common.Repository.Interceptor
                     {
                         //获取当前连接信息
                         var connec = command.Connection;
-                        //获取使用的库
-                        var database = connec.Database.ToLower();
-                        //获取当前连接对应的ef配置连接信息
-                        var info = options.Value.Where(a => a.WriteReadConnectionString.ToLower().Contains($"database={database}")).FirstOrDefault();
-                        if (info == null)
-                        {
-                            throw new ArgumentNullException("找不到EF配置连接信息!");
-                        }
-                        if (connec.State == ConnectionState.Open)
-                        {
-                            connec.Close();
-                        }
+                        ////获取使用的库
+                        //var database = connec.Database.ToLower();
+                        ////获取当前连接对应的ef配置连接信息
+                        //var info = options.Value.Where(a => a.WriteReadConnectionString.ToLower().Contains($"database={database}")).FirstOrDefault();
+                        //if (info == null)
+                        //{
+                        //    throw new ArgumentNullException("找不到EF配置连接信息!");
+                        //}
+                        //if (connec.State == ConnectionState.Open)
+                        //{
+                        //    connec.Close();
+                        //}
 
-                        //更改为从库的连接字符串
-                        var connections = SlaveConnection(info.DbContextType);
-                        //更新连接字符串
-                        connec.ConnectionString = connections;
-                        //
-                        if (connec.State == ConnectionState.Closed)
-                        {
-                            connec.Open();
-                        }
-                        //修改连接状态为从库的
-                        isSlaveOrMaster = true;
+                        ////更改为从库的连接字符串
+                        //var connections = SlaveConnection(info.DbContextType);
+                        ////更新连接字符串
+                        //connec.ConnectionString = connections;
+                        ////
+                        //if (connec.State == ConnectionState.Closed)
+                        //{
+                        //    connec.Open();
+                        //}
+                        ////修改连接状态为从库的
+                        //isSlaveOrMaster = true;
                     }
                 }
                 //上下文释放之后 
