@@ -15,6 +15,7 @@ using Fate.Common.Repository.Interceptor;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data.Common;
 
 namespace Fate.Common.Repository.UnitOfWork
 {
@@ -102,7 +103,7 @@ namespace Fate.Common.Repository.UnitOfWork
                 if (unitOfWorkOptions.IsSlaveOrMaster)
                 {
                     //设置连接为主库
-                    SetMasterConnection();
+                    SetMasterConnection().GetAwaiter().GetResult();
                 }
                 //更改事务的状态
                 unitOfWorkOptions.IsSumbitTran = true;
@@ -122,7 +123,7 @@ namespace Fate.Common.Repository.UnitOfWork
                 if (unitOfWorkOptions.IsSlaveOrMaster)
                 {
                     //设置连接为主库
-                    SetMasterConnection();
+                  await  SetMasterConnection();
                 }
                 //更改事务的状态
                 unitOfWorkOptions.IsSumbitTran = true;
@@ -165,12 +166,12 @@ namespace Fate.Common.Repository.UnitOfWork
                 throw new ApplicationException("当前上下文未开启读写分离服务!");
             if (unitOfWorkOptions.IsSumbitTran)
                 throw new ApplicationException("无法在开启事务的时候执行读写库的更改!");
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 //获取连接信息
                 var connec = dbContext.Value.Database.GetDbConnection();
                 //关闭连接
-                ChangeConnecState(connec, ConnectionState.Closed);
+                await ChangeConnecState(connec, ConnectionState.Closed);
                 //读写
                 if (readWriteEnum == ReadWriteEnum.ReadWrite)
                 {
@@ -183,9 +184,9 @@ namespace Fate.Common.Repository.UnitOfWork
                     connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
                 }
                 //打开连接
-                ChangeConnecState(connec, ConnectionState.Open);
+               await ChangeConnecState(connec, ConnectionState.Open);
                 //连接更改重新验证是否更改了数据库名
-                ChangeDataBase();
+              await  ChangeDataBase();
                 unitOfWorkOptions.IsMandatory = true;
             }).ConfigureAwait(false);
         }
@@ -196,7 +197,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public async Task<int> SaveChangeAsync()
         {
-            SetMaster();
+            await SetMaster();
             return await dbContext.Value.SaveChangesAsync();
         }
         /// <summary>
@@ -205,7 +206,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public int SaveChanges()
         {
-            SetMaster();
+            SetMaster().GetAwaiter().GetResult();
             return dbContext.Value.SaveChanges();
         }
 
@@ -216,9 +217,8 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public IRepositoryQuery<T> Query<T>() where T : class, IEntity
         {
-            SetSlave();
-            IRepositoryQuery<T> repository = service.GetService<IRepositoryQuery<T, TDbContext>>();
-            return repository;
+            SetSlave().GetAwaiter().GetResult();
+            return service.GetService<IRepositoryQuery<T, TDbContext>>();
         }
 
         /// <summary>
@@ -228,9 +228,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public IRepositoryCommand<T> Command<T>() where T : class, IEntity
         {
-            //SetSlaveConnec();
-            IRepositoryCommand<T> repository = service.GetService<IRepositoryCommand<T, TDbContext>>();
-            return repository;
+            return service.GetService<IRepositoryCommand<T, TDbContext>>();
         }
         /// <summary>
         /// 更改数据库的名字
@@ -240,10 +238,10 @@ namespace Fate.Common.Repository.UnitOfWork
         {
             if (unitOfWorkOptions.IsSumbitTran)
                 throw new ApplicationException("无法在事务中更改数据库!");
-            await Task.Run(() =>
+            await Task.Run(async () =>
              {
                  //开启连接
-                 ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
+                 await ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
                  dbContext.Value.Database.GetDbConnection().ChangeDatabase(dataBase);
                  unitOfWorkOptions.ChangeDataBaseName = dataBase;
              }).ConfigureAwait(false);
@@ -257,7 +255,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public async Task<int> ExecuteSqlAsync(string sql, params object[] _params)
         {
-            SetMaster();
+            await SetMaster();
             return await dbContext.Value.Database.ExecuteSqlCommandAsync(sql, _params);
         }
 
@@ -275,7 +273,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <summary>
         /// 设置从库的连接
         /// </summary>
-        private void SetSlave()
+        private async Task SetSlave()
         {
             //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为主库的话 则 更改连接字符串为 从库的 
@@ -283,13 +281,13 @@ namespace Fate.Common.Repository.UnitOfWork
             {
                 var connec = dbContext.Value.Database.GetDbConnection();
                 //关闭连接
-                ChangeConnecState(connec, ConnectionState.Closed);
+                await ChangeConnecState(connec, ConnectionState.Closed);
                 //更改连接
                 connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
                 //开启连接
-                ChangeConnecState(connec, ConnectionState.Open);
+                await ChangeConnecState(connec, ConnectionState.Open);
                 //连接更改重新验证是否更改了数据库名
-                ChangeDataBase();
+                await ChangeDataBase();
                 //更改连接的服务器为从库
                 unitOfWorkOptions.IsSlaveOrMaster = true;
             }
@@ -297,14 +295,14 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <summary>
         /// 设置主库的 连接
         /// </summary>
-        private void SetMaster()
+        private async Task SetMaster()
         {
             //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
             if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
             {
                 //设置连接为主库
-                SetMasterConnection();
+                await SetMasterConnection();
                 //更改连接的服务器为主库
                 unitOfWorkOptions.IsSlaveOrMaster = false;
             }
@@ -312,17 +310,17 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <summary>
         /// 设置主库的连接
         /// </summary>
-        private void SetMasterConnection()
+        private async Task SetMasterConnection()
         {
             var connec = dbContext.Value.Database.GetDbConnection();
             //关闭连接
-            ChangeConnecState(connec, ConnectionState.Closed);
+            await ChangeConnecState(connec, ConnectionState.Closed);
             //更改连接
             connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
             //开启连接
-            ChangeConnecState(connec, ConnectionState.Open);
+            await ChangeConnecState(connec, ConnectionState.Open);
             //连接更改重新验证是否更改了数据库名
-            ChangeDataBase();
+            await ChangeDataBase();
         }
         /// <summary>
         /// 获取从库的连接字符串( 读取规则，当所有的从库无法使用的时候读取返回主库的连接字符串)
@@ -357,7 +355,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <summary>
         /// 更改连接的状态
         /// </summary>
-        private void ChangeConnecState(IDbConnection connec, ConnectionState connectionState)
+        private async Task ChangeConnecState(DbConnection connec, ConnectionState connectionState)
         {
             //验证是否关闭连接
             if (connectionState == ConnectionState.Closed && connec.State == ConnectionState.Open)
@@ -368,7 +366,7 @@ namespace Fate.Common.Repository.UnitOfWork
             //验证是否开启连接
             if (connectionState == ConnectionState.Open && connec.State == ConnectionState.Closed)
             {
-                connec.Open();
+                await connec.OpenAsync();
                 return;
             }
         }
@@ -377,11 +375,11 @@ namespace Fate.Common.Repository.UnitOfWork
         /// 更改数据库的名字
         /// </summary>
         /// <returns></returns>
-        private void ChangeDataBase()
+        private async Task ChangeDataBase()
         {
             if (!string.IsNullOrWhiteSpace(unitOfWorkOptions.ChangeDataBaseName))
             {
-                ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
+                await ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
                 dbContext.Value.Database.GetDbConnection().ChangeDatabase(unitOfWorkOptions.ChangeDataBaseName);
             }
         }
