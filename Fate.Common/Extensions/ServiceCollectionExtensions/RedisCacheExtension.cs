@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return service.AddStackExchangeRedisCache(options =>
              {
                  //获取配置信息
-                 var redisConnectionHelp = service.BuildServiceProvider().GetService<RedisConnectionHelp>();
+                 var redisConnectionHelp = service.BuildServiceProvider().GetService<IRedisConnectionHelp>();
                  options.ConfigurationOptions = new ConfigurationOptions();
                  options.ConfigurationOptions.AllowAdmin = true;
                  options.ConfigurationOptions.Password = redisConnectionHelp.RedisPassword;

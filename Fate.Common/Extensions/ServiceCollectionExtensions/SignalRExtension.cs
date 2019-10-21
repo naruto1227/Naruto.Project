@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.AddStackExchangeRedis(options =>
              {
                  //获取配置信息
-                 var redisConnectionHelp = builder.Services.BuildServiceProvider().GetService<RedisConnectionHelp>();
+                 var redisConnectionHelp = builder.Services.BuildServiceProvider().GetService<IRedisConnectionHelp>();
                  options.Configuration.AllowAdmin = true;
                  options.Configuration.Password = redisConnectionHelp.RedisPassword;
                  options.Configuration.DefaultDatabase = redisConnectionHelp.RedisDefaultDataBase;
