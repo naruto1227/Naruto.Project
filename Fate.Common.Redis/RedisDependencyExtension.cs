@@ -39,11 +39,6 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
                 });
             }
-            //注册类的实例
-            types.Where(a => a.GetInterface("IRedisClassDependency") != null).ToList().ForEach(item =>
-            {
-                server.AddSingleton(item);
-            });
             return server;
         }
 
