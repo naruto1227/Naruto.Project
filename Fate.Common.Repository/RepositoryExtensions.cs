@@ -98,7 +98,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <typeparam name="TDbContext"></typeparam>
         /// <param name="eFOptions"></param>
-        public static void UseEntityFramework<TDbContext>(this EFOptions eFOptions, IServiceCollection services) where TDbContext : DbContext
+        /// <param name="pollSize">连接池数量</param>
+        public static void UseEntityFramework<TDbContext>(this EFOptions eFOptions, IServiceCollection services, int pollSize = 128) where TDbContext : DbContext
         {
             if (services == null)
                 throw new ArgumentNullException("services 不能为空!");
@@ -107,7 +108,7 @@ namespace Microsoft.Extensions.DependencyInjection
             if (eFOptions.ConfigureDbContext == null)
                 throw new ArgumentNullException("请先配置上下文的类型ConfigureDbContext!");
             //添加master 主库的上下文
-            services.AddDbContext<TDbContext>(eFOptions.ConfigureDbContext);
+            services.AddDbContextPool<TDbContext>(eFOptions.ConfigureDbContext, pollSize);
             if (eFOptions.DbContextType == null)
                 eFOptions.DbContextType = typeof(TDbContext); //获取上下文的实例
 
