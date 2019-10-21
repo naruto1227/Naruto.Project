@@ -88,8 +88,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<EFCommandInterceptor>();
             services.AddScoped<EFDiagnosticListener>();
             //DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
-            //注入后台服务
-            services.AddHostedService<MasterSlaveHostServer>();
+
+            //当从库有信息则执行定时服务
+            if (SlavePools.slaveConnec.Count > 0)
+            {
+                //注入后台服务
+                services.AddHostedService<MasterSlaveHostServer>();
+            }
             return services;
         }
 
