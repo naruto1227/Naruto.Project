@@ -123,7 +123,7 @@ namespace Fate.Common.Repository.UnitOfWork
                 if (unitOfWorkOptions.IsSlaveOrMaster)
                 {
                     //设置连接为主库
-                  await  SetMasterConnection();
+                    await SetMasterConnection();
                 }
                 //更改事务的状态
                 unitOfWorkOptions.IsSumbitTran = true;
@@ -184,9 +184,9 @@ namespace Fate.Common.Repository.UnitOfWork
                     connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
                 }
                 //打开连接
-               await ChangeConnecState(connec, ConnectionState.Open);
+                await ChangeConnecState(connec, ConnectionState.Open);
                 //连接更改重新验证是否更改了数据库名
-              await  ChangeDataBase();
+                await ChangeDataBase();
                 unitOfWorkOptions.IsMandatory = true;
             }).ConfigureAwait(false);
         }
@@ -255,6 +255,8 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public async Task<int> ExecuteSqlAsync(string sql, params object[] _params)
         {
+            if (string.IsNullOrWhiteSpace(sql))
+                throw new ArgumentNullException(nameof(sql) + "不能为空!");
             await SetMaster();
             return await dbContext.Value.Database.ExecuteSqlCommandAsync(sql, _params);
         }
