@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Fate.Common.Options;
 using System.IO;
 using Fate.Common.FileOperation;
+using Fate.Common.Interface;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -37,8 +38,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 }
             }
             //注入文件操作类
-            services.AddSingleton<FileHelper>();
-            services.AddSingleton<UploadFile>();
+            services.AddSingleton<IFileHelper, FileHelper>();
+            services.AddSingleton<IUploadFile, UploadFile>();
             services.AddTransient<Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider>();
             return services.Configure(options);
         }

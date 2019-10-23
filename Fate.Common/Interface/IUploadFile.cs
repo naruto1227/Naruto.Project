@@ -9,7 +9,7 @@ namespace Fate.Common.Interface
     /// <summary>
     /// 上传的服务
     /// </summary>
-    public interface IUploadFile : ICommonSingleDependency
+    public interface IUploadFile 
     {
 
         /// <summary>

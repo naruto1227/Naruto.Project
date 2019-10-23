@@ -13,6 +13,7 @@ using Fate.Common.FileOperation;
 using Fate.Common.Options;
 using Fate.Common.Extensions;
 using Fate.Common.Enum;
+using Fate.Common.Interface;
 
 namespace Fate.Common.Middleware
 {
@@ -25,7 +26,7 @@ namespace Fate.Common.Middleware
         /// <summary>
         /// 文件上传的帮助类
         /// </summary>
-        private FileHelper _file;
+        private IFileHelper _file;
         /// <summary>
         /// 扩展名的服务
         /// </summary>
@@ -47,7 +48,7 @@ namespace Fate.Common.Middleware
         /// <param name="next"></param>
         /// <param name="_myJsonResult"></param>
 
-        public FileUploadMiddleware(RequestDelegate next, MyJsonResult _myJsonResult, FileHelper file, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options, FileJsonResult _fileResult)
+        public FileUploadMiddleware(RequestDelegate next, MyJsonResult _myJsonResult, IFileHelper file, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options, FileJsonResult _fileResult)
         {
             myJsonResult = _myJsonResult;
             _file = file;

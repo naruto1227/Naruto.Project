@@ -15,6 +15,7 @@ using System.Diagnostics;
 using Fate.Common.Exceptions;
 using Microsoft.Extensions.Options;
 using Fate.Common.Options;
+using Fate.Common.Interface;
 
 namespace Fate.FileServerApi.Controllers
 {
@@ -27,9 +28,9 @@ namespace Fate.FileServerApi.Controllers
     {
         private IOptions<FileUploadOptions> options;
         private MyJsonResult myJsonResult;
-        private FileHelper _file;
+        private IFileHelper _file;
         private FileExtensionContentTypeProvider provider;
-        public FileUploadController(MyJsonResult jsonResult, FileHelper fileHelper, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options)
+        public FileUploadController(MyJsonResult jsonResult, IFileHelper fileHelper, FileExtensionContentTypeProvider _provider, IOptions<FileUploadOptions> _options)
         {
             myJsonResult = jsonResult;
             _file = fileHelper;

@@ -15,7 +15,7 @@ namespace Fate.Common.FileOperation
     /// <summary>
     /// 文件的帮助类
     /// </summary>
-    public class FileHelper : ICommonClassSigleDependency
+    public class FileHelper : IFileHelper
     {
         /// <summary>
         /// 获取文件写入的服务
@@ -58,6 +58,35 @@ namespace Fate.Common.FileOperation
             }
             else
                 resPath = "/" + resPath;
+            return resPath;
+        }
+
+        public async Task<string> AddFileAsync(Stream fileStream, string fileName)
+        {
+            //获取文件上传的根地址
+            string path = options.Value.UploadFilePath;
+            //获取的时间的目录
+            var time = DateTime.Now.ToString("yyyMMdd");
+            //目录不存在就创建一个目录
+            if (!Directory.Exists(Path.Combine(path, time)))
+            {
+                Directory.CreateDirectory(Path.Combine(path, time));
+            }
+            //拼接路径
+            string resPath = Path.Combine(time, DateTime.Now.Ticks + fileName);
+            //完整的路径
+            path = Path.Combine(path, resPath);
+            //写入文件
+            await uploadFile.UpLoadFileFromStream(fileStream, path);
+            //判断文件是否上传成功
+            if (!File.Exists(path))
+            {
+                resPath = "";
+            }
+            else
+            {
+                resPath = "/" + resPath.Replace("\\", "/");
+            }
             return resPath;
         }
 
