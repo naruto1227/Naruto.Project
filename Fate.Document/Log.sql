@@ -1,25 +1,4 @@
-/*
- Navicat Premium Data Transfer
 
- Source Server         : 218.78.55.142主库
- Source Server Type    : MySQL
- Source Server Version : 80017
- Source Host           : 218.78.55.142:3306
- Source Schema         : CP.Infrastructure
-
- Target Server Type    : MySQL
- Target Server Version : 80017
- File Encoding         : 65001
-
- Date: 06/09/2019 09:57:41
-*/
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for Log
--- ----------------------------
 DROP TABLE IF EXISTS `Log`;
 CREATE TABLE `Log`  (
   `Id` bigint(20) NOT NULL AUTO_INCREMENT,
