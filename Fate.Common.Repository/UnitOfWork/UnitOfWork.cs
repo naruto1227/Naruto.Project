@@ -253,6 +253,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public ISqlQuery SqlQuery()
         {
+            SetSlave().GetAwaiter().GetResult();
             return service.GetService<ISqlQuery<TDbContext>>();
         }
         /// <summary>
@@ -261,6 +262,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public ISqlCommand SqlCommand()
         {
+            SetMaster().GetAwaiter().GetResult();
             return service.GetService<ISqlCommand<TDbContext>>();
         }
         /// <summary>
