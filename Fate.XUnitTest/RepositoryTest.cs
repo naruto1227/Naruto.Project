@@ -40,9 +40,9 @@ namespace Fate.XUnitTest
                 options.UseEntityFramework<MysqlDbContent>(services);
                 options.IsOpenMasterSlave = true;
             });
-            services.AddScoped<EFCommandInterceptor>();
-            services.AddScoped<EFDiagnosticListener>();
-            DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
+            //services.AddScoped<EFCommandInterceptor>();
+            //services.AddScoped<EFDiagnosticListener>();
+            //DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
         }
         [Fact]
         public void Test()
@@ -145,6 +145,37 @@ namespace Fate.XUnitTest
 
             await unit.SaveChangeAsync();
             unit.CommitTransaction();
+        }
+
+        [Fact]
+        public void DataTableTest()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var dt = unit.SqlQuery().ExecuteSqlQuery("select  * from setting");
+
+        }
+        [Fact]
+        public async Task DataTableAsyncTest()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var dt = await unit.SqlQuery().ExecuteSqlQueryAsync("select  * from setting");
+
+        }
+
+        [Fact]
+        public async Task ExecSqlTest()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            unit.BeginTransaction();
+            var res = await unit.SqlCommand().ExecuteNonQueryAsync("delete from setting");
+            unit.CommitTransaction();
+        }
+        [Fact]
+        public async Task ExecuteScalarAsync()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var query = unit.SqlQuery();
+            var res = await query.ExecuteScalarAsync<int>("select Id from setting");
         }
     }
 

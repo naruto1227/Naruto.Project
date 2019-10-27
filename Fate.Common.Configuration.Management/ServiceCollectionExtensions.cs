@@ -35,7 +35,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder)
         {
            // mvcBuilder.Services.AddTransient(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
-            mvcBuilder.AddRazorPages();
             //注入mvc扩展
             mvcBuilder.ConfigureApplicationPartManager(a =>
             {

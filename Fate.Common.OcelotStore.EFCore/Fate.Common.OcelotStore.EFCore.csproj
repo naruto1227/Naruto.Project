@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ocelot" Version="13.5.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

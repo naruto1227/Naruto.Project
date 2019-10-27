@@ -6,21 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 
 
-namespace Fate.Common.Configuration.Management.Controllers
+namespace Fate.Common.Configuration.Management.Dashboard.Controllers
 {
     /// <summary>
     /// 张海波
     /// 2019-10-16
     /// 对外开放获取 配置信息的接口
     /// </summary>
-    [Route("api/{controller}")]
-    [ApiController]
-    public class ForeignController : ControllerBase
+    public class ForeignController : BaseController
     {
 
-        public JsonResult Get()
-        {
-            return new JsonResult("1");
-        }
     }
 }

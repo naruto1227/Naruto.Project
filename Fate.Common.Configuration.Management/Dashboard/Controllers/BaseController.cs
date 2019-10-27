@@ -9,11 +9,9 @@ namespace Fate.Common.Configuration.Management.Dashboard.Controllers
     /// <summary>
     /// 所有的控制器的基类
     /// </summary>
-    [Route("Management/[controller]/[action]")]
-    public class BaseController : Controller
+    [Route("api/Management/[controller]/")]
+    [ApiController]
+    public class BaseController : ControllerBase
     {
-        public IActionResult Test() {
-            return Json("1");
-        }
     }
 }

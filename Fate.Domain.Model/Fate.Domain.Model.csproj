@@ -9,11 +9,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <!--<PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />-->
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Common.Base.Model\Fate.Common.Base.Model.csproj" />
+    <ProjectReference Include="..\Fate.Common.Repository\Fate.Common.Repository.csproj" />
   </ItemGroup>
+
+  <!--<ItemGroup>
+    <ProjectReference Include="..\Fate.Common.Base.Model\Fate.Common.Base.Model.csproj" />
+  </ItemGroup>-->
 
 </Project>

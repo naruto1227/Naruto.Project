@@ -14,13 +14,6 @@ namespace Fate.Common.Configuration.Management
         {
             return app =>
             {
-                app.UseStaticFiles(new StaticFileOptions()
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Dashboard", "Content")),
-                    RequestPath = "content",
-                    DefaultContentType = "application/x-msdownload",
-                    ServeUnknownFileTypes = true
-                });
                 next(app);
             };
         }
