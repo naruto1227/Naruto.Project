@@ -248,19 +248,21 @@ namespace Fate.Common.Repository.UnitOfWork
         }
 
         /// <summary>
-        /// 执行sql语句的 返回 受影响的行数
+        /// 执行sql查询操作
         /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="_params"></param>
         /// <returns></returns>
-        public async Task<int> ExecuteSqlAsync(string sql, params object[] _params)
+        public ISqlQuery SqlQuery()
         {
-            if (string.IsNullOrWhiteSpace(sql))
-                throw new ArgumentNullException(nameof(sql) + "不能为空!");
-            await SetMaster();
-            return await dbContext.Value.Database.ExecuteSqlCommandAsync(sql, _params);
+            return service.GetService<ISqlQuery<TDbContext>>();
         }
-
+        /// <summary>
+        /// 执行sql增删改操作
+        /// </summary>
+        /// <returns></returns>
+        public ISqlCommand SqlCommand()
+        {
+            return service.GetService<ISqlCommand<TDbContext>>();
+        }
         /// <summary>
         /// 释放资源
         /// </summary>

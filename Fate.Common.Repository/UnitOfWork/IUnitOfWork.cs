@@ -45,9 +45,6 @@ namespace Fate.Common.Repository.UnitOfWork
         /// </summary>
         void RollBackTransaction();
 
-        //IRepository<T> Respositiy<T>() where T : class, IEntity;
-
-
         /// <summary>
         /// 执行 查询的操作
         /// </summary>
@@ -69,12 +66,15 @@ namespace Fate.Common.Repository.UnitOfWork
         Task ChangeDataBase(string dataBase);
 
         /// <summary>
-        /// 执行slq语句
+        /// 返回sql查询的对象
         /// </summary>
-        /// <param name="sql"></param>
         /// <returns></returns>
-        Task<int> ExecuteSqlAsync(string sql, params object[] _params);
-
+        ISqlQuery SqlQuery();
+        /// <summary>
+        /// 返回sql增删改的对象
+        /// </summary>
+        /// <returns></returns>
+        ISqlCommand SqlCommand();
         /// <summary>
         /// 强制更改为只读或者读写连接字符串(当前作用域将不再更改)
         /// </summary>
