@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Fate.Common.Configuration.Management.Dashboard;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -34,13 +36,24 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder)
         {
-           // mvcBuilder.Services.AddTransient(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
+            mvcBuilder.Services.AddServices();
             //注入mvc扩展
             mvcBuilder.ConfigureApplicationPartManager(a =>
             {
                 a.ApplicationParts.Add(new AssemblyPart(typeof(ServiceCollectionExtensions).Assembly));
             });
             return mvcBuilder;
+        }
+
+        /// <summary>
+        /// 注入服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        private static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            services.AddTransient(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
+            return services;
         }
     }
 }

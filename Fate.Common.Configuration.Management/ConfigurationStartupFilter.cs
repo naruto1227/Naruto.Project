@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Fate.Common.Configuration.Management.Dashboard;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
 using System;
@@ -14,7 +15,7 @@ namespace Fate.Common.Configuration.Management
         {
             return app =>
             {
-                next(app);
+                app.UseMiddleware<DashBoardMiddleware>();
             };
         }
     }

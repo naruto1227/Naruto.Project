@@ -1,23 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Fate.Common.Configuration.Management.Dashboard
 {
     /// <summary>
     /// 张海波
     /// 2019-10-27
-    /// 面板的资源的渲染
+    /// 面板的参数
     /// </summary>
-    internal interface IDashboardRender
+    public class DashBoardOptions
     {
         /// <summary>
-        /// 加载资源
+        /// 请求地址
         /// </summary>
-        /// <returns></returns>
-        Task LoadAsync(DashboardContext dashboardContext);
+        public PathString RequestPath { get; set; }
     }
 }

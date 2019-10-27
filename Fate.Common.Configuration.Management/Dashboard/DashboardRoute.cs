@@ -7,7 +7,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// <summary>
     /// 面板的路由 配置
     /// </summary>
-    public static class DashboardRoute
+    internal static class DashboardRoute
     {
 
         /// <summary>
@@ -32,7 +32,12 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// </summary>
         static DashboardRoute()
         {
-
+            Routes = new RouteCollections();
+            Routes.Add("/fate/js/MD5.js", new DashboardRender());
         }
+        /// <summary>
+        /// 路由集合
+        /// </summary>
+        public static RouteCollections Routes { get; }
     }
 }

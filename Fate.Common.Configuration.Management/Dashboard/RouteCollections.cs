@@ -8,7 +8,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// <summary>
     /// 路由的几个
     /// </summary>
-    public class RouteCollections
+    internal class RouteCollections
     {
         /// <summary>
         /// 存放路由的集合 
