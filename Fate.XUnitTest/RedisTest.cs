@@ -24,6 +24,7 @@ namespace Fate.XUnitTest
             services.AddRedisRepository(options =>
             {
                 options.Connection = "127.0.0.1:6379";
+                options.RedisPrefix = new Common.Redis.RedisConfig.RedisPrefixKey();
             });
             redis = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
         }
@@ -82,8 +83,12 @@ namespace Fate.XUnitTest
             //    list.Add(new setting() { Id = i });
             //}
             //redis.StoreAll(list);
-           // redis.DeleteAll<setting>();
+            // redis.DeleteAll<setting>();
         }
-
+        [Fact]
+        public void Remove()
+        {
+            redis.KeyRemove(new List<string>() { "test2", "zhang" });
+        }
     }
 }

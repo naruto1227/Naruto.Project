@@ -122,6 +122,11 @@ namespace Fate.Common.Redis.IRedisManage
         /// <param name="key"></param>
         void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default);
         /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="key"></param>
+        void KeyRemove(List<string> key, KeyOperatorEnum keyOperatorEnum = default);
+        /// <summary>
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
@@ -464,7 +469,11 @@ namespace Fate.Common.Redis.IRedisManage
         /// </summary>
         /// <param name="key"></param>
         Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default);
-
+        /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="key"></param>
+        Task<long> KeyRemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default);
         /// <summary>
         /// 判断key是否存在
         /// </summary>

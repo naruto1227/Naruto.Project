@@ -493,28 +493,44 @@ namespace Fate.Common.Redis.RedisManage
         public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
             if (keyOperatorEnum == KeyOperatorEnum.String)
-            {
                 key = StringSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.List)
-            {
                 key = ListSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.Set)
-            {
                 key = SetSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.Hash)
-            {
                 key = HashSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
-            {
                 key = SortedSetCustomKey + key;
-            }
             redisBase.DoSave(db => db.KeyDelete(key));
         }
 
+        /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="key"></param>
+        public void KeyRemove(List<string> key, KeyOperatorEnum keyOperatorEnum = default)
+        {
+            if (key == null || key.Count() <= 0)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            List<string> removeList = new List<string>();
+            key.ForEach(item =>
+            {
+                if (keyOperatorEnum == KeyOperatorEnum.String)
+                    removeList.Add(StringSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.List)
+                    removeList.Add(ListSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.Set)
+                    removeList.Add(SetSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.Hash)
+                    removeList.Add(HashSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
+                    removeList.Add(SortedSetCustomKey + item);
+            });
+            redisBase.DoSave(db => db.KeyDelete(redisBase.ConvertRedisKeys(removeList)));
+        }
         /// <summary>
         /// 判断key是否存在
         /// </summary>
@@ -554,28 +570,43 @@ namespace Fate.Common.Redis.RedisManage
         public async Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
             if (keyOperatorEnum == KeyOperatorEnum.String)
-            {
                 key = StringSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.List)
-            {
                 key = ListSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.Set)
-            {
                 key = SetSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.Hash)
-            {
                 key = HashSysCustomKey + key;
-            }
             else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
-            {
                 key = SortedSetCustomKey + key;
-            }
             return await redisBase.DoSave(db => db.KeyDeleteAsync(key));
         }
-
+        /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="key"></param>
+        public async Task<long> KeyRemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default)
+        {
+            if (key == null || key.Count() <= 0)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            List<string> removeList = new List<string>();
+            key.ForEach(item =>
+            {
+                if (keyOperatorEnum == KeyOperatorEnum.String)
+                    removeList.Add(StringSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.List)
+                    removeList.Add(ListSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.Set)
+                    removeList.Add(SetSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.Hash)
+                    removeList.Add(HashSysCustomKey + item);
+                else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
+                    removeList.Add(SortedSetCustomKey + item);
+            });
+            return await redisBase.DoSave(db => db.KeyDeleteAsync(redisBase.ConvertRedisKeys(removeList)));
+        }
         /// <summary>
         /// 判断key是否存在
         /// </summary>
@@ -922,7 +953,7 @@ namespace Fate.Common.Redis.RedisManage
             //获取id的属性
             System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Id");
             //获取id的值
-            var id = propertyInfo.GetValue(info,null);
+            var id = propertyInfo.GetValue(info, null);
             //开启事务
             var tran = redisBase.DoSave(db => db.CreateTransaction());
             tran.SetAddAsync(SetSysCustomKey + type.Name, id.ToString());
