@@ -12,6 +12,16 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// </summary>
     public class DashboardContext
     {
+        public DashboardContext()
+        {
+
+        }
+        public DashboardContext(string resourcesName, string contentType, HttpContext httpContext)
+        {
+            ResourcesName = resourcesName;
+            ContentType = contentType;
+            HttpContext = httpContext;
+        }
         /// <summary>
         /// 资源的名称
         /// </summary>

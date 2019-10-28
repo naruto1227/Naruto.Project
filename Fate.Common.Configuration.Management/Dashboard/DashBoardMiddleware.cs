@@ -21,16 +21,22 @@ namespace Fate.Common.Configuration.Management.Dashboard
             next = _next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext, RouteCollections routeCollections, IDashboardRender dashboardRender)
         {
             if (!httpContext.Request.Path.StartsWithSegments(new PathString("/fate")))
             {
                 await next(httpContext);
                 return;
             }
+            //验证当前文件是否存在
+            var resourceInfo = routeCollections[httpContext.Request.Path];
+            if (resourceInfo == null)
+            {
+                await next(httpContext);
+                return;
+            }
 
-            var i = DashboardRoute.Routes[httpContext.Request.Path];
-            await i.LoadAsync(new DashboardContext() { HttpContext = httpContext, ResourcesName = "Fate.Common.Configuration.Management.Dashboard.Content.js.MD5.js" });
+            await dashboardRender.LoadAsync(new DashboardContext(DashboardRoute.GetContentResourceName(resourceInfo.Item1, DashboardRoute.GetFileName(httpContext.Request.Path, resourceInfo.Item1)), resourceInfo.Item2, httpContext));
         }
     }
 }

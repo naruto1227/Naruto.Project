@@ -8,29 +8,34 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// <summary>
     /// 路由的几个
     /// </summary>
-    internal class RouteCollections
+    public class RouteCollections
     {
         /// <summary>
         /// 存放路由的集合 
         /// </summary>
-        private readonly List<Tuple<string, IDashboardRender>> routes = new List<Tuple<string, IDashboardRender>>();
+        private readonly Dictionary<string, Tuple<string, string>> routes = new Dictionary<string, Tuple<string, string>>();
 
-        public IDashboardRender this[string index]
+        /// <summary>
+        /// 获取类型
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Tuple<string, string> this[string index]
         {
             get
             {
-                return routes.Where(a => a.Item1.StartsWith(index)).Select(a => a.Item2).FirstOrDefault();
+                return routes.Where(a => a.Key.Equals(index)).Select(a => a.Value).FirstOrDefault();
             }
         }
         /// <summary>
         /// 添加一个路由规则
         /// </summary>
         /// <param name="pathTemplate"></param>
-        /// <param name="dashboardRender"></param>
-        public void Add(string pathTemplate, IDashboardRender dashboardRender)
+        /// <param name="contentType"></param>
+        /// <param name="folderName">目录的名称</param>
+        public void Add(string pathTemplate, string folderName, string contentType)
         {
-            routes.Add(new Tuple<string, IDashboardRender>(pathTemplate, dashboardRender));
+            routes.Add(pathTemplate, (folderName, contentType).ToTuple());
         }
-
     }
 }

@@ -52,6 +52,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddSingleton<IDashboardRender, DashboardRender>();
+            services.AddSingleton(DashboardRoute.Routes);
             services.AddTransient(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
             return services;
         }
