@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <None Remove="Dashboard\Content\js\MD5.js" />
+    <None Remove="Dashboard\Content\pages\index.html" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Dashboard\Content\js\MD5.js" />
+    <EmbeddedResource Include="Dashboard\Content\pages\index.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dashboard\Pages\" />
+    <Folder Include="Dashboard\Content\css\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Fate.Common.Configuration.Management.Dashboard.Interface;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -23,7 +24,16 @@ namespace Fate.Common.Configuration.Management.Dashboard
             //加载程序集 获取指定的资源
             using (var resourcesStream = typeof(DashboardRender).Assembly.GetManifestResourceStream(dashboardContext.ResourcesName))
             {
+                if (resourcesStream == null)
+                    return;
+                //添加响应类型
                 dashboardContext.HttpContext.Response.ContentType = dashboardContext.ContentType;
+                //设置缓存时间
+                dashboardContext.HttpContext.Response.GetTypedHeaders().CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+                {
+                    Public = true,
+                    MaxAge = TimeSpan.FromMinutes(30)
+                };
                 await resourcesStream.CopyToAsync(dashboardContext.HttpContext.Response.Body);
             }
         }

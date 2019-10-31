@@ -13,6 +13,17 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// 静态资源的请求前缀
         /// </summary>
         internal static string ResourceRequestPrefix = "/fate";
+
+        /// <summary>
+        /// 主页的资源
+        /// </summary>
+        internal static readonly string MainPageName = "/fate/pages/index.html";
+        /// <summary>
+        /// 页面的资源
+        /// </summary>
+        private static readonly string[] HtmlPages = {
+            "index.html"
+        };
         /// <summary>
         /// 存放用到的js文件的名字
         /// </summary>
@@ -29,6 +40,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
 
         };
 
+
         /// <summary>
         /// 静态初始化
         /// </summary>
@@ -42,6 +54,10 @@ namespace Fate.Common.Configuration.Management.Dashboard
             foreach (var item in Stylesheets)
             {
                 Routes.Add($"{ResourceRequestPrefix}/css/{item}", "css", "application/x-javascript");
+            }
+            foreach (var item in HtmlPages)
+            {
+                Routes.Add($"{ResourceRequestPrefix}/pages/{item}", "pages", "text/html");
             }
         }
         /// <summary>
