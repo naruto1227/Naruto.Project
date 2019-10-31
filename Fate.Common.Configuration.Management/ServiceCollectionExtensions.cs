@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Fate.Common.Configuration.Management.Dashboard;
+using Fate.Common.Configuration.Management.Dashboard.Interface;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -22,11 +24,23 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder)
         {
+            mvcBuilder.Services.AddServices();
             //注入mvc扩展
             mvcBuilder.ConfigureApplicationPartManager(a =>
             {
                 a.ApplicationParts.Add(new AssemblyPart(typeof(ServiceCollectionExtensions).Assembly));
             });
+            return mvcBuilder;
+        }
+        /// <summary>
+        /// 注入配置界面
+        /// </summary>
+        /// <param name="mvcBuilder"></param>
+        /// <returns></returns>
+        public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder, IConfiguration option)
+        {
+            mvcBuilder.Services.Configure<DashBoardOptions>(option);
+            mvcBuilder.AddConfigurationManagement();
             return mvcBuilder;
         }
         /// <summary>
@@ -42,6 +56,17 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 a.ApplicationParts.Add(new AssemblyPart(typeof(ServiceCollectionExtensions).Assembly));
             });
+            return mvcBuilder;
+        }
+        /// <summary>
+        /// 注入配置界面
+        /// </summary>
+        /// <param name="mvcBuilder"></param>
+        /// <returns></returns>
+        public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder, IConfiguration option)
+        {
+            mvcBuilder.Services.Configure<DashBoardOptions>(option);
+            mvcBuilder.AddConfigurationManagement();
             return mvcBuilder;
         }
 

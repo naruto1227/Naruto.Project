@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fate.Common.Configuration.Management.Dashboard
+namespace Fate.Common.Configuration.Management.Dashboard.Interface
 {
     /// <summary>
     /// 张海波

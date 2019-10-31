@@ -1,5 +1,7 @@
 ﻿using Fate.Common.Configuration.Management.Dashboard;
+using Fate.Common.Configuration.Management.Dashboard.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,9 +23,9 @@ namespace Fate.Common.Configuration.Management.Dashboard
             next = _next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, RouteCollections routeCollections, IDashboardRender dashboardRender)
+        public async Task InvokeAsync(HttpContext httpContext, DashboardRouteCollections routeCollections, IDashboardRender dashboardRender, IOptions<DashBoardOptions> dashBoardOptions)
         {
-            if (!httpContext.Request.Path.StartsWithSegments(new PathString("/fate")))
+            if (!httpContext.Request.Path.StartsWithSegments(dashBoardOptions.Value.RequestPath))
             {
                 await next(httpContext);
                 return;

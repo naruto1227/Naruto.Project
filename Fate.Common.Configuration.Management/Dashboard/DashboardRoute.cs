@@ -19,7 +19,6 @@ namespace Fate.Common.Configuration.Management.Dashboard
         private static readonly string[] Javascripts =
        {
             "MD5.js",
-
         };
 
         /// <summary>
@@ -35,7 +34,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// </summary>
         static DashboardRoute()
         {
-            Routes = new RouteCollections();
+            Routes = new DashboardRouteCollections();
             foreach (var item in Javascripts)
             {
                 Routes.Add($"{ResourceRequestPrefix}/js/{item}", "js", "application/x-javascript");
@@ -48,7 +47,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <summary>
         /// 路由集合
         /// </summary>
-        public static RouteCollections Routes { get; }
+        public static DashboardRouteCollections Routes { get; }
 
         /// <summary>
         /// 获取请求的文件名

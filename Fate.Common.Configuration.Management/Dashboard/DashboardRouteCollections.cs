@@ -6,9 +6,9 @@ using System.Linq;
 namespace Fate.Common.Configuration.Management.Dashboard
 {
     /// <summary>
-    /// 路由的几个
+    /// 存放静态资源的路由集合
     /// </summary>
-    public class RouteCollections
+    public class DashboardRouteCollections
     {
         /// <summary>
         /// 存放路由的集合 

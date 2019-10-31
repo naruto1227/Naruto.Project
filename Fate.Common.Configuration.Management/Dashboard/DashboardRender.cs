@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fate.Common.Configuration.Management.Dashboard.Interface;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;

@@ -13,8 +13,8 @@ namespace Fate.Common.Configuration.Management.Dashboard
     public class DashBoardOptions
     {
         /// <summary>
-        /// 请求地址
+        /// 首页地址 默认(/fate)
         /// </summary>
-        public PathString RequestPath { get; set; }
+        public PathString RequestPath { get; set; } = new PathString("/fate");
     }
 }
