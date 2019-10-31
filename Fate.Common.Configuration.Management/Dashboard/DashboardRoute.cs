@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fate.Common.Configuration.Management.Dashboard.Interface;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,27 +8,27 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// <summary>
     /// 面板的路由 配置
     /// </summary>
-    internal static class DashboardRoute
+    public class DashboardRoute : IDashboardRoute
     {
         /// <summary>
-        /// 静态资源的请求前缀
+        /// 资源的请求前缀
         /// </summary>
-        internal static string ResourceRequestPrefix = "/fate";
-
+        public string ResourceRequestPrefix { get => "/fate"; }
         /// <summary>
-        /// 主页的资源
+        /// 首页的地址
         /// </summary>
-        internal static readonly string MainPageName = "/fate/pages/index.html";
+        public string MainPageName { get => "/fate/pages/index.html"; }
+
         /// <summary>
         /// 页面的资源
         /// </summary>
-        private static readonly string[] HtmlPages = {
+        private readonly string[] HtmlPages = {
             "index.html"
         };
         /// <summary>
         /// 存放用到的js文件的名字
         /// </summary>
-        private static readonly string[] Javascripts =
+        private readonly string[] Javascripts =
        {
             "MD5.js",
         };
@@ -35,43 +36,37 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <summary>
         /// 存放需要用的样式的名字
         /// </summary>
-        private static readonly string[] Stylesheets =
+        private readonly string[] Stylesheets =
         {
 
         };
 
 
         /// <summary>
-        /// 静态初始化
+        /// 初始化
         /// </summary>
-        static DashboardRoute()
+        public DashboardRoute(IDashboardRouteCollections routeCollections)
         {
-            Routes = new DashboardRouteCollections();
             foreach (var item in Javascripts)
             {
-                Routes.Add($"{ResourceRequestPrefix}/js/{item}", "js", "application/x-javascript");
+                routeCollections.Add($"{ResourceRequestPrefix}/js/{item}", "js", "application/x-javascript");
             }
             foreach (var item in Stylesheets)
             {
-                Routes.Add($"{ResourceRequestPrefix}/css/{item}", "css", "application/x-javascript");
+                routeCollections.Add($"{ResourceRequestPrefix}/css/{item}", "css", "application/x-javascript");
             }
             foreach (var item in HtmlPages)
             {
-                Routes.Add($"{ResourceRequestPrefix}/pages/{item}", "pages", "text/html");
+                routeCollections.Add($"{ResourceRequestPrefix}/pages/{item}", "pages", "text/html");
             }
         }
-        /// <summary>
-        /// 路由集合
-        /// </summary>
-        public static DashboardRouteCollections Routes { get; }
-
         /// <summary>
         /// 获取请求的文件名
         /// </summary>
         /// <param name="requestPath">请求的路径</param>
         /// <param name="folderName">资源存放的文件夹</param>
         /// <returns></returns>
-        internal static string GetFileName(string requestPath, string folderName)
+        public string GetFileName(string requestPath, string folderName)
         {
             var folders = requestPath.Split(new string[] { $"{ResourceRequestPrefix}/{folderName}" }, StringSplitOptions.RemoveEmptyEntries);
             if (folders != null)
@@ -86,7 +81,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <param name="contentFolder"></param>
         /// <param name="resourceName"></param>
         /// <returns></returns>
-        internal static string GetContentResourceName(string contentFolder, string resourceName)
+        public string GetContentResourceName(string contentFolder, string resourceName)
         {
             return $"{GetContentFolderNamespace(contentFolder)}{resourceName}";
         }
@@ -95,7 +90,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// </summary>
         /// <param name="contentFolder"></param>
         /// <returns></returns>
-        internal static string GetContentFolderNamespace(string contentFolder)
+        private string GetContentFolderNamespace(string contentFolder)
         {
             return $"{typeof(DashboardRoute).Namespace}.Content.{contentFolder}";
         }

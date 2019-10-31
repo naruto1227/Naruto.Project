@@ -23,7 +23,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
             next = _next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, DashboardRouteCollections routeCollections, IDashboardRender dashboardRender, IOptions<DashBoardOptions> dashBoardOptions)
+        public async Task InvokeAsync(HttpContext httpContext, IDashboardRouteCollections routeCollections, IDashboardRender dashboardRender, IOptions<DashBoardOptions> dashBoardOptions, IDashboardRoute dashboardRoute)
         {
             if (!httpContext.Request.Path.StartsWithSegments(dashBoardOptions.Value.RequestPath, out PathString matched, out PathString remaining))
             {
@@ -35,17 +35,17 @@ namespace Fate.Common.Configuration.Management.Dashboard
             //验证访问的是否为首页的资源
             if (string.IsNullOrWhiteSpace(remaining))
             {
-                requestPath = DashboardRoute.MainPageName;
+                requestPath = dashboardRoute.MainPageName;
             }
             //验证当前文件是否存在
-            var resourceInfo = routeCollections[requestPath];
+            var resourceInfo = routeCollections.Get(requestPath);
             if (resourceInfo == null)
             {
                 await next(httpContext);
                 return;
             }
 
-            await dashboardRender.LoadAsync(new DashboardContext(DashboardRoute.GetContentResourceName(resourceInfo.Item1, DashboardRoute.GetFileName(requestPath, resourceInfo.Item1)), resourceInfo.Item2, httpContext));
+            await dashboardRender.LoadAsync(new DashboardContext(dashboardRoute.GetContentResourceName(resourceInfo.Item1, dashboardRoute.GetFileName(requestPath, resourceInfo.Item1)), resourceInfo.Item2, httpContext));
         }
     }
 }

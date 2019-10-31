@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Fate.Common.Configuration.Management.Dashboard.Interface;
 
 namespace Fate.Common.Configuration.Management.Dashboard
 {
     /// <summary>
     /// 存放静态资源的路由集合
     /// </summary>
-    public class DashboardRouteCollections
+    public class DashboardRouteCollections : IDashboardRouteCollections
     {
         /// <summary>
         /// 存放路由的集合 
@@ -16,17 +17,17 @@ namespace Fate.Common.Configuration.Management.Dashboard
         private readonly Dictionary<string, Tuple<string, string>> routes = new Dictionary<string, Tuple<string, string>>();
 
         /// <summary>
-        /// 获取类型
+        /// 获取资源的路由信息
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public Tuple<string, string> this[string index]
+        public Tuple<string, string> Get(string key)
         {
-            get
-            {
-                return routes.Where(a => a.Key.Equals(index)).Select(a => a.Value).FirstOrDefault();
-            }
+            if (!routes.ContainsKey(key))
+                return default;
+            return routes.Where(a => a.Key.Equals(key)).Select(a => a.Value).FirstOrDefault();
         }
+
         /// <summary>
         /// 添加一个路由规则
         /// </summary>
