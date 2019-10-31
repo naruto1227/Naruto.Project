@@ -47,7 +47,7 @@ namespace Fate.XUnitTest
         public void OrderBy()
         {
             //扩展排序
-            var res = unit.Query<setting>().AsQueryable().OrderByDescending("Id").OrderByDescending(a => a.Contact).ToList();
+            var res = unit.Query<setting>().AsQueryable().OrderBy("Id", false).ThenBy("DuringTime", false).ToList();
             //自带的排序
             var res2 = unit.Query<setting>().AsQueryable().OrderByDescending<setting, object>(a => a.Id).ThenBy(a => a.Contact).ToList();
         }

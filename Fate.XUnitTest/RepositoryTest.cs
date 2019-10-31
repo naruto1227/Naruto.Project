@@ -65,7 +65,7 @@ namespace Fate.XUnitTest
             u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
             u0k.Command<setting>().Add(new setting() { Id = new Random().Next(100000, 999999) });
             u0k.SaveChanges();
-            u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
+            var res2 = u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
             var res = u0k.Query<setting>().AsQueryable().FirstOrDefault();
         }
         [Fact]
