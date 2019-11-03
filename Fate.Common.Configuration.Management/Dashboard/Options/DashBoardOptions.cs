@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Fate.Common.Configuration.Management.Dashboard.Interface;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,5 +17,10 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// 首页地址 默认(/fate)
         /// </summary>
         public PathString RequestPath { get; set; } = new PathString("/fate");
+
+        /// <summary>
+        /// 面板的授权接口过滤器
+        /// </summary>
+        public IEnumerable<IDashboardAuthorizationFilters> Authorization { get; set; }
     }
 }

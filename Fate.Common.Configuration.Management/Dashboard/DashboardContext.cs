@@ -10,7 +10,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// 2019-10-27
     /// 面板的上下文
     /// </summary>
-    public class DashboardContext
+    public class DashboardContext: ConfigurationContext
     {
         public DashboardContext()
         {
@@ -21,6 +21,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
             ResourcesName = resourcesName;
             ContentType = contentType;
             HttpContext = httpContext;
+            ServiceProvider = httpContext.RequestServices;
         }
         /// <summary>
         /// 资源的名称
@@ -31,9 +32,5 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// 
         /// </summary>
         public string ContentType { get; set; }
-        /// <summary>
-        /// 请求的上下文
-        /// </summary>
-        public HttpContext HttpContext { get; set; }
     }
 }

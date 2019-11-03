@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
 
 namespace Fate.Common.Configuration.Management.Dashboard
 {
@@ -23,9 +25,10 @@ namespace Fate.Common.Configuration.Management.Dashboard
             next = _next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, IDashboardRouteCollections routeCollections, IDashboardRender dashboardRender, IOptions<DashBoardOptions> dashBoardOptions, IDashboardRoute dashboardRoute)
+        public async Task InvokeAsync(HttpContext httpContext, IDashboardRouteCollections routeCollections, IDashboardRender dashboardRender, IOptions<ConfigurationOptions> configurationOptions, IDashboardRoute dashboardRoute)
         {
-            if (!httpContext.Request.Path.StartsWithSegments(dashBoardOptions.Value.RequestPath, out PathString matched, out PathString remaining))
+            //匹配路由
+            if (!httpContext.Request.Path.StartsWithSegments(configurationOptions.Value.DashBoardOptions.RequestPath, out PathString matched, out PathString remaining))
             {
                 await next(httpContext);
                 return;
@@ -44,8 +47,26 @@ namespace Fate.Common.Configuration.Management.Dashboard
                 await next(httpContext);
                 return;
             }
-
-            await dashboardRender.LoadAsync(new DashboardContext(dashboardRoute.GetContentResourceName(resourceInfo.Item1, dashboardRoute.GetFileName(requestPath, resourceInfo.Item1)), resourceInfo.Item2, httpContext));
+            //设置上下文
+            var dashbordContext = new DashboardContext(dashboardRoute.GetContentResourceName(resourceInfo.Item1, dashboardRoute.GetFileName(requestPath, resourceInfo.Item1)), resourceInfo.Item2, httpContext);
+            //授权过滤器
+            var authorizationList = configurationOptions.Value.DashBoardOptions?.Authorization;
+            if (authorizationList != null && authorizationList.Count() > 0)
+            {
+                //授权处理
+                foreach (var item in authorizationList)
+                {
+                    if ((await item.AuthorizationAsync(dashbordContext)))
+                        continue;
+                    else
+                    {
+                        httpContext.Response.StatusCode = Convert.ToInt32(HttpStatusCode.Unauthorized);
+                        return;
+                    }
+                }
+            }
+            //处理响应
+            await dashboardRender.LoadAsync(dashbordContext);
         }
     }
 }

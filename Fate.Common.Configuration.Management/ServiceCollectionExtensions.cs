@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Fate.Common.Configuration.Management.Dashboard;
 using Fate.Common.Configuration.Management.Dashboard.Interface;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -39,7 +40,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder, IConfiguration option)
         {
-            mvcBuilder.Services.Configure<DashBoardOptions>(option);
+            mvcBuilder.Services.Configure<ConfigurationOptions>(option);
             mvcBuilder.AddConfigurationManagement();
             return mvcBuilder;
         }
@@ -65,7 +66,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder, IConfiguration option)
         {
-            mvcBuilder.Services.Configure<DashBoardOptions>(option);
+            mvcBuilder.Services.Configure<ConfigurationOptions>(option);
             mvcBuilder.AddConfigurationManagement();
             return mvcBuilder;
         }
@@ -80,7 +81,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IDashboardRender, DashboardRender>();
             services.AddSingleton<IDashboardRoute, DashboardRoute>();
             services.AddSingleton<IDashboardRouteCollections, DashboardRouteCollections>();
-            services.AddTransient(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
+            if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value?.DashBoardOptions != null)
+            {
+                services.AddTransient(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
+            }
             return services;
         }
     }
