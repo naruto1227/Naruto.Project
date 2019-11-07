@@ -16,6 +16,11 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class RepositoryExtensions
     {
         /// <summary>
+        /// 扩展服务
+        /// </summary>
+        private static List<Action<IServiceCollection>> Extension = new List<Action<IServiceCollection>>();
+
+        /// <summary>
         /// 注入仓储服务(依赖注入)
         /// </summary>
         /// <param name="services"></param>
@@ -77,6 +82,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnections);
                 }
             }
+            //注入配置
             services.Configure<List<EFOptions>>(a =>
             {
                 foreach (var item in options)
@@ -84,6 +90,11 @@ namespace Microsoft.Extensions.DependencyInjection
                     a.Add(item);
                 }
             });
+            //注入扩展服务
+            foreach (var item in Extension)
+            {
+                item(services);
+            }
             //注入拦截器
             //services.AddScoped<EFCommandInterceptor>();
             //services.AddScoped<EFDiagnosticListener>();
@@ -95,6 +106,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 //注入后台服务
                 services.AddHostedService<MasterSlaveHostServer>();
             }
+
             return services;
         }
 
@@ -103,24 +115,30 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <typeparam name="TDbContext"></typeparam>
         /// <param name="eFOptions"></param>
+        /// <param name="isDbContextPool">是否设置上下文池</param>
         /// <param name="pollSize">连接池数量</param>
-        public static void UseEntityFramework<TDbContext>(this EFOptions eFOptions, IServiceCollection services, int pollSize = 128) where TDbContext : DbContext
+        public static void UseEntityFramework<TDbContext>(this EFOptions eFOptions, bool isDbContextPool = true, int pollSize = 128) where TDbContext : DbContext
         {
-            if (services == null)
-                throw new ArgumentNullException("services 不能为空!");
             if (eFOptions == null)
                 throw new ArgumentNullException("值不能为空!");
-            if (eFOptions.ConfigureDbContext == null)
-                throw new ArgumentNullException("请先配置上下文的类型ConfigureDbContext!");
-            //添加master 主库的上下文
-            services.AddDbContextPool<TDbContext>(eFOptions.ConfigureDbContext, pollSize);
-            if (eFOptions.DbContextType == null)
-                eFOptions.DbContextType = typeof(TDbContext); //获取上下文的实例
+            void DbContextExtension(IServiceCollection serviceDescriptors)
+            {
+                //添加master 主库的上下文
+                if (isDbContextPool)
+                    serviceDescriptors.AddDbContextPool<TDbContext>(eFOptions.ConfigureDbContext, pollSize);
+                else
+                    serviceDescriptors.AddDbContext<TDbContext>(eFOptions.ConfigureDbContext);
 
-            //获取master主库的连接字符串
-            var dbContent = services.BuildServiceProvider().GetRequiredService<TDbContext>();
-            eFOptions.WriteReadConnectionString = dbContent.Database.GetDbConnection().ConnectionString;
-
+                if (eFOptions.DbContextType == null)
+                    eFOptions.DbContextType = typeof(TDbContext); //获取上下文的实例
+                using (var server = serviceDescriptors.BuildServiceProvider().CreateScope())
+                {
+                    //获取master主库的连接字符串
+                    var dbContent = server.ServiceProvider.GetRequiredService<TDbContext>();
+                    eFOptions.WriteReadConnectionString = dbContent.Database.GetDbConnection().ConnectionString;
+                }
+            }
+            Extension.Add(DbContextExtension);
         }
     }
 }

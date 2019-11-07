@@ -72,7 +72,7 @@ namespace Fate.Test
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
                 options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 //
-                options.UseEntityFramework<MysqlDbContent>(services);
+                options.UseEntityFramework<MysqlDbContent>();
                 options.IsOpenMasterSlave = false;
             });
 

@@ -42,7 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 ocelot.ConfigureDbContext = eFOptions.ConfigureDbContext;
                 ocelot.ReadOnlyConnectionString = eFOptions.ReadOnlyConnectionString;
                 //
-                ocelot.UseEntityFramework<OcelotDbContent>(ocelotBuilder.Services);
+                ocelot.UseEntityFramework<OcelotDbContent>();
                 ocelot.IsOpenMasterSlave = eFOptions.IsOpenMasterSlave;
             });
             //检验是否注入redis仓储

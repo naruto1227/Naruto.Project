@@ -31,7 +31,7 @@ namespace Fate.XUnitTest
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;");
 
                 //
-                options.UseEntityFramework<MysqlDbContent>(serviceDescriptors);
+                options.UseEntityFramework<MysqlDbContent>();
             });
             //打开拦截器
             serviceDescriptors.AddScoped<EFDiagnosticListener>();
