@@ -12,7 +12,11 @@ using Fate.Common.Repository.HostServer;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-
+    /// <summary>
+    /// 张海波
+    /// 2019-08.13
+    /// 仓储层的扩展服务
+    /// </summary>
     public static class RepositoryExtensions
     {
         /// <summary>
