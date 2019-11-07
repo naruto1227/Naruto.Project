@@ -61,14 +61,19 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 throw new ArgumentNullException("值不能为空!");
             }
-            //获取参数
-            List<EFOptions> options = new List<EFOptions>();
 
-            foreach (var item in action)
+            //获取参数 并执行委托
+            List<EFOptions> efOptionsList = new List<EFOptions>();
+            for (int i = 0; i < action.Count(); i++)
             {
                 EFOptions eFOptions = new EFOptions();
-                item?.Invoke(eFOptions);
-                options.Add(eFOptions);
+                action[i]?.Invoke(eFOptions);
+                if (eFOptions == null)
+                    continue;
+                //注入上下文服务扩展
+                Extension[i](services);
+                //加入集合配置
+                efOptionsList.Add(eFOptions);
                 //验证
                 if (eFOptions.IsOpenMasterSlave && (eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0))
                 {
@@ -86,19 +91,16 @@ namespace Microsoft.Extensions.DependencyInjection
                     SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnections);
                 }
             }
+
             //注入配置
             services.Configure<List<EFOptions>>(a =>
             {
-                foreach (var item in options)
+                foreach (var item in efOptionsList)
                 {
                     a.Add(item);
                 }
             });
-            //注入扩展服务
-            foreach (var item in Extension)
-            {
-                item(services);
-            }
+
             //注入拦截器
             //services.AddScoped<EFCommandInterceptor>();
             //services.AddScoped<EFDiagnosticListener>();
@@ -110,7 +112,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 //注入后台服务
                 services.AddHostedService<MasterSlaveHostServer>();
             }
-
+            Extension.Clear();
             return services;
         }
 
@@ -125,6 +127,9 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             if (eFOptions == null)
                 throw new ArgumentNullException("值不能为空!");
+            //获取上下文的实例
+            if (eFOptions.DbContextType == null)
+                eFOptions.DbContextType = typeof(TDbContext);
             void DbContextExtension(IServiceCollection serviceDescriptors)
             {
                 //添加master 主库的上下文
@@ -132,9 +137,6 @@ namespace Microsoft.Extensions.DependencyInjection
                     serviceDescriptors.AddDbContextPool<TDbContext>(eFOptions.ConfigureDbContext, pollSize);
                 else
                     serviceDescriptors.AddDbContext<TDbContext>(eFOptions.ConfigureDbContext);
-
-                if (eFOptions.DbContextType == null)
-                    eFOptions.DbContextType = typeof(TDbContext); //获取上下文的实例
                 using (var server = serviceDescriptors.BuildServiceProvider().CreateScope())
                 {
                     //获取master主库的连接字符串
