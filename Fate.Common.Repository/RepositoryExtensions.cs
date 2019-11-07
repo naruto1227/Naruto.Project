@@ -115,7 +115,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 注入EFCOre 上下文 (此参数配置需要放置在ConfigureDbContext后)
+        /// 注入EFCOre 上下文 
         /// </summary>
         /// <typeparam name="TDbContext"></typeparam>
         /// <param name="eFOptions"></param>
