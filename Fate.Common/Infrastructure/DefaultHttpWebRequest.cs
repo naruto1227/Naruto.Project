@@ -118,9 +118,7 @@ namespace Fate.Common.Infrastructure
                 if (heart != null)
                 {
                     foreach (var item in heart)
-                    {
-                        request.DefaultRequestHeaders.TryAddWithoutValidation(item.Key, item.Value);
-                    }
+                        content.Headers.Add(item.Key, item.Value);
                 }
                 if (contentTypeEnum == PostContentTypeEnum.URLENCODED)
                 {
