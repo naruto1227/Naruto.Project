@@ -19,6 +19,7 @@ using Fate.Domain.Model;
 using Fate.Domain.Model.Entities;
 using System.Threading.Tasks;
 using Fate.Common.Repository.Interceptor;
+using MySql.Data.MySqlClient;
 
 namespace Fate.XUnitTest
 {
@@ -40,9 +41,9 @@ namespace Fate.XUnitTest
                 options.UseEntityFramework<MysqlDbContent>(true, 100);
                 options.IsOpenMasterSlave = true;
             });
-            //services.AddScoped<EFCommandInterceptor>();
-            //services.AddScoped<EFDiagnosticListener>();
-            //DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
+            services.AddScoped<EFCommandInterceptor>();
+            services.AddScoped<EFDiagnosticListener>();
+            DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
         }
         [Fact]
         public void Test()
@@ -176,7 +177,7 @@ namespace Fate.XUnitTest
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var query = unit.SqlQuery();
-            var res = await query.ExecuteScalarAsync<int>("select Id from setting");
+            var res = await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "1"), new MySqlParameter("rule", "2") });
         }
     }
 
