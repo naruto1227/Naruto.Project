@@ -11,7 +11,7 @@ namespace Fate.Common.Infrastructure
         private static IConfigurationRoot configuration;
 
         static ConfigurationManage()
-        {
+        { 
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory);
             //获取当目录下的所有的配置文件的路径
             var files = new System.IO.DirectoryInfo(AppContext.BaseDirectory).GetFiles("appsettings*.json");

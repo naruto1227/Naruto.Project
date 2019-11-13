@@ -27,7 +27,7 @@ namespace Fate.Common.Config
                 if (string.IsNullOrWhiteSpace(privateKey))
                 {
                     //获取当前工作目录
-                    var path = Directory.GetCurrentDirectory();
+                    var path = AppContext.BaseDirectory();
                     //获取新的地址
                     privateKey = Path.Combine(path, "PrivateKey.xml");
                 }
@@ -53,7 +53,7 @@ namespace Fate.Common.Config
                 if (string.IsNullOrWhiteSpace(publicKey))
                 {
                     //获取当前工作目录
-                    var path = Directory.GetCurrentDirectory();
+                    var path = AppContext.BaseDirectory;
                     //
                     path = Path.Combine(path, "wwwroot");
                     if (!Directory.Exists(path))

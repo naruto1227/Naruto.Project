@@ -22,7 +22,7 @@ namespace Fate.Common.Config
                 var uploadFilePath = ConfigurationManage.GetValue("UploadFilePath");
                 //如果没有填写就默认 当前项目的根目录
                 if (string.IsNullOrWhiteSpace(uploadFilePath))
-                    uploadFilePath = Directory.GetCurrentDirectory();
+                    uploadFilePath = AppContext.BaseDirectory();
                 //合并地址
                 var path = Path.Combine(uploadFilePath, LowerFolderPath);
                 if (!Directory.Exists(path))
