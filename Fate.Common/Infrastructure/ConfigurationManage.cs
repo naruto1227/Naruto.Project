@@ -1,15 +1,36 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Fate.Common.Exceptions;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Fate.Common.Infrastructure
 {
-    public class ConfigurationManage
+    public static class ConfigurationManage
     {
 
-        private static IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(System.IO.Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+        private static IConfigurationRoot configuration;
 
+        static ConfigurationManage()
+        {
+            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory);
+            //获取当目录下的所有的配置文件的路径
+            var files = new System.IO.DirectoryInfo(AppContext.BaseDirectory).GetFiles("appsettings*.json");
+            if (files == null && files.Count() <= 0)
+                throw new NoFoundException("appsettings.json找不到");
+
+            //需要在appsettings.json中添加ASPNETCORE_ENVIRONMENT环境变量的key 
+            //获取当前系统的环境变量从appsetting中
+            var environmentName = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.json").Build().GetValue<string>(EnvironmentName);
+            //遍历名称
+            foreach (var item in files)
+            {
+                if (item.Name.Equals("appsettings.json") || item.Name.Equals($"appsettings.{environmentName}.json"))
+                {
+                    configurationBuilder.AddJsonFile(item.Name, true, true);
+                }
+            }
+            configuration = configurationBuilder.Build();
+        }
         /// <summary>
          /// 获取配置信息
         /// 
@@ -25,5 +46,29 @@ namespace Fate.Common.Infrastructure
             else
                 return value;
         }
+        /// <summary>
+         /// 获取配置中的环境变量
+         /// </summary>
+        public static string GetEnvironmentName()
+        {
+            return configuration.GetValue<string>(EnvironmentName);
+        }
+
+        /// <summary>
+         /// 获取配置信息
+         /// </summary>
+        public static T GetSection<T>(string key) =>
+             configuration.GetSection(key).Get<T>();
+
+        /// <summary>
+         /// 获取配置信息
+         /// </summary>
+        public static IConfigurationSection GetSection(string key) =>
+             configuration.GetSection(key);
+
+        /// <summary>
+        /// 存储在appsettings.js中的环境变量的key
+        /// </summary>
+        public static readonly string EnvironmentName = "ASPNETCORE_ENVIRONMENT";
     }
 }
