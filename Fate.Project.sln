@@ -81,7 +81,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timer", "Timer", "{8F850B0A-FC5A-46A7-B806-ACB47BCD1F56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CP.Common.TimerModule", "CP.Common.TimerModule\CP.Common.TimerModule.csproj", "{BA229C65-80E2-4FB5-9400-478208B2B975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CP.Common.TimerModule", "CP.Common.TimerModule\CP.Common.TimerModule.csproj", "{BA229C65-80E2-4FB5-9400-478208B2B975}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Common.OcelotStore.RedisProvider", "Fate.Common.OcelotStore.RedisProvider\Fate.Common.OcelotStore.RedisProvider.csproj", "{6B777871-0823-467A-BE8F-640CCEE74538}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -193,6 +195,10 @@ Global
 		{BA229C65-80E2-4FB5-9400-478208B2B975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA229C65-80E2-4FB5-9400-478208B2B975}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA229C65-80E2-4FB5-9400-478208B2B975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B777871-0823-467A-BE8F-640CCEE74538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B777871-0823-467A-BE8F-640CCEE74538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B777871-0823-467A-BE8F-640CCEE74538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B777871-0823-467A-BE8F-640CCEE74538}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,6 +240,7 @@ Global
 		{54F710E6-7763-4CE2-85E5-1658FE991782} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 		{8F850B0A-FC5A-46A7-B806-ACB47BCD1F56} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 		{BA229C65-80E2-4FB5-9400-478208B2B975} = {8F850B0A-FC5A-46A7-B806-ACB47BCD1F56}
+		{6B777871-0823-467A-BE8F-640CCEE74538} = {56D65EED-2397-414D-9E00-C9FD72D1834E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}

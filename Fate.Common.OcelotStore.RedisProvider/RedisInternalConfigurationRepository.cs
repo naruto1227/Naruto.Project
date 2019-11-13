@@ -10,7 +10,7 @@ using Ocelot.Middleware.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.Configuration.Creator;
 
-namespace Fate.Common.OcelotStore.EFCore
+namespace Fate.Common.OcelotStore.RedisProvider
 {
     /// <summary>
     /// 张海波
@@ -70,12 +70,11 @@ namespace Fate.Common.OcelotStore.EFCore
                 {
                     //获取所有配置服务的仓储
                     var fileConfigRepository = serviceProvider.GetService<IFileConfigurationRepository>();
-                    //获取创建配置的服务(创建一个基本的配置数据 包含路由等数据 让其将数据 传递到 IInternalConfigurationRepository 中)
+                    //获取创建配置的服务(创建一个基本的配置数据 包含路由等数据)
                     var configCreator = serviceProvider.GetService<IInternalConfigurationCreator>();
-                    //当前接口的作用是网关的每次调用 都会从其中获取路由的数据
-                    var configRepository = serviceProvider.GetService<IInternalConfigurationRepository>();
+                    //重新设置缓存
+                    AddOrReplace(configCreator.Create(fileConfigRepository.Get().GetAwaiter().GetResult().Data).GetAwaiter().GetResult().Data);
 
-                    EFConfigurationProvider.SetFileConfigInDataBase(fileConfigRepository, configCreator, configRepository).GetAwaiter().GetResult();
                     //重新获取数据
                     internalConfiguration = redis.StringGet<InternalConfiguration>(RedisCacheKey);
                 }

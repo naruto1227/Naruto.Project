@@ -37,11 +37,6 @@ namespace Fate.Test.Ocelot
                 .AddEFCache(options =>
             {
                 options.EFOptions = ef => ef.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("OcelotMysqlConnection"));
-                options.RedisOptions = redis =>
-                {
-                    redis.Connection = "127.0.0.1:6379";
-                    redis.DefaultDataBase = 2;
-                };
             }).AddSingletonDefinedAggregator<Test2DefinedAggregator>();//添加一个聚合器 用于请求聚合的时候
 
             //替换自带的DI

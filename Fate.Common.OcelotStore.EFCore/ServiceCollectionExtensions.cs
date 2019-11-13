@@ -45,27 +45,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 ocelot.UseEntityFramework<OcelotDbContent>();
                 ocelot.IsOpenMasterSlave = eFOptions.IsOpenMasterSlave;
             });
-            //检验是否注入redis仓储
-            if (ocelotBuilder.Services.BuildServiceProvider().GetService<IRedisOperationHelp>() == null)
-            {
-                if (cacheOptions.RedisOptions == null)
-                {
-                    throw new ArgumentNullException(nameof(cacheOptions.RedisOptions));
-                }
-                //注入redis仓储
-                ocelotBuilder.Services.AddRedisRepository(cacheOptions.RedisOptions);
-            }
+
 
             //更改扩展方式
             ocelotBuilder.Services.RemoveAll(typeof(IFileConfigurationRepository));
-            ocelotBuilder.Services.RemoveAll(typeof(IInternalConfigurationRepository));
-
             //重写提取Ocelot配置信息
-            ocelotBuilder.Services.AddSingleton<IInternalConfigurationRepository, RedisInternalConfigurationRepository>();
             ocelotBuilder.Services.AddSingleton(EFConfigurationProvider.Get);
             ocelotBuilder.Services.AddSingleton<IFileConfigurationRepository, EFConfigurationRepository>();
-
-
             return ocelotBuilder;
         }
     }
