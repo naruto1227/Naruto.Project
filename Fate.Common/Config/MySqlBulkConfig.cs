@@ -32,7 +32,7 @@ namespace Fate.Common.Config
                 }
                 else
                 {
-                    path = AppContext.BaseDirectory();
+                    path = AppContext.BaseDirectory;
                 }
                 return path;
             }
