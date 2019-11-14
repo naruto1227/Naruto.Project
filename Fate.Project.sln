@@ -83,7 +83,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timer", "Timer", "{8F850B0A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CP.Common.TimerModule", "CP.Common.TimerModule\CP.Common.TimerModule.csproj", "{BA229C65-80E2-4FB5-9400-478208B2B975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Common.OcelotStore.RedisProvider", "Fate.Common.OcelotStore.RedisProvider\Fate.Common.OcelotStore.RedisProvider.csproj", "{6B777871-0823-467A-BE8F-640CCEE74538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.OcelotStore.RedisProvider", "Fate.Common.OcelotStore.RedisProvider\Fate.Common.OcelotStore.RedisProvider.csproj", "{6B777871-0823-467A-BE8F-640CCEE74538}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
