@@ -64,17 +64,18 @@ namespace Fate.Test
             {
                 options.Level = CompressionLevel.Fastest;
             });
+            services.AddDbContext<Common.Configuration.Management.DB.ConfigurationDbContent>(options=> options.UseMySql("Database=ConfigurationDB;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;"));
             //注入redis仓储服务
             services.AddRedisRepository(Configuration.GetSection("AppSetting:RedisConfig"));
-            //注入mysql仓储   //注入多个ef配置信息
-            services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
-            {
-                options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
-                options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
-                //
-                options.UseEntityFramework<MysqlDbContent>();
-                options.IsOpenMasterSlave = false;
-            });
+            ////注入mysql仓储   //注入多个ef配置信息
+            //services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
+            //{
+            //    options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
+            //    options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+            //    //
+            //    options.UseEntityFramework<MysqlDbContent>();
+            //    options.IsOpenMasterSlave = false;
+            //});
 
             //使用单号
             //services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();

@@ -10,6 +10,7 @@ using Fate.Common.Configuration.Management.Dashboard;
 using Fate.Common.Configuration.Management.Dashboard.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Fate.Common.Configuration.Management.Dashboard.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -78,6 +79,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddScoped<IConfigurationServices, ConfigurationServices>();
             services.AddSingleton<IDashboardRender, DashboardRender>();
             services.AddSingleton<IDashboardRoute, DashboardRoute>();
             services.AddSingleton<IDashboardRouteCollections, DashboardRouteCollections>();
