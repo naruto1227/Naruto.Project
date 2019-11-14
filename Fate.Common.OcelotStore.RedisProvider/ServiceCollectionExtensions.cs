@@ -1,11 +1,12 @@
-﻿using Fate.Common.Redis.IRedisManage;
+﻿using Fate.Common.OcelotStore.RedisProvider;
+using Fate.Common.Redis.IRedisManage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ocelot.Configuration.Repository;
 using Ocelot.DependencyInjection;
 using System;
 
-namespace Fate.Common.OcelotStore.RedisProvider
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// 张海波

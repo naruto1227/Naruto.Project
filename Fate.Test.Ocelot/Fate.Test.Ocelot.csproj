@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj" />
     <ProjectReference Include="..\Fate.Common.OcelotStore.EFCore\Fate.Common.OcelotStore.EFCore.csproj" />
+    <ProjectReference Include="..\Fate.Common.OcelotStore.RedisProvider\Fate.Common.OcelotStore.RedisProvider.csproj" />
   </ItemGroup>
 
 </Project>

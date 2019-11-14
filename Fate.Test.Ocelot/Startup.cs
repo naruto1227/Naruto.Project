@@ -37,6 +37,13 @@ namespace Fate.Test.Ocelot
                 .AddEFCache(options =>
             {
                 options.EFOptions = ef => ef.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("OcelotMysqlConnection"));
+            }).AddRedisProvider(option =>
+            {
+                option.RedisOptions = redis =>
+                {
+                    redis.Connection = "127.0.0.1:6379";
+                    redis.DefaultDataBase = 2;
+                };
             }).AddSingletonDefinedAggregator<Test2DefinedAggregator>();//添加一个聚合器 用于请求聚合的时候
 
             //替换自带的DI
@@ -46,12 +53,9 @@ namespace Fate.Test.Ocelot
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //调用此中间件 重新设置网关的配置信息
-            app.ResetEFConfiguration(new PathString("/test"));
-            await app.UseOcelot();
-
+            app.UseOcelot().GetAwaiter().GetResult();
         }
     }
 }

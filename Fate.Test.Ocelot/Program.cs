@@ -19,6 +19,10 @@ namespace Fate.Test.Ocelot
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(5001);
+            })
                 .UseStartup<Startup>();
     }
 }
