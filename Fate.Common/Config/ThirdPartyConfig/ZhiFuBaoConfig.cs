@@ -3,7 +3,6 @@ using Alipay.AopSdk.Core.Request;
 using Alipay.AopSdk.Core.Response;
 using Fate.Common.Extensions;
 using Fate.Common.Infrastructure;
-using Fate.Common.Redis.IRedisManage;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -6,10 +6,10 @@ using Fate.Common.Extensions;
 using Fate.Common.Config;
 using System.IO;
 using System.Xml;
-using Fate.Common.Redis.IRedisManage;
 using Fate.Common.Interface;
 using System.Threading.Tasks;
 using XC.RSAUtil;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Fate.Common.Infrastructure
 {
@@ -18,10 +18,10 @@ namespace Fate.Common.Infrastructure
     /// </summary>
     public class RSAHelper : ICommonClassSigleDependency
     {
-        private readonly IRedisOperationHelp redis;
-        public RSAHelper(IRedisOperationHelp redisOperationHelp)
+        private readonly ICacheMemory cacheMemory;
+        public RSAHelper(ICacheMemory _cacheMemory)
         {
-            redis = redisOperationHelp;
+            cacheMemory = _cacheMemory;
         }
         #region 写入文件
         /// <summary>
@@ -79,8 +79,9 @@ namespace Fate.Common.Infrastructure
         {
             using (var rsa = RSA.Create())
             {
-                await redis.StringSetAsync(RSAConfig.Cache_PublicKey, rsa.ToXml(false));
-                await redis.StringSetAsync(RSAConfig.Cache_PrivateKey, rsa.ToXml(true));
+                //默认过期时间15天
+                await cacheMemory.AddAsync(RSAConfig.Cache_PublicKey, rsa.ToXml(false), new DistributedCacheEntryOptions() { AbsoluteExpiration = DateTimeOffset.Now.AddDays(15) });
+                await cacheMemory.AddAsync(RSAConfig.Cache_PrivateKey, rsa.ToXml(true), new DistributedCacheEntryOptions() { AbsoluteExpiration = DateTimeOffset.Now.AddDays(15) });
             }
         }
 
@@ -93,11 +94,11 @@ namespace Fate.Common.Infrastructure
         {
             using (var rsa = RSA.Create())
             {
-                var pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
+                var pubKey = await cacheMemory.GetAsync<string>(RSAConfig.Cache_PublicKey);
                 if (string.IsNullOrWhiteSpace(pubKey))
                 {
                     await CreateRSACacheAsync();
-                    pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
+                    pubKey = await cacheMemory.GetAsync<string>(RSAConfig.Cache_PublicKey);
                 }
                 rsa.FromXml(pubKey, false);
                 //js端用 RSAEncryptionPadding 的Pkcs1
@@ -113,7 +114,7 @@ namespace Fate.Common.Infrastructure
         {
             using (var rsa = RSA.Create())
             {
-                rsa.FromXml(await redis.StringGetAsync(RSAConfig.Cache_PrivateKey), false);
+                rsa.FromXml(await cacheMemory.GetAsync<string>(RSAConfig.Cache_PrivateKey), false);
                 return Encoding.UTF8.GetString((rsa.Decrypt(Convert.FromBase64String(deStr), RSAEncryptionPadding.OaepSHA256)));
             }
         }
@@ -124,11 +125,11 @@ namespace Fate.Common.Infrastructure
         /// <returns></returns>
         public async Task<string> GetPublicKeyStringAsync()
         {
-            var pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
+            var pubKey = await cacheMemory.GetAsync<string>(RSAConfig.Cache_PublicKey);
             if (string.IsNullOrWhiteSpace(pubKey))
             {
                 await CreateRSACacheAsync();
-                pubKey = await redis.StringGetAsync(RSAConfig.Cache_PublicKey);
+                pubKey = await cacheMemory.GetAsync<string>(RSAConfig.Cache_PublicKey);
             }
             return RsaKeyConvert.PublicKeyXmlToPem(pubKey);
         }
@@ -139,7 +140,7 @@ namespace Fate.Common.Infrastructure
         /// </summary>
         /// <param name="isPath">true代表从文件中加载 false 代表从缓存加载</param>
         /// <returns></returns>
-        public string PublicXmlToPem(bool isPath = false)
+        public async Task<string> PublicXmlToPem(bool isPath = false)
         {
             var xml = "";
             if (isPath)
@@ -150,11 +151,11 @@ namespace Fate.Common.Infrastructure
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(redis.StringGet(RSAConfig.Cache_PublicKey)))
+                if (string.IsNullOrWhiteSpace(await (cacheMemory.GetAsync<string>(RSAConfig.Cache_PublicKey))))
                 {
-                    CreateRSACacheAsync();
+                    CreateRSACacheAsync().GetAwaiter().GetResult();
                 }
-                xml = redis.StringGet(RSAConfig.Cache_PublicKey);
+                xml = await cacheMemory.GetAsync<string>(RSAConfig.Cache_PublicKey);
             }
 
             return XC.RSAUtil.RsaKeyConvert.PublicKeyXmlToPem(xml);
