@@ -11,7 +11,7 @@ namespace Fate.Common.Infrastructure
         private static IConfigurationRoot configuration;
 
         static ConfigurationManage()
-        { 
+        {
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory);
             //获取当目录下的所有的配置文件的路径
             var files = new System.IO.DirectoryInfo(AppContext.BaseDirectory).GetFiles("appsettings*.json");
@@ -65,7 +65,12 @@ namespace Fate.Common.Infrastructure
          /// </summary>
         public static IConfigurationSection GetSection(string key) =>
              configuration.GetSection(key);
-
+        /// <summary>
+        /// 获取连接
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string GetConnectionString(string key) => configuration.GetConnectionString(key);
         /// <summary>
         /// 存储在appsettings.js中的环境变量的key
         /// </summary>
