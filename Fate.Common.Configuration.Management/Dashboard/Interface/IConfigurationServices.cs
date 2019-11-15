@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Fate.Common.Configuration.Management.DB;
+using Fate.Common.Configuration.Management.DTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Fate.Common.Configuration.Management.Dashboard.Interface
 {
@@ -11,6 +14,27 @@ namespace Fate.Common.Configuration.Management.Dashboard.Interface
     /// </summary>
     public interface IConfigurationServices
     {
+        /// <summary>
+        /// 添加服务配置
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> AddConfiguration(ConfigurationEndPoint info);
 
+        /// <summary>
+        /// 修改服务配置
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> UpdateConfiguration(ConfigurationEndPoint info);
+
+        /// <summary>
+        /// 删除服务配置
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> DeleteConfiguration(ConfigurationEndPoint info);
+        /// <summary>
+        /// 查询配置信息
+        /// </summary>
+        /// <returns></returns>
+        Task<Dictionary<string, string>> QueryConfiguration(QueryConfigurationDTO info);
     }
 }

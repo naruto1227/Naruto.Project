@@ -81,10 +81,7 @@ namespace Fate.Common.Configuration
         /// <param name="data"></param>
         private void PushFile(string data)
         {
-            using (FileStream file = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write))
-            {
-                file.Write(Encoding.UTF8.GetBytes(data), 0, Encoding.UTF8.GetBytes(data).Length);
-            }
+            File.WriteAllText(filePath, data);
         }
         /// <summary>
         /// 从磁盘加载
