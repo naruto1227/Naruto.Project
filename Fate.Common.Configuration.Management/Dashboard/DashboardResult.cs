@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -24,5 +24,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// 错误消息
         /// </summary>
         public string failMsg { get; set; }
+
+        public int total  {get;set;}
     }
 }
