@@ -13,6 +13,10 @@ namespace Fate.Common.Configuration.Management
     public class ConfigurationOptions
     {
         /// <summary>
+        /// 是否启用面板(默认不启动)
+        /// </summary>
+        public bool EnableDashBoard { get; set; } = false;
+        /// <summary>
         /// 面板的配置
         /// </summary>
         public DashBoardOptions DashBoardOptions { get; set; } = new DashBoardOptions();

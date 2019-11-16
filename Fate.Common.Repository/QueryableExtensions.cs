@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Fate.Common.Linq
+namespace System.Linq
 {
     /// <summary>
     /// linq查询扩展

@@ -8,7 +8,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// <summary>
     /// 面板的路由 配置
     /// </summary>
-    public class DashboardRoute : IDashboardRoute
+    public class DefaultDashboardRoute : IDashboardRoute
     {
         /// <summary>
         /// 资源的请求前缀
@@ -45,7 +45,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <summary>
         /// 初始化
         /// </summary>
-        public DashboardRoute(IDashboardRouteCollections routeCollections)
+        public DefaultDashboardRoute(IDashboardRouteCollections routeCollections)
         {
             foreach (var item in Javascripts)
             {
@@ -92,7 +92,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <returns></returns>
         private string GetContentFolderNamespace(string contentFolder)
         {
-            return $"{typeof(DashboardRoute).Namespace}.Content.{contentFolder}";
+            return $"{typeof(DefaultDashboardRoute).Namespace}.Content.{contentFolder}";
         }
     }
 }

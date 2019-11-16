@@ -1,16 +1,12 @@
 ﻿using Fate.Common.Configuration.Management;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using Fate.Common.Configuration.Management.Dashboard;
 using Fate.Common.Configuration.Management.Dashboard.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Fate.Common.Configuration.Management.Dashboard.Services;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -39,9 +35,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="mvcBuilder"></param>
         /// <returns></returns>
-        public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder, IConfiguration option)
+        public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder, Action<ConfigurationOptions> option)
         {
-            mvcBuilder.Services.Configure<ConfigurationOptions>(option);
+            mvcBuilder.Services.Configure(option);
             mvcBuilder.AddConfigurationManagement();
             return mvcBuilder;
         }
@@ -65,9 +61,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="mvcBuilder"></param>
         /// <returns></returns>
-        public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder, IConfiguration option)
+        public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder, Action<ConfigurationOptions> option)
         {
-            mvcBuilder.Services.Configure<ConfigurationOptions>(option);
+            mvcBuilder.Services.Configure(option);
             mvcBuilder.AddConfigurationManagement();
             return mvcBuilder;
         }
@@ -79,13 +75,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IConfigurationServices, ConfigurationServices>();
-            services.AddSingleton<IDashboardRender, DashboardRender>();
-            services.AddSingleton<IDashboardRoute, DashboardRoute>();
-            services.AddSingleton<IDashboardRouteCollections, DashboardRouteCollections>();
-            if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value?.DashBoardOptions != null)
+            services.AddScoped<IConfigurationServices, DefaultConfigurationServices>();
+            services.AddScoped<IConfigurationDataServices, DefaultConfigurationDataServices>();
+            services.AddSingleton<IDashboardRender, DefaultDashboardRender>();
+            services.AddSingleton<IDashboardRoute, DefaultDashboardRoute>();
+            services.AddSingleton<IDashboardRouteCollections, DefaultDashboardRouteCollections>();
+            if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDashBoard)
             {
-                services.AddTransient(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
+                services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
             }
             return services;
         }

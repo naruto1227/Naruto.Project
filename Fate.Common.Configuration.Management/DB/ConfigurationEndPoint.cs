@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fate.Common.Configuration.Management.Object;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;

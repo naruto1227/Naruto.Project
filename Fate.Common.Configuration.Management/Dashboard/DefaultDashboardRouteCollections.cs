@@ -9,7 +9,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// <summary>
     /// 存放静态资源的路由集合
     /// </summary>
-    public class DashboardRouteCollections : IDashboardRouteCollections
+    public class DefaultDashboardRouteCollections : IDashboardRouteCollections
     {
         /// <summary>
         /// 存放路由的集合 

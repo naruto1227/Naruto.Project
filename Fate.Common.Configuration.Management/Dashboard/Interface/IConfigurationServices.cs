@@ -1,5 +1,5 @@
 ﻿using Fate.Common.Configuration.Management.DB;
-using Fate.Common.Configuration.Management.DTO;
+using Fate.Common.Configuration.Management.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,11 +30,17 @@ namespace Fate.Common.Configuration.Management.Dashboard.Interface
         /// 删除服务配置
         /// </summary>
         /// <returns></returns>
-        Task<bool> DeleteConfiguration(ConfigurationEndPoint info);
+        Task<bool> DeleteConfiguration(string[] ids);
         /// <summary>
         /// 查询配置信息
         /// </summary>
         /// <returns></returns>
-        Task<Dictionary<string, string>> QueryConfiguration(QueryConfigurationDTO info);
+        Task<DashboardResult> QueryConfiguration(QueryConfigurationDTO info);
+
+        /// <summary>
+        /// 查询单挑配置信息
+        /// </summary>
+        /// <returns></returns>
+        Task<ConfigurationEndPoint> QueryFirstConfiguration(string id);
     }
 }

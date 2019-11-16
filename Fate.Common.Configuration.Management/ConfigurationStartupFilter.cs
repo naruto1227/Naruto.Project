@@ -13,7 +13,7 @@ namespace Fate.Common.Configuration.Management
     /// <summary>
     /// 张海波
     /// 2019-10-31
-    /// 注入中间件
+    /// 注入面板中间件
     /// </summary>
     public class ConfigurationStartupFilter : IStartupFilter
     {
@@ -21,7 +21,9 @@ namespace Fate.Common.Configuration.Management
         {
             return app =>
             {
+                //注册面板中间件
                 app.UseMiddleware<DashBoardMiddleware>();
+                next(app);
             };
         }
     }

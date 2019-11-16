@@ -41,6 +41,9 @@ using Fate.Commom.Consul.KVRepository;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using System.Reflection;
+using Fate.Common.Configuration.Management.Dashboard;
+using Fate.Common.Configuration.Management.DB;
+using Fate.Common.Configuration.Management;
 
 namespace Fate.Test
 {
@@ -59,23 +62,29 @@ namespace Fate.Test
         {
 
             //注入响应压缩的服务
-            services.AddResponseCompression();
-            services.Configure<GzipCompressionProviderOptions>(options =>
-            {
-                options.Level = CompressionLevel.Fastest;
-            });
-            services.AddDbContext<Common.Configuration.Management.DB.ConfigurationDbContent>(options=> options.UseMySql("Database=ConfigurationDB;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;"));
+            //services.AddResponseCompression();
+            //services.Configure<GzipCompressionProviderOptions>(options =>
+            //{
+            //    options.Level = CompressionLevel.Fastest;
+            //});
+
             //注入redis仓储服务
             services.AddRedisRepository(Configuration.GetSection("AppSetting:RedisConfig"));
-            ////注入mysql仓储   //注入多个ef配置信息
-            //services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
-            //{
-            //    options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
-            //    options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
-            //    //
-            //    options.UseEntityFramework<MysqlDbContent>();
-            //    options.IsOpenMasterSlave = false;
-            //});
+            //注入mysql仓储   //注入多个ef配置信息
+            services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
+            {
+                options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
+                options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                //
+                options.UseEntityFramework<MysqlDbContent>();
+                options.IsOpenMasterSlave = false;
+            },
+            configureOptions =>
+            {
+                configureOptions.ConfigureDbContext = context => context.UseMySql("Database=ConfigurationDB;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;");
+                configureOptions.UseEntityFramework<ConfigurationDbContent>();
+            }
+            );
 
             //使用单号
             //services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
@@ -84,20 +93,35 @@ namespace Fate.Test
             services.AddMvcCore(option =>
             {
                 option.Filters.Add(typeof(Fate.Common.Filters.TokenAuthorizationAttribute));
-            }).AddAuthorization().AddJsonFormatters().AddConfigurationManagement().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            //注入api授权服务
-            services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
+            })
+                           .AddConfigurationManagement(options =>
+                           {
+                               options.EnableDashBoard = true;
+                               options.RequestOptions = new RequestOptions
+                               {
+                                   HttpMethod = "post",
+                                   RequestPath = "/api/data"
+                               };
+                           })
+            .AddAuthorization().AddJsonFormatters(options =>
             {
-                option.Authority = "http://localhost:54717";
-                option.RequireHttpsMetadata = false;
-                option.Audience = "api";
-            });
-            services.AddScoped(typeof(List<>));
-            services.UseFileOptions();
-            //邮箱服务
-            services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
+                options.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            })
+            .AddJsonFormatters()
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            ////注入api授权服务
+            //services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
+            //{
+            //    option.Authority = "http://localhost:54717";
+            //    option.RequireHttpsMetadata = false;
+            //    option.Audience = "api";
+            //});
+            //services.AddScoped(typeof(List<>));
+            //services.UseFileOptions();
+            ////邮箱服务
+            //services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
 
-            services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
+            //services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.AutofacDependencyInjection.AutofacDI.ConvertToAutofac(services);
             return new AutofacServiceProvider(ApplicationContainer);
@@ -110,7 +134,7 @@ namespace Fate.Test
         /// <param name="loggerFactory"></param>
         /// <param name="options1"></param>
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<List<EFOptions>> options1)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
 
             if (env.IsDevelopment())
@@ -119,16 +143,17 @@ namespace Fate.Test
             }
             //注入一场处理中间件
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseMiddleware<ConfigurationDataMiddleware>();
+            // app.UseMiddleware<DashBoardMiddleware>();
+            //app.UseAuthentication();
 
-            app.UseAuthentication();
+            //app.UseResponseCompression();
 
-            app.UseResponseCompression();
-
-            app.UseFileUpload(new Microsoft.AspNetCore.Http.PathString("/file"));
-            //配置NLog
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
-            loggerFactory.AddNLog();//添加NLog
-            env.ConfigureNLog("nlog.config");//读取Nlog配置文件
+            //app.UseFileUpload(new Microsoft.AspNetCore.Http.PathString("/file"));
+            ////配置NLog
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//这是为了防止中文乱码
+            //loggerFactory.AddNLog();//添加NLog
+            //env.ConfigureNLog("nlog.config");//读取Nlog配置文件
 
             app.UseMvc();
 

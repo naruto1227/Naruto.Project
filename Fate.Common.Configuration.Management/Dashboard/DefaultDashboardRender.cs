@@ -13,7 +13,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
     /// 2019-10-27
     /// 加载资源
     /// </summary>
-    public class DashboardRender : IDashboardRender
+    public class DefaultDashboardRender : IDashboardRender
     {
         public async Task LoadAsync(DashboardContext dashboardContext)
         {
@@ -22,7 +22,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
             if (string.IsNullOrWhiteSpace(dashboardContext.ResourcesName))
                 throw new ArgumentNullException(nameof(dashboardContext.ResourcesName));
             //加载程序集 获取指定的资源
-            using (var resourcesStream = typeof(DashboardRender).Assembly.GetManifestResourceStream(dashboardContext.ResourcesName))
+            using (var resourcesStream = typeof(DefaultDashboardRender).Assembly.GetManifestResourceStream(dashboardContext.ResourcesName))
             {
                 if (resourcesStream == null)
                     return;

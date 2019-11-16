@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Configuration.Management
+namespace Fate.Common.Configuration.Management.Object
 {
     /// <summary>
     /// 环境变量的枚举值
