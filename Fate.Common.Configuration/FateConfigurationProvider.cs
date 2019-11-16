@@ -53,24 +53,28 @@ namespace Fate.Common.Configuration
                 httpClient.BaseAddress = new Uri(configurationOptions.BaseUrl);
                 httpClient.Timeout = TimeSpan.FromSeconds(45);
 
-                HttpRequestMessage httpRequestMessag = new HttpRequestMessage();
-                httpRequestMessag.Method = HttpMethod.Post;
-                httpRequestMessag.RequestUri = new Uri(configurationOptions.RequestUrl);
-                httpRequestMessag.Content = new StringContent(new Dictionary<string, string>() { { "Group", configurationOptions.Group }, { "EnvironmentType", configurationOptions.EnvironmentType } }.ToJson(), Encoding.UTF8, "application/json");
-                //返回响应信息
-                HttpResponseMessage responseMessage = httpClient.SendAsync(httpRequestMessag).GetAwaiter().GetResult();
-                //验证状态码
-                if (responseMessage.StatusCode == HttpStatusCode.OK)
+                using (HttpRequestMessage httpRequestMessag = new HttpRequestMessage())
                 {
-                    var res = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    //如果资源存在 将资源存储再磁盘中
-                    if (!string.IsNullOrWhiteSpace(res))
+                    httpRequestMessag.Method = HttpMethod.Post;
+                    httpRequestMessag.RequestUri = new Uri(httpClient.BaseAddress, configurationOptions.RequestUrl);
+                    httpRequestMessag.Content = new StringContent(new Dictionary<string, string>() { { "Group", configurationOptions.Group }, { "EnvironmentType", configurationOptions.EnvironmentType } }.ToJson(), Encoding.UTF8, "application/json");
+                    //返回响应信息
+                    using (HttpResponseMessage responseMessage = httpClient.SendAsync(httpRequestMessag).GetAwaiter().GetResult())
                     {
-                        PushFile(res);
-                        return res.ToObject<ConcurrentDictionary<string, string>>();
+                        //验证状态码
+                        if (responseMessage.StatusCode == HttpStatusCode.OK)
+                        {
+                            var res = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                            //如果资源存在 将资源存储再磁盘中
+                            if (!string.IsNullOrWhiteSpace(res))
+                            {
+                                PushFile(res);
+                                return res.ToObject<ConcurrentDictionary<string, string>>();
+                            }
+                        }
+                        throw new ApplicationException(responseMessage.StatusCode.ToString());
                     }
                 }
-                throw new ApplicationException(responseMessage.StatusCode.ToString());
             }
         }
         //文件存放的路径

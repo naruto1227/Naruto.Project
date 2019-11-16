@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Fate.Common.CAP.Subscribe\Fate.Common.CAP.Subscribe.csproj" />
     <ProjectReference Include="..\Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj" />
     <ProjectReference Include="..\Fate.Common.Configuration.Management\Fate.Common.Configuration.Management.csproj" />
+    <ProjectReference Include="..\Fate.Common.Configuration\Fate.Common.Configuration.csproj" />
     <ProjectReference Include="..\Fate.Common.OcelotStore.Redis\Fate.Common.OcelotStore.Redis.csproj" />
     <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
     <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />

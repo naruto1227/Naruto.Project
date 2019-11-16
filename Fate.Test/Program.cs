@@ -19,6 +19,10 @@ namespace Fate.Test
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration(options =>
+            {
+                options.AddFateConfiguration();
+            })
                 .UseStartup<Startup>();
     }
 }
