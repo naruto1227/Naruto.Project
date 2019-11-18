@@ -20,6 +20,11 @@ namespace Fate.Common.Configuration.Management
         /// 面板的配置
         /// </summary>
         public DashBoardOptions DashBoardOptions { get; set; } = new DashBoardOptions();
+
+        /// <summary>
+        /// 是否启用接口路由 默认不启用
+        /// </summary>
+        public bool EnableDataRoute { get; set; } = false;
         /// <summary>
         /// 接口的配置
         /// </summary>

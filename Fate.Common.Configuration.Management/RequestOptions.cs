@@ -18,7 +18,7 @@ namespace Fate.Common.Configuration.Management
         /// </summary>
         public PathString RequestPath { get; set; } = new PathString("/api/configuration/data");
         /// <summary>
-        /// 接口请求的方式
+        /// 接口请求的方式 目前仅支持get和post (post需要传递json格式)
         /// </summary>
         public string HttpMethod { get; set; }
         /// <summary>

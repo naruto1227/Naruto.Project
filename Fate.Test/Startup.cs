@@ -99,9 +99,11 @@ namespace Fate.Test
                                options.EnableDashBoard = true;
                                options.RequestOptions = new RequestOptions
                                {
-                                   HttpMethod = "post",
-                                   RequestPath = "/api/data"
+                                   HttpMethod = "get",
+                                   RequestPath = "/api/data",
+
                                };
+                               options.EnableDataRoute = true;
                            })
             .AddAuthorization().AddJsonFormatters(options =>
             {
@@ -143,7 +145,6 @@ namespace Fate.Test
             }
             //注入一场处理中间件
             app.UseMiddleware<ExceptionHandlerMiddleware>();
-            app.UseMiddleware<ConfigurationDataMiddleware>();
             // app.UseMiddleware<DashBoardMiddleware>();
             //app.UseAuthentication();
 

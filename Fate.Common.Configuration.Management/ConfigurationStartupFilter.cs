@@ -27,4 +27,22 @@ namespace Fate.Common.Configuration.Management
             };
         }
     }
+
+    /// <summary>
+    /// 张海波
+    /// 2019-11-18
+    /// 启用获取配置数据中间件
+    /// </summary>
+    public class COnfigurationDataStartupFilter : IStartupFilter
+    {
+        public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
+        {
+            return app =>
+            {
+                //注册配置数据获取中间件
+                app.UseMiddleware<ConfigurationDataMiddleware>();
+                next(app);
+            };
+        }
+    }
 }

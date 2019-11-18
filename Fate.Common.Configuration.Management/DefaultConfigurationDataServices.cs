@@ -26,6 +26,7 @@ namespace Fate.Common.Configuration.Management
         {
             unitOfWork = _unitOfWork;
         }
+
         /// <summary>
         /// 获取数据
         /// </summary>
@@ -33,37 +34,60 @@ namespace Fate.Common.Configuration.Management
         /// <returns></returns>
         public async Task QueryDataAsync(RequestContext requestContext)
         {
-            //获取传递的数据
-            using (StreamReader stringReader = new StreamReader(requestContext.HttpContext.Request.Body))
+            //获取请求参数
+            BaseQueryConfigurationDTO dto = await QueryParam(requestContext);
+
+            if (dto == null)
             {
-                var param = await stringReader.ReadToEndAsync();
-                if (string.IsNullOrWhiteSpace(param))
-                {
-                    await WriteMessageAsync(requestContext.HttpContext, HttpStatusCode.BadRequest, "参数错误");
-                    return;
-                }
-                //序列化
-                var dto = param.ToObject<BaseQueryConfigurationDTO>();
-                if (dto == null)
-                {
-                    await WriteMessageAsync(requestContext.HttpContext, HttpStatusCode.BadRequest, "参数错误");
-                    return;
-                }
-                //获取数据
-                var dataList = await unitOfWork.Query<ConfigurationEndPoint>()
-                      .Where(a => a.EnvironmentType == dto.EnvironmentType)
-                      .WhereIf(!string.IsNullOrWhiteSpace(dto.Group), a => a.Group == dto.Group).Select(a => new { a.Key, a.Value }).AsNoTracking().ToListAsync();
-                //构建返回数据
-                Dictionary<string, string> dic = new Dictionary<string, string>();
-                if (dataList != null && dataList.Count() > 0)
-                {
-                    dataList.ForEach(item =>
-                    {
-                        dic.Add(item.Key, item.Value);
-                    });
-                }
-                await WriteMessageAsync(requestContext.HttpContext, HttpStatusCode.OK, dic.ToJson());
+                await WriteMessageAsync(requestContext.HttpContext, HttpStatusCode.BadRequest, "参数错误");
+                return;
             }
+            //获取数据
+            var dataList = await unitOfWork.Query<ConfigurationEndPoint>()
+                  .Where(a => a.EnvironmentType == dto.EnvironmentType)
+                  .WhereIf(!string.IsNullOrWhiteSpace(dto.Group), a => a.Group == dto.Group).Select(a => new { a.Key, a.Value }).AsNoTracking().ToListAsync();
+            //构建返回数据
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            if (dataList != null && dataList.Count() > 0)
+            {
+                dataList.ForEach(item =>
+                {
+                    dic.Add(item.Key, item.Value);
+                });
+            }
+            await WriteMessageAsync(requestContext.HttpContext, HttpStatusCode.OK, dic.ToJson());
+
+        }
+
+        /// <summary>
+        /// 获取请求参数
+        /// </summary>
+        /// <returns></returns>
+        private async Task<BaseQueryConfigurationDTO> QueryParam(RequestContext requestContext)
+        {
+            BaseQueryConfigurationDTO dto = default;
+            //匹配请求规则
+            if (requestContext.HttpContext.Request.Method == HttpMethod.Get.ToString())
+            {
+                dto = new BaseQueryConfigurationDTO();
+                //获取请求的参数
+                var queryStrings = requestContext.HttpContext.Request.Query;
+                dto.Group = queryStrings["Group"].ToString();
+
+                int.TryParse(queryStrings["EnvironmentType"].ToString(), out var environmentType);
+                dto.EnvironmentType = environmentType;
+            }
+            else if (requestContext.HttpContext.Request.Method == HttpMethod.Post.ToString())
+            {
+                //获取传递的数据
+                using (StreamReader stringReader = new StreamReader(requestContext.HttpContext.Request.Body))
+                {
+                    var param = await stringReader.ReadToEndAsync();
+                    if (!string.IsNullOrWhiteSpace(param))
+                        dto = param.ToObject<BaseQueryConfigurationDTO>(); //序列化
+                }
+            }
+            return dto;
         }
         /// <summary>
         /// 输出消息

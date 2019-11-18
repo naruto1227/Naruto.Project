@@ -80,6 +80,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IDashboardRender, DefaultDashboardRender>();
             services.AddSingleton<IDashboardRoute, DefaultDashboardRoute>();
             services.AddSingleton<IDashboardRouteCollections, DefaultDashboardRouteCollections>();
+
+            if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDataRoute)
+            {
+                services.AddScoped(typeof(IStartupFilter), typeof(COnfigurationDataStartupFilter));
+            }
+
             if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDashBoard)
             {
                 services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));

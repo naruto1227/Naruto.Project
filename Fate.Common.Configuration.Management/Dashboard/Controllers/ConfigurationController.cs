@@ -26,22 +26,38 @@ namespace Fate.Common.Configuration.Management.Dashboard.Controllers
             services = _services;
         }
         /// <summary>
-        /// 新增修改配置信息
+        /// 新增配置信息
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddUpd(ConfigurationEndPoint info)
+        public async Task<IActionResult> Add(ConfigurationEndPoint info)
         {
             if (info == null)
                 return BadRequest($"{nameof(info)}参数校检错误");
-            if (!string.IsNullOrWhiteSpace(info.Id))
-            {
-                await services.UpdateConfiguration(info);
-            }
-            else
-            {
-                await services.AddConfiguration(info);
-            }
+            if (string.IsNullOrWhiteSpace(info.Key))
+                return BadRequest($"{nameof(info.Key)}参数校检错误");
+            if (string.IsNullOrWhiteSpace(info.Key))
+                return BadRequest($"{nameof(info.Value)}参数校检错误");
+            await services.AddConfiguration(info);
+            return Ok();
+        }
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, ConfigurationEndPoint info)
+        {
+            if (info == null)
+                return BadRequest($"{nameof(info)}参数校检错误");
+            if (id != info.Id)
+                return BadRequest($"{nameof(info.Id)}参数不一致");
+            if (string.IsNullOrWhiteSpace(info.Key))
+                return BadRequest($"{nameof(info.Key)}参数校检错误");
+            if (string.IsNullOrWhiteSpace(info.Key))
+                return BadRequest($"{nameof(info.Value)}参数校检错误");
+            await services.UpdateConfiguration(info);
             return Ok();
         }
         /// <summary>
@@ -74,9 +90,10 @@ namespace Fate.Common.Configuration.Management.Dashboard.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
+            await services.DeleteConfiguration(new string[] { id });
             return Ok();
         }
     }

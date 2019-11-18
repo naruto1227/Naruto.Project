@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.Extensions.DependencyInjection;
 namespace Fate.Common.Configuration.Management
 {
     /// <summary>
@@ -29,7 +29,7 @@ namespace Fate.Common.Configuration.Management
         /// <param name="requestOptions">配置的请求的参数</param>
         /// <param name="dataServices">数据服务</param>
         /// <returns></returns>
-        public async Task InvokeAsync(HttpContext httpContext, IOptions<ConfigurationOptions>  configurationOptions, IConfigurationDataServices dataServices)
+        public async Task InvokeAsync(HttpContext httpContext, IOptions<ConfigurationOptions> configurationOptions)
         {
             //验证请求地址
             if (!httpContext.Request.Path.StartsWithSegments(configurationOptions.Value.RequestOptions.RequestPath))
@@ -64,6 +64,7 @@ namespace Fate.Common.Configuration.Management
                     }
                 }
             }
+            var dataServices = httpContext.RequestServices.GetService<IConfigurationDataServices>();
             //处理数据
             await dataServices.QueryDataAsync(requestContext);
         }

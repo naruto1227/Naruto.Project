@@ -20,6 +20,10 @@ namespace Fate.Common.Configuration
         /// 请求地址
         /// </summary>
         public string RequestUrl { get; set; }
+        /// <summary>
+        /// 请求方式
+        /// </summary>
+        public string Method { get; set; } = "get";
 
         /// <summary>
         /// 组名

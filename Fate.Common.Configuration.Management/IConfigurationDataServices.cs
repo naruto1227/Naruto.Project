@@ -9,7 +9,7 @@ namespace Fate.Common.Configuration.Management
     /// <summary>
     /// 获取配置数据的接口服务
     /// </summary>
-    public interface IConfigurationDataServices
+    public interface IConfigurationDataServices 
     {
         /// <summary>
         /// 获取配置数据 返回字典
