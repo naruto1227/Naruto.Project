@@ -12,18 +12,6 @@ namespace Fate.Common.Interface
     /// </summary>
     public interface IHttpRequest:ICommonSingleDependency
     {
-        /// <summary>
-        /// get请求
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        Task<Dictionary<string, object>> DoGetAsync(string url);
-
-        /// <summary>
-        /// get请求 获取字符串
-        /// </summary>
-        /// <param name="url"></param>
-        Task<string> DoGetStringAsync(string url);
 
         /// <summary>
         /// get 请求 带token的

@@ -27,34 +27,6 @@ namespace Fate.Common.Infrastructure
         }
 
         /// <summary>
-        /// get请求
-        /// </summary>
-        /// <param name="url"></param>
-        public async Task<Dictionary<string, object>> DoGetAsync(string url)
-        {
-            var res = await DoGetStringAsync(url);
-            return res.ToDic();
-        }
-
-        /// <summary>
-        /// get请求 获取字符串
-        /// </summary>
-        /// <param name="url"></param>
-        public async Task<string> DoGetStringAsync(string url)
-        {
-            using (var client = httpClientFactory.CreateClient())
-            {
-                using (var respon = await client.GetAsync(url))
-                {
-                    var res = await respon.Content.ReadAsStringAsync();
-                    if (res.IsNullOrEmpty())
-                        logger.LogInformation($"{url},ResponMessage:{respon.ToJson()}");
-                    return res;
-                }
-            }
-        }
-
-        /// <summary>
         /// get 请求
         /// </summary>
         /// <param name="url">访问地址</param>
@@ -70,26 +42,24 @@ namespace Fate.Common.Infrastructure
 
         public async Task<string> DoGetStringAsync(string url, string authToken = null, Dictionary<string, string> heart = null)
         {
-            using (var request = httpClientFactory.CreateClient())
+            var request = httpClientFactory.CreateClient();
+            if (!string.IsNullOrWhiteSpace(authToken))
             {
-                if (!string.IsNullOrWhiteSpace(authToken))
+                request.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+            }
+            if (heart != null)
+            {
+                foreach (var item in heart)
                 {
-                    request.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                    request.DefaultRequestHeaders.TryAddWithoutValidation(item.Key, item.Value);
                 }
-                if (heart != null)
-                {
-                    foreach (var item in heart)
-                    {
-                        request.DefaultRequestHeaders.TryAddWithoutValidation(item.Key, item.Value);
-                    }
-                }
-                using (var respon = await request.GetAsync(url))
-                {
-                    var res = (await respon.Content.ReadAsStringAsync());//返回结果
-                    if (res.IsNullOrEmpty())
-                        logger.LogInformation($"{url},ResponMessage:{respon.ToJson()}");
-                    return res;
-                }
+            }
+            using (var respon = await request.GetAsync(url))
+            {
+                var res = (await respon.Content.ReadAsStringAsync());//返回结果
+                if (res.IsNullOrEmpty())
+                    logger.LogInformation($"{url},ResponMessage:{respon.ToJson()}");
+                return res;
             }
         }
 
@@ -109,32 +79,27 @@ namespace Fate.Common.Infrastructure
 
         public async Task<string> DoPostStringAsync(string url, HttpContent content, string authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED)
         {
-            using (var request = httpClientFactory.CreateClient())
+            var request = httpClientFactory.CreateClient();
+
+            if (!string.IsNullOrWhiteSpace(authToken))
             {
-                if (!string.IsNullOrWhiteSpace(authToken))
-                {
-                    request.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
-                }
-                if (heart != null)
-                {
-                    foreach (var item in heart)
-                        content.Headers.Add(item.Key, item.Value);
-                }
-                if (contentTypeEnum == PostContentTypeEnum.URLENCODED)
-                {
-                    request.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
-                }
-                else if (contentTypeEnum == PostContentTypeEnum.JSON)
-                {
-                    request.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                }
-                using (var respon = await request.PostAsync(url, content))
-                {
-                    var res = (await respon.Content.ReadAsStringAsync());//返回结果
-                    if (res.IsNullOrEmpty())
-                        logger.LogInformation($"{url},ResponMessage:{respon.ToJson()}");
-                    return res;
-                }
+                request.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+            }
+            if (heart != null)
+            {
+                foreach (var item in heart)
+                    content.Headers.Add(item.Key, item.Value);
+            }
+            if (contentTypeEnum == PostContentTypeEnum.URLENCODED)
+                request.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+            else if (contentTypeEnum == PostContentTypeEnum.JSON)
+                request.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            using (var respon = await request.PostAsync(url, content))
+            {
+                var res = (await respon.Content.ReadAsStringAsync());//返回结果
+                if (res.IsNullOrEmpty())
+                    logger.LogInformation($"{url},ResponMessage:{respon.ToJson()}");
+                return res;
             }
         }
     }
