@@ -1,4 +1,10 @@
 ﻿
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
+using Remotion.Linq;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,6 +17,24 @@ namespace System.Linq
     public static class QueryableExtensions
     {
         /// <summary>
+        /// 生成sql
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public static string ToSql<TEntity>(this IQueryable<TEntity> query, Microsoft.EntityFrameworkCore.DbContext dbCtx)
+        {
+            IQueryModelGenerator modelGenerator = dbCtx.GetService<IQueryModelGenerator>();
+            QueryModel queryModel = modelGenerator.ParseQuery(query.Expression);
+            DatabaseDependencies databaseDependencies = dbCtx.GetService<DatabaseDependencies>();
+            QueryCompilationContext queryCompilationContext = databaseDependencies.QueryCompilationContextFactory.Create(false);
+            RelationalQueryModelVisitor modelVisitor = (RelationalQueryModelVisitor)queryCompilationContext.CreateQueryModelVisitor();
+            modelVisitor.CreateQueryExecutor<TEntity>(queryModel);
+            var sql = modelVisitor.Queries.First().ToString();
+            return sql;
+        }
+
+        /// <summary>
         /// 分页
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -18,9 +42,9 @@ namespace System.Linq
         /// <param name="page">页数</param>
         /// <param name="pageSize">展示的数量</param>
         /// <returns></returns>
-        public static IQueryable<T> PageBy<T> (this IQueryable<T> query, int page,int pageSize)
+        public static IQueryable<T> PageBy<T>(this IQueryable<T> query, int page, int pageSize)
         {
-            if (query==null)
+            if (query == null)
                 return null;
             if (page < 1)
                 page = 1;
@@ -67,7 +91,7 @@ namespace System.Linq
         /// <param name="condition">A boolean value</param>
         /// <param name="predicate">Predicate to filter the query</param>
         /// <returns>Filtered or not filtered query based on <paramref name="condition"/></returns>
-        public static IQueryable<T> WhereIf<T>( this IQueryable<T> query, bool condition, Expression<Func<T, int, bool>> predicate)
+        public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, int, bool>> predicate)
         {
             if (query == null)
                 return null;
@@ -83,7 +107,7 @@ namespace System.Linq
         /// <param name="condition">A boolean value</param>
         /// <param name="predicate">Predicate to filter the query</param>
         /// <returns>Filtered or not filtered query based on <paramref name="condition"/></returns>
-        public static TQueryable WhereIf<T, TQueryable>( this TQueryable query, bool condition, Expression<Func<T, int, bool>> predicate)
+        public static TQueryable WhereIf<T, TQueryable>(this TQueryable query, bool condition, Expression<Func<T, int, bool>> predicate)
             where TQueryable : IQueryable<T>
         {
             if (query == null)
