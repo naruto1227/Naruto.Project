@@ -206,7 +206,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public int SaveChanges()
         {
-            SetMaster().GetAwaiter().GetResult();
+            SetMaster().ConfigureAwait(false).GetAwaiter().GetResult();
             return dbContext.Value.SaveChanges();
         }
 
@@ -217,7 +217,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public IRepositoryQuery<T> Query<T>() where T : class, IEntity
         {
-            SetSlave().GetAwaiter().GetResult();
+            SetSlave().ConfigureAwait(false).GetAwaiter().GetResult();
             return service.GetService<IRepositoryQuery<T, TDbContext>>();
         }
 
@@ -253,7 +253,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public ISqlQuery SqlQuery()
         {
-            SetSlave().GetAwaiter().GetResult();
+            SetSlave().ConfigureAwait(false).GetAwaiter().GetResult();
             return service.GetService<ISqlQuery<TDbContext>>();
         }
         /// <summary>
@@ -262,7 +262,7 @@ namespace Fate.Common.Repository.UnitOfWork
         /// <returns></returns>
         public ISqlCommand SqlCommand()
         {
-            SetMaster().GetAwaiter().GetResult();
+            SetMaster().ConfigureAwait(false).GetAwaiter().GetResult();
             return service.GetService<ISqlCommand<TDbContext>>();
         }
         /// <summary>
