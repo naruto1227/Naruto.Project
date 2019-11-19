@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace Fate.Common.Interface
         /// <param name="authToken">oauth token</param>
         /// <param name="heart">访问头</param>
         /// <returns></returns>
-        Task<Dictionary<string, object>> DoGetAsync(string url, string authToken = null, Dictionary<string, string> heart = null);
+        Task<Dictionary<string, object>> DoGetAsync(string url, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null);
 
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace Fate.Common.Interface
         /// <param name="authToken">oauth token</param>
         /// <param name="heart">访问头</param>
         /// <returns></returns>
-        Task<string> DoGetStringAsync(string url, string authToken = null, Dictionary<string, string> heart = null);
+        Task<string> DoGetStringAsync(string url, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null);
 
 
 
@@ -42,7 +43,7 @@ namespace Fate.Common.Interface
         /// <param name="heart">访问头</param>
         /// <param name="contentTypeEnum">传输类型</param>
         /// <returns></returns>
-        Task<Dictionary<string, object>> DoPostAsync(string url, HttpContent content, string authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED);
+        Task<Dictionary<string, object>> DoPostAsync(string url, HttpContent content, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED);
 
         /// <summary>
         /// post 请求 (key value 使用 FormUrlEncodedContent) json 格式使用 StringContent
@@ -52,7 +53,7 @@ namespace Fate.Common.Interface
         /// <param name="heart">访问头</param>
         /// <param name="contentTypeEnum">传输类型</param>
         /// <returns></returns>
-        Task<string> DoPostStringAsync(string url, HttpContent content, string authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED);
+        Task<string> DoPostStringAsync(string url, HttpContent content, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED);
 
     }
 }

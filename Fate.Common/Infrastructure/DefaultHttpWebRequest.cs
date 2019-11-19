@@ -33,19 +33,19 @@ namespace Fate.Common.Infrastructure
         /// <param name="authToken">oauth token</param>
         /// <param name="heart">访问头</param>
         /// <returns></returns>
-        public async Task<Dictionary<string, object>> DoGetAsync(string url, string authToken = null, Dictionary<string, string> heart = null)
+        public async Task<Dictionary<string, object>> DoGetAsync(string url, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null)
         {
             var res = await DoGetStringAsync(url, authToken, heart);
             return res.ToDic();
         }
 
 
-        public async Task<string> DoGetStringAsync(string url, string authToken = null, Dictionary<string, string> heart = null)
+        public async Task<string> DoGetStringAsync(string url, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null)
         {
             var request = httpClientFactory.CreateClient();
-            if (!string.IsNullOrWhiteSpace(authToken))
+            if (authToken != null)
             {
-                request.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                request.DefaultRequestHeaders.Authorization = authToken;
             }
             if (heart != null)
             {
@@ -71,19 +71,19 @@ namespace Fate.Common.Infrastructure
         /// <param name="heart">访问头</param>
         /// <param name="contentTypeEnum">传输类型</param>
         /// <returns></returns>
-        public async Task<Dictionary<string, object>> DoPostAsync(string url, HttpContent content, string authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED)
+        public async Task<Dictionary<string, object>> DoPostAsync(string url, HttpContent content, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED)
         {
             var res = await DoPostStringAsync(url, content, authToken, heart, contentTypeEnum);
             return res.ToDic();
         }
 
-        public async Task<string> DoPostStringAsync(string url, HttpContent content, string authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED)
+        public async Task<string> DoPostStringAsync(string url, HttpContent content, AuthenticationHeaderValue authToken = null, Dictionary<string, string> heart = null, PostContentTypeEnum contentTypeEnum = PostContentTypeEnum.URLENCODED)
         {
             var request = httpClientFactory.CreateClient();
 
-            if (!string.IsNullOrWhiteSpace(authToken))
+            if (authToken != null)
             {
-                request.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+                request.DefaultRequestHeaders.Authorization = authToken;
             }
             if (heart != null)
             {
