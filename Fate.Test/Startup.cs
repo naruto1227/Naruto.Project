@@ -44,6 +44,7 @@ using System.Reflection;
 using Fate.Common.Configuration.Management.Dashboard;
 using Fate.Common.Configuration.Management.DB;
 using Fate.Common.Configuration.Management;
+using Fate.Common.Redis.IRedisManage;
 
 namespace Fate.Test
 {
@@ -120,9 +121,11 @@ namespace Fate.Test
             //});
             //services.AddScoped(typeof(List<>));
             //services.UseFileOptions();
+
+            services.AddFateConfiguration();
             ////邮箱服务
             //services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
-
+            //services.BuildServiceProvider()
             //services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.AutofacDependencyInjection.AutofacDI.ConvertToAutofac(services);
@@ -138,11 +141,19 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //var redis = app.ApplicationServices.GetRequiredService<IRedisOperationHelp>();
+            //redis.Subscribe("changeConfiguration", (channel, redisvalue) =>
+            //{
 
+            //    Configuration["test"] = "2";
+            //    var res = Configuration.AsEnumerable();
+            //    Console.WriteLine("1");
+            //});
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             //注入一场处理中间件
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             // app.UseMiddleware<DashBoardMiddleware>();
@@ -157,7 +168,14 @@ namespace Fate.Test
             //env.ConfigureNLog("nlog.config");//读取Nlog配置文件
 
             app.UseMvc();
-
+            app.Map("/hello", build =>
+            {
+                build.Run(async content =>
+                {
+                    var str = Encoding.UTF8.GetBytes(Configuration.GetValue<string>("test"));
+                    await content.Response.Body.WriteAsync(str, 0, str.Length);
+                });
+            });
 
         }
     }

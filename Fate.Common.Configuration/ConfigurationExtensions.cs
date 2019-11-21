@@ -1,4 +1,5 @@
 ﻿using Fate.Common.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,17 @@ namespace Microsoft.Extensions.Configuration
         public static IConfigurationBuilder AddFateConfiguration(this IConfigurationBuilder @this)
         {
             return @this.Add(new FateConfigurationSource());
+        }
+        /// <summary>
+        /// 注入配置更新服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddFateConfiguration(this IServiceCollection services)
+        {
+            services.AddSingleton<IReloadData, DefaultReloadData>();
+            services.BuildServiceProvider().GetRequiredService<IReloadData>().SubscribeReloadAsync(null).ConfigureAwait(false).GetAwaiter().GetResult();
+            return services;
         }
     }
 }

@@ -77,11 +77,17 @@ namespace Fate.Common.Configuration.Management.Dashboard.Controllers
         /// 获取配置信息
         /// </summary>
         /// <returns></returns>
-        [HttpGet("QueryList")]
-        public async Task<IActionResult> Query(QueryConfigurationDTO info)
+        [HttpGet("{page}/{limit}")]
+        public async Task<IActionResult> Query(int page, int limit, string group, int environmentType)
         {
-            if (info == null)
-                return BadRequest($"{nameof(info)}参数校检错误");
+
+            var info = new QueryConfigurationDTO()
+            {
+                Page = page,
+                Limit = limit,
+                Group = group,
+                EnvironmentType = environmentType
+            };
             var list = await services.QueryConfiguration(info);
             return Ok(list);
         }
