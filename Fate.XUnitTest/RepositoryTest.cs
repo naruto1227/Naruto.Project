@@ -89,7 +89,8 @@ namespace Fate.XUnitTest
             //
             // await unit.ChangeReadOrWriteConnection(Common.Repository.Object.ReadWriteEnum.Read);
             // await unit.ChangeDataBase("test1");
-            var sql =  unit.Query<setting>().AsQueryable().ToSql(services.BuildServiceProvider().GetRequiredService<MysqlDbContent>());
+            //var sql =  unit.Query<setting>().AsQueryable().ToSql(services.BuildServiceProvider().GetRequiredService<MysqlDbContent>());
+            var sql = unit.Query<setting>().AsQueryable().ToSql();
             var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
         }
 
