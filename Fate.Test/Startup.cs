@@ -48,6 +48,10 @@ using Fate.Common.Redis.IRedisManage;
 
 namespace Fate.Test
 {
+    public class TestOption
+    {
+        public string test1 { get; set; }
+    }
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -55,6 +59,8 @@ namespace Fate.Test
             Configuration = configuration;
         }
 
+
+        private static IConfiguration configuration2;
         public IConfiguration Configuration { get; }
         public IContainer ApplicationContainer { get; private set; }
 
@@ -127,6 +133,8 @@ namespace Fate.Test
             //services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
             //services.BuildServiceProvider()
             //services.AddSingleton<Domain.Event.Infrastructure.Redis.RedisStoreEventBus>();
+
+            services.Configure<TestOption>(Configuration.GetSection("test"));
             //替换自带的di 转换为autofac 注入程序集
             ApplicationContainer = Fate.Common.AutofacDependencyInjection.AutofacDI.ConvertToAutofac(services);
             return new AutofacServiceProvider(ApplicationContainer);
@@ -141,12 +149,18 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //var redis = app.ApplicationServices.GetRequiredService<IRedisOperationHelp>();
+            app.UseFateConfiguration();
+            configuration2 = Configuration;
+            var redis = app.ApplicationServices.GetRequiredService<IRedisOperationHelp>();
             //redis.Subscribe("changeConfiguration", (channel, redisvalue) =>
             //{
 
             //    Configuration["test"] = "2";
             //    var res = Configuration.AsEnumerable();
+            //    using (var scope = app.ApplicationServices.CreateScope())
+            //    {
+            //        var test = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<TestOption>>();
+            //    }
             //    Console.WriteLine("1");
             //});
             if (env.IsDevelopment())
@@ -172,8 +186,13 @@ namespace Fate.Test
             {
                 build.Run(async content =>
                 {
-                    var str = Encoding.UTF8.GetBytes(Configuration.GetValue<string>("test"));
-                    await content.Response.Body.WriteAsync(str, 0, str.Length);
+                    using (var scope = app.ApplicationServices.CreateScope())
+                    {
+                        var test = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<TestOption>>();
+
+                        var str = Encoding.UTF8.GetBytes(configuration2.GetValue<string>("1") + ":" + test.Value.test1);
+                        await content.Response.Body.WriteAsync(str, 0, str.Length);
+                    }
                 });
             });
 

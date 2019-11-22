@@ -1,4 +1,5 @@
 ﻿using Fate.Common.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,14 @@ namespace Microsoft.Extensions.Configuration
         public static IServiceCollection AddFateConfiguration(this IServiceCollection services)
         {
             services.AddSingleton<IReloadData, DefaultReloadData>();
-            services.BuildServiceProvider().GetRequiredService<IReloadData>().SubscribeReloadAsync(null).ConfigureAwait(false).GetAwaiter().GetResult();
+
             return services;
+        }
+
+        public static IApplicationBuilder UseFateConfiguration(this IApplicationBuilder app)
+        {
+            app.ApplicationServices.GetRequiredService<IReloadData>().SubscribeReloadAsync(null).ConfigureAwait(false).GetAwaiter().GetResult();
+            return app;
         }
     }
 }

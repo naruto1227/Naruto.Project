@@ -23,10 +23,10 @@ namespace Fate.Common.Configuration
         /// <summary>
         /// 加载配置
         /// </summary>
-        public override async void Load()
+        public override void Load()
         {
             //存储数据
-            Data = await fateConfiguration.LoadConfiguration();
+            Data = fateConfiguration.LoadConfiguration().ConfigureAwait(false).GetAwaiter().GetResult();
             //存储配置的key
             FateConfigurationInfrastructure.Keys = new ConcurrentBag<string>(Data.Keys);
             //FateConfigurationInfrastructure.changeToken = GetReloadToken();
