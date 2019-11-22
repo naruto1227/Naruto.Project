@@ -10,7 +10,7 @@ namespace Fate.Common.Configuration
     /// <summary>
     /// 张海波
     /// 2019-11-21 
-    /// 存储配置的key 可用于重新加载配置的时候（暂时无用）
+    /// 存储配置的key 可用于重新加载配置的时候（暂时无用，因为一般来说热更新只是更新存在的字段）
     /// </summary>
     internal static class FateConfigurationInfrastructure
     {
