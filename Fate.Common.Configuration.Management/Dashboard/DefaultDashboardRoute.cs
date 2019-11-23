@@ -83,7 +83,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <returns></returns>
         public string GetContentResourceName(string contentFolder, string resourceName)
         {
-            return $"{GetContentFolderNamespace(contentFolder)}{resourceName}";
+            return $"{GetContentFolderNamespace(contentFolder)}{resourceName}".Replace("/", ".");
         }
         /// <summary>
         /// 获取文件夹的名称

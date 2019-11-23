@@ -31,7 +31,7 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <summary>
         /// 添加一个路由规则
         /// </summary>
-        /// <param name="pathTemplate"></param>
+        /// <param name="pathTemplate">请求地址模板</param>
         /// <param name="contentType"></param>
         /// <param name="folderName">目录的名称</param>
         public void Add(string pathTemplate, string folderName, string contentType)
