@@ -1,5 +1,4 @@
 ﻿
-using Fate.Common.Configuration.Management.Dashboard.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;
@@ -10,41 +9,42 @@ using System.Linq;
 using System.Net;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Fate.Common.Configuration.Management.Dashboard
+namespace Fate.Infrastructure.VirtualFile
 {
     /// <summary>
     /// 张海波
     /// 2019-10-27
     /// 面板的中间件
     /// </summary>
-    public class DashBoardMiddleware
+    public class VirtualFileMiddleware
     {
         private readonly RequestDelegate next;
 
-        public DashBoardMiddleware(RequestDelegate _next)
+        public VirtualFileMiddleware(RequestDelegate _next)
         {
             next = _next;
         }
-
-        public async Task InvokeAsync(HttpContext httpContext, IOptions<ConfigurationOptions> configurationOptions)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <param name="configurationOptions"></param>
+        /// <returns></returns>
+        public async Task InvokeAsync(HttpContext httpContext, IOptions<VirtualFileOptions> configurationOptions)
         {
             //匹配路由
-            if (!httpContext.Request.Path.StartsWithSegments(configurationOptions.Value.DashBoardOptions.RequestPath, out PathString matched, out PathString remaining))
+            if (!httpContext.Request.Path.StartsWithSegments(configurationOptions.Value.RequestPath, out PathString matched, out PathString remaining))
             {
                 await next(httpContext);
                 return;
             }
             //获取面板路由服务
-            var dashboardRoute = httpContext.RequestServices.GetService<IDashboardRoute>();
+            var virtualFileResource = httpContext.RequestServices.GetService<IVirtualFileResource>();
             //接收请求地址
             var requestPath = httpContext.Request.Path;
-            //验证访问的是否为首页的资源
-            if (string.IsNullOrWhiteSpace(remaining))
-            {
-                requestPath = dashboardRoute.MainPageName;
-            }
+            
             //路由集合服务
-            var routeCollections = httpContext.RequestServices.GetService<IDashboardRouteCollections>();
+            var routeCollections = httpContext.RequestServices.GetService<IVirtualFileRouteCollections>();
             //验证当前文件是否存在
             var resourceInfo = routeCollections.Get(requestPath);
             if (resourceInfo == null)
@@ -53,15 +53,15 @@ namespace Fate.Common.Configuration.Management.Dashboard
                 return;
             }
             //设置上下文
-            var dashbordContext = new DashboardContext(dashboardRoute.GetContentResourceName(resourceInfo.Item1, dashboardRoute.GetFileName(requestPath, resourceInfo.Item1)), resourceInfo.Item2, httpContext);
+            var virtualFileContext = new VirtualFileContext(virtualFileResource.GetContentResourceName(resourceInfo.Item1, virtualFileResource.GetFileName(requestPath, resourceInfo.Item1)), resourceInfo.Item2, httpContext);
             //授权过滤器
-            var authorizationList = configurationOptions.Value.DashBoardOptions?.Authorization;
+            var authorizationList = configurationOptions.Value?.Authorization;
             if (authorizationList != null && authorizationList.Count() > 0)
             {
                 //授权处理
                 foreach (var item in authorizationList)
                 {
-                    if ((await item.AuthorizationAsync(dashbordContext)))
+                    if ((await item.AuthorizationAsync(virtualFileContext)))
                         continue;
                     else
                     {
@@ -70,10 +70,10 @@ namespace Fate.Common.Configuration.Management.Dashboard
                     }
                 }
             }
-            //面板渲染服务
-            var dashboardRender = httpContext.RequestServices.GetService<IDashboardRender>();
+            //资源渲染服务
+            var virtualFileRender = httpContext.RequestServices.GetService<IVirtualFileRender>();
             //处理响应
-            await dashboardRender.LoadAsync(dashbordContext);
+            await virtualFileRender.LoadAsync(virtualFileContext);
         }
     }
 }

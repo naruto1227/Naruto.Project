@@ -3,20 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Configuration.Management.Dashboard
+namespace Fate.Infrastructure.VirtualFile
 {
     /// <summary>
     /// 张海波
     /// 2019-10-27
-    /// 面板的上下文
+    /// 上下文
     /// </summary>
-    public class DashboardContext: ConfigurationContext
+    public class VirtualFileContext
     {
-        public DashboardContext()
-        {
-
-        }
-        public DashboardContext(string resourcesName, string contentType, HttpContext httpContext)
+        public VirtualFileContext(string resourcesName, string contentType, HttpContext httpContext)
         {
             ResourcesName = resourcesName;
             ContentType = contentType;
@@ -32,5 +28,14 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// 
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// 请求的上下文
+        /// </summary>
+        public  HttpContext HttpContext { get; internal set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public  IServiceProvider ServiceProvider { get; internal set; }
     }
 }

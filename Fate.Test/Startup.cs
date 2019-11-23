@@ -67,7 +67,6 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-
             //注入响应压缩的服务
             //services.AddResponseCompression();
             //services.Configure<GzipCompressionProviderOptions>(options =>

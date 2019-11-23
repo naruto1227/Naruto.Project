@@ -6,11 +6,13 @@
 
   <ItemGroup>
     <None Remove="Dashboard\Content\js\MD5.js" />
+    <None Remove="Dashboard\Content\js\test\jsconfig1.json" />
     <None Remove="Dashboard\Content\pages\index.html" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Dashboard\Content\js\MD5.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\test\jsconfig1.json" />
     <EmbeddedResource Include="Dashboard\Content\pages\index.html" />
   </ItemGroup>
 
@@ -23,10 +25,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fate.Common.Repository\Fate.Common.Repository.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.VirtualFile\Fate.Infrastructure.VirtualFile.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Dashboard\Content\css\" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties dashboard_4content_4js_4test_4jsconfig1_1json__JsonSchema="http://json.schemastore.org/appsettings" /></VisualStudio></ProjectExtensions>
 
 </Project>

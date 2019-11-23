@@ -85,6 +85,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CP.Common.TimerModule", "CP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.OcelotStore.RedisProvider", "Fate.Common.OcelotStore.RedisProvider\Fate.Common.OcelotStore.RedisProvider.csproj", "{6B777871-0823-467A-BE8F-640CCEE74538}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.VirtualFile", "Fate.Infrastructure.VirtualFile\Fate.Infrastructure.VirtualFile.csproj", "{0268D785-03DA-4806-A2EF-C08DAB316EAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,10 @@ Global
 		{6B777871-0823-467A-BE8F-640CCEE74538}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B777871-0823-467A-BE8F-640CCEE74538}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B777871-0823-467A-BE8F-640CCEE74538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0268D785-03DA-4806-A2EF-C08DAB316EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0268D785-03DA-4806-A2EF-C08DAB316EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0268D785-03DA-4806-A2EF-C08DAB316EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0268D785-03DA-4806-A2EF-C08DAB316EAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,6 +247,7 @@ Global
 		{8F850B0A-FC5A-46A7-B806-ACB47BCD1F56} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 		{BA229C65-80E2-4FB5-9400-478208B2B975} = {8F850B0A-FC5A-46A7-B806-ACB47BCD1F56}
 		{6B777871-0823-467A-BE8F-640CCEE74538} = {56D65EED-2397-414D-9E00-C9FD72D1834E}
+		{0268D785-03DA-4806-A2EF-C08DAB316EAB} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}

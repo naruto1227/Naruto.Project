@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Configuration.Management.Dashboard.Interface
+namespace Fate.Infrastructure.VirtualFile
 {
     /// <summary>
     /// 张海波
     /// 2019-10-31
     /// 当前集合为了操作静态资源的信息
     /// </summary>
-    public interface IDashboardRouteCollections
+    public interface IVirtualFileRouteCollections
     {
         /// <summary>
         /// 获取资源的信息
@@ -20,8 +20,8 @@ namespace Fate.Common.Configuration.Management.Dashboard.Interface
         /// <summary>
         /// 添加一个路由规则
         /// </summary>
-        /// <param name="pathTemplate"></param>
-        /// <param name="folderName"></param>
+        /// <param name="pathTemplate">请求的地址</param>
+        /// <param name="folderName">相对于 ResouresDirectoryPrefix 值的目录名称</param>
         /// <param name="contentType"></param>
         void Add(string pathTemplate, string folderName, string contentType);
     }

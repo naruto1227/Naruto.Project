@@ -1,35 +1,36 @@
-﻿using Fate.Common.Configuration.Management.Dashboard.Interface;
+﻿
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fate.Common.Configuration.Management.Dashboard
+namespace Fate.Infrastructure.VirtualFile
 {
     /// <summary>
     /// 张海波
     /// 2019-10-27
     /// 加载资源
     /// </summary>
-    public class DefaultDashboardRender : IDashboardRender
+    public class DefaultVirtualFileRender : IVirtualFileRender
     {
         /// <summary>
-        /// 获取当前项目的程序集
+        /// 获取加载资源项目的程序集
         /// </summary>
         private readonly Assembly assembly;
 
-        public DefaultDashboardRender()
+        public DefaultVirtualFileRender(IOptions<VirtualFileOptions> virtualFileOptions)
         {
-            assembly = typeof(DefaultDashboardRender).Assembly;
+            assembly = virtualFileOptions.Value.ResouresAssembly;
         }
         /// <summary>
         /// 加载资源
         /// </summary>
         /// <param name="dashboardContext"></param>
         /// <returns></returns>
-        public async Task LoadAsync(DashboardContext dashboardContext)
+        public async Task LoadAsync(VirtualFileContext dashboardContext)
         {
             if (dashboardContext == null)
                 throw new ArgumentNullException(nameof(dashboardContext));

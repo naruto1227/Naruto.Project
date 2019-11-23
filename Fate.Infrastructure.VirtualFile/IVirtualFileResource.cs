@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Common.Configuration.Management.Dashboard.Interface
+namespace Fate.Infrastructure.VirtualFile
 {
     /// <summary>
     /// 张海波
-    /// 2019-10-31
-    /// 面板路由配置接口
+    /// 2019-11-24
+    /// 虚拟文件的资源名称信息的操作
     /// </summary>
-    public interface IDashboardRoute
+    public interface IVirtualFileResource
     {
-        string ResourceRequestPrefix { get; }
-
-        string MainPageName { get; }
-
         /// <summary>
         /// 获取文件的名字
         /// </summary>
@@ -27,7 +23,7 @@ namespace Fate.Common.Configuration.Management.Dashboard.Interface
         /// 获取资源的名称
         /// </summary>
         /// <param name="contentFolder"></param>
-        /// <param name="resourceName"></param>
+        /// <param name="resourceName">相对于 ResouresDirectoryPrefix 值的目录名称</param>
         /// <returns></returns>
         string GetContentResourceName(string contentFolder, string resourceName);
     }

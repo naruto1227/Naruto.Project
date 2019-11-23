@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Fate.Common.Configuration.Management.Dashboard.Services;
 using System;
+using Fate.Infrastructure.VirtualFile;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -77,19 +78,36 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<IConfigurationServices, DefaultConfigurationServices>();
             services.AddScoped<IConfigurationDataServices, DefaultConfigurationDataServices>();
-            services.AddSingleton<IDashboardRender, DefaultDashboardRender>();
-            services.AddSingleton<IDashboardRoute, DefaultDashboardRoute>();
-            services.AddSingleton<IDashboardRouteCollections, DefaultDashboardRouteCollections>();
 
             if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDataRoute)
             {
                 services.AddScoped(typeof(IStartupFilter), typeof(COnfigurationDataStartupFilter));
             }
 
-            if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDashBoard)
+            //if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDashBoard)
+            //{
+            //    services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
+            //}
+            VirtualFileResoureInfos.HtmlPages = new ResoureInfo()
             {
-                services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
-            }
+                DirectoryName = "pages",
+                Names = new string[] {
+                    "index"
+                }
+            };
+            VirtualFileResoureInfos.Jsons = new ResoureInfo()
+            {
+                DirectoryName = "js/test",
+                Names = new string[] {
+                    "jsconfig1"
+                }
+            };
+            services.AddVirtualFileServices(options =>
+            {
+                options.ResouresAssembly = typeof(ServiceCollectionExtensions).Assembly;
+                options.ResouresDirectoryPrefix = $"{ options.ResouresAssembly.GetName().Name}.Dashboard.Content";
+
+            });
             return services;
         }
     }

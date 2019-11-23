@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using Fate.Common.Configuration.Management.Dashboard.Interface;
+using System.Collections.Concurrent;
 
-namespace Fate.Common.Configuration.Management.Dashboard
+namespace Fate.Infrastructure.VirtualFile
 {
     /// <summary>
     /// 存放静态资源的路由集合
     /// </summary>
-    public class DefaultDashboardRouteCollections : IDashboardRouteCollections
+    public class DefaultVirtualFileRouteCollections : IVirtualFileRouteCollections
     {
         /// <summary>
         /// 存放路由的集合 
+        /// 第一个参数为资源的请求地址
+        /// 第二个参数为所处目录的名称 （相互与 文件所处的根路径的名称 多个目录之间用/分割  ，例 js/test ）
+        /// 第三个参数为contentType
         /// </summary>
-        private readonly Dictionary<string, Tuple<string, string>> routes = new Dictionary<string, Tuple<string, string>>();
+        private readonly ConcurrentDictionary<string, Tuple<string, string>> routes = new ConcurrentDictionary<string, Tuple<string, string>>();
 
         /// <summary>
         /// 获取资源的路由信息
@@ -23,20 +26,19 @@ namespace Fate.Common.Configuration.Management.Dashboard
         /// <returns></returns>
         public Tuple<string, string> Get(string key)
         {
-            if (!routes.ContainsKey(key))
-                return default;
-            return routes.Where(a => a.Key.Equals(key)).Select(a => a.Value).FirstOrDefault();
+            routes.TryGetValue(key, out var res);
+            return res;
         }
 
         /// <summary>
         /// 添加一个路由规则
         /// </summary>
         /// <param name="pathTemplate">请求地址模板</param>
-        /// <param name="contentType"></param>
+        /// <param name="contentType">类型</param>
         /// <param name="folderName">目录的名称</param>
         public void Add(string pathTemplate, string folderName, string contentType)
         {
-            routes.Add(pathTemplate, (folderName, contentType).ToTuple());
+            routes.TryAdd(pathTemplate, (folderName, contentType).ToTuple());
         }
     }
 }
