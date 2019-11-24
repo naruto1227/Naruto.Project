@@ -7,6 +7,8 @@ using System.Collections.Concurrent;
 namespace Fate.Infrastructure.VirtualFile
 {
     /// <summary>
+    /// 张海波
+    /// 2019-11-24
     /// 存放静态资源的路由集合
     /// </summary>
     public class DefaultVirtualFileRouteCollections : IVirtualFileRouteCollections
@@ -14,7 +16,7 @@ namespace Fate.Infrastructure.VirtualFile
         /// <summary>
         /// 存放路由的集合 
         /// 第一个参数为资源的请求地址
-        /// 第二个参数为所处目录的名称 （相互与 文件所处的根路径的名称 多个目录之间用/分割  ，例 js/test ）
+        /// 第二个参数为所处目录的名称 （相互与 文件所处的根路径的名称 多个目录之间用/分割  ，例 js/test ）为了请求的时候用于过滤拼接资源名称
         /// 第三个参数为contentType
         /// </summary>
         private readonly ConcurrentDictionary<string, Tuple<string, string>> routes = new ConcurrentDictionary<string, Tuple<string, string>>();
@@ -34,11 +36,11 @@ namespace Fate.Infrastructure.VirtualFile
         /// 添加一个路由规则
         /// </summary>
         /// <param name="pathTemplate">请求地址模板</param>
-        /// <param name="contentType">类型</param>
+        /// <param name="mimeType">类型</param>
         /// <param name="folderName">目录的名称</param>
-        public void Add(string pathTemplate, string folderName, string contentType)
+        public void Add(string pathTemplate, string folderName, string mimeType)
         {
-            routes.TryAdd(pathTemplate, (folderName, contentType).ToTuple());
+            routes.TryAdd(pathTemplate, (folderName, mimeType).ToTuple());
         }
     }
 }

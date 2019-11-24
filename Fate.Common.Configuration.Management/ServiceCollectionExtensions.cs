@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Fate.Common.Configuration.Management.Dashboard.Services;
 using System;
 using Fate.Infrastructure.VirtualFile;
+using System.Collections.Generic;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -88,20 +89,24 @@ namespace Microsoft.Extensions.DependencyInjection
             //{
             //    services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
             //}
-            VirtualFileResoureInfos.HtmlPages = new ResoureInfo()
+            VirtualFileResoureInfos.Add(new List<ResoureInfo>()
             {
-                DirectoryName = "pages",
-                Names = new string[] {
-                    "index"
-                }
-            };
-            VirtualFileResoureInfos.Jsons = new ResoureInfo()
+                new ResoureInfo(){
+                    MimeType="text/heml",
+                  DirectoryName="pages",
+                  Names=new string[]{
+                      "index.html"
+                  }
+                },
+                new ResoureInfo()
             {
                 DirectoryName = "js/test",
                 Names = new string[] {
-                    "jsconfig1"
-                }
-            };
+                    "jsconfig1.json"
+                },
+                MimeType="text/json"
+            }
+        });
             services.AddVirtualFileServices(options =>
             {
                 options.ResouresAssembly = typeof(ServiceCollectionExtensions).Assembly;

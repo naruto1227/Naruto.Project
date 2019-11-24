@@ -15,7 +15,7 @@ namespace Fate.Infrastructure.VirtualFile
     public class VirtualFileOptions
     {
         /// <summary>
-        /// 首页地址 默认(/fate)
+        /// 请求地址的前缀 默认(/fate)
         /// </summary>
         public PathString RequestPath { get; set; } = new PathString("/fate");
 
@@ -28,6 +28,7 @@ namespace Fate.Infrastructure.VirtualFile
         /// 资源的前缀(例 Fate.Infrastructure.VirtualFile.Content)
         /// </summary>
         public string ResouresDirectoryPrefix { get; set; }
+
         /// <summary>
         /// 虚拟文件的授权接口过滤器
         /// </summary>

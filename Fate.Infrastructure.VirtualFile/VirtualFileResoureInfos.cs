@@ -17,6 +17,10 @@ namespace Fate.Infrastructure.VirtualFile
         public string DirectoryName { get; set; }
 
         /// <summary>
+        /// 资源的 mime类型
+        /// </summary>
+        public string MimeType { get; set; }
+        /// <summary>
         /// 资源的名称
         /// </summary>
         public string[] Names { get; set; } = new string[] { };
@@ -24,35 +28,20 @@ namespace Fate.Infrastructure.VirtualFile
     /// <summary>
     /// 资源的名称配置
     /// </summary>
-    public class VirtualFileResoureInfos
+    public static class VirtualFileResoureInfos
     {
         /// <summary>
-        /// 资源的请求前缀
+        /// 资源信息
         /// </summary>
-        public static string ResourceRequestPrefix { get => "/fate"; }
+        internal static List<ResoureInfo> ResoureInfo { get; set; } = new List<ResoureInfo>();
 
-        /// <summary>
-        /// 页面的资源
-        /// 第一个参数为资源存在的目录名称
-        /// 第二个为
-        /// </summary>
-        public static ResoureInfo HtmlPages { get; set; } = new ResoureInfo();
-        /// <summary>
-        /// 存放用到的js文件的名字
-        /// </summary>
-        public static ResoureInfo Javascripts { get; set; } = new ResoureInfo();
-        /// <summary>
-        /// 存放需要用的样式的名字
-        /// </summary>
-        public static ResoureInfo Stylesheets { get; set; } = new ResoureInfo();
-        /// <summary>
-        /// json文件
-        /// </summary>
-        public static ResoureInfo Jsons { get; set; } = new ResoureInfo();
-
-        /// <summary>
-        /// png文件
-        /// </summary>
-        public static ResoureInfo Pngs { get; set; } = new ResoureInfo();
+        public static void Add(ResoureInfo resoureInfo)
+        {
+            ResoureInfo.Add(resoureInfo);
+        }
+        public static void Add(IList<ResoureInfo> resoureInfos)
+        {
+            ResoureInfo.AddRange(resoureInfos);
+        }
     }
 }

@@ -23,7 +23,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IVirtualFileResource, DefaultVirtualFileResource>();
             //注入中间件
             services.AddScoped(typeof(IStartupFilter), typeof(VirtualFileStartupFilter));
-            services.BuildServiceProvider().GetRequiredService<IVirtualFileResource>();
             return services;
         }
     }

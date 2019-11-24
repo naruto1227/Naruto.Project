@@ -15,6 +15,8 @@ namespace Fate.Infrastructure.VirtualFile
         /// 资源的命名空间
         /// </summary>
         private readonly string ResouresDirectoryPrefix;
+
+        private readonly IOptions<VirtualFileOptions> _virtualFileOptions;
         /// <summary>
         /// 初始化
         /// </summary>
@@ -22,6 +24,7 @@ namespace Fate.Infrastructure.VirtualFile
         /// <param name="routeCollections">路由的集合</param>
         public DefaultVirtualFileResource(IOptions<VirtualFileOptions> virtualFileOptions, IVirtualFileRouteCollections routeCollections)
         {
+            _virtualFileOptions = virtualFileOptions;
             ResouresDirectoryPrefix = virtualFileOptions.Value.ResouresDirectoryPrefix;
 
             LoadResoure(routeCollections);
@@ -33,30 +36,18 @@ namespace Fate.Infrastructure.VirtualFile
         /// <param name="routeCollections"></param>
         private void LoadResoure(IVirtualFileRouteCollections routeCollections)
         {
-            //初始化资源信息
-            foreach (var item in VirtualFileResoureInfos.Javascripts.Names)
+            if (VirtualFileResoureInfos.ResoureInfo != null)
             {
-                routeCollections.Add($"{VirtualFileResoureInfos.ResourceRequestPrefix}/{VirtualFileResoureInfos.Javascripts.DirectoryName}/{item}.js", VirtualFileResoureInfos.Javascripts.DirectoryName, "application/x-javascript");
-            }
-            foreach (var item in VirtualFileResoureInfos.Stylesheets.Names)
-            {
-                routeCollections.Add($"{VirtualFileResoureInfos.ResourceRequestPrefix}/{VirtualFileResoureInfos.Stylesheets.DirectoryName}/{item}.css", VirtualFileResoureInfos.Stylesheets.DirectoryName, "application/x-javascript");
-            }
-            foreach (var item in VirtualFileResoureInfos.HtmlPages.Names)
-            {
-                routeCollections.Add($"{VirtualFileResoureInfos.ResourceRequestPrefix}/{VirtualFileResoureInfos.HtmlPages.DirectoryName}/{item}.html", VirtualFileResoureInfos.HtmlPages.DirectoryName,
-                  "text/html");
-            }
-
-            foreach (var item in VirtualFileResoureInfos.Jsons.Names)
-            {
-                routeCollections.Add($"{VirtualFileResoureInfos.ResourceRequestPrefix}/{VirtualFileResoureInfos.Jsons.DirectoryName}/{item}.json", VirtualFileResoureInfos.Jsons.DirectoryName,
-                  "text/json");
-            }
-            foreach (var item in VirtualFileResoureInfos.Pngs.Names)
-            {
-                routeCollections.Add($"{VirtualFileResoureInfos.ResourceRequestPrefix}/{VirtualFileResoureInfos.Pngs.DirectoryName}/{item}.png", VirtualFileResoureInfos.Pngs.DirectoryName,
-                  "image/png");
+                foreach (var resoureInfo in VirtualFileResoureInfos.ResoureInfo)
+                {
+                    //初始化资源信息
+                    foreach (var item in resoureInfo.Names)
+                    {
+                        routeCollections.Add($"{_virtualFileOptions.Value.RequestPath}/{resoureInfo.DirectoryName}/{item}", resoureInfo.DirectoryName, resoureInfo.MimeType);
+                    }
+                }
+                //清空数据
+                VirtualFileResoureInfos.ResoureInfo.Clear();
             }
         }
         /// <summary>
@@ -67,7 +58,7 @@ namespace Fate.Infrastructure.VirtualFile
         /// <returns></returns>
         public string GetFileName(string requestPath, string folderName)
         {
-            var folders = requestPath.Split(new string[] { $"{VirtualFileResoureInfos.ResourceRequestPrefix}/{folderName}" }, StringSplitOptions.RemoveEmptyEntries);
+            var folders = requestPath.Split(new string[] { $"{_virtualFileOptions.Value.RequestPath}/{folderName}" }, StringSplitOptions.RemoveEmptyEntries);
             if (folders != null)
             {
                 return folders[folders.Length - 1].Replace("/", ".");
