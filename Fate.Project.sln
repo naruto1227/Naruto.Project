@@ -81,7 +81,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timer", "Timer", "{8F850B0A-FC5A-46A7-B806-ACB47BCD1F56}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.TimerModule", "CP.Common.TimerModule\Fate.Infrastructure.TimerModule.csproj", "{BA229C65-80E2-4FB5-9400-478208B2B975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.TimerModule", "Fate.Infrastructure.TimerModule\Fate.Infrastructure.TimerModule.csproj", "{BA229C65-80E2-4FB5-9400-478208B2B975}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.OcelotStore.RedisProvider", "Fate.Infrastructure.OcelotStore.RedisProvider\Fate.Infrastructure.OcelotStore.RedisProvider.csproj", "{6B777871-0823-467A-BE8F-640CCEE74538}"
 EndProject
