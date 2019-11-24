@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Fate.Common.AutofacDependencyInjection;
+using Fate.Infrastructure.AutofacDependencyInjection;
 using Fate.Domain.Model.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Fate.Common.Repository.UnitOfWork;
+using Fate.Infrastructure.Repository.UnitOfWork;
 using System.Data;
-using Fate.Common.Extensions;
-using Fate.Common.Repository;
+using Fate.Infrastructure.Extensions;
+using Fate.Infrastructure.Repository;
 using Fate.Domain.Model;
 using System.Threading;
 

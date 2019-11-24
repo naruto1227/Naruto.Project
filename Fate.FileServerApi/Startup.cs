@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Fate.Common.Infrastructure;
+using Fate.Infrastructure.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http.Features;
-using Fate.Common.Middleware;
-using Fate.Common.FileOperation;
-using Fate.Common.Config;
-using Fate.Common.Extensions;
-using Fate.Common.AutofacDependencyInjection;
+using Fate.Infrastructure.Middleware;
+using Fate.Infrastructure.FileOperation;
+using Fate.Infrastructure.Config;
+using Fate.Infrastructure.Extensions;
+using Fate.Infrastructure.AutofacDependencyInjection;
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Fate.Common.Options;
+using Fate.Infrastructure.Options;
 
 namespace Fate.FileServerApi
 {

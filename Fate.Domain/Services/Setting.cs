@@ -1,17 +1,17 @@
 ﻿using Fate.Domain.Model;
-using Fate.Common.Repository;
+using Fate.Infrastructure.Repository;
 using Fate.Domain.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Repository.UnitOfWork;
+using Fate.Infrastructure.Repository.UnitOfWork;
 using Fate.Domain.Event;
 using Fate.Domain.Event.Infrastructure;
 using Fate.Domain.Event.Events;
 using Fate.Domain.Event.EventHandlers;
 using Fate.Domain.Event.Infrastructure.Redis;
-using Fate.Common.Base.Model;
+using Fate.Infrastructure.Base.Model;
 
 namespace Fate.Domain.Services
 {

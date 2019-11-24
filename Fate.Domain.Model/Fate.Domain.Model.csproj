@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Common.Repository\Fate.Common.Repository.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Repository\Fate.Infrastructure.Repository.csproj" />
   </ItemGroup>
 
   <!--<ItemGroup>
-    <ProjectReference Include="..\Fate.Common.Base.Model\Fate.Common.Base.Model.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Base.Model\Fate.Infrastructure.Base.Model.csproj" />
   </ItemGroup>-->
 
 </Project>

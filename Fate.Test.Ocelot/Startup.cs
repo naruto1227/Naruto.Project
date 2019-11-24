@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Fate.Common.OcelotStore.EFCore;
+using Fate.Infrastructure.OcelotStore.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,8 +16,8 @@ using Ocelot.Cache;
 using Ocelot.Configuration.File;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Fate.Common.Repository.UnitOfWork;
-using Fate.Common.OcelotStore.EFCore.DB;
+using Fate.Infrastructure.Repository.UnitOfWork;
+using Fate.Infrastructure.OcelotStore.EFCore.DB;
 
 namespace Fate.Test.Ocelot
 {

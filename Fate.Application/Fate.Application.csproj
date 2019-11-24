@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure\Fate.Infrastructure.csproj" />
     <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
     <ProjectReference Include="..\Fate.Domain\Fate.Domain.csproj" />
   </ItemGroup>

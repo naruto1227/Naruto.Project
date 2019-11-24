@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.WebApi", "Fate.WebApi\Fate.WebApi.csproj", "{5D2B8CC1-EE36-4B8C-BEA4-CE11E9E64194}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common", "Fate.Common\Fate.Common.csproj", "{95785746-5F1B-4132-9778-60E616B3BD8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure", "Fate.Infrastructure\Fate.Infrastructure.csproj", "{95785746-5F1B-4132-9778-60E616B3BD8F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Application", "Fate.Application\Fate.Application.csproj", "{91875A01-3B25-4478-9F73-C33F45A63DE0}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Domain", "Fate.Domain\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fate.Applications", "Fate.Applications", "{DF220979-1B11-4DEC-AD83-146AF781E3A3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fate.Infrastructure", "Fate.Infrastructure", "{4A8F666D-71AD-40C6-8DBF-37341F67CE79}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fate.Infrastructures", "Fate.Infrastructures", "{4A8F666D-71AD-40C6-8DBF-37341F67CE79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fate.Domains", "Fate.Domains", "{72C204CF-4677-4CB8-B747-31571C305EB2}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Domain.Event", "Fate.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.XUnitTest", "Fate.XUnitTest\Fate.XUnitTest.csproj", "{5B20EEAE-7550-4A6C-9558-F81F0A0D5523}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Redis", "Fate.Common.Redis\Fate.Common.Redis.csproj", "{F32A1DAE-8EFF-4DC1-97B7-99CC5510F2EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Redis", "Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj", "{F32A1DAE-8EFF-4DC1-97B7-99CC5510F2EB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.IdentityServer4", "Fate.IdentityServer4\Fate.IdentityServer4.csproj", "{E5637F6A-99F9-425C-89D1-B20DB0C9145B}"
 EndProject
@@ -35,25 +35,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.FileServerApi", "Fate.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.TimeServer", "Fate.TimeServer\Fate.TimeServer.csproj", "{307B30CA-0FB6-4B08-9696-B9612B9BD9CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.RabbitMQ", "Fate.Common.RabbitMQ\Fate.Common.RabbitMQ.csproj", "{557F9335-37E5-4BA9-AE6F-E978000CF708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.RabbitMQ", "Fate.Infrastructure.RabbitMQ\Fate.Infrastructure.RabbitMQ.csproj", "{557F9335-37E5-4BA9-AE6F-E978000CF708}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.BaseRibbitMQ", "Fate.Common.BaseRibbitMQ\Fate.Common.BaseRibbitMQ.csproj", "{BD062578-3359-452C-A9F8-21F79153CF09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.BaseRibbitMQ", "Fate.Infrastructure.BaseRibbitMQ\Fate.Infrastructure.BaseRibbitMQ.csproj", "{BD062578-3359-452C-A9F8-21F79153CF09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQ", "RabbitMQ", "{405D7187-152B-463F-87FB-62864E291CAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3575B4A0-B3E0-4982-9D79-E863DE07D1FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.CAP.Subscribe", "Fate.Common.CAP.Subscribe\Fate.Common.CAP.Subscribe.csproj", "{30FF0F4D-01A9-47EE-BA4D-A830C6425097}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.CAP.Subscribe", "Fate.Infrastructure.CAP.Subscribe\Fate.Infrastructure.CAP.Subscribe.csproj", "{30FF0F4D-01A9-47EE-BA4D-A830C6425097}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Repository", "Fate.Common.Repository\Fate.Common.Repository.csproj", "{812D3207-C2FB-4DF9-BD3C-34BB11789CD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Repository", "Fate.Infrastructure.Repository\Fate.Infrastructure.Repository.csproj", "{812D3207-C2FB-4DF9-BD3C-34BB11789CD9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ocelot", "Ocelot", "{56D65EED-2397-414D-9E00-C9FD72D1834E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.OcelotStore.Redis", "Fate.Common.OcelotStore.Redis\Fate.Common.OcelotStore.Redis.csproj", "{DE9A430E-7B8C-479C-B710-E7FA95F6F9F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.OcelotStore.Redis", "Fate.Infrastructure.OcelotStore.Redis\Fate.Infrastructure.OcelotStore.Redis.csproj", "{DE9A430E-7B8C-479C-B710-E7FA95F6F9F2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.OcelotStore.EFCore", "Fate.Common.OcelotStore.EFCore\Fate.Common.OcelotStore.EFCore.csproj", "{73A36EAF-AE62-44BC-A8CD-E632B7CDEB51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.OcelotStore.EFCore", "Fate.Infrastructure.OcelotStore.EFCore\Fate.Infrastructure.OcelotStore.EFCore.csproj", "{73A36EAF-AE62-44BC-A8CD-E632B7CDEB51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Base.Model", "Fate.Common.Base.Model\Fate.Common.Base.Model.csproj", "{001B1DC8-47BE-4E9B-8C05-46676AB80DE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Base.Model", "Fate.Infrastructure.Base.Model\Fate.Infrastructure.Base.Model.csproj", "{001B1DC8-47BE-4E9B-8C05-46676AB80DE6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{28527CF0-C1A2-45F9-8934-339FD8914EC1}"
 EndProject
@@ -61,17 +61,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Test.Ocelot", "Fate.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consul", "Consul", "{B9E1ECBD-967F-453E-B9CB-61BABA799568}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Commom.Consul", "Fate.Commom.Consul\Fate.Commom.Consul.csproj", "{C9058225-186D-46D1-9CCD-713AB9C48989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Consul", "Fate.Infrastructure.Consul\Fate.Infrastructure.Consul.csproj", "{C9058225-186D-46D1-9CCD-713AB9C48989}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Configuration", "Fate.Common.Configuration\Fate.Common.Configuration.csproj", "{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Configuration", "Fate.Infrastructure.Configuration\Fate.Infrastructure.Configuration.csproj", "{4CBECF8D-2B03-4CE1-B150-2DC24AA79ABB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Mapper", "Fate.Common.Mapper\Fate.Common.Mapper.csproj", "{5CA9A626-E0B5-4229-AE9C-EA666CCBAAAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Mapper", "Fate.Infrastructure.Mapper\Fate.Infrastructure.Mapper.csproj", "{5CA9A626-E0B5-4229-AE9C-EA666CCBAAAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.AutofacDependencyInjection", "Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj", "{6F7561E6-389C-4A1F-8FEB-1A6E1C2F4BBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.AutofacDependencyInjection", "Fate.Infrastructure.AutofacDependencyInjection\Fate.Infrastructure.AutofacDependencyInjection.csproj", "{6F7561E6-389C-4A1F-8FEB-1A6E1C2F4BBB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{BCCD954F-FDCF-4B73-9786-3B12B93E5F16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.Configuration.Management", "Fate.Common.Configuration.Management\Fate.Common.Configuration.Management.csproj", "{30E482D6-5C3F-4F9E-ABED-F3C4725E6097}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Configuration.Management", "Fate.Infrastructure.Configuration.Management\Fate.Infrastructure.Configuration.Management.csproj", "{30E482D6-5C3F-4F9E-ABED-F3C4725E6097}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapper", "Mapper", "{C0037D83-76E3-447C-8793-02EB06445964}"
 EndProject
@@ -81,11 +81,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timer", "Timer", "{8F850B0A-FC5A-46A7-B806-ACB47BCD1F56}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CP.Common.TimerModule", "CP.Common.TimerModule\CP.Common.TimerModule.csproj", "{BA229C65-80E2-4FB5-9400-478208B2B975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.TimerModule", "CP.Common.TimerModule\Fate.Infrastructure.TimerModule.csproj", "{BA229C65-80E2-4FB5-9400-478208B2B975}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Common.OcelotStore.RedisProvider", "Fate.Common.OcelotStore.RedisProvider\Fate.Common.OcelotStore.RedisProvider.csproj", "{6B777871-0823-467A-BE8F-640CCEE74538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.OcelotStore.RedisProvider", "Fate.Infrastructure.OcelotStore.RedisProvider\Fate.Infrastructure.OcelotStore.RedisProvider.csproj", "{6B777871-0823-467A-BE8F-640CCEE74538}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.VirtualFile", "Fate.Infrastructure.VirtualFile\Fate.Infrastructure.VirtualFile.csproj", "{0268D785-03DA-4806-A2EF-C08DAB316EAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.VirtualFile", "Fate.Infrastructure.VirtualFile\Fate.Infrastructure.VirtualFile.csproj", "{0268D785-03DA-4806-A2EF-C08DAB316EAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VirtualFile", "VirtualFile", "{03043560-B482-4939-A5C4-99F38D15B7FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -247,7 +249,8 @@ Global
 		{8F850B0A-FC5A-46A7-B806-ACB47BCD1F56} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 		{BA229C65-80E2-4FB5-9400-478208B2B975} = {8F850B0A-FC5A-46A7-B806-ACB47BCD1F56}
 		{6B777871-0823-467A-BE8F-640CCEE74538} = {56D65EED-2397-414D-9E00-C9FD72D1834E}
-		{0268D785-03DA-4806-A2EF-C08DAB316EAB} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
+		{0268D785-03DA-4806-A2EF-C08DAB316EAB} = {03043560-B482-4939-A5C4-99F38D15B7FF}
+		{03043560-B482-4939-A5C4-99F38D15B7FF} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}

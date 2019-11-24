@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Fate.Common.NPOI;
+using Fate.Infrastructure.NPOI;
 using System.IO;
 
 namespace Fate.XUnitTest

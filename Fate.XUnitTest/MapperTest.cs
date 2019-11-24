@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using Fate.Common.Mapper;
+using Fate.Infrastructure.Mapper;
 using Xunit;
 
-using Fate.Common.Mapper.Attributes;
+using Fate.Infrastructure.Mapper.Attributes;
 using AutoMapper;
 
 namespace Fate.XUnitTest

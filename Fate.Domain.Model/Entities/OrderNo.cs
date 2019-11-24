@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Fate.Common.Base.Model;
+using Fate.Infrastructure.Base.Model;
 namespace Fate.Domain.Model.Entities
 {
     /// <summary>

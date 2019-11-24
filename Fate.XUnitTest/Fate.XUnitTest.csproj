@@ -16,15 +16,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fate.Application\Fate.Application.csproj" />
-    <ProjectReference Include="..\Fate.Commom.Consul\Fate.Commom.Consul.csproj" />
-    <ProjectReference Include="..\Fate.Common.CAP.Subscribe\Fate.Common.CAP.Subscribe.csproj" />
-    <ProjectReference Include="..\Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj" />
-    <ProjectReference Include="..\Fate.Common.Mapper\Fate.Common.Mapper.csproj" />
-    <ProjectReference Include="..\Fate.Common.OcelotStore.EFCore\Fate.Common.OcelotStore.EFCore.csproj" />
-    <ProjectReference Include="..\Fate.Common.OcelotStore.Redis\Fate.Common.OcelotStore.Redis.csproj" />
-    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
-    <ProjectReference Include="..\Fate.Common.Repository\Fate.Common.Repository.csproj" />
-    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Consul\Fate.Infrastructure.Consul.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.AutofacDependencyInjection\Fate.Infrastructure.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.CAP.Subscribe\Fate.Infrastructure.CAP.Subscribe.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Mapper\Fate.Infrastructure.Mapper.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.EFCore\Fate.Infrastructure.OcelotStore.EFCore.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.Redis\Fate.Infrastructure.OcelotStore.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Repository\Fate.Infrastructure.Repository.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure\Fate.Infrastructure.csproj" />
     <ProjectReference Include="..\Fate.Domain.Event\Fate.Domain.Event.csproj" />
     <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
     <ProjectReference Include="..\Fate.Domain\Fate.Domain.csproj" />

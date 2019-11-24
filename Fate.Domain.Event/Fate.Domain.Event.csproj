@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj" />
-    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.AutofacDependencyInjection\Fate.Infrastructure.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
   </ItemGroup>
 
 </Project>

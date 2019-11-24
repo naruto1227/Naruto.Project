@@ -25,14 +25,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fate.Application\Fate.Application.csproj" />
-    <ProjectReference Include="..\Fate.Commom.Consul\Fate.Commom.Consul.csproj" />
-    <ProjectReference Include="..\Fate.Common.CAP.Subscribe\Fate.Common.CAP.Subscribe.csproj" />
-    <ProjectReference Include="..\Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj" />
-    <ProjectReference Include="..\Fate.Common.Configuration.Management\Fate.Common.Configuration.Management.csproj" />
-    <ProjectReference Include="..\Fate.Common.Configuration\Fate.Common.Configuration.csproj" />
-    <ProjectReference Include="..\Fate.Common.OcelotStore.Redis\Fate.Common.OcelotStore.Redis.csproj" />
-    <ProjectReference Include="..\Fate.Common.Redis\Fate.Common.Redis.csproj" />
-    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Consul\Fate.Infrastructure.Consul.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.AutofacDependencyInjection\Fate.Infrastructure.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.CAP.Subscribe\Fate.Infrastructure.CAP.Subscribe.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Configuration.Management\Fate.Infrastructure.Configuration.Management.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Configuration\Fate.Infrastructure.Configuration.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.Redis\Fate.Infrastructure.OcelotStore.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure\Fate.Infrastructure.csproj" />
     <ProjectReference Include="..\Fate.Domain.Event\Fate.Domain.Event.csproj" />
     <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
     <ProjectReference Include="..\Fate.Domain\Fate.Domain.csproj" />

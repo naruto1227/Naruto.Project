@@ -3,10 +3,10 @@ using Xunit;
 using System.Collections.Generic;
 using Fate.Domain.Model.Entities;
 using System.Diagnostics;
-using Fate.Common.AutofacDependencyInjection;
-using Fate.Common.Repository;
+using Fate.Infrastructure.AutofacDependencyInjection;
+using Fate.Infrastructure.Repository;
 using System.Data;
-using Fate.Common.NPOI;
+using Fate.Infrastructure.NPOI;
 using System.IO;
 using System.Linq;
 

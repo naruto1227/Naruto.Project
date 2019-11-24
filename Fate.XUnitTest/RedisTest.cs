@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Fate.Common.Redis;
-using Fate.Common.Redis.IRedisManage;
+using Fate.Infrastructure.Redis;
+using Fate.Infrastructure.Redis.IRedisManage;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using Fate.Domain.Model.Entities;
@@ -24,7 +24,7 @@ namespace Fate.XUnitTest
             services.AddRedisRepository(options =>
             {
                 options.Connection = "127.0.0.1:6379";
-                options.RedisPrefix = new Common.Redis.RedisConfig.RedisPrefixKey();
+                options.RedisPrefix = new Fate.Infrastructure.Redis.RedisConfig.RedisPrefixKey();
             });
             redis = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
         }

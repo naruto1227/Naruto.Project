@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using IdentityModel.Client;
 using Fate.IdentityServer4.Model;
 using System.Net.Http;
-using Fate.Common.Extensions;
-using Fate.Common.Enum;
-using Fate.Common.Infrastructure;
+using Fate.Infrastructure.Extensions;
+using Fate.Infrastructure.Enum;
+using Fate.Infrastructure.Infrastructure;
 
 namespace Fate.IdentityServer4.Controllers
 {

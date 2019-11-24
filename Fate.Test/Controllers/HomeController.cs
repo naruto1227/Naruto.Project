@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Fate.Domain.Interface;
 using Fate.Application.Interface;
-using Fate.Common.Repository.UnitOfWork;
-using Fate.Common.Redis.IRedisManage;
+using Fate.Infrastructure.Repository.UnitOfWork;
+using Fate.Infrastructure.Redis.IRedisManage;
 using Microsoft.AspNetCore.Authorization;
 using Fate.Domain.Model.Entities;
-using Fate.Common.AutofacDependencyInjection;
-using Fate.Common.Infrastructure;
-using Fate.Common.Repository;
+using Fate.Infrastructure.AutofacDependencyInjection;
+using Fate.Infrastructure.Infrastructure;
+using Fate.Infrastructure.Repository;
 using StackExchange.Redis;
 using Fate.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Fate.Domain.Model;
-using Fate.Common.Email;
-using Fate.Common.Interface;
+using Fate.Infrastructure.Email;
+using Fate.Infrastructure.Interface;
 
 namespace Fate.Test.Controllers
 {
@@ -50,7 +50,7 @@ namespace Fate.Test.Controllers
             redis.StringSet("zhang", "haibo");
             await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
             jsonResult.msg = "helloword";
-            //throw new Fate.Common.Exceptions.NoAuthorizationException("111111111111111");
+            //throw new Fate.Infrastructure.Exceptions.NoAuthorizationException("111111111111111");
         }
 
         [HttpGet]
@@ -173,7 +173,7 @@ namespace Fate.Test.Controllers
         public void testlog()
         {
 
-            var log = AutofacDI.Resolve<Fate.Common.NLog.NLogHelper>();
+            var log = AutofacDI.Resolve<Fate.Infrastructure.NLog.NLogHelper>();
             log.Info("1");
         }
 

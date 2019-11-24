@@ -5,7 +5,7 @@
 //using System.Linq;
 //using System.Xml.Linq;
 //using System.Collections.Concurrent;
-//using Fate.Common.AutofacDependencyInjection;
+//using Fate.Infrastructure.AutofacDependencyInjection;
 //using System.Reflection;
 
 //namespace Fate.Domain.Event.Infrastructure

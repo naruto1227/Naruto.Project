@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.AutofacDependencyInjection;
-using Fate.Common.Redis.IRedisManage;
-using Fate.Common.Redis.RedisConfig;
+using Fate.Infrastructure.AutofacDependencyInjection;
+using Fate.Infrastructure.Redis.IRedisManage;
+using Fate.Infrastructure.Redis.RedisConfig;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using System.Reflection;
@@ -143,9 +143,9 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         /// <returns></returns>
         public async Task ClearAllEvent()
         {
-            if (await redis.KeyExistsAsync(RedisEventHashKey,Common.Redis.KeyOperatorEnum.Hash))
+            if (await redis.KeyExistsAsync(RedisEventHashKey, Fate.Infrastructure.Redis.KeyOperatorEnum.Hash))
             {
-                await redis.KeyRemoveAsync(RedisEventHashKey, Common.Redis.KeyOperatorEnum.Hash);
+                await redis.KeyRemoveAsync(RedisEventHashKey, Fate.Infrastructure.Redis.KeyOperatorEnum.Hash);
             }
         }
 

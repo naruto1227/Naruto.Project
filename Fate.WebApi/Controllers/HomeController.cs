@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Fate.Common.Repository;
+using Fate.Infrastructure.Repository;
 using Fate.Application.Interface;
-using Fate.Common.Repository.UnitOfWork;
+using Fate.Infrastructure.Repository.UnitOfWork;
 using Fate.Application.Services;
 
 namespace Fate.WebApi.Controllers

@@ -22,8 +22,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fate.Application\Fate.Application.csproj" />
-    <ProjectReference Include="..\Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj" />
-    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.AutofacDependencyInjection\Fate.Infrastructure.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure\Fate.Infrastructure.csproj" />
     <ProjectReference Include="..\Fate.Domain.Model\Fate.Domain.Model.csproj" />
   </ItemGroup>
 

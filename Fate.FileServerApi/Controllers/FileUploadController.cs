@@ -4,18 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Fate.Common.Infrastructure;
-using Fate.Common.Config;
-using Fate.Common.Enum;
+using Fate.Infrastructure.Infrastructure;
+using Fate.Infrastructure.Config;
+using Fate.Infrastructure.Enum;
 using System.IO;
-using Fate.Common.FileOperation;
-using Fate.Common.Extensions;
+using Fate.Infrastructure.FileOperation;
+using Fate.Infrastructure.Extensions;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Diagnostics;
-using Fate.Common.Exceptions;
+using Fate.Infrastructure.Exceptions;
 using Microsoft.Extensions.Options;
-using Fate.Common.Options;
-using Fate.Common.Interface;
+using Fate.Infrastructure.Options;
+using Fate.Infrastructure.Interface;
 
 namespace Fate.FileServerApi.Controllers
 {
@@ -94,7 +94,7 @@ namespace Fate.FileServerApi.Controllers
             //获取需要删除的文件
             string files = Request.Form["files"];
             if (files == null)
-                throw new Common.Exceptions.MyExceptions("请填写文件的路径");
+                throw new MyExceptions("请填写文件的路径");
             //获取需要删除的文件信息
             var fileArray = files.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             await _file.DeleteFileAsync(fileArray);

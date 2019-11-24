@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
-using Fate.Commom.Consul;
+using Fate.Infrastructure.Consul;
 using System.Net;
 using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading;
 using System.Diagnostics;
-using Fate.Common.Repository;
-using Fate.Common.Repository.UnitOfWork;
+using Fate.Infrastructure.Repository;
+using Fate.Infrastructure.Repository.UnitOfWork;
 
 using Microsoft.EntityFrameworkCore;
 using Fate.Domain.Model;
 using Fate.Domain.Model.Entities;
 using System.Threading.Tasks;
-using Fate.Common.Repository.Interceptor;
+using Fate.Infrastructure.Repository.Interceptor;
 using MySql.Data.MySqlClient;
 
 namespace Fate.XUnitTest

@@ -13,20 +13,20 @@ using Autofac;
 
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Fate.Common.Repository.UnitOfWork;
-using Fate.Common.Infrastructure;
+using Fate.Infrastructure.Repository.UnitOfWork;
+using Fate.Infrastructure.Infrastructure;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using System.Text;
-using Fate.Common.Middleware;
-using Fate.Common.Repository;
+using Fate.Infrastructure.Middleware;
+using Fate.Infrastructure.Repository;
 using Fate.Domain.Model.Entities;
-using Fate.Common.Redis;
-using Fate.Common.BaseRibbitMQ;
-using Fate.Common.Repository.Object;
-using Fate.Common.Extensions;
-using Fate.Common.Options;
-using Fate.Common.Repository.Interceptor;
+using Fate.Infrastructure.Redis;
+using Fate.Infrastructure.BaseRibbitMQ;
+using Fate.Infrastructure.Repository.Object;
+using Fate.Infrastructure.Extensions;
+using Fate.Infrastructure.Options;
+using Fate.Infrastructure.Repository.Interceptor;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -34,17 +34,17 @@ using System.IO.Compression;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Fate.Domain.Model;
-using Fate.Commom.Consul;
-using Fate.Commom.Consul.ServiceRegister;
-using Fate.Commom.Consul.ServiceDiscovery;
-using Fate.Commom.Consul.KVRepository;
+using Fate.Infrastructure.Consul;
+using Fate.Infrastructure.Consul.ServiceRegister;
+using Fate.Infrastructure.Consul.ServiceDiscovery;
+using Fate.Infrastructure.Consul.KVRepository;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using System.Reflection;
-using Fate.Common.Configuration.Management.Dashboard;
-using Fate.Common.Configuration.Management.DB;
-using Fate.Common.Configuration.Management;
-using Fate.Common.Redis.IRedisManage;
+using Fate.Infrastructure.Configuration.Management.Dashboard;
+using Fate.Infrastructure.Configuration.Management.DB;
+using Fate.Infrastructure.Configuration.Management;
+using Fate.Infrastructure.Redis.IRedisManage;
 
 namespace Fate.Test
 {
@@ -98,7 +98,7 @@ namespace Fate.Test
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
-                option.Filters.Add(typeof(Fate.Common.Filters.TokenAuthorizationAttribute));
+                option.Filters.Add(typeof(Fate.Infrastructure.Filters.TokenAuthorizationAttribute));
             })
                            .AddConfigurationManagement(options =>
                            {
@@ -135,7 +135,7 @@ namespace Fate.Test
 
             services.Configure<TestOption>(Configuration.GetSection("test"));
             //替换自带的di 转换为autofac 注入程序集
-            ApplicationContainer = Fate.Common.AutofacDependencyInjection.AutofacDI.ConvertToAutofac(services);
+            ApplicationContainer = Fate.Infrastructure.AutofacDependencyInjection.AutofacDI.ConvertToAutofac(services);
             return new AutofacServiceProvider(ApplicationContainer);
         }
         /// <summary>

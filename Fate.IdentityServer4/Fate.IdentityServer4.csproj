@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Common\Fate.Common.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure\Fate.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

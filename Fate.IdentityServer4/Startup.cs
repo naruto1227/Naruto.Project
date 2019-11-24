@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Fate.IdentityServer4.Model;
-using Fate.Common.Infrastructure;
+using Fate.Infrastructure.Infrastructure;
 
 namespace Fate.IdentityServer4
 {

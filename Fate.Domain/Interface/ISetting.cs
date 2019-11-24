@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Fate.Common.Base.Model;
+using Fate.Infrastructure.Base.Model;
 using Fate.Domain.Model;
 namespace Fate.Domain.Interface
 {

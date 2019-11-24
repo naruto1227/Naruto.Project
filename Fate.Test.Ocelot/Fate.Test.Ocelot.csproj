@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Common.AutofacDependencyInjection\Fate.Common.AutofacDependencyInjection.csproj" />
-    <ProjectReference Include="..\Fate.Common.OcelotStore.EFCore\Fate.Common.OcelotStore.EFCore.csproj" />
-    <ProjectReference Include="..\Fate.Common.OcelotStore.RedisProvider\Fate.Common.OcelotStore.RedisProvider.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.AutofacDependencyInjection\Fate.Infrastructure.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.EFCore\Fate.Infrastructure.OcelotStore.EFCore.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.RedisProvider\Fate.Infrastructure.OcelotStore.RedisProvider.csproj" />
   </ItemGroup>
 
 </Project>

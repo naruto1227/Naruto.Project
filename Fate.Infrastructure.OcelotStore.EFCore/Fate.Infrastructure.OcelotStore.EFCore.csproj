@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ocelot" Version="13.5.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Repository\Fate.Infrastructure.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

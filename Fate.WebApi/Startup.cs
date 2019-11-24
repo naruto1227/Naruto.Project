@@ -12,15 +12,15 @@ using Microsoft.Extensions.Options;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Fate.Common.Repository.UnitOfWork;
-using Fate.Common.Infrastructure;
+using Fate.Infrastructure.Repository.UnitOfWork;
+using Fate.Infrastructure.Infrastructure;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using System.Text;
-using Fate.Common.Middleware;
-using Fate.Common.Repository;
+using Fate.Infrastructure.Middleware;
+using Fate.Infrastructure.Repository;
 using Fate.Domain.Model;
-using Fate.Common.AutofacDependencyInjection;
+using Fate.Infrastructure.AutofacDependencyInjection;
 
 namespace Fate.WebApi
 {
@@ -43,7 +43,7 @@ namespace Fate.WebApi
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {
-                option.Filters.Add(typeof(Fate.Common.Filters.TokenAuthorizationAttribute));
+                option.Filters.Add(typeof(Fate.Infrastructure.Filters.TokenAuthorizationAttribute));
             }).AddAuthorization().AddJsonFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //注入api授权服务
             services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
