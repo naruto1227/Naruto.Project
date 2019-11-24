@@ -89,24 +89,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //{
             //    services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
             //}
-            VirtualFileResoureInfos.Add(new List<ResoureInfo>()
-            {
-                new ResoureInfo(){
-                    MimeType="text/heml",
-                  DirectoryName="pages",
-                  Names=new string[]{
-                      "index.html"
-                  }
-                },
-                new ResoureInfo()
-            {
-                DirectoryName = "js/test",
-                Names = new string[] {
-                    "jsconfig1.json"
-                },
-                MimeType="text/json"
-            }
-        });
+            SetResoure();
             services.AddVirtualFileServices(options =>
             {
                 options.ResouresAssembly = typeof(ServiceCollectionExtensions).Assembly;
@@ -114,6 +97,120 @@ namespace Microsoft.Extensions.DependencyInjection
 
             });
             return services;
+        }
+
+        private static void SetResoure()
+        {
+            VirtualFileResoureInfos.Add(new List<ResoureInfo>()
+            {
+                new ResoureInfo(){
+                    MimeType="text/html",
+                  DirectoryName="pages",
+                  Names=new string[]{
+                       "index.html",
+                        "configuration.html",
+                        "configuration-add.html",
+                        "configuration-edit.html",
+                        "console.html",
+                        "group.html",
+                        "group-add.html",
+                        "group-edit.html",
+                  }
+                },
+                new ResoureInfo()
+            {
+                DirectoryName = "js",
+                Names = new string[] {
+                    "carousel",
+             "code.js",
+             "colorpicker.js",
+             "console.js",
+             "element.js",
+             "flow.js",
+             "form.js",
+             "jquery.js",
+             "laydate.js",
+             "layedit.js",
+             "layer.js",
+             "laypage.js",
+             "laytpl.js",
+             "layui.all.js",
+             "layui.js",
+             "mobile.js",
+             "okadmin.js",
+             "okBarcode.js",
+             "okContextMenu.js",
+             "okCookie.js",
+             "okGVerify.js",
+             "okLayer.js",
+             "okLoading.js",
+             "okMd5.js",
+             "okMock.js",
+             "okNprogress.js",
+             "okSweetAlert2.js",
+             "okTab.js",
+             "okToastr.js",
+             "okUtils.js",
+             "rate.js",
+             "slider.js",
+             "table.js",
+             "transfer.js",
+             "tree.js",
+             "upload.js",
+             "util.js"
+                },
+                MimeType="application/x-javascript"
+            },
+                  new ResoureInfo()
+            {
+                DirectoryName = "css",
+                Names = new string[] {
+                       "code.css",
+            "common.css",
+            "index.css",
+            "jquery.contextMenu.css",
+            "laydate.css",
+            "layer.css",
+            "layui.css",
+            "layui.mobile.css",
+            "nprogress.css",
+            "okadmin.animate.css",
+            "okadmin.css",
+            "okadmin.theme.css",
+            "okLoading.css",
+            "oksub.css",
+            "toastr.min.css",
+                },
+                MimeType="text/css"
+            },
+             new ResoureInfo()
+            {
+                DirectoryName = "json",
+                Names = new string[] {
+                     "navs.json",
+                },
+                MimeType="text/json"
+            },
+              new ResoureInfo()
+            {
+                DirectoryName = "images/png",
+                Names = new string[] {
+                    "icon.png",
+                    "icon-ext.png"
+                },
+                MimeType="image/png"
+            },
+                new ResoureInfo()
+            {
+                DirectoryName = "images/gif",
+                Names = new string[] {
+                     "loading-0.gif",
+                    "loading-1.gif",
+                    "loading-2.gif"
+                },
+                MimeType="image/gif"
+            }
+        });
         }
     }
 }
