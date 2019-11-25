@@ -1,12 +1,11 @@
 /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
 
 var objOkTab = "";
-layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "okHoliday"], function () {
+layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu"], function () {
   var okUtils = layui.okUtils;
   var $ = layui.jquery;
   var layer = layui.layer;
   var okLayer = layui.okLayer;
-	var okHoliday = layui.okHoliday;
 
   var okTab = layui.okTab({
     // 菜单请求路径
@@ -235,7 +234,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
   function noticeFun() {
     var srcWidth = okUtils.getBodyWidth();
     layer.open({
-      type: 0, title: "系统公告", btn: "我知道啦", btnAlign: 'c', content: okHoliday.getContent(),
+      type: 0, title: "系统公告", btn: "我知道啦", btnAlign: 'c', content:'公告',
       yes: function (index) {
         if (srcWidth > 800) {
           layer.tips('公告跑到这里去啦', '#notice', {

@@ -27,10 +27,8 @@ if (!Object.assign) {
     "use strict";
     var okmodules = {
         "okTab": "/fate/js/okTab",
-        "okCountUp": "/fate/js/okCountUp",
         "okUtils": "/fate/js/okUtils",
         "okGVerify": "/fate/js/okGVerify",
-        "qrcode": "/fate/js/qrcode",
         "okQrcode": "/fate/js/okQrcode",
         "okAddlink": "/fate/js/okAddlink",
         "okLayer": "/fate/js/okLayer",
@@ -42,7 +40,6 @@ if (!Object.assign) {
         "okBarcode": "/fate/js/okBarcode",
         "okNprogress": "/fate/js/okNprogress",
         "okSweetAlert2": "/fate/js/okSweetAlert2",
-        "okHoliday": "/fate/js/okHoliday",
     };
     var modulePath = Object.assign({
         layer: "/fate/js/layer",

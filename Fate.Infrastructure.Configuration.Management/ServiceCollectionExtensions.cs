@@ -103,7 +103,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             VirtualFileResoureInfos.Add(new List<ResoureInfo>()
             {
-                new ResoureInfo(){
+                  new ResoureInfo(){
                     MimeType="text/html",
                   DirectoryName="pages",
                   Names=new string[]{
@@ -117,47 +117,46 @@ namespace Microsoft.Extensions.DependencyInjection
                         "group-edit.html",
                   }
                 },
-                new ResoureInfo()
+                  new ResoureInfo()
             {
                 DirectoryName = "js",
                 Names = new string[] {
                     "carousel",
-             "code.js",
-             "colorpicker.js",
-             "console.js",
-             "element.js",
-             "flow.js",
-             "form.js",
-             "jquery.js",
-             "laydate.js",
-             "layedit.js",
-             "layer.js",
-             "laypage.js",
-             "laytpl.js",
-             "layui.all.js",
-             "layui.js",
-             "mobile.js",
-             "okadmin.js",
-             "okBarcode.js",
-             "okContextMenu.js",
-             "okCookie.js",
-             "okGVerify.js",
-             "okLayer.js",
-             "okLoading.js",
-             "okMd5.js",
-             "okMock.js",
-             "okNprogress.js",
-             "okSweetAlert2.js",
-             "okTab.js",
-             "okToastr.js",
-             "okUtils.js",
-             "rate.js",
-             "slider.js",
-             "table.js",
-             "transfer.js",
-             "tree.js",
-             "upload.js",
-             "util.js"
+                     "code.js",
+                     "colorpicker.js",
+                     "element.js",
+                     "flow.js",
+                     "form.js",
+                     "jquery.js",
+                     "laydate.js",
+                     "layedit.js",
+                     "layer.js",
+                     "laypage.js",
+                     "laytpl.js",
+                     "layui.all.js",
+                     "layui.js",
+                     "mobile.js",
+                     "okadmin.js",
+                     "okBarcode.js",
+                     "okContextMenu.js",
+                     "okCookie.js",
+                     "okGVerify.js",
+                     "okLayer.js",
+                     "okLoading.js",
+                     "okMd5.js",
+                     "okMock.js",
+                     "okNprogress.js",
+                     "okSweetAlert2.js",
+                     "okTab.js",
+                     "okToastr.js",
+                     "okUtils.js",
+                     "rate.js",
+                     "slider.js",
+                     "table.js",
+                     "transfer.js",
+                     "tree.js",
+                     "upload.js",
+                     "util.js"
                 },
                 MimeType="application/x-javascript"
             },
@@ -165,25 +164,76 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 DirectoryName = "css",
                 Names = new string[] {
-                       "code.css",
-            "common.css",
-            "index.css",
-            "jquery.contextMenu.css",
-            "laydate.css",
-            "layer.css",
-            "layui.css",
-            "layui.mobile.css",
-            "nprogress.css",
-            "okadmin.animate.css",
-            "okadmin.css",
-            "okadmin.theme.css",
-            "okLoading.css",
-            "oksub.css",
-            "toastr.min.css",
+                "code.css",
+                "common.css",
+                "index.css",
+                "jquery.contextMenu.css",
+                "laydate.css",
+                "layer.css",
+                "layui.css",
+                "layui.mobile.css",
+                "nprogress.css",
+                "okadmin.animate.css",
+                "okadmin.css",
+                "okadmin.theme.css",
+                "okLoading.css",
+                "oksub.css",
+                "iconfont.css",
+                "toastr.min.css",
                 },
                 MimeType="text/css"
             },
-             new ResoureInfo()
+                  new ResoureInfo()
+                {
+                    DirectoryName = "js/css",
+                    Names = new string[] {
+                        "icon.png",
+                        },
+                    MimeType="image/png"
+                },
+                  new ResoureInfo()
+                {
+                    DirectoryName = "js/css",
+                    Names = new string[] {
+                        "loading-1.gif",
+                        "loading-0.gif"
+                        },
+                    MimeType="image/gif"
+                },
+                  new ResoureInfo()
+                {
+                    DirectoryName = "js/css",
+                    Names = new string[] {
+                        "laydate.css",
+                         "layer.css",
+                        },
+                    MimeType="text/css"
+                },
+                  new ResoureInfo()
+            {
+                DirectoryName = "font",
+                Names = new string[] {
+                    "iconfont.ttf",
+                    },
+                MimeType="application/octet-stream"
+            },
+                  new ResoureInfo()
+            {
+                DirectoryName = "font",
+                Names = new string[] {
+                    "iconfont.woff",
+                    },
+                MimeType="font/x-woff"
+            },
+                  new ResoureInfo()
+            {
+                DirectoryName = "font",
+                Names = new string[] {
+                    "iconfont.woff2",
+                    },
+                MimeType="application/font-woff2"
+            },
+                  new ResoureInfo()
             {
                 DirectoryName = "json",
                 Names = new string[] {
@@ -191,25 +241,24 @@ namespace Microsoft.Extensions.DependencyInjection
                 },
                 MimeType="text/json"
             },
-              new ResoureInfo()
+                  new ResoureInfo()
             {
                 DirectoryName = "images/png",
                 Names = new string[] {
-                    "icon.png",
-                    "icon-ext.png"
+
+                    "icon-ext.png",
+                    "avatar.png"
                 },
                 MimeType="image/png"
             },
-                new ResoureInfo()
-            {
-                DirectoryName = "images/gif",
-                Names = new string[] {
-                     "loading-0.gif",
-                    "loading-1.gif",
-                    "loading-2.gif"
-                },
-                MimeType="image/gif"
-            }
+                  new ResoureInfo()
+                    {
+                        DirectoryName = "images/gif",
+                        Names = new string[] {
+                            "loading-2.gif"
+                        },
+                        MimeType="image/gif"
+                    }
         });
         }
     }

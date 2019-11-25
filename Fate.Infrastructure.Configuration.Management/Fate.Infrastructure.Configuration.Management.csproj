@@ -16,13 +16,10 @@
     <ProjectReference Include="..\Fate.Infrastructure.Repository\Fate.Infrastructure.Repository.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.VirtualFile\Fate.Infrastructure.VirtualFile.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dashboard\Content\css\" />
-  </ItemGroup>
   <ItemGroup>
     <None Remove="Dashboard\Content\css\code.css" />
     <None Remove="Dashboard\Content\css\common.css" />
+    <None Remove="Dashboard\Content\css\iconfont.css" />
     <None Remove="Dashboard\Content\css\index.css" />
     <None Remove="Dashboard\Content\css\jquery.contextMenu.css" />
     <None Remove="Dashboard\Content\css\laydate.css" />
@@ -36,16 +33,18 @@
     <None Remove="Dashboard\Content\css\okLoading.css" />
     <None Remove="Dashboard\Content\css\oksub.css" />
     <None Remove="Dashboard\Content\css\toastr.min.css" />
+    <None Remove="Dashboard\Content\font\iconfont.woff" />
+    <None Remove="Dashboard\Content\font\iconfont.woff2" />
     <None Remove="Dashboard\Content\images\gif\loading-0.gif" />
     <None Remove="Dashboard\Content\images\gif\loading-1.gif" />
     <None Remove="Dashboard\Content\images\gif\loading-2.gif" />
+    <None Remove="Dashboard\Content\images\png\avatar.png" />
     <None Remove="Dashboard\Content\images\png\icon-ext.png" />
     <None Remove="Dashboard\Content\images\png\icon.png" />
     <None Remove="Dashboard\Content\json\navs.json" />
     <None Remove="Dashboard\Content\js\carousel.js" />
     <None Remove="Dashboard\Content\js\code.js" />
     <None Remove="Dashboard\Content\js\colorpicker.js" />
-    <None Remove="Dashboard\Content\js\console.js" />
     <None Remove="Dashboard\Content\js\element.js" />
     <None Remove="Dashboard\Content\js\flow.js" />
     <None Remove="Dashboard\Content\js\form.js" />
@@ -93,10 +92,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Dashboard\Content\css\code.css" />
     <EmbeddedResource Include="Dashboard\Content\css\common.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\iconfont.css" />
     <EmbeddedResource Include="Dashboard\Content\css\index.css" />
     <EmbeddedResource Include="Dashboard\Content\css\jquery.contextMenu.css" />
-    <EmbeddedResource Include="Dashboard\Content\css\laydate.css" />
-    <EmbeddedResource Include="Dashboard\Content\css\layer.css" />
+    <EmbeddedResource Include="Dashboard\Content\font\iconfont.woff" />
+    <EmbeddedResource Include="Dashboard\Content\font\iconfont.woff2" />
+    <EmbeddedResource Include="Dashboard\Content\images\png\avatar.png" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\laydate.css" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\layer.css" />
     <EmbeddedResource Include="Dashboard\Content\css\layui.css" />
     <EmbeddedResource Include="Dashboard\Content\css\layui.mobile.css" />
     <EmbeddedResource Include="Dashboard\Content\css\nprogress.css" />
@@ -105,16 +108,15 @@
     <EmbeddedResource Include="Dashboard\Content\css\okLoading.css" />
     <EmbeddedResource Include="Dashboard\Content\css\oksub.css" />
     <EmbeddedResource Include="Dashboard\Content\css\toastr.min.css" />
-    <EmbeddedResource Include="Dashboard\Content\images\gif\loading-0.gif" />
-    <EmbeddedResource Include="Dashboard\Content\images\gif\loading-1.gif" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\loading-0.gif" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\loading-1.gif" />
     <EmbeddedResource Include="Dashboard\Content\images\gif\loading-2.gif" />
     <EmbeddedResource Include="Dashboard\Content\images\png\icon-ext.png" />
-    <EmbeddedResource Include="Dashboard\Content\images\png\icon.png" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\icon.png" />
     <EmbeddedResource Include="Dashboard\Content\json\navs.json" />
     <EmbeddedResource Include="Dashboard\Content\js\carousel.js" />
     <EmbeddedResource Include="Dashboard\Content\js\code.js" />
     <EmbeddedResource Include="Dashboard\Content\js\colorpicker.js" />
-    <EmbeddedResource Include="Dashboard\Content\js\console.js" />
     <EmbeddedResource Include="Dashboard\Content\js\element.js" />
     <EmbeddedResource Include="Dashboard\Content\js\flow.js" />
     <EmbeddedResource Include="Dashboard\Content\js\form.js" />
