@@ -139,6 +139,12 @@ namespace Fate.Infrastructure.Repository.Base
                     command.Parameters.Add(item);
                 }
             }
+            //设置超时时间
+            if (repository.Database.GetCommandTimeout() != null)
+            {
+                int.TryParse(repository.Database.GetCommandTimeout()?.ToString(), out var commandTimeout);
+                command.CommandTimeout = commandTimeout;
+            }
             return command;
         }
 

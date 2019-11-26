@@ -128,6 +128,12 @@ namespace Fate.Infrastructure.Repository.Base
                 //绑定事务
                 command.Transaction = repository.Database.CurrentTransaction.GetDbTransaction();
             }
+            //设置超时时间
+            if (repository.Database.GetCommandTimeout() != null)
+            {
+                int.TryParse(repository.Database.GetCommandTimeout()?.ToString(), out var commandTimeout);
+                command.CommandTimeout = commandTimeout;
+            }
             return command;
         }
 
