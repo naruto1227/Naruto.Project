@@ -11,10 +11,11 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard
     /// </summary>
     public class DashboardResult
     {
+        public int code = 0;
         /// <summary>
         /// 返回的数据
         /// </summary>
-        public object rows { get; set; }
+        public object data { get; set; }
         /// <summary>
         /// 消息
         /// </summary>
@@ -27,6 +28,6 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard
         /// <summary>
         /// 总数
         /// </summary>
-        public int total { get; set; }
+        public int count { get; set; }
     }
 }

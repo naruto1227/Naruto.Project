@@ -62,8 +62,8 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
                 .WhereIf(info.EnvironmentType >= 0, a => a.EnvironmentType == info.EnvironmentType).AsNoTracking();
             var result = new DashboardResult();
             result.msg = "查询成功";
-            result.total = await configurationEndpoint.CountAsync();
-            result.rows = await configurationEndpoint.PageBy(info.Page, info.Limit).ToListAsync();
+            result.count = await configurationEndpoint.CountAsync();
+            result.data = await configurationEndpoint.PageBy(info.Page, info.Limit).ToListAsync();
             return result;
         }
         /// <summary>
