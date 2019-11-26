@@ -368,7 +368,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <summary>
         /// 获取字符串
         /// </summary>
-        Task<RedisValue> StringGetAsync(string key);
+        Task<string> StringGetAsync(string key);
         /// <summary>
         /// 获取对象
         /// </summary>

@@ -440,7 +440,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 获取字符串
         /// </summary>
-        public async Task<RedisValue> StringGetAsync(string key)
+        public async Task<string> StringGetAsync(string key)
         {
             return await redisBase.DoSave(db => db.StringGetAsync(StringSysCustomKey + key));
         }
