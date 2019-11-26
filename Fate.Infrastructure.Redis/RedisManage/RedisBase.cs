@@ -74,14 +74,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="val"></param>
         /// <returns></returns>
-        public T ConvertObj<T>(RedisValue val)
+        public T ConvertObj<T>(string val)
         {
-            if (val.ToString() == null)
+            if (val== null)
                 return default;
             return JsonConvert.DeserializeObject<T>(val);
         }
 
-        public List<T> ConvertList<T>(RedisValue[] val)
+        public List<T> ConvertList<T>(string[] val)
         {
             if (val == null)
                 return default;

@@ -44,7 +44,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="val"></param>
         /// <returns></returns>
-        T ConvertObj<T>(RedisValue val);
+        T ConvertObj<T>(string val);
 
         /// <summary>
         /// 
@@ -52,7 +52,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="val"></param>
         /// <returns></returns>
-        List<T> ConvertList<T>(RedisValue[] val);
+        List<T> ConvertList<T>(string[] val);
 
         /// <summary>
         /// 
