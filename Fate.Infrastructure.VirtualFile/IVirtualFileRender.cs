@@ -10,7 +10,7 @@ namespace Fate.Infrastructure.VirtualFile
     /// <summary>
     /// 张海波
     /// 2019-10-27
-    /// 面板的资源的渲染
+    /// 资源的渲染
     /// </summary>
     public interface IVirtualFileRender
     {

@@ -14,7 +14,7 @@ namespace Fate.Infrastructure.VirtualFile
     /// <summary>
     /// 张海波
     /// 2019-10-27
-    /// 面板的中间件
+    /// 资源处理的中间件
     /// </summary>
     public class VirtualFileMiddleware
     {
