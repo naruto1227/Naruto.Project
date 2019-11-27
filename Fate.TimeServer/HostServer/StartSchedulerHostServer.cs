@@ -17,7 +17,7 @@ namespace Fate.TimeServer
         /// <summary>
         /// 应用程序的生命周期
         /// </summary>
-        private IApplicationLifetime applicationLifetime;
+        private IHostApplicationLifetime applicationLifetime;
         /// <summary>
         /// 日志
         /// </summary>
@@ -27,7 +27,7 @@ namespace Fate.TimeServer
         /// 获取服务
         /// </summary>
         /// <param name="_applicationLifetime"></param>
-        public StartSchedulerHostServer(IApplicationLifetime _applicationLifetime, ILogger<StartSchedulerHostServer> _logger, LogScheduler _logScheduler)
+        public StartSchedulerHostServer(IHostApplicationLifetime _applicationLifetime, ILogger<StartSchedulerHostServer> _logger, LogScheduler _logScheduler)
         {
             applicationLifetime = _applicationLifetime;
             logger = _logger;

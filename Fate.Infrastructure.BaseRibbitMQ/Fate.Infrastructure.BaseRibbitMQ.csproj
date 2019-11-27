@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <Description>RabbitMQ的基类层(如需实现分布式事务和发布订阅需继承此类库)</Description>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetCore.CAP" Version="2.5.1" />
-    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.5.1" />
-    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="2.5.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+    <PackageReference Include="DotNetCore.CAP" Version="2.6.0" />
+    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.6.0" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="2.6.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.1" />
   </ItemGroup>
 
 </Project>

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.WebApi", "Fate.WebApi\Fate.WebApi.csproj", "{5D2B8CC1-EE36-4B8C-BEA4-CE11E9E64194}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure", "Fate.Infrastructure\Fate.Infrastructure.csproj", "{95785746-5F1B-4132-9778-60E616B3BD8F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Application", "Fate.Application\Fate.Application.csproj", "{91875A01-3B25-4478-9F73-C33F45A63DE0}"
@@ -95,10 +93,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D2B8CC1-EE36-4B8C-BEA4-CE11E9E64194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D2B8CC1-EE36-4B8C-BEA4-CE11E9E64194}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D2B8CC1-EE36-4B8C-BEA4-CE11E9E64194}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D2B8CC1-EE36-4B8C-BEA4-CE11E9E64194}.Release|Any CPU.Build.0 = Release|Any CPU
 		{95785746-5F1B-4132-9778-60E616B3BD8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95785746-5F1B-4132-9778-60E616B3BD8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95785746-5F1B-4132-9778-60E616B3BD8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -212,7 +206,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5D2B8CC1-EE36-4B8C-BEA4-CE11E9E64194} = {7A3DF7B3-2E97-4ED9-A060-DB825BC26FB4}
 		{95785746-5F1B-4132-9778-60E616B3BD8F} = {54F710E6-7763-4CE2-85E5-1658FE991782}
 		{91875A01-3B25-4478-9F73-C33F45A63DE0} = {DF220979-1B11-4DEC-AD83-146AF781E3A3}
 		{3A3F06F9-19CF-40EE-A616-DA72CDB785C6} = {72C204CF-4677-4CB8-B747-31571C305EB2}

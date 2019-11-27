@@ -152,10 +152,6 @@ namespace Fate.Test.Controllers
             await email.SendEmailAsync("1635783721@qq.com,1091675746@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "E:\\360极速浏览器下载\\chimp-master.zip");
         }
 
-        public void model()
-        {
-            var str = AutofacDI.Resolve<setting>();
-        }
 
         public string subTest()
         {
@@ -169,12 +165,6 @@ namespace Fate.Test.Controllers
             ////发布
             //redis.Publish("push", "你好");
             return "1";
-        }
-        public void testlog()
-        {
-
-            var log = AutofacDI.Resolve<Fate.Infrastructure.NLog.NLogHelper>();
-            log.Info("1");
         }
 
         public void testConfig()

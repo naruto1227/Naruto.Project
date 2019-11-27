@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using Remotion.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -17,33 +18,56 @@ namespace System.Linq
     /// </summary>
     public static class QueryableExtensions
     {
-        private static readonly TypeInfo QueryCompilerTypeInfo = typeof(QueryCompiler).GetTypeInfo();
-        private static readonly FieldInfo QueryCompilerField = typeof(EntityQueryProvider).GetTypeInfo().DeclaredFields.First(x => x.Name == "_queryCompiler");
-        private static readonly FieldInfo QueryModelGeneratorField = typeof(QueryCompiler).GetTypeInfo().DeclaredFields.First(x => x.Name == "_queryModelGenerator");
-        private static readonly FieldInfo DataBaseField = QueryCompilerTypeInfo.DeclaredFields.Single(x => x.Name == "_database");
-        private static readonly PropertyInfo DatabaseDependenciesField = typeof(Database).GetTypeInfo().DeclaredProperties.Single(x => x.Name == "Dependencies");
+        private const BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Instance;
 
         /// <summary>
-        /// 获取本次查询SQL语句
+        /// 将linq转换成sql 返回sql和参数(EFCore 3.0) 
+        /// 第一个字符串为替换过 参数的sql字符串
+        /// 第二个字符串为原始的sql字符串
+        /// 第三个参数为参数
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="query"></param>
         /// <returns></returns>
-        public static string ToSql<TEntity>(this IQueryable<TEntity> query)
+        public static (string, string, IReadOnlyDictionary<string, object>) ToSqlWithParams<TEntity>(this IQueryable<TEntity> query)
         {
-            var queryCompiler = (QueryCompiler)QueryCompilerField.GetValue(query.Provider);
-            var queryModelGenerator = (QueryModelGenerator)QueryModelGeneratorField.GetValue(queryCompiler);
-            var queryModel = queryModelGenerator.ParseQuery(query.Expression);
-            var database = DataBaseField.GetValue(queryCompiler);
-            var databaseDependencies = (DatabaseDependencies)DatabaseDependenciesField.GetValue(database);
-            var queryCompilationContext = databaseDependencies.QueryCompilationContextFactory.Create(false);
-            var modelVisitor = (RelationalQueryModelVisitor)queryCompilationContext.CreateQueryModelVisitor();
-            modelVisitor.CreateQueryExecutor<TEntity>(queryModel);
-            var sql = modelVisitor.Queries.First().ToString();
+            var enumerator = query.Provider
+                .Execute<IEnumerable<TEntity>>(query.Expression)
+                .GetEnumerator();
 
-            return sql;
+            var enumeratorType = enumerator.GetType();
+            //获取查询表达式列
+            var selectFieldInfo = enumeratorType.GetField("_selectExpression", bindingFlags) ?? throw new InvalidOperationException($"cannot find field _selectExpression on type {enumeratorType.Name}");
+            //获取sql工厂
+            var sqlGeneratorFieldInfo = enumeratorType.GetField("_querySqlGeneratorFactory", bindingFlags) ?? throw new InvalidOperationException($"cannot find field _querySqlGeneratorFactory on type {enumeratorType.Name}");
+            //查询上下文
+            var queryContextFieldInfo = enumeratorType.GetField("_relationalQueryContext", bindingFlags) ?? throw new InvalidOperationException($"cannot find field _relationalQueryContext on type {enumeratorType.Name}");
+            //获取查询表达式列
+            var selectExpression = selectFieldInfo.GetValue(enumerator) as SelectExpression ?? throw new InvalidOperationException($"could not get SelectExpression");
+            //获取sql工厂
+            var factory = sqlGeneratorFieldInfo.GetValue(enumerator) as IQuerySqlGeneratorFactory ?? throw new InvalidOperationException($"could not get SqlServerQuerySqlGeneratorFactory");
+            //查询上下文
+            var queryContext = queryContextFieldInfo.GetValue(enumerator) as RelationalQueryContext ?? throw new InvalidOperationException($"could not get RelationalQueryContext");
+            //创建一个查询的对象
+            var sqlGenerator = factory.Create();
+            //获取执行的命令
+            var command = sqlGenerator.GetCommand(selectExpression);
+            //执行sql传递的参数
+            var parametersDict = queryContext.ParameterValues;
+            //原始的sql执行文本
+            var sql = command.CommandText;
+            //将参数赋值转换
+            var converSql = sql;
+
+            if (parametersDict != null && parametersDict.Count() > 0)
+            {
+                foreach (var item in parametersDict)
+                {
+                    converSql = converSql.Replace($"@{item.Key}", $"'{item.Value.ToString()}'");
+                }
+            }
+            return (converSql, sql, parametersDict);
         }
-
         /// <summary>
         /// 分页
         /// </summary>

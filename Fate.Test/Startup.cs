@@ -45,6 +45,8 @@ using Fate.Infrastructure.Configuration.Management.Dashboard;
 using Fate.Infrastructure.Configuration.Management.DB;
 using Fate.Infrastructure.Configuration.Management;
 using Fate.Infrastructure.Redis.IRedisManage;
+using Microsoft.Extensions.Hosting;
+using Fate.Infrastructure.AutofacDependencyInjection;
 
 namespace Fate.Test
 {
@@ -65,7 +67,7 @@ namespace Fate.Test
         public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             //注入响应压缩的服务
             //services.AddResponseCompression();
@@ -111,12 +113,8 @@ namespace Fate.Test
                                };
                                options.EnableDataRoute = true;
                            })
-            .AddAuthorization().AddJsonFormatters(options =>
-            {
-                options.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-            })
-            .AddJsonFormatters()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            .AddAuthorization()
+            .SetCompatibilityVersion(CompatibilityVersion.Latest);
             ////注入api授权服务
             //services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
             //{
@@ -135,8 +133,15 @@ namespace Fate.Test
 
             services.Configure<TestOption>(Configuration.GetSection("test"));
             //替换自带的di 转换为autofac 注入程序集
-            ApplicationContainer = Fate.Infrastructure.AutofacDependencyInjection.AutofacDI.ConvertToAutofac(services);
-            return new AutofacServiceProvider(ApplicationContainer);
+        }
+
+        /// <summary>
+        /// 使用autofac（在ConfigureServices之后执行）
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AutofacModule());
         }
         /// <summary>
         /// 
@@ -146,7 +151,7 @@ namespace Fate.Test
         /// <param name="loggerFactory"></param>
         /// <param name="options1"></param>
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseFateConfiguration();
             configuration2 = Configuration;
@@ -180,21 +185,20 @@ namespace Fate.Test
             //loggerFactory.AddNLog();//添加NLog
             //env.ConfigureNLog("nlog.config");//读取Nlog配置文件
 
-            app.UseMvc();
-            app.Map("/hello", build =>
+            app.UseRouting();
+            app.UseEndpoints(builds =>
             {
-                build.Run(async content =>
-                {
-                    using (var scope = app.ApplicationServices.CreateScope())
-                    {
-                        var test = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<TestOption>>();
+                builds.MapGet("/hello", async content =>
+                 {
+                     using (var scope = app.ApplicationServices.CreateScope())
+                     {
+                         var test = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<TestOption>>();
 
-                        var str = Encoding.UTF8.GetBytes(configuration2.GetValue<string>("1") + ":" + test.Value.test1);
-                        await content.Response.Body.WriteAsync(str, 0, str.Length);
-                    }
-                });
+                         var str = Encoding.UTF8.GetBytes(configuration2.GetValue<string>("1") + ":" + test.Value.test1);
+                         await content.Response.Body.WriteAsync(str, 0, str.Length);
+                     }
+                 });
             });
-
         }
     }
 }

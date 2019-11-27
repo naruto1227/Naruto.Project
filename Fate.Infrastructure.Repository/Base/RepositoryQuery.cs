@@ -52,7 +52,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// sql语句查询
         /// </summary>
         /// <returns></returns>
-        public IQueryable<T> QuerySqlAsync(string sql, params object[] _params) => repository.Set<T>().FromSql(sql, _params);
+        public IQueryable<T> QuerySqlAsync(string sql, params object[] _params) => repository.Set<T>().FromSqlRaw(sql, _params);
 
         /// <summary>
         /// 获取单条记录

@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Fate.Test
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+           await CreateWebHostBuilder(args).RunConsoleAsync();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(options =>
-            {
-                options.AddFateConfiguration();
-            })
-                .UseStartup<Startup>();
+        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }

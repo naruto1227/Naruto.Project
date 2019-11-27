@@ -28,7 +28,7 @@ namespace Fate.IdentityServer4
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<MyJsonResult>();
-            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
+            services.AddControllers();
             services.AddIds4();
         }
 
