@@ -24,25 +24,6 @@ namespace System.Linq
         private static readonly PropertyInfo DatabaseDependenciesField = typeof(Database).GetTypeInfo().DeclaredProperties.Single(x => x.Name == "Dependencies");
 
         /// <summary>
-        /// 生成sql
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        public static string ToSql<TEntity>(this IQueryable<TEntity> query, Microsoft.EntityFrameworkCore.DbContext dbCtx)
-        {
-            
-            IQueryModelGenerator modelGenerator = dbCtx.GetService<IQueryModelGenerator>();
-            QueryModel queryModel = modelGenerator.ParseQuery(query.Expression);
-            DatabaseDependencies databaseDependencies = dbCtx.GetService<DatabaseDependencies>();
-            QueryCompilationContext queryCompilationContext = databaseDependencies.QueryCompilationContextFactory.Create(false);
-            RelationalQueryModelVisitor modelVisitor = (RelationalQueryModelVisitor)queryCompilationContext.CreateQueryModelVisitor();
-            modelVisitor.CreateQueryExecutor<TEntity>(queryModel);
-            var sql = modelVisitor.Queries.First().ToString();
-            return sql;
-        }
-
-        /// <summary>
         /// 获取本次查询SQL语句
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
