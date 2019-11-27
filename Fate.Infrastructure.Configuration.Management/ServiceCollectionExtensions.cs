@@ -111,10 +111,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         "configuration.html",
                         "configuration-add.html",
                         "configuration-edit.html",
-                        "console.html",
-                        "group.html",
-                        "group-add.html",
-                        "group-edit.html",
+                        "console.html"
                   }
                 },
                   new ResoureInfo()
@@ -144,7 +141,6 @@ namespace Microsoft.Extensions.DependencyInjection
                      "okLayer.js",
                      "okLoading.js",
                      "okMd5.js",
-                     "okMock.js",
                      "okNprogress.js",
                      "okSweetAlert2.js",
                      "okTab.js",

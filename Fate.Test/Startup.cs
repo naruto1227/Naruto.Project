@@ -94,7 +94,7 @@ namespace Fate.Test
 
             //使用单号
             //services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
-
+            services.AddPublishConfiguration();
             //注入一个mini版的mvc 不需要包含Razor
             services.AddMvcCore(option =>
             {

@@ -9,7 +9,7 @@ layui.define(["layer"], function (exprots) {
         /**
          * 服务器地址
          */
-        baseUrl: "http://rap2api.taobao.org/app/mock/233041",
+        baseUrl: "/",
         /**
          * 获取body的总宽度
          */
@@ -45,6 +45,7 @@ layui.define(["layer"], function (exprots) {
                 url: okUtils.isFrontendBackendSeparate ? okUtils.baseUrl + url : url,
                 type: type || "get",
                 data: params || {},
+                contentType: "application/json; charset=UTF-8",
                 dataType: "json",
                 beforeSend: function () {
                     if (load) {
@@ -156,7 +157,7 @@ layui.define(["layer"], function (exprots) {
                     }
                     return false;
                 }
-            },
+            }
         }
     };
     exprots("okUtils", okUtils);

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fate.Infrastructure.Configuration\Fate.Infrastructure.Configuration.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.Repository\Fate.Infrastructure.Repository.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.VirtualFile\Fate.Infrastructure.VirtualFile.csproj" />
   </ItemGroup>
@@ -67,7 +68,6 @@
     <None Remove="Dashboard\Content\js\okLayer.js" />
     <None Remove="Dashboard\Content\js\okLoading.js" />
     <None Remove="Dashboard\Content\js\okMd5.js" />
-    <None Remove="Dashboard\Content\js\okMock.js" />
     <None Remove="Dashboard\Content\js\okNprogress.js" />
     <None Remove="Dashboard\Content\js\okSweetAlert2.js" />
     <None Remove="Dashboard\Content\js\okTab.js" />
@@ -84,9 +84,6 @@
     <None Remove="Dashboard\Content\pages\configuration-edit.html" />
     <None Remove="Dashboard\Content\pages\configuration.html" />
     <None Remove="Dashboard\Content\pages\console.html" />
-    <None Remove="Dashboard\Content\pages\group-add.html" />
-    <None Remove="Dashboard\Content\pages\group-edit.html" />
-    <None Remove="Dashboard\Content\pages\group.html" />
     <None Remove="Dashboard\Content\pages\index.html" />
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +136,6 @@
     <EmbeddedResource Include="Dashboard\Content\js\okLayer.js" />
     <EmbeddedResource Include="Dashboard\Content\js\okLoading.js" />
     <EmbeddedResource Include="Dashboard\Content\js\okMd5.js" />
-    <EmbeddedResource Include="Dashboard\Content\js\okMock.js" />
     <EmbeddedResource Include="Dashboard\Content\js\okNprogress.js" />
     <EmbeddedResource Include="Dashboard\Content\js\okSweetAlert2.js" />
     <EmbeddedResource Include="Dashboard\Content\js\okTab.js" />
@@ -156,9 +152,6 @@
     <EmbeddedResource Include="Dashboard\Content\pages\configuration-edit.html" />
     <EmbeddedResource Include="Dashboard\Content\pages\configuration.html" />
     <EmbeddedResource Include="Dashboard\Content\pages\console.html" />
-    <EmbeddedResource Include="Dashboard\Content\pages\group-add.html" />
-    <EmbeddedResource Include="Dashboard\Content\pages\group-edit.html" />
-    <EmbeddedResource Include="Dashboard\Content\pages\group.html" />
     <EmbeddedResource Include="Dashboard\Content\pages\index.html" />
   </ItemGroup>
 

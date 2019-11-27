@@ -17,5 +17,10 @@ namespace Fate.Infrastructure.Configuration
         internal static ConcurrentBag<string> Keys = new ConcurrentBag<string>();
 
         internal static IChangeToken changeToken;
+        /// <summary>
+        /// 订阅的key
+        /// </summary>
+        internal static string SubscribeKey = "changeConfiguration";
+
     }
 }

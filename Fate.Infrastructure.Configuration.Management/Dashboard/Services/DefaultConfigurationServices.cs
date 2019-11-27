@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Fate.Infrastructure.Redis.IRedisManage;
 
 namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
 {
@@ -19,9 +20,12 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
     public class DefaultConfigurationServices : IConfigurationServices
     {
         private readonly IUnitOfWork<ConfigurationDbContent> unitOfWork;
-        public DefaultConfigurationServices(IUnitOfWork<ConfigurationDbContent> _unitOfWork)
+
+        private readonly IConfigurationPublish publish;
+        public DefaultConfigurationServices(IUnitOfWork<ConfigurationDbContent> _unitOfWork, IConfigurationPublish _publish)
         {
             unitOfWork = _unitOfWork;
+            publish = _publish;
         }
         /// <summary>
         /// 新增
@@ -33,7 +37,12 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
             if (info == null)
                 return default;
             await unitOfWork.Command<ConfigurationEndPoint>().AddAsync(info);
-            return await SaveChangeAsync();
+            var res = await SaveChangeAsync();
+            if (res)
+            {
+                await publish.PublishAsync();
+            }
+            return res;
         }
         /// <summary>
         /// 删除
@@ -78,11 +87,20 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
             //修改
             await unitOfWork.Command<ConfigurationEndPoint>().UpdateAsync(a => a.Id == info.Id, item =>
              {
-                 item = info;
+                 item.Value = info.Value;
+                 item.Remark = info.Remark;
+                 item.Key = info.Key;
+                 item.Group = info.Group;
+                 item.EnvironmentType = info.EnvironmentType;
                  return item;
              });
 
-            return await SaveChangeAsync();
+            var res = await SaveChangeAsync();
+            if (res)
+            {
+                await publish.PublishAsync();
+            }
+            return res;
         }
 
         /// <summary>
@@ -101,7 +119,7 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
         /// <returns></returns>
         private async Task<bool> SaveChangeAsync()
         {
-            return (await unitOfWork.SaveChangeAsync()) > 1;
+            return (await unitOfWork.SaveChangeAsync()) > 0;
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Fate.Infrastructure.Configuration
 {
     public class DefaultReloadData : DefaultFateConfigurationLoad, IReloadData
     {
-        private readonly string SubscribeKey = "changeConfiguration";
 
         private readonly IRedisOperationHelp redis;
         private readonly IConfiguration configuration;
@@ -27,7 +26,7 @@ namespace Fate.Infrastructure.Configuration
         /// <returns></returns>
         public async Task SubscribeReloadAsync(object obj)
         {
-            await redis.SubscribeAsync(SubscribeKey, async (channel, value) =>
+            await redis.SubscribeAsync(FateConfigurationInfrastructure.SubscribeKey, async (channel, value) =>
               {
                   //重新获取数据
                   var data = await LoadConfiguration();

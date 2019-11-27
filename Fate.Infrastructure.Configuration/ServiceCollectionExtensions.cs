@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Configuration
     /// 2019-11-14
     /// 自定义配置扩展
     /// </summary>
-    public static class ConfigurationExtensions
+    public static class ServiceCollectionExtensions
     {
 
         /// <summary>
@@ -34,7 +34,15 @@ namespace Microsoft.Extensions.Configuration
 
             return services;
         }
-
+        /// <summary>
+        /// 注入发布服务
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddPublishConfiguration(this IServiceCollection @this)
+        {
+            return @this.AddSingleton<IConfigurationPublish, DefaultConfigurationPublish>();
+        }
         public static IApplicationBuilder UseFateConfiguration(this IApplicationBuilder app)
         {
             app.ApplicationServices.GetRequiredService<IReloadData>().SubscribeReloadAsync(null).ConfigureAwait(false).GetAwaiter().GetResult();

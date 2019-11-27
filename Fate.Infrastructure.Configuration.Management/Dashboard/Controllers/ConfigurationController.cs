@@ -38,8 +38,11 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Controllers
                 return BadRequest($"{nameof(info.Key)}参数校检错误");
             if (string.IsNullOrWhiteSpace(info.Key))
                 return BadRequest($"{nameof(info.Value)}参数校检错误");
-            await services.AddConfiguration(info);
-            return Ok();
+            var res = await services.AddConfiguration(info);
+            DashboardResult dashboardResult = new DashboardResult();
+            dashboardResult.code = 0;
+            dashboardResult.data = res;
+            return Ok(dashboardResult);
         }
         /// <summary>
         /// 修改
@@ -57,8 +60,11 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Controllers
                 return BadRequest($"{nameof(info.Key)}参数校检错误");
             if (string.IsNullOrWhiteSpace(info.Key))
                 return BadRequest($"{nameof(info.Value)}参数校检错误");
-            await services.UpdateConfiguration(info);
-            return Ok();
+            var res = await services.UpdateConfiguration(info);
+            DashboardResult dashboardResult = new DashboardResult();
+            dashboardResult.code = 0;
+            dashboardResult.data = res;
+            return Ok(dashboardResult);
         }
         /// <summary>
         /// 查询单条信息
@@ -71,7 +77,10 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Controllers
             if (string.IsNullOrWhiteSpace(id))
                 return BadRequest($"{nameof(id)}参数校检失败");
             var info = await services.QueryFirstConfiguration(id);
-            return Ok(info);
+            DashboardResult dashboardResult = new DashboardResult();
+            dashboardResult.code = 0;
+            dashboardResult.data = info;
+            return Ok(dashboardResult);
         }
         /// <summary>
         /// 获取配置信息
@@ -100,8 +109,11 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await services.DeleteConfiguration(new string[] { id });
-            return Ok();
+            var res = await services.DeleteConfiguration(id.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToArray());
+            DashboardResult dashboardResult = new DashboardResult();
+            dashboardResult.code = 0;
+            dashboardResult.data = res;
+            return Ok(dashboardResult);
         }
     }
 }

@@ -19,12 +19,6 @@
         "fontFamily": "layui-icon",
         "icon": "&#xe62e;",
         "spread": false
-      },
-      {
-        "title": "组列表",
-        "href": "/fate/pages/group.html",
-        "icon": "&#xe62e;",
-        "spread": false
       }
     ]
   }
