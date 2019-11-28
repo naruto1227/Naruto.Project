@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
-namespace Fate.Infrastructure.Extensions
+namespace System
 {
     /// <summary>
     /// json扩展
