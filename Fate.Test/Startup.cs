@@ -97,8 +97,8 @@ namespace Fate.Test
             //使用单号
             //services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
             services.AddPublishConfiguration();
-            //注入一个mini版的mvc 不需要包含Razor
-            services.AddMvcCore(option =>
+
+            services.AddControllers(option =>
             {
                 option.Filters.Add(typeof(Fate.Infrastructure.Filters.TokenAuthorizationAttribute));
             })
@@ -112,9 +112,7 @@ namespace Fate.Test
 
                                };
                                options.EnableDataRoute = true;
-                           })
-            .AddAuthorization()
-            .SetCompatibilityVersion(CompatibilityVersion.Latest);
+                           });
             ////注入api授权服务
             //services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
             //{
@@ -188,6 +186,7 @@ namespace Fate.Test
             app.UseRouting();
             app.UseEndpoints(builds =>
             {
+                builds.MapControllers();
                 builds.MapGet("/hello", async content =>
                  {
                      using (var scope = app.ApplicationServices.CreateScope())

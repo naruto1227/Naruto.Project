@@ -111,7 +111,21 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         T StringGet<T>(string key);
-
+        /// <summary>
+        /// 自增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        long StringIncrement(string key, long value = 1);
+        /// <summary>
+        /// 递减
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        long StringDecrement(string key, long value = 1);
         #endregion
 
         #region key
@@ -375,15 +389,24 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         Task<T> StringGetAsync<T>(string key);
 
+
+        /// <summary>
+        /// 自增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        Task<long> StringIncrementAsync(string key, long value = 1);
+        /// <summary>
+        /// 递减
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<long> StringDecrementAsync(string key, long value = 1);
         #endregion
 
-        ///// <summary>
-        ///// 获取多个key的值
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="keys"></param>
-        ///// <returns></returns>
-        //Task<T> StringGetMultipleAsync<T>(string[] keys);
         #region list
 
         /// <summary>

@@ -391,6 +391,32 @@ namespace Fate.Infrastructure.Redis.RedisManage
         {
             return redisBase.ConvertObj<T>(redisBase.DoSave(db => db.StringGet(StringSysCustomKey + key)));
         }
+
+
+        /// <summary>
+        /// 自增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        public long StringIncrement(string key, long value = 1)
+        {
+            key = StringSysCustomKey + key;
+            return redisBase.DoSave(db => db.StringIncrement(key, value));
+        }
+
+        /// <summary>
+        /// 递减
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public long StringDecrement(string key, long value = 1)
+        {
+            key = StringSysCustomKey + key;
+            return redisBase.DoSave(db => db.StringDecrement(key, value));
+        }
         #endregion
 
         #region 异步
@@ -460,27 +486,30 @@ namespace Fate.Infrastructure.Redis.RedisManage
             return redisBase.ConvertObj<T>(value);
         }
 
-        ///// <summary>
-        ///// 获取多个key的值
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="keys"></param>
-        ///// <returns></returns>
-        //public async Task<T> StringGetMultipleAsync<T>(string[] keys) where T : class, new()
-        //{
-        //    if (keys == null)
-        //        throw new ApplicationException("参数不能为空");
-        //    T li = new T();
-        //    foreach (var item in keys)
-        //    {
-        //        var key = StringSysCustomKey + item;
-        //        var value = await redisBase.DoSave(db => db.StringGetAsync(key));
-        //        if (value.ToString() != null)
-        //        {
-        //            li(redisBase.ConvertObj<T>(value));
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// 自增
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        public Task<long> StringIncrementAsync(string key, long value = 1)
+        {
+            key = StringSysCustomKey + key;
+            return redisBase.DoSave(db => db.StringIncrementAsync(key, value));
+        }
+
+        /// <summary>
+        /// 递减
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Task<long> StringDecrementAsync(string key, long value = 1)
+        {
+            key = StringSysCustomKey + key;
+            return redisBase.DoSave(db => db.StringDecrementAsync(key, value));
+        }
         #endregion
         #endregion
 

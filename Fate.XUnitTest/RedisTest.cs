@@ -41,6 +41,29 @@ namespace Fate.XUnitTest
             });
             //发布
             subscriber.Publish("push", "你好");
+          var res=  redis.GetDatabase().StringIncrement("test", 0d);
+            for (int i = 0; i < 10; i++)
+            {
+                res= redis.GetDatabase().StringIncrement("test");
+            }
+           var rr= redis.GetDatabase().StringGet("test");
+
+            res= redis.GetDatabase().StringDecrement("test");
+            for (int i = 0; i < 5;  i++)
+            {
+                res = redis.GetDatabase().StringDecrement("test");
+            }
+
+           var  redisbase = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
+           res= redisbase.StringIncrement("test");
+            for (int i = 0; i < 10; i++)
+            {
+                res = redisbase.StringIncrement("test");
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                res = redisbase.StringDecrement("test");
+            }
             Console.WriteLine("1");
         }
         [Fact]
