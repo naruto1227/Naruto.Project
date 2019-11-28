@@ -119,7 +119,7 @@ namespace Fate.Infrastructure.Repository.Base
         {
             if (string.IsNullOrWhiteSpace(sql))
                 throw new ArgumentNullException(nameof(sql));
-            if (!sql.ToUpper().StartsWith("SELECT"))
+            if (!sql.ToUpper().TrimStart().StartsWith("SELECT"))
                 throw new Exception($"{nameof(sql)}不是一条查询语句");
         }
         /// <summary>
