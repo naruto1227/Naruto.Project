@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using Fate.Domain.Model.Entities;
 using System.Linq;
+using System.IO;
 
 namespace Fate.XUnitTest
 {
@@ -32,30 +33,21 @@ namespace Fate.XUnitTest
         public void test()
         {
             var redis = ConnectionMultiplexer.Connect("127.0.0.1");
-            ISubscriber subscriber = redis.GetSubscriber();
-            //订阅
-            subscriber.Subscribe("push", (chanel, msg) =>
-            {
-                Console.WriteLine(chanel);
-                Console.WriteLine(msg);
-            });
-            //发布
-            subscriber.Publish("push", "你好");
-          var res=  redis.GetDatabase().StringIncrement("test", 0d);
+            var res = redis.GetDatabase().StringIncrement("test", 0d);
             for (int i = 0; i < 10; i++)
             {
-                res= redis.GetDatabase().StringIncrement("test");
+                res = redis.GetDatabase().StringIncrement("test");
             }
-           var rr= redis.GetDatabase().StringGet("test");
+            var rr = redis.GetDatabase().StringGet("test");
 
-            res= redis.GetDatabase().StringDecrement("test");
-            for (int i = 0; i < 5;  i++)
+            res = redis.GetDatabase().StringDecrement("test");
+            for (int i = 0; i < 5; i++)
             {
                 res = redis.GetDatabase().StringDecrement("test");
             }
 
-           var  redisbase = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
-           res= redisbase.StringIncrement("test");
+            var redisbase = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
+            res = redisbase.StringIncrement("test");
             for (int i = 0; i < 10; i++)
             {
                 res = redisbase.StringIncrement("test");
@@ -65,6 +57,19 @@ namespace Fate.XUnitTest
                 res = redisbase.StringDecrement("test");
             }
             Console.WriteLine("1");
+        }
+        [Fact]
+        public async Task Publish()
+        {
+            var path = Path.GetTempPath();
+            var redis = ConnectionMultiplexer.Connect("127.0.0.1");
+            ISubscriber subscriber = redis.GetSubscriber();
+            Parallel.For(1, 10, async item =>
+            {
+                //发布
+                await subscriber.PublishAsync("push", item.ToString());
+            });
+            await Task.Delay(2000);
         }
         [Fact]
         public async Task RedisTest1()

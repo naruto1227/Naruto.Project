@@ -161,8 +161,7 @@ namespace Fate.XUnitTest
         public async Task DataTableAsyncTest()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-            await unit.ChangeDataBase("test1");
-            var dt = await unit.SqlQuery().ExecuteSqlQueryAsync("select  * from setting");
+            var dt = await unit.SqlQuery().ExecuteSqlQueryAsync("    1select  * from setting");
 
         }
 
