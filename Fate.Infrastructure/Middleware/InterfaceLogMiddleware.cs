@@ -29,6 +29,13 @@ namespace Fate.Infrastructure.Middleware
         /// <returns></returns>
         public async Task InvokeAsync(HttpContext httpContext)
         {
+            //不记录根请求 减少日志量
+            if (httpContext.Request.Path.Value.Equals("/"))
+            {
+                //执行下一个中间件
+                await next(httpContext);
+                return;
+            }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append($"【接口地址：{httpContext.Request.Path.Value} ,Method:{httpContext.Request.Method}】");
             //heard
