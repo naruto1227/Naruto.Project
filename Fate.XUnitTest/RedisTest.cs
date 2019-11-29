@@ -64,12 +64,12 @@ namespace Fate.XUnitTest
             var path = Path.GetTempPath();
             var redis = ConnectionMultiplexer.Connect("127.0.0.1");
             ISubscriber subscriber = redis.GetSubscriber();
-            Parallel.For(1, 10, async item =>
+            Parallel.For(0, 1000, async item =>
             {
                 //发布
                 await subscriber.PublishAsync("push", item.ToString());
             });
-            await Task.Delay(2000);
+            
         }
         [Fact]
         public async Task RedisTest1()
