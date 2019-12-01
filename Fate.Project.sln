@@ -87,6 +87,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Virtual
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VirtualFile", "VirtualFile", "{03043560-B482-4939-A5C4-99F38D15B7FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.Mongo", "Fate.Infrastructure.Mongo\Fate.Infrastructure.Mongo.csproj", "{E2AFC917-33E6-44FE-89D3-C00CD23328EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{0268D785-03DA-4806-A2EF-C08DAB316EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0268D785-03DA-4806-A2EF-C08DAB316EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0268D785-03DA-4806-A2EF-C08DAB316EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2AFC917-33E6-44FE-89D3-C00CD23328EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2AFC917-33E6-44FE-89D3-C00CD23328EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2AFC917-33E6-44FE-89D3-C00CD23328EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2AFC917-33E6-44FE-89D3-C00CD23328EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -244,6 +250,7 @@ Global
 		{6B777871-0823-467A-BE8F-640CCEE74538} = {56D65EED-2397-414D-9E00-C9FD72D1834E}
 		{0268D785-03DA-4806-A2EF-C08DAB316EAB} = {03043560-B482-4939-A5C4-99F38D15B7FF}
 		{03043560-B482-4939-A5C4-99F38D15B7FF} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
+		{E2AFC917-33E6-44FE-89D3-C00CD23328EB} = {3575B4A0-B3E0-4982-9D79-E863DE07D1FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Description>ocelot网关的配置存储方式替代为mysql存储</Description>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
