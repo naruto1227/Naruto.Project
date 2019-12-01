@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Fate.Infrastructure.Base.Model;
+using Fate.Infrastructure.BaseRepository.Model;
 using System.ComponentModel.DataAnnotations;
 
 namespace Fate.Domain.Model.Entities

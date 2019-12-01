@@ -4,9 +4,4 @@
     <Description>Mongo的仓储封装</Description>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Fate.Infrastructure.Base.Model\Fate.Infrastructure.Base.Model.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,4 @@
-﻿using Fate.Infrastructure.Base.Model;
+﻿using Fate.Infrastructure.BaseRepository.Model;
 using Fate.Infrastructure.Repository.Interface;
 using System;
 using System.Collections.Generic;

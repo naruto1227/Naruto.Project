@@ -75,7 +75,7 @@ namespace Fate.Test
             //{
             //    options.Level = CompressionLevel.Fastest;
             //});
-
+            services.AddDistributedMemoryCache();
             //注入redis仓储服务
             services.AddRedisRepository(Configuration.GetSection("AppSetting:RedisConfig"));
             //注入mysql仓储   //注入多个ef配置信息

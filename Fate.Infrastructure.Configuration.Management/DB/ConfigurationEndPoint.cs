@@ -12,7 +12,7 @@ namespace Fate.Infrastructure.Configuration.Management.DB
     /// 配置信息表
     /// </summary>
     [Table("ConfigurationEndPoint")]
-    public class ConfigurationEndPoint : Base.Model.IEntity
+    public class ConfigurationEndPoint : BaseRepository.Model.IEntity
     {
 
         /// <summary>

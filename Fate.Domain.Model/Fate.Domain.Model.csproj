@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <!--<ItemGroup>
-    <ProjectReference Include="..\Fate.Infrastructure.Base.Model\Fate.Infrastructure.Base.Model.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.BaseRepository.Model\Fate.Infrastructure.BaseRepository.Model.csproj" />
   </ItemGroup>-->
 
 </Project>

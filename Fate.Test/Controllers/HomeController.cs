@@ -31,17 +31,14 @@ namespace Fate.Test.Controllers
         SettingApp setting;
         private IUnitOfWork<MysqlDbContent> unitOfWork;
         private IRedisOperationHelp redis;
-
-        private readonly IEmail email;
         RSAHelper rSA;
-        public Home1Controller(SettingApp _setting, IUnitOfWork<MysqlDbContent> _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA, IEmail _email)
+        public Home1Controller(SettingApp _setting, IUnitOfWork<MysqlDbContent> _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
         {
             setting = _setting;
             unitOfWork = _unitOfWork;
             redis = _redis;
             jsonResult = myJson;
             rSA = _rSA;
-            email = _email;
         }
         [HttpGet]
         public async Task test()
@@ -143,13 +140,6 @@ namespace Fate.Test.Controllers
         public void test22()
         {
             rSA.CreateRSACacheAsync();
-        }
-
-        public async Task sendEmail()
-        {
-            //EmailKit emailKi = new EmailKit();
-            //await emailKi.SendEmailAsync("1635783721@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "D:\\360极速浏览器下载\\AdminLTE-2.4.5.zip");
-            await email.SendEmailAsync("1635783721@qq.com,1091675746@qq.com", "测试", "", "<a src='www.baidu.com'>点击</a>", "E:\\360极速浏览器下载\\chimp-master.zip");
         }
 
 

@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Fate.Infrastructure.Repository.Object;
 using Fate.Infrastructure.Repository.Interface;
-using Fate.Infrastructure.Base.Model;
+using Fate.Infrastructure.BaseRepository.Model;
 using Microsoft.EntityFrameworkCore;
 namespace Fate.Infrastructure.Repository.UnitOfWork
 {

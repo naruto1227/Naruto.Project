@@ -11,7 +11,7 @@ using Fate.Domain.Event.Infrastructure;
 using Fate.Domain.Event.Events;
 using Fate.Domain.Event.EventHandlers;
 using Fate.Domain.Event.Infrastructure.Redis;
-using Fate.Infrastructure.Base.Model;
+using Fate.Infrastructure.BaseRepository.Model;
 
 namespace Fate.Domain.Services
 {
