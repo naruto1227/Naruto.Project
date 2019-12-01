@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>数据库的仓储封装 ,如需使用此层的数据访问，需要将RepositoryExtensions方法中的两个扩展方法，注入到Startup中，并配置参数</Description>
+    <Description>关系型数据库的仓储封装 ,如需使用此层的数据访问，需要将RepositoryExtensions方法中的两个扩展方法，注入到Startup中，并配置参数</Description>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 

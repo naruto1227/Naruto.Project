@@ -4,4 +4,12 @@
     <Description>Mongo的仓储封装</Description>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Infrastructure.BaseMongo.Model\Fate.Infrastructure.BaseMongo.Model.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.1" />
+        <PackageReference Include="MongoDB.Driver" Version="2.9.3" />
+  </ItemGroup>
 </Project>
