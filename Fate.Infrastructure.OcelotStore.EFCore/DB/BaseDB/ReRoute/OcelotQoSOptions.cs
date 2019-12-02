@@ -10,7 +10,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// 熔断 （单条记录）
     /// </summary>
-    public class OcelotQoSOptions : Base.Model.IEntity
+    public class OcelotQoSOptions : BaseRepository.Model.IEntity
     {
 
         public int Id { get; set; }

@@ -9,7 +9,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     ///  （单条记录）
     /// </summary>
     [Table("OcelotSecurityOptions")]
-    public class OcelotSecurityOptions : Base.Model.IEntity
+    public class OcelotSecurityOptions : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id

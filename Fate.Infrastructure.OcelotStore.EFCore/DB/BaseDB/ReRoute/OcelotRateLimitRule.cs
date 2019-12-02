@@ -9,7 +9,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// 请求限流的实体 (单条记录)
     /// </summary>
-    public class OcelotRateLimitRule : Base.Model.IEntity
+    public class OcelotRateLimitRule : BaseRepository.Model.IEntity
     {
 
         /// <summary>

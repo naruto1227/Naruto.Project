@@ -8,7 +8,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// 负载均衡的实体 (单条记录)
     /// </summary>
-    public class OcelotLoadBalancer : Base.Model.IEntity
+    public class OcelotLoadBalancer : BaseRepository.Model.IEntity
     {
         public int Id { get; set; }
         /// <summary>

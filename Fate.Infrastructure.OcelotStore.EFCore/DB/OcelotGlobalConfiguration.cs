@@ -10,7 +10,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     ///  ocelot的全局配置
     /// </summary>
     [Table("OcelotGlobalConfiguration")]
-    public class OcelotGlobalConfiguration : Base.Model.IEntity
+    public class OcelotGlobalConfiguration : BaseRepository.Model.IEntity
     {
         /// <summary>
         ///

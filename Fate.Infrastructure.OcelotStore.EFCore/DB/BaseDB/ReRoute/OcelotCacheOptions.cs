@@ -11,7 +11,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// 单条记录
     /// </summary>
     [Table("OcelotCacheOptions")]
-    public class OcelotCacheOptions : Base.Model.IEntity
+    public class OcelotCacheOptions : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id

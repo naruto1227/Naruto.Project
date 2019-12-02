@@ -12,7 +12,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// 认证中心
     /// </summary>
-    public class OcelotAuthenticationOption: Base.Model.IEntity
+    public class OcelotAuthenticationOption: BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id

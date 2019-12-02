@@ -10,7 +10,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// ocelot的请求头转发
     /// </summary>
-    public class OcelotHeaderTransform : Base.Model.IEntity
+    public class OcelotHeaderTransform : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键Id

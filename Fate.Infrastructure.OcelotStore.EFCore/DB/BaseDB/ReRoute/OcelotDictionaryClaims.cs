@@ -9,7 +9,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// 字典的配置
     /// </summary>
-    public class OcelotDictionaryClaims : Base.Model.IEntity
+    public class OcelotDictionaryClaims : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键Id

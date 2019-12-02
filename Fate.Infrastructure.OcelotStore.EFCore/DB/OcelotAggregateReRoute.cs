@@ -10,7 +10,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// ocelot请求聚合的路由
     /// </summary>
     [Table("OcelotAggregateReRoute")]
-    public class OcelotAggregateReRoute : Base.Model.IEntity
+    public class OcelotAggregateReRoute : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id

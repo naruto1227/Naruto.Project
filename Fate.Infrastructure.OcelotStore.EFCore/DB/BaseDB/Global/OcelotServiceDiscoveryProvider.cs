@@ -11,7 +11,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// 单条记录
     /// </summary>
     [Table("OcelotServiceDiscoveryProvider")]
-    public class OcelotServiceDiscoveryProvider : Base.Model.IEntity
+    public class OcelotServiceDiscoveryProvider : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id

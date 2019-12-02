@@ -8,7 +8,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// 下游 的主机地址
     /// </summary>
-    public class OcelotHostAndPort : Base.Model.IEntity
+    public class OcelotHostAndPort : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id

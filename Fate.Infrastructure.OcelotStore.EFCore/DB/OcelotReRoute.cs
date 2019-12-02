@@ -10,7 +10,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
     /// <summary>
     /// 路由
     /// </summary>
-    public class OcelotReRoute : Base.Model.IEntity
+    public class OcelotReRoute : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id
