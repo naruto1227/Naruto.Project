@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Mongo.Interface
 {
@@ -93,7 +94,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int Count(string collectionName, FilterDefinition<T> filter, CountOptions options = null);
+        long Count(string collectionName, FilterDefinition<T> filter, CountOptions options = null);
 
         /// <summary>
         /// 获取总数
@@ -101,7 +102,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int Count(FilterDefinition<T> filter, CountOptions options = null);
+        long Count(FilterDefinition<T> filter, CountOptions options = null);
 
         #endregion
 
@@ -168,7 +169,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int Count(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null);
+        long Count(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null);
 
         /// <summary>
         /// 获取总数
@@ -176,7 +177,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int Count(Expression<Func<T, bool>> filter, CountOptions options = null);
+        long Count(Expression<Func<T, bool>> filter, CountOptions options = null);
 
         #endregion
 
@@ -193,7 +194,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 查询多条数据
@@ -201,7 +202,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -211,7 +212,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FirstOrDefaultAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FirstOrDefaultAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取单条数据
@@ -219,7 +220,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FirstOrDefaultAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FirstOrDefaultAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 分页查找数据 
@@ -230,7 +231,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="pageSize">条数</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindByPageAsync(string collectionName, FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindByPageAsync(string collectionName, FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 分页查找数据 
@@ -240,7 +241,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="pageSize">条数</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions< T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取总数
@@ -249,7 +250,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int CountAsync(string collectionName, FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> CountAsync(string collectionName, FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取总数
@@ -257,7 +258,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int CountAsync(FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> CountAsync(FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -270,7 +271,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 查询多条数据
@@ -278,7 +279,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -288,7 +289,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FirstOrDefaultAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FirstOrDefaultAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions< T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取单条数据
@@ -296,7 +297,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FirstOrDefaultAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 分页查找数据 
@@ -307,7 +308,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="pageSize">条数</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindByPageAsync(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindByPageAsync(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions< T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 分页查找数据 
@@ -317,7 +318,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="pageSize">条数</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> FindByPageAsync(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindByPageAsync(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions< T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取总数
@@ -326,7 +327,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int CountAsync(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> CountAsync(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取总数
@@ -334,7 +335,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int CountAsync(Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> CountAsync(Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default);
 
         #endregion
 

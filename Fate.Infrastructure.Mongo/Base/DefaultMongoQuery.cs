@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Mongo.Base
 {
@@ -18,127 +19,187 @@ namespace Fate.Infrastructure.Mongo.Base
     /// <typeparam name="T"></typeparam>
     public class DefaultMongoQuery<T, TMongoContext> : IMongoQuery<T, TMongoContext> where T : class where TMongoContext : MongoContext
     {
+        /// <summary>
+        /// 只读的基础设施
+        /// </summary>
+        private readonly IMongoReadInfrastructure<TMongoContext> readInfrastructure;
 
-        public DefaultMongoQuery()
-        {
 
-        }
-        public int Count(string collectionName, FilterDefinition<T> filter, CountOptions options = null)
+        public DefaultMongoQuery(IMongoReadInfrastructure<TMongoContext> _readInfrastructure)
         {
-            throw new NotImplementedException();
-        }
-
-        public int Count(FilterDefinition<T> filter, CountOptions options = null)
-        {
-            throw new NotImplementedException();
+            readInfrastructure = _readInfrastructure;
         }
 
-        public int Count(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null)
+        public long Count(string collectionName, FilterDefinition<T> filter, CountOptions options = null)
         {
-            throw new NotImplementedException();
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).CountDocuments(filter, options);
+            });
         }
 
-        public int Count(Expression<Func<T, bool>> filter, CountOptions options = null)
+        public long Count(FilterDefinition<T> filter, CountOptions options = null)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return Count(collectionName, filter, options);
         }
 
-        public int CountAsync(string collectionName, FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default)
+        public long Count(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null)
         {
-            throw new NotImplementedException();
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).CountDocuments(filter, options);
+            });
         }
 
-        public int CountAsync(FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default)
+        public long Count(Expression<Func<T, bool>> filter, CountOptions options = null)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return Count(collectionName, filter, options);
         }
 
-        public int CountAsync(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default)
+        public Task<long> CountAsync(string collectionName, FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).CountDocumentsAsync(filter, options, cancellationToken);
+            });
         }
 
-        public int CountAsync(Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default)
+        public Task<long> CountAsync(FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return CountAsync(collectionName, filter, options, cancellationToken);
+        }
+
+        public Task<long> CountAsync(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default)
+        {
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).CountDocumentsAsync(filter, options, cancellationToken);
+            });
+        }
+
+        public Task<long> CountAsync(Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default)
+        {
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return CountAsync(collectionName, filter, options, cancellationToken);
         }
 
         public List<T> Find(string collectionName, FilterDefinition<T> filter, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).Find(filter, options).ToList();
+            });
         }
 
         public List<T> Find(FilterDefinition<T> filter, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return Find(collectionName, filter, options);
         }
 
         public List<T> Find(string collectionName, Expression<Func<T, bool>> filter, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).Find(filter, options).ToList();
+            });
         }
 
         public List<T> Find(Expression<Func<T, bool>> filter, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return Find(collectionName, filter, options);
         }
 
-        public List<T> FindAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> FindAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await readInfrastructure.Exec(async database =>
+            {
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
+            });
         }
 
-        public List<T> FindAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> FindAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return await FindAsync(collectionName, filter, options, cancellationToken);
         }
 
-        public List<T> FindAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> FindAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await readInfrastructure.Exec(async database =>
+            {
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
+            });
         }
 
-        public List<T> FindAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> FindAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return await FindAsync(collectionName, filter, options, cancellationToken);
         }
 
         public List<T> FindByPage(string collectionName, FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).Find(filter, options).Skip(((pageIndex < 0 ? 1 : pageIndex) - 1) * pageSize).Limit(pageSize).ToList();
+            });
         }
 
         public List<T> FindByPage(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return FindByPage(collectionName, pageIndex, pageSize, options);
         }
 
         public List<T> FindByPage(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            return readInfrastructure.Exec(database =>
+            {
+                return database.GetCollection<T>(collectionName).Find(filter, options).Skip(((pageIndex < 0 ? 1 : pageIndex) - 1) * pageSize).Limit(pageSize).ToList();
+            });
         }
 
         public List<T> FindByPage(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            throw new NotImplementedException();
+            //获取实体的名称
+            var collectionName = typeof(T).Name;
+            return FindByPage(collectionName, pageIndex, pageSize, options);
         }
 
-        public List<T> FindByPageAsync(string collectionName, FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> FindByPageAsync(string collectionName, FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        {
+            //return await readInfrastructure.Exec(async database =>
+            //{
+            //    return ( database.GetCollection<T>(collectionName).Find(filter, options)).Skip(((pageIndex < 0 ? 1 : pageIndex) - 1) * pageSize).Limit(pageSize).ToList();
+            //});
+            return null;
+        }
+
+        public Task<List<T>> FindByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public List<T> FindByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
+        public Task<List<T>> FindByPageAsync(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public List<T> FindByPageAsync(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<T> FindByPageAsync(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
+        public Task<List<T>> FindByPageAsync(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -163,22 +224,22 @@ namespace Fate.Infrastructure.Mongo.Base
             throw new NotImplementedException();
         }
 
-        public T FirstOrDefaultAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
+        public Task<T> FirstOrDefaultAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public T FirstOrDefaultAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public Task<T> FirstOrDefaultAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public T FirstOrDefaultAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T, T> options = null, CancellationToken cancellationToken = default)
+        public Task<T> FirstOrDefaultAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public T FirstOrDefaultAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

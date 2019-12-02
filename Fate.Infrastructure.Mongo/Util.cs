@@ -21,6 +21,12 @@ namespace Fate.Infrastructure.Mongo
                 throw new ArgumentNullException(source.GetType().Name);
         }
 
-
+        public static bool IsNullOrEmpty(this string source)
+        {
+            if (string.IsNullOrWhiteSpace(source))
+                return true;
+            else
+                return false;
+        }
     }
 }

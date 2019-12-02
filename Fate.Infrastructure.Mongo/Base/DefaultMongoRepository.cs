@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Mongo.Base
 {
@@ -16,10 +17,33 @@ namespace Fate.Infrastructure.Mongo.Base
     /// <typeparam name="T"></typeparam>
     public class DefaultMongoRepository<TMongoContext> : IMongoRepository<TMongoContext> where TMongoContext : MongoContext
     {
+
         private readonly IServiceProvider serviceProvider;
-        public DefaultMongoRepository(IServiceProvider _serviceProvider)
+
+        /// <summary>
+        /// 上下文的作用域参数
+        /// </summary>
+        private MongoContextOptions mongoContextOptions;
+
+        public DefaultMongoRepository(IServiceProvider _serviceProvider, MongoContextOptions _mongoContextOptions)
         {
             serviceProvider = _serviceProvider;
+
+            mongoContextOptions = _mongoContextOptions;
+        }
+
+        /// <summary>
+        /// 切换库
+        /// </summary>
+        /// <param name="dataBase"></param>
+        /// <returns></returns>
+        public Task ChangeDataBase(string dataBase)
+        {
+            dataBase.CheckNull();
+            return Task.Factory.StartNew(() =>
+            {
+                mongoContextOptions.DataBase = dataBase;
+            });
         }
         /// <summary>
         /// 增删改操作

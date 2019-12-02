@@ -22,25 +22,25 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <summary>
         /// 只读的对象池
         /// </summary>
-        private readonly ConcurrentDictionary<string, IMongoClient> ReadOnlyPool;
+        private readonly ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>> ReadOnlyPool;
 
         /// <summary>
         /// 读写的对象池
         /// </summary>
-        private readonly ConcurrentDictionary<string, IMongoClient> WriteReadPool;
+        private readonly ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>> WriteReadPool;
 
         public DefaultMongoClientFactory(IOptions<List<MongoContext>> _mongoContexts)
         {
             mongoContexts = _mongoContexts;
-            ReadOnlyPool = new ConcurrentDictionary<string, IMongoClient>();
-            WriteReadPool = new ConcurrentDictionary<string, IMongoClient>();
+            ReadOnlyPool = new ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>>();
+            WriteReadPool = new ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>>();
         }
         /// <summary>
         /// 获取客户端
         /// </summary>
         /// <typeparam name="TMongoContext"></typeparam>
         /// <returns></returns>
-        public IMongoClient GetMongoClient<TMongoContext>() where TMongoContext : MongoContext
+        public Tuple<IMongoClient, MongoContext> GetMongoClient<TMongoContext>() where TMongoContext : MongoContext
         {
             var contextType = typeof(TMongoContext).Name;
             //从内存中读取mongodb客户端
@@ -51,7 +51,8 @@ namespace Fate.Infrastructure.Mongo.Base
             //获取上下文信息
             var mongoContextInfo = mongoContexts.Value.Where(a => a.ContextTypeName == contextType).FirstOrDefault();
             mongoContextInfo.CheckNull();
-            mongoClientInfo = new MongoClient(mongoContextInfo.ConnectionString);
+            //实例化mongo客户端信息
+            mongoClientInfo = new Tuple<IMongoClient, MongoContext>(new MongoClient(mongoContextInfo.ConnectionString), mongoContextInfo);
             //存储进字典
             WriteReadPool.TryAdd(contextType, mongoClientInfo);
             return mongoClientInfo;
@@ -62,7 +63,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <typeparam name="TMongoContext"></typeparam>
         /// <returns></returns>
 
-        public Task<IMongoClient> GetMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext
+        public Task<Tuple<IMongoClient, MongoContext>> GetMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext
         {
             return Task.Factory.StartNew(() =>
              {
@@ -76,18 +77,24 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <typeparam name="TMongoContext"></typeparam>
         /// <returns></returns>
 
-        public IMongoClient GetReadMongoClient<TMongoContext>() where TMongoContext : MongoContext
+        public Tuple<IMongoClient, MongoContext> GetReadMongoClient<TMongoContext>() where TMongoContext : MongoContext
         {
             var contextType = typeof(TMongoContext).Name;
+            //获取上下文信息
+            var mongoContextInfo = mongoContexts.Value.Where(a => a.ContextTypeName == contextType).FirstOrDefault();
+            mongoContextInfo.CheckNull();
+            //验证是否开启读写分离
+            if (mongoContextInfo.IsOpenMasterSlave == false)
+            {
+                return GetMongoClient<TMongoContext>();
+            }
             //从内存中读取mongodb客户端
             var mongoClientInfo = ReadOnlyPool.Where(a => a.Key == contextType).Select(a => a.Value).FirstOrDefault();
             if (mongoClientInfo != null)
                 return mongoClientInfo;
+            //实例化mongo客户端信息
+            mongoClientInfo = new Tuple<IMongoClient, MongoContext>(new MongoClient(mongoContextInfo.ReadOnlyConnectionString.FirstOrDefault()), mongoContextInfo);
 
-            //获取上下文信息
-            var mongoContextInfo = mongoContexts.Value.Where(a => a.ContextTypeName == contextType).FirstOrDefault();
-            mongoContextInfo.CheckNull();
-            mongoClientInfo = new MongoClient(mongoContextInfo.ReadOnlyConnectionString.FirstOrDefault());
             //存储进字典
             ReadOnlyPool.TryAdd(contextType, mongoClientInfo);
             return mongoClientInfo;
@@ -98,7 +105,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// </summary>
         /// <typeparam name="TMongoContext"></typeparam>
         /// <returns></returns>
-        public Task<IMongoClient> GetReadMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext
+        public Task<Tuple<IMongoClient, MongoContext>> GetReadMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext
         {
             return Task.Factory.StartNew(() =>
             {

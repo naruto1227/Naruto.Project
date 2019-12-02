@@ -3,6 +3,7 @@ using Fate.Infrastructure.Mongo.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Mongo.Interface
 {
@@ -13,6 +14,13 @@ namespace Fate.Infrastructure.Mongo.Interface
     /// </summary>
     public interface IMongoRepository<TMongoContext> where TMongoContext : MongoContext
     {
+        /// <summary>
+        /// 切换库
+        /// </summary>
+        /// <param name="dataBase"></param>
+        /// <returns></returns>
+        Task ChangeDataBase(string dataBase);
+
         /// <summary>
         /// 查询接口
         /// </summary>

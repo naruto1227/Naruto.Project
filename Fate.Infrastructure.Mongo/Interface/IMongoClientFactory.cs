@@ -18,23 +18,23 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// 获取mongo 客户端
         /// </summary>
         /// <returns></returns>
-        Task<IMongoClient> GetMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext;
+        Task<Tuple<IMongoClient, MongoContext>> GetMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext;
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IMongoClient GetMongoClient<TMongoContext>() where TMongoContext : MongoContext;
+        Tuple<IMongoClient, MongoContext> GetMongoClient<TMongoContext>() where TMongoContext : MongoContext;
 
         /// <summary>
         /// 获取读的mongo客户端
         /// </summary>
         /// <returns></returns>
-        IMongoClient GetReadMongoClient<TMongoContext>() where TMongoContext : MongoContext;
+        Tuple<IMongoClient, MongoContext> GetReadMongoClient<TMongoContext>() where TMongoContext : MongoContext;
 
         /// <summary>
         /// 获取读的mongo客户端
         /// </summary>
         /// <returns></returns>
-        Task<IMongoClient> GetReadMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext;
+        Task<Tuple<IMongoClient, MongoContext>> GetReadMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext;
     }
 }

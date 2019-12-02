@@ -18,6 +18,10 @@ namespace Fate.Infrastructure.Mongo.Object
         public string ConnectionString { get; set; }
 
         /// <summary>
+        /// 存储库
+        /// </summary>
+        public string DataBase { get; set; }
+        /// <summary>
         /// 上下文类型名称
         /// </summary>
         public string ContextTypeName { get; set; }

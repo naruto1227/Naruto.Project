@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Fate.XUnitTest
@@ -33,8 +34,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017", ContextTypeName = "TestMongoContext" });
-                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.18.227:27018", ContextTypeName = "Test2MongoContext" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.1.6:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
         }
 
@@ -42,6 +42,13 @@ namespace Fate.XUnitTest
         public void GetServices()
         {
             var repository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
+        }
+
+        [Fact]
+        public async Task CountAsync()
+        {
+            var repository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
+            var res = await repository.Query<TestDTO>().CountAsync(a => 1 == 1);
         }
         [Fact]
         public void Test()
