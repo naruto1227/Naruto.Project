@@ -32,7 +32,7 @@ namespace Fate.FileServerApi
         public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddDirectoryBrowser();
 
@@ -45,9 +45,6 @@ namespace Fate.FileServerApi
             });
             // services.AddDirectoryBrowser();
             services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            ApplicationContainer = services.ConvertToAutofac(0);
-            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

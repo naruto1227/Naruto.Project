@@ -11,6 +11,9 @@ namespace Fate.Infrastructure.Mongo.Object
     /// </summary>
     public class MongoDBOptions
     {
-
+        ///// <summary>
+        ///// mongodb的上下文
+        ///// </summary>
+        //public param MongoContext> MongoContexts { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Fate.Infrastructure.Mongo.Object;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,11 +18,23 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// 获取mongo 客户端
         /// </summary>
         /// <returns></returns>
-        Task<IMongoClient> GetMongoClientAsync();
+        Task<IMongoClient> GetMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext;
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IMongoClient GetMongoClient();
-    }  
+        IMongoClient GetMongoClient<TMongoContext>() where TMongoContext : MongoContext;
+
+        /// <summary>
+        /// 获取读的mongo客户端
+        /// </summary>
+        /// <returns></returns>
+        IMongoClient GetReadMongoClient<TMongoContext>() where TMongoContext : MongoContext;
+
+        /// <summary>
+        /// 获取读的mongo客户端
+        /// </summary>
+        /// <returns></returns>
+        Task<IMongoClient> GetReadMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext;
+    }
 }

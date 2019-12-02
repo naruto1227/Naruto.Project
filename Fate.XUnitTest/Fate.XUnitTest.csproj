@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Fate.Infrastructure.AutofacDependencyInjection\Fate.Infrastructure.AutofacDependencyInjection.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.CAP.Subscribe\Fate.Infrastructure.CAP.Subscribe.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.Mapper\Fate.Infrastructure.Mapper.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Mongo\Fate.Infrastructure.Mongo.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.EFCore\Fate.Infrastructure.OcelotStore.EFCore.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.Redis\Fate.Infrastructure.OcelotStore.Redis.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
