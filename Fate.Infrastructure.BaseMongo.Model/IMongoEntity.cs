@@ -12,8 +12,8 @@ namespace Fate.Infrastructure.BaseMongo.Model
     public abstract class IMongoEntity 
     {
         /// <summary>
-        /// mongodb的主键id
+        /// mongodb的主键id  不可改 字段名称必须为此名称
         /// </summary>
-        public virtual ObjectId MongoId { get; set; }
+        public virtual ObjectId _id { get; set; }
     }
 }

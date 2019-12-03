@@ -47,6 +47,7 @@ using Fate.Infrastructure.Configuration.Management;
 using Fate.Infrastructure.Redis.IRedisManage;
 using Microsoft.Extensions.Hosting;
 using Fate.Infrastructure.AutofacDependencyInjection;
+using Fate.Test.TestClass;
 
 namespace Fate.Test
 {
@@ -93,7 +94,10 @@ namespace Fate.Test
                 configureOptions.UseEntityFramework<ConfigurationDbContent>();
             }
             );
-
+            services.AddMongoServices(options =>
+            {
+                options.Add(new TestMongo() { ConnectionString = "mongodb://192.168.18.227:27017", ContextTypeName = "TestMongo", DataBase = "test" });
+            });
             //使用单号
             //services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
             services.AddPublishConfiguration();

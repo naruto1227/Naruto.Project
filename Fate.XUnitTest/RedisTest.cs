@@ -69,7 +69,7 @@ namespace Fate.XUnitTest
                 //发布
                 await subscriber.PublishAsync("push", item.ToString());
             });
-            
+
         }
         [Fact]
         public async Task RedisTest1()
@@ -98,8 +98,17 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task StringTest()
         {
-            await redis.StringSetAsync("1", "1");
-            await redis.StringGetAsync("1");
+            for (int i = 0; i < 5; i++)
+            {
+                using (var servicesscope = services.BuildServiceProvider().CreateScope())
+                {
+                    var redis = servicesscope.ServiceProvider.GetRequiredService<IRedisOperationHelp>();
+                    await redis.StringSetAsync("1", "1");
+                    await redis.StringGetAsync("1");
+                }
+            }
+           
+
         }
         [Fact]
         public void Store()

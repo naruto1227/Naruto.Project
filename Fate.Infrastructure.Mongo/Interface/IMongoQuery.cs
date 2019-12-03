@@ -1,6 +1,7 @@
 ﻿using Fate.Infrastructure.BaseMongo.Model;
 using Fate.Infrastructure.Mongo.Object;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -29,6 +30,17 @@ namespace Fate.Infrastructure.Mongo.Interface
     /// </summary>
     public interface IMongoQuery<T> where T : class
     {
+        /// <summary>
+        /// mongo的IQueryable扩展
+        /// </summary>
+        /// <returns></returns>
+        IMongoQueryable<T> AsQueryable();
+        /// <summary>
+        /// mongo的IQueryable扩展
+        /// </summary>
+        /// <returns></returns>
+        IMongoQueryable<T> AsQueryable(string collectionName);
+
         #region  同步
 
         #region FilterDefinition
@@ -241,7 +253,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="pageSize">条数</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<T>> FindByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions< T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取总数
@@ -289,7 +301,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<T> FirstOrDefaultAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions< T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FirstOrDefaultAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取单条数据
@@ -308,7 +320,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="pageSize">条数</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<T>> FindByPageAsync(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions< T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindByPageAsync(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 分页查找数据 
@@ -318,7 +330,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="pageSize">条数</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<T>> FindByPageAsync(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions< T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> FindByPageAsync(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取总数

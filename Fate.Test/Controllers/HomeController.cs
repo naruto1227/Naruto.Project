@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Fate.Domain.Model;
 using Fate.Infrastructure.Email;
 using Fate.Infrastructure.Interface;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Fate.Test.Controllers
 {
@@ -31,22 +32,31 @@ namespace Fate.Test.Controllers
         SettingApp setting;
         private IUnitOfWork<MysqlDbContent> unitOfWork;
         private IRedisOperationHelp redis;
+
+        private readonly IServiceProvider serviceProvider;
         RSAHelper rSA;
-        public Home1Controller(SettingApp _setting, IUnitOfWork<MysqlDbContent> _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA)
+        public Home1Controller(SettingApp _setting, IUnitOfWork<MysqlDbContent> _unitOfWork, IRedisOperationHelp _redis, MyJsonResult myJson, RSAHelper _rSA, IServiceProvider _serviceProvider)
         {
             setting = _setting;
             unitOfWork = _unitOfWork;
             redis = _redis;
             jsonResult = myJson;
             rSA = _rSA;
+            serviceProvider = _serviceProvider;
         }
         [HttpGet]
         public async Task test()
         {
+            var redis1 = serviceProvider.GetRequiredService<IRedisOperationHelp>();
+            redis1.StringSet("zhang", "haibo");
+            using (var serviceScope = serviceProvider.CreateScope())
+            {
+                var redis2 = serviceScope.ServiceProvider.GetRequiredService<IRedisOperationHelp>();
+                redis2.StringSet("zhang", "haibo");
 
-            redis.StringSet("zhang", "haibo");
-            await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+            }
             jsonResult.msg = "helloword";
+            await setting.add(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
             //throw new Fate.Infrastructure.Exceptions.NoAuthorizationException("111111111111111");
         }
 

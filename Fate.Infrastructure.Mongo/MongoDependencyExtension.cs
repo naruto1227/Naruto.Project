@@ -32,8 +32,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<MongoContextOptions>();
             services.AddSingleton<IMongoClientFactory, DefaultMongoClientFactory>();
+            services.AddScoped<MongoContextOptions>();
             services.AddScoped(typeof(IMongoQuery<,>), typeof(DefaultMongoQuery<,>));
             services.AddScoped(typeof(IMongoCommand<,>), typeof(DefaultMongoCommand<,>));
             services.AddScoped(typeof(IMongoRepository<>), typeof(DefaultMongoRepository<>));

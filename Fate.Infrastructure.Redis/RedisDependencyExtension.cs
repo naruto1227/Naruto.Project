@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     var classType = redisDependencyTypes.Where(a => a.IsClass && a.GetInterface(item.Name) != null).FirstOrDefault();
                     if (classType != null)
                     {
-                        server.AddScoped(item, classType);
+                        server.AddSingleton(item, classType);
                     }
                 });
             }
