@@ -117,7 +117,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int DeleteMany(FilterDefinition<T> filter, DeleteOptions options = null);
+        long DeleteMany(FilterDefinition<T> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除多条
@@ -125,7 +125,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int DeleteMany(Expression<Func<T, bool>> filter, DeleteOptions options = null);
+        long DeleteMany(Expression<Func<T, bool>> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除多条
@@ -133,7 +133,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int DeleteMany(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null);
+        long DeleteMany(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除多条
@@ -141,7 +141,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        int DeleteMany(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null);
+        long DeleteMany(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 查找一个数据 并且删除掉
@@ -152,7 +152,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         T FindOneAndDelete(FilterDefinition<T> filter, FindOneAndDeleteOptions<T> options = null);
 
         /// <summary>
-        /// 查找一个数据 并且删除掉
+        /// 查找一个数据 并且删除掉(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="options"></param>
@@ -160,7 +160,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         T FindOneAndDelete(Expression<Func<T, bool>> filter, FindOneAndDeleteOptions<T> options = null);
 
         /// <summary>
-        /// 查找一个数据 并且删除掉
+        /// 查找一个数据 并且删除掉(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="options"></param>
@@ -168,7 +168,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         T FindOneAndDelete(string collectionName, FilterDefinition<T> filter, FindOneAndDeleteOptions<T> options = null);
 
         /// <summary>
-        /// 查找一个数据 并且删除掉
+        /// 查找一个数据 并且删除掉(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="options"></param>
@@ -179,106 +179,116 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// 更新单个
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="updateField">需要更新的字段的key和value</param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        UpdateResult UpdateOne(FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null);
+        bool UpdateOne(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新单条
         /// </summary>
+        /// <param name="updateField">需要更新的字段的key和value</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        UpdateResult UpdateOne(Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null);
+        bool UpdateOne(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+
         /// <summary>
         /// 更新单个
         /// </summary>
+        /// <param name="updateField">需要更新的字段的key和value</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        UpdateResult UpdateOne(string collectionName, FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null);
+        bool UpdateOne(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新单条
         /// </summary>
+        /// <param name="updateField">需要更新的字段的key和value</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        UpdateResult UpdateOne(string collectionName, Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null);
-        /// <summary>
-        /// 更新多条数据
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="update"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        UpdateResult UpdateMany(FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null);
+        bool UpdateOne(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新多条数据
         /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        UpdateResult UpdateMany(Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null);
-        /// <summary>
-        /// 更新多条数据
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="update"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        UpdateResult UpdateMany(string collectionName, FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null);
+        bool UpdateMany(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新多条数据
         /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        UpdateResult UpdateMany(string collectionName, Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null);
+        bool UpdateMany(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        /// <summary>
+        /// 更新多条数据
+        /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
+        /// <param name="filter"></param>
+        /// <param name="update"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        bool UpdateMany(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 更新多条数据
+        /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
+        /// <param name="filter"></param>
+        /// <param name="update"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        bool UpdateMany(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+
+        /// <summary>
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FindOneAndUpdate(Expression<Func<T, bool>> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null);
+        T FindOneAndUpdate(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null);
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FindOneAndUpdate(FilterDefinition<T> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null);
+        T FindOneAndUpdate(FilterDefinition<T> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null);
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FindOneAndUpdate(string collectionName, Expression<Func<T, bool>> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null);
+        T FindOneAndUpdate(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null);
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        T FindOneAndUpdate(string collectionName, FilterDefinition<T> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null);
+        T FindOneAndUpdate(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null);
 
         /// <summary>
         /// 替换单个文档
@@ -287,7 +297,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        ReplaceOneResult ReplaceOne(FilterDefinition<T> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(FilterDefinition<T> filter, T replacement, UpdateOptions options = null);
 
         /// <summary>
         /// 替换单个文档
@@ -296,7 +306,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        ReplaceOneResult ReplaceOne(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null);
 
         /// <summary>
         /// 替换单个文档
@@ -305,7 +315,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        ReplaceOneResult ReplaceOne(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null);
 
         /// <summary>
         /// 替换单个文档
@@ -314,10 +324,10 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        ReplaceOneResult ReplaceOne(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null);
 
         /// <summary>
-        /// 查找单个并替换
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="replacement"></param>
@@ -325,7 +335,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <returns></returns>
         T FindOneAndReplace(FilterDefinition<T> filter, T replacement, FindOneAndReplaceOptions<T> options = null);
         /// <summary>
-        /// 查找单个并替换
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="replacement"></param>
@@ -335,7 +345,7 @@ namespace Fate.Infrastructure.Mongo.Interface
 
 
         /// <summary>
-        /// 查找单个并替换
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="replacement"></param>
@@ -343,7 +353,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <returns></returns>
         T FindOneAndReplace(string collectionName, FilterDefinition<T> filter, T replacement, FindOneAndReplaceOptions<T> options = null);
         /// <summary>
-        /// 查找单个并替换
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="replacement"></param>
@@ -442,7 +452,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<int> DeleteManyAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> DeleteManyAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除多条
@@ -450,16 +460,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<int> DeleteManyAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// 删除多条
-        /// </summary>
-        /// <param name="collectionName">集合名称</param>
-        /// <param name="filter"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        Task<int> DeleteManyAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> DeleteManyAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除多条
@@ -468,10 +469,19 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<int> DeleteManyAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> DeleteManyAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找一个数据 并且删除掉
+        /// 删除多条
+        /// </summary>
+        /// <param name="collectionName">集合名称</param>
+        /// <param name="filter"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<long> DeleteManyAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 查找一个数据 并且删除掉(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="options"></param>
@@ -479,7 +489,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         Task<T> FindOneAndDeleteAsync(FilterDefinition<T> filter, FindOneAndDeleteOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找一个数据 并且删除掉
+        /// 查找一个数据 并且删除掉(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="options"></param>
@@ -487,7 +497,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         Task<T> FindOneAndDeleteAsync(Expression<Func<T, bool>> filter, FindOneAndDeleteOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找一个数据 并且删除掉
+        /// 查找一个数据 并且删除掉(返回旧数据)
         /// </summary>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
@@ -496,7 +506,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         Task<T> FindOneAndDeleteAsync(string collectionName, FilterDefinition<T> filter, FindOneAndDeleteOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找一个数据 并且删除掉
+        /// 查找一个数据 并且删除掉(返回旧数据)
         /// </summary>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
@@ -507,114 +517,122 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <summary>
         /// 更新单个
         /// </summary>
+        /// <param name="updateField">需要更改的字段</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<UpdateResult> UpdateOneAsync(FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateOneAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 更新单条
         /// </summary>
+        /// <param name="updateField">需要更改的字段</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<UpdateResult> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新单个
         /// </summary>
+        /// <param name="updateField">需要更改的字段</param>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<UpdateResult> UpdateOneAsync(string collectionName, FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateOneAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 更新单条
         /// </summary>
+        /// <param name="updateField">需要更改的字段</param>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<UpdateResult> UpdateOneAsync(string collectionName, Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateOneAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新多条数据
         /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<UpdateResult> UpdateManyAsync(FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// 更新多条数据
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="update"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        Task<UpdateResult> UpdateManyAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
-        /// <summary>
-        /// 更新多条数据
-        /// </summary>
-        /// <param name="collectionName">集合名称</param>
-        /// <param name="filter"></param>
-        /// <param name="update"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        Task<UpdateResult> UpdateManyAsync(string collectionName, FilterDefinition<T> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
-
+        Task<bool> UpdateManyAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 更新多条数据
         /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
+        /// <param name="filter"></param>
+        /// <param name="update"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<bool> UpdateManyAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// 更新多条数据
+        /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<UpdateResult> UpdateManyAsync(string collectionName, Expression<Func<T, bool>> filter, UpdateDefinition<T> update, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateManyAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 更新多条数据
+        /// </summary>
+        /// <param name="updateField">需要更新的字段</param>
+        /// <param name="collectionName">集合名称</param>
+        /// <param name="filter"></param>
+        /// <param name="update"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<bool> UpdateManyAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<T> FindOneAndUpdateAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FindOneAndUpdateAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<T> FindOneAndUpdateAsync(FilterDefinition<T> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FindOneAndUpdateAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<T> FindOneAndUpdateAsync(string collectionName, Expression<Func<T, bool>> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FindOneAndUpdateAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找一条数据并且更新
+        /// 查找一条数据并且更新(返回旧数据)
         /// </summary>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<T> FindOneAndUpdateAsync(string collectionName, FilterDefinition<T> filter, UpdateDefinition<T> update, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<T> FindOneAndUpdateAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, FindOneAndUpdateOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 替换单个文档
@@ -623,7 +641,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<ReplaceOneResult> ReplaceOneAsync(FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> ReplaceOneAsync(FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 替换单个文档
@@ -632,17 +650,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<ReplaceOneResult> ReplaceOneAsync(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// 替换单个文档
-        /// </summary>
-        /// <param name="collectionName">集合名称</param>
-        /// <param name="filter"></param>
-        /// <param name="replacement"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        Task<ReplaceOneResult> ReplaceOneAsync(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> ReplaceOneAsync(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 替换单个文档
@@ -652,10 +660,20 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<ReplaceOneResult> ReplaceOneAsync(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> ReplaceOneAsync(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 查找单个并替换
+        /// 替换单个文档
+        /// </summary>
+        /// <param name="collectionName">集合名称</param>
+        /// <param name="filter"></param>
+        /// <param name="replacement"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<bool> ReplaceOneAsync(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="replacement"></param>
@@ -663,7 +681,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <returns></returns>
         Task<T> FindOneAndReplaceAsync(FilterDefinition<T> filter, T replacement, FindOneAndReplaceOptions<T> options = null, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 查找单个并替换
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="replacement"></param>
@@ -671,7 +689,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <returns></returns>
         Task<T> FindOneAndReplaceAsync(Expression<Func<T, bool>> filter, T replacement, FindOneAndReplaceOptions<T> options = null, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 查找单个并替换
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>
@@ -680,7 +698,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <returns></returns>
         Task<T> FindOneAndReplaceAsync(string collectionName, FilterDefinition<T> filter, T replacement, FindOneAndReplaceOptions<T> options = null, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 查找单个并替换
+        /// 查找单个并替换(返回旧数据)
         /// </summary>
         /// <param name="collectionName">集合名称</param>
         /// <param name="filter"></param>

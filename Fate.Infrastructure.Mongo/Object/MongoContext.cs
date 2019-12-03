@@ -21,6 +21,15 @@ namespace Fate.Infrastructure.Mongo.Object
         /// 存储库
         /// </summary>
         public string DataBase { get; set; }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string Password { get; set; }
         /// <summary>
         /// 上下文类型名称
         /// </summary>

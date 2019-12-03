@@ -23,7 +23,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <summary>
         /// mongo存储库接口
         /// </summary>
-        private IMongoDatabase mongoDatabase;
+        private Lazy<IMongoDatabase> mongoDatabase;
 
         /// <summary>
         /// mongo客户端
@@ -36,19 +36,19 @@ namespace Fate.Infrastructure.Mongo.Base
             //获取mongo客户端信息
             var mongoClientInfo = _mongoClientFactory.GetMongoClient<TMongoContext>();
             mongoClient = mongoClientInfo.Item1;
-            mongoDatabase = mongoClient.GetDatabase(mongoClientInfo.Item2.DataBase);
+            mongoDatabase = new Lazy<IMongoDatabase>(mongoClient.GetDatabase(mongoClientInfo.Item2.DataBase));
         }
 
         public TResult Exec<TResult>(Func<IMongoDatabase, TResult> action)
         {
             ChangeDataBase();
-            return action(mongoDatabase);
+            return action(mongoDatabase.Value);
         }
 
         public void Exec(Action<IMongoDatabase> action)
         {
             ChangeDataBase();
-            action(mongoDatabase);
+            action(mongoDatabase.Value);
         }
         /// <summary>
         /// 切换存储库
@@ -57,7 +57,7 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             if (!mongoContextOptions.DataBase.IsNullOrEmpty())
             {
-                mongoDatabase = mongoClient.GetDatabase(mongoContextOptions.DataBase);
+                mongoDatabase = new Lazy<IMongoDatabase>(mongoClient.GetDatabase(mongoContextOptions.DataBase));
             }
         }
     }
@@ -79,7 +79,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <summary>
         /// mongo存储库接口
         /// </summary>
-        private IMongoDatabase mongoDatabase;
+        private Lazy<IMongoDatabase> mongoDatabase;
 
         /// <summary>
         /// mongo客户端
@@ -93,19 +93,19 @@ namespace Fate.Infrastructure.Mongo.Base
             //获取mongo客户端信息
             var mongoClientInfo = _mongoClientFactory.GetReadMongoClient<TMongoContext>();
             mongoClient = mongoClientInfo.Item1;
-            mongoDatabase = mongoClient.GetDatabase(mongoClientInfo.Item2.DataBase);
+            mongoDatabase = new Lazy<IMongoDatabase>(mongoClient.GetDatabase(mongoClientInfo.Item2.DataBase));
         }
 
         public TResult Exec<TResult>(Func<IMongoDatabase, TResult> action)
         {
             ChangeDataBase();
-            return action(mongoDatabase);
+            return action(mongoDatabase.Value);
         }
 
         public void Exec(Action<IMongoDatabase> action)
         {
             ChangeDataBase();
-            action(mongoDatabase);
+            action(mongoDatabase.Value);
         }
         /// <summary>
         /// 切换存储库
@@ -114,7 +114,7 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             if (!mongoContextOptions.DataBase.IsNullOrEmpty())
             {
-                mongoDatabase = mongoClient.GetDatabase(mongoContextOptions.DataBase);
+                mongoDatabase = new Lazy<IMongoDatabase>(mongoClient.GetDatabase(mongoContextOptions.DataBase));
             }
         }
     }

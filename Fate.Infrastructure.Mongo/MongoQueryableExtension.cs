@@ -1,9 +1,9 @@
-﻿using MongoDB.Driver.Linq;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Infrastructure.Mongo
+namespace MongoDB.Driver.Linq
 {
     public static class MongoQueryableExtension
     {
