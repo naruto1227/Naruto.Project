@@ -13,7 +13,7 @@ namespace Fate.Infrastructure.Mongo.Object
     public abstract class MongoContext
     {
         /// <summary>
-        /// 连接字符串
+        /// 连接字符串(127.0.0.1:27017)
         /// </summary>
         public string ConnectionString { get; set; }
 
@@ -25,11 +25,11 @@ namespace Fate.Infrastructure.Mongo.Object
         /// <summary>
         /// 用户名
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
         /// <summary>
         /// 上下文类型名称
         /// </summary>

@@ -112,5 +112,12 @@ namespace Fate.Infrastructure.Mongo.Base
                 return GetReadMongoClient<TMongoContext>();
             });
         }
+
+        private MongoClientSettings MongoClientSettings()
+        {
+            return new MongoClientSettings()
+            {
+            };
+        }
     }
 }

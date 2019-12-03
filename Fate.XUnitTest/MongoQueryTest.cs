@@ -45,7 +45,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.1.6:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
@@ -76,8 +76,8 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Find()
         {
-            var res = await mongoRepository.Query<TestDTO>().FindAsync("test2", a => true);
-            res = mongoRepository.Query<TestDTO>().Find("test2", a => true);
+            var res = await mongoRepository.Query<TestDTO>().FindAsync(a => true);
+         //   res = mongoRepository.Query<TestDTO>().Find("test2", a => true);
         }
 
 
