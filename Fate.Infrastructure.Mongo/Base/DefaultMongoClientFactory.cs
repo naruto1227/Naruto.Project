@@ -20,20 +20,14 @@ namespace Fate.Infrastructure.Mongo.Base
     {
         private readonly IOptions<List<MongoContext>> mongoContexts;
         /// <summary>
-        /// 只读的对象池
+        /// mongoclient的对象池
         /// </summary>
-        private readonly ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>> ReadOnlyPool;
-
-        /// <summary>
-        /// 读写的对象池
-        /// </summary>
-        private readonly ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>> WriteReadPool;
+        private readonly ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>> MongoClientPool;
 
         public DefaultMongoClientFactory(IOptions<List<MongoContext>> _mongoContexts)
         {
             mongoContexts = _mongoContexts;
-            ReadOnlyPool = new ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>>();
-            WriteReadPool = new ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>>();
+            MongoClientPool = new ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>>();
         }
         /// <summary>
         /// 获取客户端
@@ -44,7 +38,7 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             var contextType = typeof(TMongoContext).Name;
             //从内存中读取mongodb客户端
-            var mongoClientInfo = WriteReadPool.Where(a => a.Key == contextType).Select(a => a.Value).FirstOrDefault();
+            var mongoClientInfo = MongoClientPool.Where(a => a.Key == contextType).Select(a => a.Value).FirstOrDefault();
             if (mongoClientInfo != null)
                 return mongoClientInfo;
 
@@ -54,7 +48,7 @@ namespace Fate.Infrastructure.Mongo.Base
             //实例化mongo客户端信息
             mongoClientInfo = new Tuple<IMongoClient, MongoContext>(new MongoClient(mongoContextInfo.ConnectionString), mongoContextInfo);
             //存储进字典
-            WriteReadPool.TryAdd(contextType, mongoClientInfo);
+            MongoClientPool.TryAdd(contextType, mongoClientInfo);
             return mongoClientInfo;
         }
         /// <summary>
@@ -69,48 +63,6 @@ namespace Fate.Infrastructure.Mongo.Base
              {
                  return GetMongoClient<TMongoContext>();
              });
-        }
-
-        /// <summary>
-        /// 获取只读的客户端
-        /// </summary>
-        /// <typeparam name="TMongoContext"></typeparam>
-        /// <returns></returns>
-
-        public Tuple<IMongoClient, MongoContext> GetReadMongoClient<TMongoContext>() where TMongoContext : MongoContext
-        {
-            var contextType = typeof(TMongoContext).Name;
-            //获取上下文信息
-            var mongoContextInfo = mongoContexts.Value.Where(a => a.ContextTypeName == contextType).FirstOrDefault();
-            mongoContextInfo.CheckNull();
-            //验证是否开启读写分离
-            if (mongoContextInfo.IsOpenMasterSlave == false)
-            {
-                return GetMongoClient<TMongoContext>();
-            }
-            //从内存中读取mongodb客户端
-            var mongoClientInfo = ReadOnlyPool.Where(a => a.Key == contextType).Select(a => a.Value).FirstOrDefault();
-            if (mongoClientInfo != null)
-                return mongoClientInfo;
-            //实例化mongo客户端信息
-            mongoClientInfo = new Tuple<IMongoClient, MongoContext>(new MongoClient(mongoContextInfo.ReadOnlyConnectionString.FirstOrDefault()), mongoContextInfo);
-
-            //存储进字典
-            ReadOnlyPool.TryAdd(contextType, mongoClientInfo);
-            return mongoClientInfo;
-        }
-
-        /// <summary>
-        /// 获取只写的客户端
-        /// </summary>
-        /// <typeparam name="TMongoContext"></typeparam>
-        /// <returns></returns>
-        public Task<Tuple<IMongoClient, MongoContext>> GetReadMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext
-        {
-            return Task.Factory.StartNew(() =>
-            {
-                return GetReadMongoClient<TMongoContext>();
-            });
         }
 
         private MongoClientSettings MongoClientSettings()

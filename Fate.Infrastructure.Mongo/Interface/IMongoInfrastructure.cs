@@ -11,21 +11,11 @@ namespace Fate.Infrastructure.Mongo.Interface
     /// 2019-12-2
     /// mongo基础设施的读写抽象接口
     /// </summary>
-    public interface IMongoWriteReadInfrastructure<TMongoContext> : IMongoInfrastructure where TMongoContext : MongoContext
+    public interface IMongoInfrastructure<TMongoContext> : IMongoInfrastructure where TMongoContext : MongoContext
     {
 
     }
 
-
-    /// <summary>
-    /// 张海波
-    /// 2019-12-2
-    /// mongo基础设施的只读抽象接口
-    /// </summary>
-    public interface IMongoReadInfrastructure<TMongoContext> : IMongoInfrastructure where TMongoContext : MongoContext
-    {
-
-    }
 
     /// <summary>
     /// 张海波

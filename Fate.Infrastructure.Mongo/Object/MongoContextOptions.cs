@@ -14,6 +14,6 @@ namespace Fate.Infrastructure.Mongo.Object
         /// <summary>
         /// 存储库
         /// </summary>
-        internal string DataBase { get; set; } = default;
+        internal string ChangeDataBase { get; set; } = default;
     }
 }

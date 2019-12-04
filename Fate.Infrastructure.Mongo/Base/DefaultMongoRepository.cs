@@ -42,7 +42,7 @@ namespace Fate.Infrastructure.Mongo.Base
             dataBase.CheckNull();
             return Task.Factory.StartNew(() =>
             {
-                mongoContextOptions.DataBase = dataBase;
+                mongoContextOptions.ChangeDataBase = dataBase;
             });
         }
         /// <summary>

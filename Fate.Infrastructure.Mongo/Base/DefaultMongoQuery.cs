@@ -21,17 +21,17 @@ namespace Fate.Infrastructure.Mongo.Base
     public class DefaultMongoQuery<T, TMongoContext> : IMongoQuery<T, TMongoContext> where T : class where TMongoContext : MongoContext
     {
         /// <summary>
-        /// 只读的基础设施
+        /// mongo客户端基础设施
         /// </summary>
-        private readonly IMongoReadInfrastructure<TMongoContext> readInfrastructure;
+        private readonly IMongoInfrastructure<TMongoContext> infrastructure;
         /// <summary>
         /// 实体的类型名
         /// </summary>
         private readonly string collectionTypeName = typeof(T).Name;
 
-        public DefaultMongoQuery(IMongoReadInfrastructure<TMongoContext> _readInfrastructure)
+        public DefaultMongoQuery(IMongoInfrastructure<TMongoContext> _infrastructure)
         {
-            readInfrastructure = _readInfrastructure;
+            infrastructure = _infrastructure;
         }
 
 
@@ -50,7 +50,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public IMongoQueryable<T> AsQueryable(string collectionName)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).AsQueryable();
             });
@@ -64,7 +64,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public long Count(string collectionName, FilterDefinition<T> filter, CountOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).CountDocuments(filter, options);
             });
@@ -89,7 +89,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public long Count(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).CountDocuments(filter, options);
             });
@@ -114,7 +114,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public Task<long> CountAsync(string collectionName, FilterDefinition<T> filter, CountOptions options = null, CancellationToken cancellationToken = default)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).CountDocumentsAsync(filter, options, cancellationToken);
             });
@@ -139,7 +139,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public Task<long> CountAsync(string collectionName, Expression<Func<T, bool>> filter, CountOptions options = null, CancellationToken cancellationToken = default)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).CountDocumentsAsync(filter, options, cancellationToken);
             });
@@ -164,7 +164,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public List<T> Find(string collectionName, FilterDefinition<T> filter, FindOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).Find(filter, options).ToList();
             });
@@ -189,7 +189,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public List<T> Find(string collectionName, Expression<Func<T, bool>> filter, FindOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).Find(filter, options).ToList();
             });
@@ -214,7 +214,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<List<T>> FindAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await readInfrastructure.Exec(async database =>
+            return await infrastructure.Exec(async database =>
             {
                 return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
             });
@@ -239,7 +239,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<List<T>> FindAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await readInfrastructure.Exec(async database =>
+            return await infrastructure.Exec(async database =>
             {
                 return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
             });
@@ -264,7 +264,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public List<T> FindByPage(string collectionName, FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).Find(filter, options).Skip(((pageIndex < 0 ? 1 : pageIndex) - 1) * pageSize).Limit(pageSize).ToList();
             });
@@ -289,7 +289,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public List<T> FindByPage(string collectionName, Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return database.GetCollection<T>(collectionName).Find(filter, options).Skip(((pageIndex < 0 ? 1 : pageIndex) - 1) * pageSize).Limit(pageSize).ToList();
             });
@@ -325,7 +325,7 @@ namespace Fate.Infrastructure.Mongo.Base
             if (pageSize > 0 && options.Limit <= 0)
                 options.Limit = pageSize;
 
-            return await readInfrastructure.Exec(async database =>
+            return await infrastructure.Exec(async database =>
             {
                 return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
             });
@@ -358,7 +358,7 @@ namespace Fate.Infrastructure.Mongo.Base
             if (pageSize > 0 && options.Limit <= 0)
                 options.Limit = pageSize;
 
-            return await readInfrastructure.Exec(async database =>
+            return await infrastructure.Exec(async database =>
             {
                 return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
             });
@@ -383,7 +383,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public T FirstOrDefault(string collectionName, FilterDefinition<T> filter, FindOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
           {
               return (database.GetCollection<T>(collectionName).Find(filter, options)).FirstOrDefault();
           });
@@ -408,7 +408,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public T FirstOrDefault(string collectionName, Expression<Func<T, bool>> filter, FindOptions options = null)
         {
-            return readInfrastructure.Exec(database =>
+            return infrastructure.Exec(database =>
             {
                 return (database.GetCollection<T>(collectionName).Find(filter, options)).FirstOrDefault();
             });
@@ -434,7 +434,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<T> FirstOrDefaultAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await readInfrastructure.Exec(async database =>
+            return await infrastructure.Exec(async database =>
             {
                 return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).FirstOrDefaultAsync(cancellationToken);
             });
@@ -459,7 +459,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<T> FirstOrDefaultAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await readInfrastructure.Exec(async database =>
+            return await infrastructure.Exec(async database =>
             {
                 return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).FirstOrDefaultAsync(cancellationToken);
             });

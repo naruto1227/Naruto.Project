@@ -45,7 +45,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.1.6:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }

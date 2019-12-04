@@ -37,8 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped(typeof(IMongoQuery<,>), typeof(DefaultMongoQuery<,>));
             services.AddScoped(typeof(IMongoCommand<,>), typeof(DefaultMongoCommand<,>));
             services.AddScoped(typeof(IMongoRepository<>), typeof(DefaultMongoRepository<>));
-            services.AddScoped(typeof(IMongoReadInfrastructure<>), typeof(MongoReadInfrastructure<>));
-            services.AddScoped(typeof(IMongoWriteReadInfrastructure<>), typeof(MongoWriteReadInfrastructure<>));
+            services.AddScoped(typeof(IMongoInfrastructure<>), typeof(MongoInfrastructure<>));
             return services;
         }
     }
