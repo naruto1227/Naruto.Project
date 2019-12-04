@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Fate.Infrastructure.Options;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Fate.Infrastructure.Email
 {
@@ -25,10 +26,13 @@ namespace Fate.Infrastructure.Email
 
         private readonly ILogger<EmailKit> logger;
 
-        public EmailKit(IOptions<EmailOptions> _emailOptions, ILogger<EmailKit> _logger)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public EmailKit(IOptions<EmailOptions> _emailOptions, ILogger<EmailKit> _logger, IWebHostEnvironment _webHostEnvironment)
         {
             emailOptions = _emailOptions;
             logger = _logger;
+            webHostEnvironment = _webHostEnvironment;
         }
         /// <summary>
         /// 发邮件
@@ -45,6 +49,10 @@ namespace Fate.Infrastructure.Email
             if (string.IsNullOrWhiteSpace(msgToEmail))
             {
                 throw new ArgumentNullException(nameof(msgToEmail));
+            }
+            if (title != null)
+            {
+                title = $"{webHostEnvironment.EnvironmentName}:{title}";
             }
             var msgToEmails = msgToEmail.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             if (msgToEmails == null || msgToEmails.Length <= 0)
