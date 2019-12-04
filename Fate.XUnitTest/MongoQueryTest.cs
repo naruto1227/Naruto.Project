@@ -57,6 +57,12 @@ namespace Fate.XUnitTest
         }
 
         [Fact]
+        public async Task BsonDocument()
+        {
+            var list = await mongoRepository.Query<BsonDocument>().FindAsync(Builders<BsonDocument>.Filter.Eq("name", "hai"));
+        }
+
+        [Fact]
         public async Task CountAsync()
         {
             var repository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
@@ -77,18 +83,18 @@ namespace Fate.XUnitTest
         public async Task Find()
         {
             var res = await mongoRepository.Query<TestDTO>().FindAsync(a => true);
-         //   res = mongoRepository.Query<TestDTO>().Find("test2", a => true);
+            //   res = mongoRepository.Query<TestDTO>().Find("test2", a => true);
         }
 
 
         [Fact]
         public async Task FindByPage()
         {
-            var res = await mongoRepository.Query<TestDTO>().FindByPageAsync(a => true, 1, 1, new FindOptions<TestDTO>()
+            var res = await mongoRepository.Query<TestDTO>().FindByPageAsync(a => true, 1, 100, new FindOptions<TestDTO>()
             {
-                Sort = Builders<TestDTO>.Sort.Ascending("Age")
+                Sort = Builders<TestDTO>.Sort.Ascending("Hobbit")
             });
-            res = mongoRepository.Query<TestDTO>().FindByPage("test2", a => true, 1, 1);
+            res = mongoRepository.Query<TestDTO>().FindByPage(a => true, 1, 1);
         }
 
         [Fact]

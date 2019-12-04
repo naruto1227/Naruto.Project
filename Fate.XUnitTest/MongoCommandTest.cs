@@ -1,5 +1,6 @@
 ﻿using Fate.Infrastructure.Mongo.Interface;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using SharpCompress.Archives;
 using System;
@@ -19,11 +20,19 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
-
+        [Fact]
+        public async Task BsonDocument()
+        {
+            await mongoRepository.Command<BsonDocument>().InsertOneAsync(new BsonDocument
+            {
+                { "name","hai"},
+                { "age","nian"}
+            });
+        }
         [Fact]
         public async Task BulkWrite()
         {
@@ -49,7 +58,7 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Insert()
         {
-           // await mongoRepository.ChangeDataBase("test2");
+            // await mongoRepository.ChangeDataBase("test2");
             mongoRepository.Command<TestDTO>().InsertOne(new TestDTO()
             {
                 Name = "王五"
