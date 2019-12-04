@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <Description>ocelot网关的配置存储方式替代为mysql存储</Description>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Ocelot" Version="13.8.0" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>

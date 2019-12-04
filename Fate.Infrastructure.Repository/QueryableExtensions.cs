@@ -36,6 +36,7 @@ namespace System.Linq
                 .GetEnumerator();
 
             var enumeratorType = enumerator.GetType();
+            var str = enumeratorType.GetFields();
             //获取查询表达式列
             var selectFieldInfo = enumeratorType.GetField("_selectExpression", bindingFlags) ?? throw new InvalidOperationException($"cannot find field _selectExpression on type {enumeratorType.Name}");
             //获取sql工厂
