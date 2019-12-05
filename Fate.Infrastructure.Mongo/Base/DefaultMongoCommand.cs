@@ -23,14 +23,14 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <summary>
         /// 读写的基础设施
         /// </summary>
-        private readonly IMongoInfrastructure<TMongoContext> infrastructure;
+        private readonly IMongoInfrastructureBase<TMongoContext> infrastructure;
         /// <summary>
         /// 实体的类型名
         /// </summary>
         private readonly string collectionTypeName = typeof(T).Name;
 
 
-        public DefaultMongoCommand(IMongoInfrastructure<TMongoContext> _infrastructure)
+        public DefaultMongoCommand(IMongoInfrastructureBase<TMongoContext> _infrastructure)
         {
             infrastructure = _infrastructure;
         }
@@ -53,7 +53,13 @@ namespace Fate.Infrastructure.Mongo.Base
                 return database.GetCollection<T>(collectionName).BulkWrite(requests, options);
             });
         }
-
+        /// <summary>
+        /// 批量操作
+        /// </summary>
+        /// <param name="requests"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<BulkWriteResult<T>> BulkWriteAsync(IEnumerable<WriteModel<T>> requests, BulkWriteOptions options = null, CancellationToken cancellationToken = default)
         {
             return BulkWriteAsync(collectionTypeName, requests, options, cancellationToken);
@@ -66,7 +72,12 @@ namespace Fate.Infrastructure.Mongo.Base
                 return database.GetCollection<T>(collectionName).BulkWriteAsync(requests, options, cancellationToken);
             });
         }
-
+        /// <summary>
+        /// 删除多个
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public long DeleteMany(FilterDefinition<T> filter, DeleteOptions options = null)
         {
             return DeleteMany(collectionTypeName, filter, options);

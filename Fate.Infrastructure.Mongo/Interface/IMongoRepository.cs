@@ -34,5 +34,18 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         IMongoCommand<T> Command<T>() where T : class;
+
+        /// <summary>
+        /// database的操作
+        /// </summary>
+        /// <returns></returns>
+        IMongoDataBaseInfrastructure DataBaseInfrastructure();
+
+        /// <summary>
+        /// 索引的操作
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        IMongoIndexInfrastructure<T> IndexInfrastructure<T>() where T : class;
     }
 }

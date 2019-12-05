@@ -13,7 +13,7 @@ namespace Fate.Infrastructure.Mongo.Base
     /// mongo基础设施接口的默认实现
     /// </summary>
     /// <typeparam name="TMongoContext"></typeparam>
-    public class MongoInfrastructure<TMongoContext> : IMongoInfrastructure<TMongoContext> where TMongoContext : MongoContext
+    public class MongoInfrastructureBase<TMongoContext> : IMongoInfrastructureBase<TMongoContext> where TMongoContext : MongoContext
     {
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// </summary>
         private readonly IMongoClient mongoClient;
 
-        public MongoInfrastructure(MongoContextOptions _mongoContextOptions, IMongoClientFactory _mongoClientFactory)
+        public MongoInfrastructureBase(MongoContextOptions _mongoContextOptions, IMongoClientFactory _mongoClientFactory)
         {
             mongoContextOptions = _mongoContextOptions;
             //获取mongo客户端信息
@@ -61,4 +61,8 @@ namespace Fate.Infrastructure.Mongo.Base
             }
         }
     }
+
+
+
+
 }

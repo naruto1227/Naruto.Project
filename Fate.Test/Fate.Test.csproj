@@ -38,4 +38,6 @@
     <ProjectReference Include="..\Fate.WebApi\Fate.WebApi.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -63,5 +63,24 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return serviceProvider.GetRequiredService<IMongoQuery<T, TMongoContext>>();
         }
+
+        /// <summary>
+        /// database的操作
+        /// </summary>
+        /// <returns></returns>
+        public IMongoDataBaseInfrastructure DataBaseInfrastructure()
+        {
+            return serviceProvider.GetRequiredService<IMongoDataBaseInfrastructure<TMongoContext>>();
+        }
+
+        /// <summary>
+        /// 索引的操作
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IMongoIndexInfrastructure<T> IndexInfrastructure<T>() where T : class
+        {
+            return serviceProvider.GetRequiredService<IMongoIndexInfrastructure<T, TMongoContext>>();
+        }
     }
 }

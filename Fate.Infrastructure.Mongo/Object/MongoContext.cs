@@ -10,7 +10,7 @@ namespace Fate.Infrastructure.Mongo.Object
     /// mongodb的上下文 配置mongo的参数
     /// 每次连接上下文需要继承此对象
     /// </summary>
-    public abstract class MongoContext
+    public class MongoContext
     {
         /// <summary>
         /// 连接字符串

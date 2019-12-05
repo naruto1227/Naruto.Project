@@ -1,7 +1,18 @@
 ﻿## 接口对象说明
->| 类 | 注释 |
->| :-----:| :----: |
->| MongoDependencyExtension | 依赖注入扩展 |
+>| 类 | 默认实现类 | 注释 |
+>| :-----:| :----: | :----: |
+>| MongoDependencyExtension |  | 依赖注入扩展 |
+>| IMongoClientFactory | DefaultMongoClientFactory | <b>IMongoClient</b>工厂获取 |
+>| IMongoCommand | DefaultMongoCommand | 数据的增删改接口 |
+>| IMongoDataBaseInfrastructure | DefaultMongoDataBaseInfrastructure | 操作MongoDataBase接口 |
+>| IMongoIndexInfrastructure | DefaultMongoIndexInfrastructure | 操作集合的索引 |
+>| IMongoInfrastructureBase | MongoInfrastructureBase| 数据的基础设施接口 |
+>| IMongoQuery | DefaultMongoQuery | 数据的查询接口 |
+>| IMongoRepository | DefaultMongoRepository | mongo仓储的入口 |
+>| MongoContext |  | mongo的上下文,每个Mongo上下文类需要继承此对象用来配置连接等参数，多租户模式只需要配置多个<b>MongoContext</b>子类 |
+>| MongoContextOptions |  | 在每次上下文的请求中，存储的数据 |
+>| MongoQueryableExtension |  | IMongoQueryable的扩展 |
+
 
 ## Mongodb 的连接实例
 >mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]

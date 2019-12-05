@@ -34,10 +34,18 @@ namespace Fate.Test
         {
             mongoRepository = _mongoRepository;
         }
-
-        public async Task Count()
+        [HttpGet]
+        public async Task insert()
         {
-            var res = await mongoRepository.Query<TestDTO>().CountAsync("test1", a => 1 == 1);
+            var list = new List<TestDTO>();
+            for (int i = 0; i < 10; i++)
+            {
+                list.Add(new TestDTO()
+                {
+                    Name = "张三" + i
+                });
+            }
+            await mongoRepository.Command<TestDTO>().InsertManyAsync(list);
         }
     }
 }

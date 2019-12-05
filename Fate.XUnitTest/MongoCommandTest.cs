@@ -20,7 +20,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.1.6:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27021", ContextTypeName = "TestMongoContext", DataBase = "test" });
                 //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
@@ -59,29 +59,32 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Insert()
         {
-            // await mongoRepository.ChangeDataBase("test2");
-            mongoRepository.Command<TestDTO>().InsertOne(new TestDTO()
-            {
-                Name = "王五"
-            });
+            Parallel.For(0, 30000, async item =>
+             {
+                 // await mongoRepository.ChangeDataBase("test2");
+                 mongoRepository.Command<TestDTO>().InsertOne(new TestDTO()
+                 {
+                     Name = "王五"
+                 });
 
-            await mongoRepository.Command<TestDTO>().InsertOneAsync(new TestDTO()
-            {
-                Name = "王五"
-            });
-            var list = await mongoRepository.Query<TestDTO>().FindAsync(a => a.Name == "王五");
+                 await mongoRepository.Command<TestDTO>().InsertOneAsync(new TestDTO()
+                 {
+                     Name = "王五"
+                 });
+                 var list = await mongoRepository.Query<TestDTO>().FindAsync(a => a.Name == "王五");
 
-            mongoRepository.Command<TestDTO>().InsertMany(new List<TestDTO>()
-            {
+                 mongoRepository.Command<TestDTO>().InsertMany(new List<TestDTO>()
+             {
                new TestDTO(){  Name="王五"},
                new TestDTO(){  Name="王五", Age=11}
-            });
-            await mongoRepository.Command<TestDTO>().InsertManyAsync(new List<TestDTO>()
-            {
+             });
+                 await mongoRepository.Command<TestDTO>().InsertManyAsync(new List<TestDTO>()
+             {
                new TestDTO(){  Name="王五"},
                new TestDTO(){  Name="王五", Age=11}
-            });
-            list = await mongoRepository.Query<TestDTO>().FindAsync(Builders<TestDTO>.Filter.Eq(a => a.Name, "王五"));
+             });
+                 list = await mongoRepository.Query<TestDTO>().FindAsync(Builders<TestDTO>.Filter.Eq(a => a.Name, "王五"));
+             });
         }
         /// <summary>
         /// 删除

@@ -6,15 +6,6 @@ using System.Text;
 
 namespace Fate.Infrastructure.Mongo.Interface
 {
-    /// <summary>
-    /// 张海波
-    /// 2019-12-2
-    /// mongo基础设施的读写抽象接口
-    /// </summary>
-    public interface IMongoInfrastructure<TMongoContext> : IMongoInfrastructure where TMongoContext : MongoContext
-    {
-
-    }
 
 
     /// <summary>
@@ -22,7 +13,7 @@ namespace Fate.Infrastructure.Mongo.Interface
     /// 2019-12-2
     /// mongo基础设施的通用接口
     /// </summary>
-    public interface IMongoInfrastructure
+    public interface IMongoInfrastructureBase
     {
         /// <summary>
         /// 执行操作
@@ -38,4 +29,15 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <returns></returns>
         void Exec(Action<IMongoDatabase> action);
     }
+
+    /// <summary>
+    /// 张海波
+    /// 2019-12-2
+    /// mongo基础设施的读写抽象接口
+    /// </summary>
+    public interface IMongoInfrastructureBase<TMongoContext> : IMongoInfrastructureBase where TMongoContext : MongoContext
+    {
+
+    }
+
 }
