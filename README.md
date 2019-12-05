@@ -1,5 +1,5 @@
 ﻿# Fate.Project 
-> 本框架采用的.Net Core 2.2 的框架,用的DDD的思想，实现了Redis,EFCore,Consul,Ocelot,Mapper,AutoFac,RabbitMQ,IdentityServer4的一套分布式快速开发的框架.
+> 本框架采用的.Net Core 3.1 的框架,用的DDD的思想，实现了Redis,EFCore,MongoDB,VirtualFile,Consul,Ocelot,Mapper,AutoFac,RabbitMQ,IdentityServer4的一套分布式快速开发的框架.
 
 > 1. <b>Fate.Infrastructure.Consul</b>实现了consul的服务发现和服务注册，还有数据的仓储.
 > 2. <b>Fate.Infrastructure.Redis</b>使用<b>StackExchange.Redis</b>实现对Redis访问层的封装，客户端支持集群的配置。
@@ -15,3 +15,7 @@
 > 12. <b>Fate.Domain.Model</b>领域实体层
 > 13. <b>Fate.Application</b>应用层
 > 14. <b>Fate.Infrastructure</b>基础设施层
+> 15. <b>Fate.Infrastructure.VirtualFile</b>虚拟文件系统
+> 16. <b>Fate.Infrastructure.Mongo</b>MongoDB仓储
+> 17. <b>Fate.Infrastructure.Configuration.Management</b>配置中心的面板和配置中间件提供
+> 18. <b>Fate.Infrastructure.Configuration</b>提供获取远程配置
