@@ -1,6 +1,7 @@
 ﻿using Fate.Infrastructure.Redis.IRedisManage;
 using Fate.Infrastructure.Redis.RedisConfig;
 using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default)
+        public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default ,CommandFlags flags = CommandFlags.None)
         {
             if (keyOperatorEnum == KeyOperatorEnum.String)
                 key = redisPrefixKey.StringPrefixKey + key;
@@ -41,14 +42,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 key = redisPrefixKey.HashPrefixKey + key;
             else if (keyOperatorEnum == KeyOperatorEnum.SortedSet)
                 key = redisPrefixKey.SortedSetKey + key;
-            redisBase.DoSave(db => db.KeyDelete(key));
+            redisBase.DoSave(db => db.KeyDelete(key,flags));
         }
 
         /// <summary>
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public void KeyRemove(List<string> key, KeyOperatorEnum keyOperatorEnum = default)
+        public void KeyRemove(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             if (key == null || key.Count() <= 0)
             {
@@ -60,16 +61,16 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 item = GetKey(item, keyOperatorEnum);
                 removeList.Add(item);
             });
-            redisBase.DoSave(db => db.KeyDelete(redisBase.ConvertRedisKeys(removeList)));
+            redisBase.DoSave(db => db.KeyDelete(redisBase.ConvertRedisKeys(removeList),flags));
         }
         /// <summary>
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
-        public bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default)
+        public bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             key = GetKey(key, keyOperatorEnum);
-            return redisBase.DoSave(db => db.KeyExists(key));
+            return redisBase.DoSave(db => db.KeyExists(key,flags));
         }
         #endregion
 
@@ -78,16 +79,16 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public async Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
+        public async Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             key = GetKey(key, keyOperatorEnum);
-            return await redisBase.DoSave(db => db.KeyDeleteAsync(key));
+            return await redisBase.DoSave(db => db.KeyDeleteAsync(key,flags));
         }
         /// <summary>
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public async Task<long> KeyRemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default)
+        public async Task<long> KeyRemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             if (key == null || key.Count() <= 0)
             {
@@ -100,16 +101,16 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 item = GetKey(item, keyOperatorEnum);
                 removeList.Add(item);
             });
-            return await redisBase.DoSave(db => db.KeyDeleteAsync(redisBase.ConvertRedisKeys(removeList)));
+            return await redisBase.DoSave(db => db.KeyDeleteAsync(redisBase.ConvertRedisKeys(removeList),flags));
         }
         /// <summary>
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
-        public async Task<bool> KeyExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
+        public async Task<bool> KeyExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             key = GetKey(key, keyOperatorEnum);
-            return await redisBase.DoSave(db => db.KeyExistsAsync(key));
+            return await redisBase.DoSave(db => db.KeyExistsAsync(key,flags));
         }
         #endregion
 

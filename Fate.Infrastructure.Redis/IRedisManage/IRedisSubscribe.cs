@@ -19,23 +19,23 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        void Subscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler);
+        void Subscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 发布消息
         /// </summary>
         /// <param name="channel">被订阅的name</param>
         /// <param name="message">需要传递的参数</param>
-        long Publish(RedisChannel channel, RedisValue message = default);
+        long Publish(RedisChannel channel, RedisValue message = default, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 取消订阅
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null);
+        void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 取消所有的订阅
         /// </summary>
-        void UnsubscribeAll();
+        void UnsubscribeAll(CommandFlags flags = CommandFlags.None);
         #endregion
         #region 异步
         /// <summary>
@@ -43,25 +43,25 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler);
+        Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 发布消息
         /// </summary>
         /// <param name="channel">被订阅的name</param>
         /// <param name="message">需要传递的参数</param>
-        Task<long> PublishAsync(RedisChannel channel, RedisValue message = default);
+        Task<long> PublishAsync(RedisChannel channel, RedisValue message = default, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 取消订阅
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null);
+        Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 取消所有的订阅
         /// </summary>
-        Task UnsubscribeAllAsync();
+        Task UnsubscribeAllAsync(CommandFlags flags = CommandFlags.None);
         #endregion
     }
 }

@@ -26,7 +26,7 @@ namespace Fate.Infrastructure.Configuration
         /// <returns></returns>
         public async Task SubscribeReloadAsync(object obj)
         {
-            await redis.SubscribeAsync(FateConfigurationInfrastructure.SubscribeKey, async (channel, value) =>
+            await redis.RedisSubscribe().SubscribeAsync(FateConfigurationInfrastructure.SubscribeKey, async (channel, value) =>
               {
                   //重新获取数据
                   var data = await LoadConfiguration();

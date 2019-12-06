@@ -1,6 +1,7 @@
 ﻿using Fate.Infrastructure.Redis.IRedisManage;
 using Fate.Infrastructure.Redis.RedisConfig;
 using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,9 +46,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T SortedSetGet<T>(string key, double score)
+        public T SortedSetGet<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None)
         {
-            var result = redisBase.DoSave(db => db.SortedSetRangeByScore(redisPrefixKey.SortedSetKey + key, score));
+            var result = redisBase.DoSave(db => db.SortedSetRangeByScore(redisPrefixKey.SortedSetKey + key, score, double.PositiveInfinity, Exclude.None, order, skip, take, flags));
             return redisBase.ConvertObj<T>(result.ToString());
         }
         /// <summary>
@@ -95,9 +96,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task<T> SortedSetGetAsync<T>(string key, double score)
+        public async Task<T> SortedSetGetAsync<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None)
         {
-            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(redisPrefixKey.SortedSetKey + key, score));
+            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(redisPrefixKey.SortedSetKey + key, score, double.PositiveInfinity, Exclude.None, order, skip, take, flags));
             return redisBase.ConvertObj<T>(result.ToString());
         }
         /// <summary>

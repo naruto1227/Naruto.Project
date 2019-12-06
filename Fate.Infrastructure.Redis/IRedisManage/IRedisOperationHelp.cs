@@ -57,5 +57,11 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <returns></returns>
         IRedisSubscribe RedisSubscribe();
+
+        /// <summary>
+        /// 锁
+        /// </summary>
+        /// <returns></returns>
+        IRedisLock RedisLock();
     }
 }

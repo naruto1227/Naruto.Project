@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StackExchange.Redis;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T SortedSetGet<T>(string key, double score);
+        T SortedSetGet<T>(string key, double score,  Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 获取集合中的数量
@@ -61,7 +62,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<T> SortedSetGetAsync<T>(string key, double score);
+        Task<T> SortedSetGetAsync<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 获取集合中的数量
         /// </summary>

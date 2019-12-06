@@ -91,6 +91,13 @@ namespace Fate.Infrastructure.Redis.RedisManage
         {
             return serviceProvider.GetRequiredService<IRedisSubscribe>();
         }
-
+        /// <summary>
+        /// 锁
+        /// </summary>
+        /// <returns></returns>
+        public IRedisLock RedisLock()
+        {
+            return serviceProvider.GetRequiredService<IRedisLock>();
+        }
     }
 }

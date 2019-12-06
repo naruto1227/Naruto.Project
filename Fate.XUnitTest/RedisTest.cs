@@ -47,14 +47,14 @@ namespace Fate.XUnitTest
             }
 
             var redisbase = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
-            res = redisbase.StringIncrement("test");
+            res = redisbase.RedisString().StringIncrement("test");
             for (int i = 0; i < 10; i++)
             {
-                res = redisbase.StringIncrement("test");
+                res = redisbase.RedisString().StringIncrement("test");
             }
             for (int i = 0; i < 10; i++)
             {
-                res = redisbase.StringDecrement("test");
+                res = redisbase.RedisString().StringDecrement("test");
             }
             Console.WriteLine("1");
         }
@@ -82,14 +82,14 @@ namespace Fate.XUnitTest
                 settings1.Enqueue(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             });
 
-            await redis.ListSetAsync<setting>("test", settings1.ToList());
+            await redis.RedisList().ListSetAsync<setting>("test", settings1.ToList());
         }
 
         [Fact]
         public async Task Pub()
         {
 
-            await redis.SubscribeAsync("test", (msg, value) =>
+            await redis.RedisSubscribe().SubscribeAsync("test", (msg, value) =>
              {
                  Console.WriteLine(value);
              });
@@ -103,17 +103,17 @@ namespace Fate.XUnitTest
                 using (var servicesscope = services.BuildServiceProvider().CreateScope())
                 {
                     var redis = servicesscope.ServiceProvider.GetRequiredService<IRedisOperationHelp>();
-                    await redis.StringSetAsync("1", "1");
-                    await redis.StringGetAsync("1");
+                    await redis.RedisString().StringSetAsync("1", "1");
+                    await redis.RedisString().StringGetAsync("1");
                 }
             }
-           
+
 
         }
         [Fact]
         public void Store()
         {
-            redis.Store(new setting() { Description = "1" });
+            redis.RedisStore().Store(new setting() { Description = "1" });
             //List<setting> list = new List<setting>();
             //for (int i = 0; i < 100000; i++)
             //{
@@ -125,7 +125,7 @@ namespace Fate.XUnitTest
         [Fact]
         public void Remove()
         {
-            redis.KeyRemove(new List<string>() { "test2", "zhang" });
+            redis.RedisKey().KeyRemove(new List<string>() { "test2", "zhang" });
         }
     }
 }

@@ -48,11 +48,11 @@ namespace Fate.Test.Controllers
         public async Task test()
         {
             var redis1 = serviceProvider.GetRequiredService<IRedisOperationHelp>();
-            redis1.StringSet("zhang", "haibo");
+            redis1.RedisString().StringSet("zhang", "haibo");
             using (var serviceScope = serviceProvider.CreateScope())
             {
                 var redis2 = serviceScope.ServiceProvider.GetRequiredService<IRedisOperationHelp>();
-                redis2.StringSet("zhang", "haibo");
+                redis2.RedisString().StringSet("zhang", "haibo");
 
             }
             jsonResult.msg = "helloword";
@@ -100,7 +100,7 @@ namespace Fate.Test.Controllers
         }
         public async Task testredis2()
         {
-            await redis.ListRightPushAsync("1", new Random().Next(1000, 9999).ToString());
+            await redis.RedisList().ListRightPushAsync("1", new Random().Next(1000, 9999).ToString());
         }
 
         [HttpGet]
@@ -133,7 +133,7 @@ namespace Fate.Test.Controllers
 
         public async Task RedisTest()
         {
-            await redis.StringSetAsync("1", new Random().Next(1000, 9999).ToString());
+            await redis.RedisString().StringSetAsync("1", new Random().Next(1000, 9999).ToString());
         }
 
         public async Task testEF()
@@ -160,7 +160,7 @@ namespace Fate.Test.Controllers
                 Console.WriteLine(channel);
                 Console.WriteLine(message);
             };
-            redis.Subscribe("push", handler);
+            redis.RedisSubscribe().Subscribe("push", handler);
 
             ////发布
             //redis.Publish("push", "你好");
