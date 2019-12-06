@@ -36,15 +36,15 @@ namespace Fate.XUnitTest
             //注入mysql仓储   //注入多个ef配置信息
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;");
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
                 options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent>(true, 100);
                 options.IsOpenMasterSlave = false;
             });
-            services.AddScoped<EFCommandInterceptor>();
-            services.AddScoped<EFDiagnosticListener>();
-            DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
+            //services.AddScoped<EFCommandInterceptor>();
+            //services.AddScoped<EFDiagnosticListener>();
+            //DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
         }
         [Fact]
         public void Test()
@@ -87,15 +87,14 @@ namespace Fate.XUnitTest
         public async Task Query()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-
-            IQuerySqlGeneratorFactory querySqlGeneratorFactory= services.BuildServiceProvider().GetRequiredService<IQuerySqlGeneratorFactory>();
             //
             // await unit.ChangeReadOrWriteConnection(Common.Repository.Object.ReadWriteEnum.Read);
             // await unit.ChangeDataBase("test1");
             //var sql =  unit.Query<setting>().AsQueryable().ToSql(services.BuildServiceProvider().GetRequiredService<MysqlDbContent>());
             // var sql = unit.Query<setting>().AsQueryable().ToSql();
             var str2 = "";
-            var str = unit.Query<setting>().AsQueryable().Where(a => a.Description == str2);
+            var str = unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToSqlWithParams();
+            await unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToListAsync();
         }
 
         [Fact]

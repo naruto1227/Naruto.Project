@@ -21,7 +21,7 @@ namespace System.Linq
         private const BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Instance;
 
         /// <summary>
-        /// 将linq转换成sql 返回sql和参数(EFCore 3.0) 
+        /// 将linq转换成sql 返回sql和参数(EFCore 3.1) 
         /// 第一个字符串为替换过 参数的sql字符串
         /// 第二个字符串为原始的sql字符串
         /// 第三个参数为参数
@@ -32,23 +32,39 @@ namespace System.Linq
         public static (string, string, IReadOnlyDictionary<string, object>) ToSqlWithParams<TEntity>(this IQueryable<TEntity> query)
         {
             var enumerator = query.Provider
-                .Execute<IEnumerable<TEntity>>(query.Expression)
-                .GetEnumerator();
+                             .Execute<IEnumerable<TEntity>>(query.Expression)
+                             .GetEnumerator();
 
-            var enumeratorType = enumerator.GetType();
-            var str = enumeratorType.GetFields();
-            //获取查询表达式列
-            var selectFieldInfo = enumeratorType.GetField("_selectExpression", bindingFlags) ?? throw new InvalidOperationException($"cannot find field _selectExpression on type {enumeratorType.Name}");
-            //获取sql工厂
-            var sqlGeneratorFieldInfo = enumeratorType.GetField("_querySqlGeneratorFactory", bindingFlags) ?? throw new InvalidOperationException($"cannot find field _querySqlGeneratorFactory on type {enumeratorType.Name}");
-            //查询上下文
-            var queryContextFieldInfo = enumeratorType.GetField("_relationalQueryContext", bindingFlags) ?? throw new InvalidOperationException($"cannot find field _relationalQueryContext on type {enumeratorType.Name}");
-            //获取查询表达式列
-            var selectExpression = selectFieldInfo.GetValue(enumerator) as SelectExpression ?? throw new InvalidOperationException($"could not get SelectExpression");
-            //获取sql工厂
-            var factory = sqlGeneratorFieldInfo.GetValue(enumerator) as IQuerySqlGeneratorFactory ?? throw new InvalidOperationException($"could not get SqlServerQuerySqlGeneratorFactory");
-            //查询上下文
-            var queryContext = queryContextFieldInfo.GetValue(enumerator) as RelationalQueryContext ?? throw new InvalidOperationException($"could not get RelationalQueryContext");
+            Type enumeratorType = enumerator.GetType();
+
+            FieldInfo relationalCommandCacheFieldInfo = enumeratorType.GetField("_relationalCommandCache", bindingFlags)
+                ?? throw new InvalidOperationException(
+                    $"cannot find field _relationalCommandCache on type {enumeratorType.Name}");
+            Type relationalCommandCacheType = relationalCommandCacheFieldInfo.FieldType;
+
+            //获取查询表达式
+            var selectFieldInfo = relationalCommandCacheType.GetField("_selectExpression", bindingFlags)
+                ?? throw new InvalidOperationException(
+                    $"cannot find field _selectExpression on type {relationalCommandCacheType.Name}");
+            var sqlGeneratorFieldInfo = relationalCommandCacheType.GetField("_querySqlGeneratorFactory", bindingFlags)
+                ?? throw new InvalidOperationException(
+                    $"cannot find field _querySqlGeneratorFactory on type {relationalCommandCacheType.Name}");
+            var queryContextFieldInfo = enumeratorType.GetField("_relationalQueryContext", bindingFlags)
+                ?? throw new InvalidOperationException(
+                    $"cannot find field _relationalQueryContext on type {enumeratorType.Name}");
+
+            object relationalCommandCache = relationalCommandCacheFieldInfo.GetValue(enumerator);
+
+            var selectExpression = selectFieldInfo.GetValue(relationalCommandCache) as SelectExpression
+                ?? throw new InvalidOperationException($"could not get SelectExpression");
+
+            var queryContext = queryContextFieldInfo.GetValue(enumerator) as RelationalQueryContext
+                ?? throw new InvalidOperationException($"could not get RelationalQueryContext");
+
+            IQuerySqlGeneratorFactory factory = sqlGeneratorFieldInfo.GetValue(relationalCommandCache)
+                as IQuerySqlGeneratorFactory
+                ?? throw new InvalidOperationException($"could not get IQuerySqlGeneratorFactory");
+
             //创建一个查询的对象
             var sqlGenerator = factory.Create();
             //获取执行的命令

@@ -13,6 +13,7 @@ namespace Fate.Domain.Model.Entities
         public string Rule { get; set; }
         [ConcurrencyCheck]
         public string Contact { get; set; }
+        [Required]
         public string Description { get; set; }
         public int Integral { get; set; }
     }
