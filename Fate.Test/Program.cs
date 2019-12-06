@@ -16,7 +16,7 @@ namespace Fate.Test
     {
         public static async Task Main(string[] args)
         {
-           await CreateWebHostBuilder(args).RunConsoleAsync();
+            await CreateWebHostBuilder(args).RunConsoleAsync();
         }
 
         public static IHostBuilder CreateWebHostBuilder(string[] args) =>
@@ -24,6 +24,13 @@ namespace Fate.Test
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureKestrel(options =>
+                    {
+                        options.ListenAnyIP(5000, listen =>
+                        {
+                            listen.UseConnectionHandler
+                        });
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }
