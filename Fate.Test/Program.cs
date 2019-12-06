@@ -24,13 +24,6 @@ namespace Fate.Test
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.ConfigureKestrel(options =>
-                    {
-                        options.ListenAnyIP(5000, listen =>
-                        {
-                            listen.UseConnectionHandler
-                        });
-                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

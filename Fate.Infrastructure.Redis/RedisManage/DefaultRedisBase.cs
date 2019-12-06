@@ -15,10 +15,10 @@ namespace Fate.Infrastructure.Redis.RedisManage
     /// 2019.08.13
     /// redis 访问的基类
     /// </summary>
-    public class RedisBase : IRedisManage.IRedisBase
+    public class DefaultRedisBase : IRedisManage.IRedisBase
     {
         private IRedisConnectionHelp redisConnectionHelp;
-        public RedisBase(IRedisConnectionHelp _redisConnectionHelp)
+        public DefaultRedisBase(IRedisConnectionHelp _redisConnectionHelp)
         {
             redisConnectionHelp = _redisConnectionHelp;
         }
@@ -76,7 +76,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public T ConvertObj<T>(string val)
         {
-            if (val== null)
+            if (val == null)
                 return default;
             return JsonConvert.DeserializeObject<T>(val);
         }
@@ -94,9 +94,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
             return result;
         }
 
-        public RedisKey[] ConvertRedisKeys(List<string> val)
+        public StackExchange.Redis.RedisKey[] ConvertRedisKeys(List<string> val)
         {
-            return val.Select(k => (RedisKey)k).ToArray();
+            return val.Select(k => (StackExchange.Redis.RedisKey)k).ToArray();
         }
 
         /// <summary>

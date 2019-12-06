@@ -12,7 +12,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
     /// <summary>
     /// 
     /// </summary>
-    public class RedisSet: IRedisSet
+    public class DefaultRedisSet: IRedisSet
     {
         private readonly IRedisBase redisBase;
 
@@ -21,7 +21,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 实例化连接
         /// </summary>
-        public RedisSet(IRedisBase _redisBase, IOptions<RedisOptions> options)
+        public DefaultRedisSet(IRedisBase _redisBase, IOptions<RedisOptions> options)
         {
             redisBase = _redisBase;
             //初始化key的前缀

@@ -10,22 +10,28 @@ namespace Fate.Infrastructure.Redis.RedisManage
     /// <summary>
     /// 
     /// </summary>
-    public class RedisStore: IRedisStore
+    public class DefaultRedisStore : IRedisStore
     {
         private readonly IRedisBase redisBase;
 
         private readonly RedisPrefixKey redisPrefixKey;
 
+        private readonly IRedisSet redisSet;
         /// <summary>
         /// 实例化连接
         /// </summary>
-        public RedisStore(IRedisBase _redisBase, IOptions<RedisOptions> options)
+        public DefaultRedisStore(IRedisBase _redisBase, IOptions<RedisOptions> options, IRedisSet _redisSet)
         {
             redisBase = _redisBase;
             //初始化key的前缀
             redisPrefixKey = options.Value.RedisPrefix ?? new RedisPrefixKey();
+            redisSet = _redisSet;
         }
 
+        /// <summary>
+        /// Store的前缀
+        /// </summary>
+        private readonly string StoreSysCustomKey = "urn:";
         #region Store
         /// <summary>
         /// 保存一个集合 （事务）
@@ -116,7 +122,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
 
             var tran = redisBase.DoSave(db => db.CreateTransaction());
             //获取需要删除的id
-            var ids = SetGet<T>();
+            var ids = redisSet.SetGet<T>();
             tran.KeyDeleteAsync(redisPrefixKey.SetPrefixKey + type.Name);
             foreach (var item in ids)
             {
@@ -182,7 +188,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
 
             List<T> li = new List<T>();
             //获取id的集合
-            var ids = SetGet<T>();
+            var ids = redisSet.SetGet<T>();
             if (ids != null && ids.Length > 0)
             {
                 foreach (var item in ids)

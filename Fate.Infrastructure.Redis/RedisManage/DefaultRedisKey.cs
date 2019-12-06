@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Redis.RedisManage
 {
-    public class RedisKey : IRedisKey
+    public class DefaultRedisKey : IRedisKey
     {
         private readonly IRedisBase redisBase;
 
@@ -18,7 +18,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 实例化连接
         /// </summary>
-        public RedisKey(IRedisBase _redisBase, IOptions<RedisOptions> options)
+        public DefaultRedisKey(IRedisBase _redisBase, IOptions<RedisOptions> options)
         {
             redisBase = _redisBase;
             //初始化key的前缀

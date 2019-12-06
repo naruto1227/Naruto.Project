@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Redis.RedisManage
 {
-    public class RedisHash : IRedisHash
+    public class DefaultRedisHash : IRedisHash
     {
         private readonly IRedisBase redisBase;
 
@@ -19,7 +19,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 实例化连接
         /// </summary>
-        public RedisHash(IRedisBase _redisBase, IOptions<RedisOptions> options)
+        public DefaultRedisHash(IRedisBase _redisBase, IOptions<RedisOptions> options)
         {
             redisBase = _redisBase;
             //初始化key的前缀

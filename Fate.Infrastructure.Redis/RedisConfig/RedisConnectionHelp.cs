@@ -194,7 +194,7 @@ namespace Fate.Infrastructure.Redis.RedisConfig
             //哨兵节点
             sentinelConfig.ForEach(a =>
             {
-                var endPoint = RedisBase.ParseEndPoints(a);
+                var endPoint = DefaultRedisBase.ParseEndPoints(a);
                 if (!sentineloption.EndPoints.Contains(endPoint))
                 {
                     sentineloption.EndPoints.Add(a);
