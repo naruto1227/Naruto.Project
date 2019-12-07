@@ -11,7 +11,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
     /// 2019-12-6
     /// 发布订阅
     /// </summary>
-    public interface IRedisSubscribe
+    public interface IRedisSubscribe:IRedisDependency
     {
         #region 同步
         /// <summary>
