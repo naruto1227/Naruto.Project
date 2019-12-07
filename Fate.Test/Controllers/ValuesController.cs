@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fate.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fate.Test.Controllers
@@ -10,6 +11,7 @@ namespace Fate.Test.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        public SettingApp settingApp { get; set; }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()

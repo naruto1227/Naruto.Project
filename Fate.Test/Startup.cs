@@ -49,6 +49,8 @@ using Microsoft.Extensions.Hosting;
 using Fate.Infrastructure.AutofacDependencyInjection;
 using Fate.Test.TestClass;
 using Fate.Infrastructure.Mongo.Object;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace Fate.Test
 {
@@ -71,6 +73,8 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Replace(ServiceDescriptor
+    .Transient<IControllerActivator, ServiceBasedControllerActivator>());
             //注入响应压缩的服务
             //services.AddResponseCompression();
             //services.Configure<GzipCompressionProviderOptions>(options =>
@@ -142,7 +146,13 @@ namespace Fate.Test
         /// </summary>
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
-        {
+
+        { //获取所有控制器类型并使用属性注入
+            var controllerBaseType = typeof(ControllerBase);
+            builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+                .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
+                //启用属性注入
+                .PropertiesAutowired();
             builder.RegisterModule(new AutofacModule());
         }
         /// <summary>
