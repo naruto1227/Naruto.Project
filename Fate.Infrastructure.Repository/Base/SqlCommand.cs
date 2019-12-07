@@ -17,15 +17,17 @@ namespace Fate.Infrastructure.Repository.Base
     /// </summary>
     public class SqlCommand<TDbContext> : ISqlCommand<TDbContext> where TDbContext : DbContext
     {
-        //定义一个上下文
-        private DbContext repository;
+        /// <summary>
+        /// 获取读写的基础设施
+        /// </summary>
+        private readonly IRepositoryWriteInfrastructure<TDbContext> infrastructure;
 
         /// <summary>
         /// 构造获取上下文工厂
         /// </summary>
-        public SqlCommand(IDbContextFactory factory)
+        public SqlCommand(IRepositoryWriteInfrastructure<TDbContext> _infrastructure)
         {
-            repository = factory.Get<TDbContext>();
+            infrastructure = _infrastructure;
         }
         /// <summary>
         /// 执行sql 返回受影响的行数
@@ -86,7 +88,7 @@ namespace Fate.Infrastructure.Repository.Base
         private async Task<DbConnection> GetConnection()
         {
             //获取连接
-            var connection = repository.Database.GetDbConnection();
+            var connection = infrastructure.Exec(repository => repository.Database.GetDbConnection());
             //验证连接是否开启
             if (connection.State == ConnectionState.Closed)
             {
@@ -120,22 +122,22 @@ namespace Fate.Infrastructure.Repository.Base
                     command.Parameters.Add(item);
                 }
             }
+            //获取当前执行的事务
+            var currentTransaction = infrastructure.Exec(repository => repository.Database.CurrentTransaction);
             //判断是否开启了事务
-            if (repository.Database.CurrentTransaction != null)
+            if (currentTransaction != null)
             {
                 //绑定事务
-                command.Transaction = repository.Database.CurrentTransaction.GetDbTransaction();
+                command.Transaction = currentTransaction.GetDbTransaction();
             }
             //设置超时时间
-            if (repository.Database.GetCommandTimeout() != null)
+            if (infrastructure.Exec(repository => repository.Database.GetCommandTimeout()) != null)
             {
-                int.TryParse(repository.Database.GetCommandTimeout()?.ToString(), out var commandTimeout);
+                int.TryParse(infrastructure.Exec(repository => repository.Database.GetCommandTimeout()?.ToString()), out var commandTimeout);
                 command.CommandTimeout = commandTimeout;
             }
             return command;
         }
-
-
         #endregion
     }
 }

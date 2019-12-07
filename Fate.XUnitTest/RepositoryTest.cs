@@ -36,7 +36,7 @@ namespace Fate.XUnitTest
             //注入mysql仓储   //注入多个ef配置信息
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
                 options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent>(true, 100);
@@ -64,10 +64,14 @@ namespace Fate.XUnitTest
 
             var u0k = iserverPri.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             u0k.CommandTimeout = 40;
-            u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
-            u0k.Command<setting>().Add(new setting() { Id = new Random().Next(100000, 999999) });
+            //u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
+            for (int i = 0; i < 100; i++)
+            {
+                u0k.Command<setting>().Add(new setting() { Id = new Random().Next(100000, 999999) });
+            }
+
             u0k.SaveChanges();
-            var res2 = u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
+            // var res2 = u0k.Query<setting>().AsQueryable().OrderBy("Rule").ToList();
             var res = u0k.Query<setting>().AsQueryable().FirstOrDefault();
         }
         [Fact]
@@ -117,6 +121,7 @@ namespace Fate.XUnitTest
         public async Task WriteRead()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            await unit.ChangeDataBase("test1");
             var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
             str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
@@ -128,9 +133,9 @@ namespace Fate.XUnitTest
         public async Task Tran()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-
-            unit.BeginTransaction();
             await unit.ChangeDataBase("test1");
+            unit.BeginTransaction();
+
             var str = await unit.Query<setting>().AsQueryable().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             await unit.SaveChangeAsync();
@@ -171,8 +176,10 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task ExecSqlTest()
         {
-            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>(); await unit.ChangeDataBase("test1");
             unit.BeginTransaction();
+
+            unit.CommandTimeout = 180;
             var res = await unit.SqlCommand().ExecuteNonQueryAsync("delete from setting");
             unit.CommitTransaction();
         }
@@ -181,7 +188,9 @@ namespace Fate.XUnitTest
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var query = unit.SqlQuery();
-            var res = await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "1"), new MySqlParameter("rule", "2") });
+          await  unit.ChangeDataBase("test1");
+            unit.CommandTimeout = 180;
+            var res = await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
         }
     }
 

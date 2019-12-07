@@ -19,12 +19,6 @@ namespace Fate.Infrastructure.Repository.Interface
     /// </summary>
     public interface IRepositoryCommand<T> : IRepositoryDependency where T : IEntity
     {
-        /// <summary>
-        /// 更改仓储的上下文
-        /// </summary>
-        /// <param name="dbContext"></param>
-        /// <returns></returns>
-        Task ChangeDbContext(DbContext dbContext);
         #region 异步
         /// <summary>
         /// 新增

@@ -18,15 +18,17 @@ namespace Fate.Infrastructure.Repository.Base
     /// </summary>
     public class SqlQuery<TDbContext> : ISqlQuery<TDbContext> where TDbContext : DbContext
     {
-        //定义一个上下文
-        private DbContext repository;
+        /// <summary>
+        /// 获取读的基础设施
+        /// </summary>
+        private readonly IRepositoryReadInfrastructure<TDbContext> infrastructure;
 
         /// <summary>
         /// 构造获取上下文工厂
         /// </summary>
-        public SqlQuery(IDbContextFactory factory)
+        public SqlQuery(IRepositoryReadInfrastructure<TDbContext> _infrastructure)
         {
-            repository = factory.Get<TDbContext>();
+            infrastructure = _infrastructure;
         }
         #region 同步
         /// <summary>
@@ -103,7 +105,7 @@ namespace Fate.Infrastructure.Repository.Base
         private async Task<DbConnection> GetConnection()
         {
             //获取连接
-            var connection = repository.Database.GetDbConnection();
+            var connection = infrastructure.Exec(repository => repository.Database.GetDbConnection());
             //验证连接是否开启
             if (connection.State == ConnectionState.Closed)
             {
@@ -138,9 +140,9 @@ namespace Fate.Infrastructure.Repository.Base
                 }
             }
             //设置超时时间
-            if (repository.Database.GetCommandTimeout() != null)
+            if (infrastructure.Exec(repository => repository.Database.GetCommandTimeout()) != null)
             {
-                int.TryParse(repository.Database.GetCommandTimeout()?.ToString(), out var commandTimeout);
+                int.TryParse(infrastructure.Exec(repository => repository.Database.GetCommandTimeout()?.ToString()), out var commandTimeout);
                 command.CommandTimeout = commandTimeout;
             }
             return command;

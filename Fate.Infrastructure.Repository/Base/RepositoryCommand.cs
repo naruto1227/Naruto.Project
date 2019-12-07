@@ -10,40 +10,32 @@ using System.Linq;
 
 namespace Fate.Infrastructure.Repository.Base
 {
-    public class RepositoryCommand<T, TDbContext> : IRepositoryCommand<T, TDbContext> where T : class, IEntity where TDbContext:DbContext
+    public class RepositoryCommand<T, TDbContext> : IRepositoryCommand<T, TDbContext> where T : class, IEntity where TDbContext : DbContext
     {
-
-        private DbContext repository;
-
-        public RepositoryCommand(IDbContextFactory factory)
-        {
-            repository = factory.Get<TDbContext>();
-        }
-
         /// <summary>
-        /// 更改仓储的上下文
+        /// 获取读写的基础设施
         /// </summary>
-        /// <param name="dbContext"></param>
-        /// <returns></returns>
-        public Task ChangeDbContext(DbContext dbContext)
+        private readonly IRepositoryWriteInfrastructure<TDbContext> infrastructure;
+
+        public RepositoryCommand(IRepositoryWriteInfrastructure<TDbContext> _infrastructure)
         {
-            repository = dbContext;
-            return Task.FromResult(0);
+            infrastructure = _infrastructure;
         }
+
         #region 异步
         /// <summary>
         /// 单条数据添加
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public async Task AddAsync(T info) => await repository.Set<T>().AddAsync(info);
+        public async Task AddAsync(T info) => await infrastructure.Exec(async repository => await repository.Set<T>().AddAsync(info));
 
         /// <summary>
         /// 批量添加数据
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public async Task BulkAddAsync(IEnumerable<T> entities) => await repository.Set<T>().AddRangeAsync(entities);
+        public async Task BulkAddAsync(IEnumerable<T> entities) => await infrastructure.Exec(async repository => await repository.Set<T>().AddRangeAsync(entities));
 
         /// <summary>
         /// 删除数据
@@ -52,9 +44,12 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task DeleteAsync(Expression<Func<T, bool>> condition)
         {
-            var list = await Where(condition).ToArrayAsync();
-            if (list != null && list.Count() > 0)
-                BulkDelete(list);
+            await infrastructure.Exec(async repository =>
+            {
+                var list = await Where(condition).ToArrayAsync();
+                if (list != null && list.Count() > 0)
+                    BulkDelete(list);
+            });
         }
         /// <summary>
         /// 批量删除数据
@@ -63,10 +58,13 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task BulkDeleteAsync(params T[] entities)
         {
-            await Task.Run(() =>
+            await infrastructure.Exec(async repository =>
             {
-                repository.Set<T>().RemoveRange(entities);
-            }).ConfigureAwait(false);
+                await Task.Run(() =>
+                {
+                    repository.Set<T>().RemoveRange(entities);
+                }).ConfigureAwait(false);
+            });
         }
         /// <summary>
         /// 更新单条实体
@@ -75,8 +73,11 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public Task UpdateAsync(T info)
         {
-            repository.Set<T>().Update(info);
-            return Task.FromResult(0);
+            return infrastructure.Exec(repository =>
+           {
+               repository.Set<T>().Update(info);
+               return Task.FromResult(0);
+           });
         }
         /// <summary>
         /// 更新个别的字段数据
@@ -86,12 +87,15 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task UpdateAsync(Expression<Func<T, bool>> condition, Func<T, T> update)
         {
-            var list = await Where(condition).ToListAsync();
-            if (list != null && list.Count() > 0)
-            {
-                foreach (var item in list)
-                    update(item);
-            }
+            await infrastructure.Exec(async repository =>
+           {
+               var list = await Where(condition).ToListAsync();
+               if (list != null && list.Count() > 0)
+               {
+                   foreach (var item in list)
+                       update(item);
+               }
+           });
         }
         /// <summary>
         /// 编辑
@@ -100,15 +104,18 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public Task BulkUpdateAsync(params T[] entities)
         {
-            repository.Set<T>().UpdateRange(entities);
-            return Task.FromResult(0);
+            return infrastructure.Exec(repository =>
+           {
+               repository.Set<T>().UpdateRange(entities);
+               return Task.FromResult(0);
+           });
         }
         /// <summary>
         /// 获取单条记录
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        private Task<T> FindAsync(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefaultAsync();
+        private Task<T> FindAsync(Expression<Func<T, bool>> condition) => infrastructure.Exec(repository => Where(condition).FirstOrDefaultAsync());
 
         #endregion
 
@@ -119,7 +126,10 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="entity"></param>
         public void Add(T entity)
         {
-            repository.Set<T>().Add(entity);
+            infrastructure.Exec(repository =>
+            {
+                repository.Set<T>().Add(entity);
+            });
         }
 
         /// <summary>
@@ -128,7 +138,10 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="info"></param>
         public void BulkAdd(IEnumerable<T> entities)
         {
-            repository.Set<T>().AddRange(entities);
+            infrastructure.Exec(repository =>
+            {
+                repository.Set<T>().AddRange(entities);
+            });
         }
 
         /// <summary>
@@ -138,22 +151,25 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public void Delete(Expression<Func<T, bool>> condition)
         {
-            var list = Where(condition).ToArray();
-            if (list != null && list.Count() > 0)
-                BulkDelete(list);
+            infrastructure.Exec(repository =>
+            {
+                var list = Where(condition).ToArray();
+                if (list != null && list.Count() > 0)
+                    BulkDelete(list);
+            });
         }
         /// <summary>
         /// 删除数据
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public void BulkDelete(params T[] entities) => repository.Set<T>().RemoveRange(entities);
+        public void BulkDelete(params T[] entities) => infrastructure.Exec(repository => repository.Set<T>().RemoveRange(entities));
         /// <summary>
         /// 更新单条实体
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public void Update(T info) => repository.Set<T>().Update(info);
+        public void Update(T info) => infrastructure.Exec(repository => repository.Set<T>().Update(info));
         /// <summary>
         /// 更新个别的字段数据
         /// </summary>
@@ -162,19 +178,22 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public void Update(Expression<Func<T, bool>> condition, Func<T, T> update)
         {
-            var list = Where(condition).ToList();
-            if (list != null && list.Count() > 0)
+            infrastructure.Exec(repository =>
             {
-                foreach (var item in list)
-                    update(item);
-            }
+                var list = Where(condition).ToList();
+                if (list != null && list.Count() > 0)
+                {
+                    foreach (var item in list)
+                        update(item);
+                }
+            });
         }
         /// <summary>
         /// 编辑
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public void BulkUpdate(params T[] entities) => repository.Set<T>().UpdateRange(entities);
+        public void BulkUpdate(params T[] entities) => infrastructure.Exec(repository => repository.Set<T>().UpdateRange(entities));
 
         #endregion
 
@@ -183,12 +202,12 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        private T Find(Expression<Func<T, bool>> condition) => Where(condition).FirstOrDefault();
+        private T Find(Expression<Func<T, bool>> condition) => infrastructure.Exec(repository => Where(condition).FirstOrDefault());
         /// <summary>
         /// 根据条件查询
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        private IQueryable<T> Where(Expression<Func<T, bool>> condition) => repository.Set<T>().Where(condition).AsQueryable();
+        private IQueryable<T> Where(Expression<Func<T, bool>> condition) => infrastructure.Exec(repository => repository.Set<T>().Where(condition).AsQueryable());
     }
 }

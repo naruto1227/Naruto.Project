@@ -10,7 +10,7 @@ namespace Fate.Domain.Model.Entities
     {
         public int Id { get; set; }
         public string DuringTime { get; set; }
-        public string Rule { get; set; }
+        public string? Rule { get; set; }
         [ConcurrencyCheck]
         public string Contact { get; set; }
         [Required]
