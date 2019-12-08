@@ -17,17 +17,17 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
+        void Remove(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        void KeyRemove(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
+        void Remove(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
-        bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
+        bool Exists(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
 
         #endregion
 
@@ -36,17 +36,17 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
+        Task<bool> RemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        Task<long> KeyRemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
+        Task<long> RemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
-        Task<bool> KeyExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
+        Task<bool> ExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None);
         #endregion
     }
 }

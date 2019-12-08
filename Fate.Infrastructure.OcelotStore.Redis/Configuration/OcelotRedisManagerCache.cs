@@ -47,7 +47,7 @@ namespace Fate.Infrastructure.OcelotStore.Redis
                 return;
             }
             //保存数据
-            redis.RedisString().StringSet<T>(prefix + key, value, ttl);
+            redis.RedisString().Set<T>(prefix + key, value, ttl);
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace Fate.Infrastructure.OcelotStore.Redis
         public void AddAndDelete(string key, T value, TimeSpan ttl, string region)
         {
 
-            if (redis.RedisKey().KeyExists(prefix + key))
+            if (redis.RedisKey().Exists(prefix + key))
             {
-                redis.RedisKey().KeyRemove(prefix + key);
+                redis.RedisKey().Remove(prefix + key);
             }
 
             Add(key, value, ttl, region);
@@ -81,11 +81,11 @@ namespace Fate.Infrastructure.OcelotStore.Redis
         /// <returns></returns>
         public T Get(string key, string region)
         {
-            if (!redis.RedisKey().KeyExists(prefix + key))
+            if (!redis.RedisKey().Exists(prefix + key))
             {
                 return default;
             }
-            return redis.RedisString().StringGet<T>(prefix + key);
+            return redis.RedisString().Get<T>(prefix + key);
         }
     }
 }

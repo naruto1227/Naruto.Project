@@ -32,7 +32,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="member"></param>
         /// <param name="score"></param>
         /// <returns></returns>
-        public bool SortedSetAdd<T>(string key, T value, double score)
+        public bool Add<T>(string key, T value, double score)
         {
             if (value == null)
             {
@@ -46,7 +46,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T SortedSetGet<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None)
+        public T Get<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None)
         {
             var result = redisBase.DoSave(db => db.SortedSetRangeByScore(redisPrefixKey.SortedSetKey + key, score, double.PositiveInfinity, Exclude.None, order, skip, take, flags));
             return redisBase.ConvertObj<T>(result.ToString());
@@ -56,14 +56,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public long SortedSetLength(string key)
+        public long Length(string key)
         {
             return redisBase.DoSave(db => db.SortedSetLength(redisPrefixKey.SortedSetKey + key));
         }
         /// <summary>
         /// 移除SortedSet
         /// </summary>
-        public bool SortedSetRemove<T>(string key, T value)
+        public bool Remove<T>(string key, T value)
         {
             if (value == null)
             {
@@ -82,7 +82,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="member"></param>
         /// <param name="score"></param>
         /// <returns></returns>
-        public async Task<bool> SortedSetAddAsync<T>(string key, T value, double score)
+        public async Task<bool> AddAsync<T>(string key, T value, double score)
         {
             if (value == null)
             {
@@ -96,7 +96,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task<T> SortedSetGetAsync<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None)
+        public async Task<T> GetAsync<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None)
         {
             var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(redisPrefixKey.SortedSetKey + key, score, double.PositiveInfinity, Exclude.None, order, skip, take, flags));
             return redisBase.ConvertObj<T>(result.ToString());
@@ -106,14 +106,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<long> SortedSetLengthAsync(string key)
+        public async Task<long> LengthAsync(string key)
         {
             return await redisBase.DoSave(db => db.SortedSetLengthAsync(redisPrefixKey.SortedSetKey + key));
         }
         /// <summary>
         /// 移除SortedSet
         /// </summary>
-        public async Task<bool> SortedSetRemoveAsync<T>(string key, T value)
+        public async Task<bool> RemoveAsync<T>(string key, T value)
         {
             if (value == null)
             {

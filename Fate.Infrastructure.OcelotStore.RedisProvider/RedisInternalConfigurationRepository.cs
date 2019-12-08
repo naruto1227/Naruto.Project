@@ -50,7 +50,7 @@ namespace Fate.Infrastructure.OcelotStore.RedisProvider
             lock (LockObject)
             {
                 //存储基本的配置
-                redis.RedisString().StringSet(RedisCacheKey, internalConfiguration);
+                redis.RedisString().Set(RedisCacheKey, internalConfiguration);
             }
             return new OkResponse();
         }
@@ -64,7 +64,7 @@ namespace Fate.Infrastructure.OcelotStore.RedisProvider
             lock (LockObject)
             {
                 //获取基本的配置
-                var internalConfiguration = redis.RedisString().StringGet<InternalConfiguration>(RedisCacheKey);
+                var internalConfiguration = redis.RedisString().Get<InternalConfiguration>(RedisCacheKey);
 
                 if (internalConfiguration == null)
                 {
@@ -76,7 +76,7 @@ namespace Fate.Infrastructure.OcelotStore.RedisProvider
                     AddOrReplace(configCreator.Create(fileConfigRepository.Get().GetAwaiter().GetResult().Data).GetAwaiter().GetResult().Data);
 
                     //重新获取数据
-                    internalConfiguration = redis.RedisString().StringGet<InternalConfiguration>(RedisCacheKey);
+                    internalConfiguration = redis.RedisString().Get<InternalConfiguration>(RedisCacheKey);
                 }
 
                 return new OkResponse<IInternalConfiguration>(internalConfiguration);

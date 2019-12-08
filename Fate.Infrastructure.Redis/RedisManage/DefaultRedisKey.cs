@@ -30,7 +30,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public void KeyRemove(string key, KeyOperatorEnum keyOperatorEnum = default ,CommandFlags flags = CommandFlags.None)
+        public void Remove(string key, KeyOperatorEnum keyOperatorEnum = default ,CommandFlags flags = CommandFlags.None)
         {
             if (keyOperatorEnum == KeyOperatorEnum.String)
                 key = redisPrefixKey.StringPrefixKey + key;
@@ -49,7 +49,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public void KeyRemove(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
+        public void Remove(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             if (key == null || key.Count() <= 0)
             {
@@ -67,7 +67,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
-        public bool KeyExists(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
+        public bool Exists(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             key = GetKey(key, keyOperatorEnum);
             return redisBase.DoSave(db => db.KeyExists(key,flags));
@@ -79,7 +79,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public async Task<bool> KeyRemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> RemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             key = GetKey(key, keyOperatorEnum);
             return await redisBase.DoSave(db => db.KeyDeleteAsync(key,flags));
@@ -88,7 +88,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
-        public async Task<long> KeyRemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
+        public async Task<long> RemoveAsync(List<string> key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             if (key == null || key.Count() <= 0)
             {
@@ -107,7 +107,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
-        public async Task<bool> KeyExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> ExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default, CommandFlags flags = CommandFlags.None)
         {
             key = GetKey(key, keyOperatorEnum);
             return await redisBase.DoSave(db => db.KeyExistsAsync(key,flags));

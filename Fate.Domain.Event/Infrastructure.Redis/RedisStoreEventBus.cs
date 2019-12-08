@@ -46,7 +46,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         {
             //从缓存中读取需要触发的事件
             var type = eventData.GetType();
-            var res = (await redis.RedisHash().HashGetAsync(RedisEventHashKey, type.ToString())).ToString().JsonToEvent() as IEventHandler<TEvent>;
+            var res = (await redis.RedisHash().GetAsync(RedisEventHashKey, type.ToString())).ToString().JsonToEvent() as IEventHandler<TEvent>;
             if (res != null)
             {
                 ExecAction(async () =>
@@ -57,7 +57,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                     if (eventData.IsFail)
                     {
                         //存储到失败的集合
-                        await redis.RedisHash().HashSetAsync(RedisEventFailHashKey, JsonConvert.SerializeObject(eventData), res.GetType().FullName);
+                        await redis.RedisHash().SetAsync(RedisEventFailHashKey, JsonConvert.SerializeObject(eventData), res.GetType().FullName);
                     }
                     //else
                     //{
@@ -84,7 +84,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         {
             lock (sync)
             {
-                redis.RedisHash().HashDeleteAsync(RedisEventHashKey, typeof(TEvent).ToString());
+                redis.RedisHash().DeleteAsync(RedisEventHashKey, typeof(TEvent).ToString());
             }
             return Task.CompletedTask;
         }
@@ -99,7 +99,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
             lock (sync)
             {
                 //将注册的事件写入redis缓存
-                redis.RedisHash().HashSetAsync(RedisEventHashKey, typeof(TEvent).ToString(), eventHandler.EventToJson());
+                redis.RedisHash().SetAsync(RedisEventHashKey, typeof(TEvent).ToString(), eventHandler.EventToJson());
             }
             return Task.CompletedTask;
         }
@@ -129,7 +129,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                         lock (sync)
                         {
                             //将注册的事件写入redis缓存
-                            redis.RedisHash().HashSetAsync(RedisEventHashKey, dataType.ToString(), eventHandler.EventToJson());
+                            redis.RedisHash().SetAsync(RedisEventHashKey, dataType.ToString(), eventHandler.EventToJson());
                         }
                     }
                 }
@@ -143,9 +143,9 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         /// <returns></returns>
         public async Task ClearAllEvent()
         {
-            if (await redis.RedisKey().KeyExistsAsync(RedisEventHashKey, Fate.Infrastructure.Redis.KeyOperatorEnum.Hash))
+            if (await redis.RedisKey().ExistsAsync(RedisEventHashKey, Fate.Infrastructure.Redis.KeyOperatorEnum.Hash))
             {
-                await redis.RedisKey().KeyRemoveAsync(RedisEventHashKey, Fate.Infrastructure.Redis.KeyOperatorEnum.Hash);
+                await redis.RedisKey().RemoveAsync(RedisEventHashKey, Fate.Infrastructure.Redis.KeyOperatorEnum.Hash);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
         public async Task HandleFailEvent()
         {
             //获取失败的信息
-            var eventHandleList = await redis.RedisHash().HashGetAllAsync(RedisEventFailHashKey);
+            var eventHandleList = await redis.RedisHash().GetAllAsync(RedisEventFailHashKey);
             if (eventHandleList != null && eventHandleList.Count() > 0)
             {
                 foreach (var eventHandle in eventHandleList)
@@ -181,12 +181,12 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                         //执行方法
                         method.Invoke(obj, parameters);
                         //删除
-                        redis.RedisHash().HashDeleteAsync(RedisEventFailHashKey, eventHandle.Key);
+                        redis.RedisHash().DeleteAsync(RedisEventFailHashKey, eventHandle.Key);
                     });
                 }
             }
             //如果还存在的数据就递归执行
-            if ((await redis.RedisHash().HashValuesAsync(RedisEventFailHashKey)).Any())
+            if ((await redis.RedisHash().ValuesAsync(RedisEventFailHashKey)).Any())
             {
                 await HandleFailEvent();
             }

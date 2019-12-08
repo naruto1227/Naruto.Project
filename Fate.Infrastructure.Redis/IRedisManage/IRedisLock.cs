@@ -39,7 +39,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        bool LockRelease(string key, string value, CommandFlags flags = CommandFlags.None);
+        bool Release(string key, string value, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 释放锁
@@ -48,7 +48,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        Task<bool> LockReleaseAsync(string key, string value, CommandFlags flags = CommandFlags.None);
+        Task<bool> ReleaseAsync(string key, string value, CommandFlags flags = CommandFlags.None);
 
     }
 }

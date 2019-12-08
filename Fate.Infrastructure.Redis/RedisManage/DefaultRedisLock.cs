@@ -62,7 +62,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public bool LockRelease(string key, string value, CommandFlags flags = CommandFlags.None)
+        public bool Release(string key, string value, CommandFlags flags = CommandFlags.None)
         {
             return redisBase.DoSave((database) =>
             {
@@ -77,7 +77,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public Task<bool> LockReleaseAsync(string key, string value, CommandFlags flags = CommandFlags.None)
+        public Task<bool> ReleaseAsync(string key, string value, CommandFlags flags = CommandFlags.None)
         {
             return redisBase.DoSave((database) =>
             {

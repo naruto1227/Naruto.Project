@@ -33,7 +33,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public bool SetAdd<T>(string value, CommandFlags flags = CommandFlags.None)
+        public bool Add<T>(string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -50,7 +50,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public bool SetRemove<T>(string value, CommandFlags flags = CommandFlags.None)
+        public bool Remove<T>(string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -65,7 +65,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public string[] SetGet<T>(CommandFlags flags = CommandFlags.None)
+        public string[] Get<T>(CommandFlags flags = CommandFlags.None)
         {
             //反射实体的信息
             var type = typeof(T);
@@ -76,7 +76,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public string[] SetGet(string key, CommandFlags flags = CommandFlags.None)
+        public string[] Get(string key, CommandFlags flags = CommandFlags.None)
         {
             return redisBase.DoSave(db => db.SetMembers(redisPrefixKey.SetPrefixKey + key, flags)).ToStringArray();
         }
@@ -85,7 +85,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public bool SetAdd(string key, string value, CommandFlags flags = CommandFlags.None)
+        public bool Add(string key, string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -99,7 +99,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void SetRemove(string key, string value, CommandFlags flags = CommandFlags.None)
+        public void Remove(string key, string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -114,7 +114,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public async Task<bool> SetAddAsync<T>(string value, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync<T>(string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -131,7 +131,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public async Task<bool> SetRemoveAsync<T>(string value, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> RemoveAsync<T>(string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -146,7 +146,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<string[]> SetGetAsync<T>( CommandFlags flags = CommandFlags.None)
+        public async Task<string[]> GetAsync<T>( CommandFlags flags = CommandFlags.None)
         {
             //反射实体的信息
             var type = typeof(T);
@@ -157,7 +157,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<string[]> SetGetAsync(string key, CommandFlags flags = CommandFlags.None)
+        public async Task<string[]> GetAsync(string key, CommandFlags flags = CommandFlags.None)
         {
             return (await redisBase.DoSave(db => db.SetMembersAsync(redisPrefixKey.SetPrefixKey + key, flags))).ToStringArray();
         }
@@ -166,7 +166,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public async Task<bool> SetAddAsync(string key, string value, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync(string key, string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -180,7 +180,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public async Task<bool> SetRemoveAsync(string key, string value, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> RemoveAsync(string key, string value, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrEmpty(value))
             {

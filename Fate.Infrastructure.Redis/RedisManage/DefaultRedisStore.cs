@@ -122,7 +122,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
 
             var tran = redisBase.DoSave(db => db.CreateTransaction());
             //获取需要删除的id
-            var ids = redisSet.SetGet<T>();
+            var ids = redisSet.Get<T>();
             tran.KeyDeleteAsync(redisPrefixKey.SetPrefixKey + type.Name);
             foreach (var item in ids)
             {
@@ -188,7 +188,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
 
             List<T> li = new List<T>();
             //获取id的集合
-            var ids = redisSet.SetGet<T>();
+            var ids = redisSet.Get<T>();
             if (ids != null && ids.Length > 0)
             {
                 foreach (var item in ids)

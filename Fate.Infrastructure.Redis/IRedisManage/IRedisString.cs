@@ -18,29 +18,29 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        void StringSet(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        void Set(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        void StringSet<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        void Set<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        bool StringSet<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        bool Set<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 获取字符串
         /// </summary>
-        string StringGet(string key, CommandFlags flags = CommandFlags.None);
+        string Get(string key, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 获取对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        T StringGet<T>(string key, CommandFlags flags = CommandFlags.None);
+        T Get<T>(string key, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 自增
         /// </summary>
@@ -48,14 +48,14 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        long StringIncrement(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        long Increment(string key, long value = 1, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 递减
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        long StringDecrement(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        long Decrement(string key, long value = 1, CommandFlags flags = CommandFlags.None);
         #endregion
 
 
@@ -64,26 +64,26 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> SetAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<bool> StringSetAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> SetAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<bool> StringSetAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> SetAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 获取字符串
         /// </summary>
-        Task<string> StringGetAsync(string key, CommandFlags flags = CommandFlags.None);
+        Task<string> GetAsync(string key, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 获取对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<T> StringGetAsync<T>(string key, CommandFlags flags = CommandFlags.None);
+        Task<T> GetAsync<T>(string key, CommandFlags flags = CommandFlags.None);
 
 
         /// <summary>
@@ -93,14 +93,14 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        Task<long> StringIncrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        Task<long> IncrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 递减
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        Task<long> StringDecrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        Task<long> DecrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None);
         #endregion
     }
 }

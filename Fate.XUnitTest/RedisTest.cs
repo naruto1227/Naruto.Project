@@ -47,14 +47,14 @@ namespace Fate.XUnitTest
             }
 
             var redisbase = services.BuildServiceProvider().GetService<IRedisOperationHelp>();
-            res = redisbase.RedisString().StringIncrement("test");
+            res = redisbase.RedisString().Increment("test");
             for (int i = 0; i < 10; i++)
             {
-                res = redisbase.RedisString().StringIncrement("test");
+                res = redisbase.RedisString().Increment("test");
             }
             for (int i = 0; i < 10; i++)
             {
-                res = redisbase.RedisString().StringDecrement("test");
+                res = redisbase.RedisString().Decrement("test");
             }
             Console.WriteLine("1");
         }
@@ -82,7 +82,7 @@ namespace Fate.XUnitTest
                 settings1.Enqueue(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             });
 
-            await redis.RedisList().ListSetAsync<setting>("test", settings1.ToList());
+            await redis.RedisList().SetAsync<setting>("test", settings1.ToList());
         }
 
         [Fact]
@@ -103,8 +103,8 @@ namespace Fate.XUnitTest
                 using (var servicesscope = services.BuildServiceProvider().CreateScope())
                 {
                     var redis = servicesscope.ServiceProvider.GetRequiredService<IRedisOperationHelp>();
-                    await redis.RedisString().StringSetAsync("1", "1");
-                    await redis.RedisString().StringGetAsync("1");
+                    await redis.RedisString().SetAsync("1", "1");
+                    await redis.RedisString().GetAsync("1");
                 }
             }
 
@@ -125,7 +125,7 @@ namespace Fate.XUnitTest
         [Fact]
         public void Remove()
         {
-            redis.RedisKey().KeyRemove(new List<string>() { "test2", "zhang" });
+            redis.RedisKey().Remove(new List<string>() { "test2", "zhang" });
         }
     }
 }

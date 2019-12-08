@@ -23,26 +23,26 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="member"></param>
         /// <param name="score"></param>
         /// <returns></returns>
-        bool SortedSetAdd<T>(string key, T value, double score);
+        bool Add<T>(string key, T value, double score);
 
         /// <summary>
         /// 获取SortedSet的数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T SortedSetGet<T>(string key, double score,  Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None);
+        T Get<T>(string key, double score,  Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 获取集合中的数量
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        long SortedSetLength(string key);
+        long Length(string key);
 
         /// <summary>
         /// 移除SortedSet
         /// </summary>
-        bool SortedSetRemove<T>(string key, T value);
+        bool Remove<T>(string key, T value);
 
         #endregion
 
@@ -55,25 +55,25 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="member"></param>
         /// <param name="score"></param>
         /// <returns></returns>
-        Task<bool> SortedSetAddAsync<T>(string key, T value, double score);
+        Task<bool> AddAsync<T>(string key, T value, double score);
 
         /// <summary>
         /// 获取SortedSet的数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<T> SortedSetGetAsync<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None);
+        Task<T> GetAsync<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 获取集合中的数量
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<long> SortedSetLengthAsync(string key);
+        Task<long> LengthAsync(string key);
 
         /// <summary>
         /// 移除SortedSet
         /// </summary>
-        Task<bool> SortedSetRemoveAsync<T>(string key, T value);
+        Task<bool> RemoveAsync<T>(string key, T value);
 
         #endregion
     }
