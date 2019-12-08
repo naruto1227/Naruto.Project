@@ -57,7 +57,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                     if (eventData.IsFail)
                     {
                         //存储到失败的集合
-                        await redis.RedisHash().SetAsync(RedisEventFailHashKey, JsonConvert.SerializeObject(eventData), res.GetType().FullName);
+                        await redis.RedisHash().AddAsync(RedisEventFailHashKey, JsonConvert.SerializeObject(eventData), res.GetType().FullName);
                     }
                     //else
                     //{
@@ -99,7 +99,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
             lock (sync)
             {
                 //将注册的事件写入redis缓存
-                redis.RedisHash().SetAsync(RedisEventHashKey, typeof(TEvent).ToString(), eventHandler.EventToJson());
+                redis.RedisHash().AddAsync(RedisEventHashKey, typeof(TEvent).ToString(), eventHandler.EventToJson());
             }
             return Task.CompletedTask;
         }
@@ -129,7 +129,7 @@ namespace Fate.Domain.Event.Infrastructure.Redis
                         lock (sync)
                         {
                             //将注册的事件写入redis缓存
-                            redis.RedisHash().SetAsync(RedisEventHashKey, dataType.ToString(), eventHandler.EventToJson());
+                            redis.RedisHash().AddAsync(RedisEventHashKey, dataType.ToString(), eventHandler.EventToJson());
                         }
                     }
                 }

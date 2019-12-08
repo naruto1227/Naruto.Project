@@ -48,11 +48,11 @@ namespace Fate.Test.Controllers
         public async Task test()
         {
             var redis1 = serviceProvider.GetRequiredService<IRedisOperationHelp>();
-            redis1.RedisString().Set("zhang", "haibo");
+            redis1.RedisString().Add("zhang", "haibo");
             using (var serviceScope = serviceProvider.CreateScope())
             {
                 var redis2 = serviceScope.ServiceProvider.GetRequiredService<IRedisOperationHelp>();
-                redis2.RedisString().Set("zhang", "haibo");
+                redis2.RedisString().Add("zhang", "haibo");
 
             }
             jsonResult.msg = "helloword";
@@ -133,7 +133,7 @@ namespace Fate.Test.Controllers
 
         public async Task RedisTest()
         {
-            await redis.RedisString().SetAsync("1", new Random().Next(1000, 9999).ToString());
+            await redis.RedisString().AddAsync("1", new Random().Next(1000, 9999).ToString());
         }
 
         public async Task testEF()

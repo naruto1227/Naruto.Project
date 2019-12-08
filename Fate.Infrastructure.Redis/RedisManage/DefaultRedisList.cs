@@ -33,7 +33,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void Set<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public void Add<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (value != null && value.Count > 0)
             {
@@ -158,7 +158,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public async Task SetAsync<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task AddAsync<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (value != null && value.Count > 0)
             {

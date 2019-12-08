@@ -20,7 +20,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        void Set<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        void Add<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 取list 集合
         /// </summary>
@@ -90,7 +90,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        Task SetAsync<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task AddAsync<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 取list 集合

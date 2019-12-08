@@ -50,7 +50,7 @@ namespace Fate.Infrastructure.OcelotStore.RedisProvider
             lock (LockObject)
             {
                 //存储基本的配置
-                redis.RedisString().Set(RedisCacheKey, internalConfiguration);
+                redis.RedisString().Add(RedisCacheKey, internalConfiguration);
             }
             return new OkResponse();
         }

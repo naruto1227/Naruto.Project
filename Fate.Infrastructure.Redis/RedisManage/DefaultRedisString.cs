@@ -31,7 +31,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        public void Set(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public void Add(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -43,7 +43,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void Set<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public void Add<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (value == null)
             {
@@ -58,7 +58,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public bool Set<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public bool Add<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (value == null || value.Count() <= 0)
             {
@@ -122,7 +122,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        public async Task<bool> SetAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -134,7 +134,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<bool> SetAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (value == null)
             {
@@ -147,7 +147,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<bool> SetAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (value == null || value.Count() <= 0)
             {

@@ -105,7 +105,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        public void Set(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None)
+        public void Add(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
@@ -119,7 +119,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        public bool Set(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public bool Add(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             return redisBase.DoSave(db => db.HashSet(redisPrefixKey.HashPrefixKey + key, hashField, value,when,flags));
         }
@@ -214,7 +214,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        public Task SetAsync(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None)
+        public Task AddAsync(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
@@ -228,7 +228,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        public Task<bool> SetAsync(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public Task<bool> AddAsync(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             return redisBase.DoSave(db => db.HashSetAsync(redisPrefixKey.HashPrefixKey + key, hashField, value,when,flags));
         }

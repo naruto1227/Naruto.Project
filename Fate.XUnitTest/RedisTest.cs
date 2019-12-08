@@ -82,7 +82,7 @@ namespace Fate.XUnitTest
                 settings1.Enqueue(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             });
 
-            await redis.RedisList().SetAsync<setting>("test", settings1.ToList());
+            await redis.RedisList().AddAsync<setting>("test", settings1.ToList());
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace Fate.XUnitTest
                 using (var servicesscope = services.BuildServiceProvider().CreateScope())
                 {
                     var redis = servicesscope.ServiceProvider.GetRequiredService<IRedisOperationHelp>();
-                    await redis.RedisString().SetAsync("1", "1");
+                    await redis.RedisString().AddAsync("1", "1");
                     await redis.RedisString().GetAsync("1");
                 }
             }

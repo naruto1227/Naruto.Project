@@ -66,7 +66,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        void Set(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None);
+        void Add(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 储存单条hash值
@@ -75,7 +75,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        bool Set(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        bool Add(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 获取所有的数据
         /// </summary>
@@ -150,7 +150,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="hashFields">存储的数据key-value结构</param>
         /// <returns></returns>
-        Task SetAsync(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None);
+        Task AddAsync(string key, HashEntry[] hashFields, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 储存单条hash值
@@ -159,7 +159,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="hashField">字段名</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        Task<bool> SetAsync(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync(string key, string hashField, string value, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 返回所有值
         /// </summary>

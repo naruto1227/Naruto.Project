@@ -18,18 +18,18 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        void Set(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        void Add(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        void Set<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        void Add<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        bool Set<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        bool Add<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 获取字符串
@@ -64,17 +64,17 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        Task<bool> SetAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<bool> SetAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<bool> SetAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
         /// <summary>
         /// 获取字符串
         /// </summary>

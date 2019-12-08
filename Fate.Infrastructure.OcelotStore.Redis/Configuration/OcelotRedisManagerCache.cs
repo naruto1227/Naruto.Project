@@ -47,7 +47,7 @@ namespace Fate.Infrastructure.OcelotStore.Redis
                 return;
             }
             //保存数据
-            redis.RedisString().Set<T>(prefix + key, value, ttl);
+            redis.RedisString().Add<T>(prefix + key, value, ttl);
         }
 
         /// <summary>
