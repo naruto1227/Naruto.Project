@@ -44,6 +44,14 @@ namespace Fate.Infrastructure.Repository.Base
 
         void IDisposable.Dispose()
         {
+            //释放资源
+            if (_dbContexts != null && _dbContexts.Count > 0)
+            {
+                foreach (var item in _dbContexts)
+                {
+                    item.Value?.Dispose();
+                }
+            }
             _dbContexts?.Clear();
             _dbContexts = null;
             GC.SuppressFinalize(this);
