@@ -60,7 +60,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        long RightPush<T>(string key, List<T> value, CommandFlags flags = CommandFlags.None);
+        long RightPush<T>(string key, List<T> value);
                 /// <summary>
         /// 往最后推送一个数据
         /// </summary>
@@ -158,7 +158,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        Task<long> RightPushAsync<T>(string key, List<T> value, CommandFlags flags = CommandFlags.None);
+        Task<long> RightPushAsync<T>(string key, List<T> value);
         #endregion
     }
 }

@@ -129,7 +129,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public long RightPush<T>(string key, List<T> value, CommandFlags flags = CommandFlags.None)
+        public long RightPush<T>(string key, List<T> value)
         {
             if (value == null || value.Count <= 0)
                 throw new ApplicationException("值不能为空");
@@ -138,7 +138,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 redisValues[i] = redisBase.ConvertJson(value[i]);
             }
-            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, redisValues, flags));
+            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, redisValues));
         }
         /// <summary>
         /// 获取集合中的数量
@@ -266,7 +266,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task<long> RightPushAsync<T>(string key, List<T> value, CommandFlags flags = CommandFlags.None)
+        public async Task<long> RightPushAsync<T>(string key, List<T> value)
         {
             if (value == null || value.Count <= 0)
                 throw new ApplicationException("值不能为空");
@@ -275,7 +275,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 redisValues.Add(redisBase.ConvertJson(item));
             });
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisValues.ToArray(), flags));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
         }
         /// <summary>
         /// 往末尾推送多条数据
