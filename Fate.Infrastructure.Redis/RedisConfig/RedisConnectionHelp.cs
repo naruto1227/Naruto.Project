@@ -15,10 +15,8 @@ namespace Fate.Infrastructure.Redis.RedisConfig
     /// 2019.08.13
     /// redis缓存链接
     /// </summary>
-    public class RedisConnectionHelp : IRedisConnectionHelp
+    public class RedisConnectionHelp : IRedisConnectionHelp, IDisposable
     {
-        private readonly object Locker = new object();
-        private ConnectionMultiplexer _instance;
         /// <summary>
         /// 获取redis的参数
         /// </summary>
@@ -26,6 +24,16 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         public RedisConnectionHelp(IOptions<RedisOptions> _options)
         {
             options = _options;
+
+            if (RedisConnection == null || !RedisConnection.IsConnected)
+            {
+                RedisConnection = GetManager();
+                //判断是否开启集群哨兵模式
+                if (!string.IsNullOrWhiteSpace(IsOpenSentinel) && IsOpenSentinel.Equals("1"))
+                {
+                    OpenSentinelManager();
+                }
+            }
         }
         /// <summary>
         /// redis密码
@@ -91,47 +99,11 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         }
 
         private ISubscriber sentinelsub;
-        /// <summary>
-        /// 缓存
-        /// </summary>
-        private readonly ConcurrentDictionary<string, ConnectionMultiplexer> Concache = new ConcurrentDictionary<string, ConnectionMultiplexer>();
 
         /// <summary>
-        /// 单例获取
+        /// 获取
         /// </summary>
-        public ConnectionMultiplexer RedisConnection
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (Locker)
-                    {
-                        if (_instance == null || !_instance.IsConnected)
-                        {
-                            _instance = GetFromCache();
-                            //判断是否开启集群哨兵模式
-                            if (!string.IsNullOrWhiteSpace(IsOpenSentinel) && IsOpenSentinel.Equals("1"))
-                            {
-                                OpenSentinelManager();
-                            }
-                        }
-                    }
-                }
-                return _instance;
-            }
-        }
-        /// <summary>
-        /// 先从缓存中获取 再从配置读取
-        /// </summary>
-        /// <returns></returns>
-        private ConnectionMultiplexer GetFromCache()
-        {
-            //判断缓存中是否存在
-            if (!Concache.ContainsKey(RedisConnectionConfig))
-                Concache[RedisConnectionConfig] = GetManager();
-            return Concache[RedisConnectionConfig];
-        }
+        public ConnectionMultiplexer RedisConnection { get; }
 
         /// <summary>
         /// 获取
@@ -275,6 +247,14 @@ namespace Fate.Infrastructure.Redis.RedisConfig
             Console.WriteLine("InternalError:Message" + e.Exception.Message);
         }
 
+
+
         #endregion 事件
+
+        public void Dispose()
+        {
+            RedisConnection?.Close();
+            RedisConnection?.Dispose();
+        }
     }
 }

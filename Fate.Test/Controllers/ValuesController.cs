@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fate.Application.Services;
+using Fate.Infrastructure.Redis.IRedisManage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fate.Test.Controllers
@@ -12,10 +13,13 @@ namespace Fate.Test.Controllers
     public class ValuesController : ControllerBase
     {
         public SettingApp settingApp { get; set; }
+
+        public IRedisOperationHelp Redis { get; set; }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            Redis.RedisString().Add(Guid.NewGuid().ToString(), "1");
             return new string[] { "value1", "value2" };
         }
 
@@ -30,6 +34,7 @@ namespace Fate.Test.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+
         }
 
         // PUT api/values/5
