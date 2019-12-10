@@ -29,7 +29,7 @@ namespace Fate.Infrastructure.Redis.RedisConfig
             {
                 RedisConnection = GetManager();
                 //判断是否开启集群哨兵模式
-                if (!string.IsNullOrWhiteSpace(IsOpenSentinel) && IsOpenSentinel.Equals("1"))
+                if (IsOpenSentinel == 1)
                 {
                     OpenSentinelManager();
                 }
@@ -69,11 +69,11 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         /// <summary>
         /// 是否开启哨兵模式 1 开启
         /// </summary>
-        private string IsOpenSentinel
+        private int IsOpenSentinel
         {
             get
             {
-                return options.Value != null ? options.Value.IsOpenSentinel.ToString() : "";
+                return options.Value != null ? options.Value.IsOpenSentinel : 0;
             }
         }
         /// <summary>
@@ -123,7 +123,7 @@ namespace Fate.Infrastructure.Redis.RedisConfig
             };
             if (RedisConnectionConfig == null || RedisConnectionConfig.Count() <= 0)
             {
-                throw new ArgumentNullException("redis链接字符串未null");
+                throw new ArgumentNullException("redis链接字符串为null");
             }
             //获取连接的字符串
             var connections = RedisConnectionConfig.ToList();

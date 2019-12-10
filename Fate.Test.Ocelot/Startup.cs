@@ -41,7 +41,7 @@ namespace Fate.Test.Ocelot
             {
                 option.RedisOptions = redis =>
                 {
-                    redis.Connection = "127.0.0.1:6379";
+                    redis.Connection = new string[] { "127.0.0.1:6379" };
                     redis.DefaultDataBase = 2;
                 };
             }).AddSingletonDefinedAggregator<Test2DefinedAggregator>();//添加一个聚合器 用于请求聚合的时候
