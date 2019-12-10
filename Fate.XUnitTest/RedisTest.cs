@@ -24,7 +24,7 @@ namespace Fate.XUnitTest
             //注入redis仓储服务
             services.AddRedisRepository(options =>
             {
-                options.Connection = "127.0.0.1:6379";
+                options.Connection = new string[] { "127.0.0.1:6379" };
                 options.RedisPrefix = new Fate.Infrastructure.Redis.RedisConfig.RedisPrefixKey();
             });
             redis = services.BuildServiceProvider().GetService<IRedisOperationHelp>();

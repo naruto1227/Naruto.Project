@@ -58,11 +58,11 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         /// <summary>
         /// redis连接字符串
         /// </summary>
-        public string RedisConnectionConfig
+        public string[] RedisConnectionConfig
         {
             get
             {
-                return options.Value != null ? options.Value.Connection : "";
+                return options.Value != null ? options.Value.Connection : new string[] { };
             }
         }
 
@@ -121,12 +121,12 @@ namespace Fate.Infrastructure.Redis.RedisConfig
                 AbortOnConnectFail = false,
                 AsyncTimeout = DefaultAsyncTimeout
             };
-            if (string.IsNullOrWhiteSpace(RedisConnectionConfig))
+            if (RedisConnectionConfig == null || RedisConnectionConfig.Count() <= 0)
             {
                 throw new ArgumentNullException("redis链接字符串未null");
             }
             //获取连接的字符串
-            var connections = RedisConnectionConfig.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var connections = RedisConnectionConfig.ToList();
             connections.ForEach(item =>
             {
                 if (!string.IsNullOrWhiteSpace(item))
@@ -162,7 +162,7 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         private void OpenSentinelManager(ConfigurationOptions sentineloptions = null)
         {
             //获取哨兵地址
-            List<string> sentinelConfig = options.Value.RedisSentinelIp?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList() ?? new List<string>();
+            List<string> sentinelConfig = options.Value.RedisSentinelIp.ToList() ?? new List<string>();
             //哨兵节点
             sentinelConfig.ForEach(a =>
             {

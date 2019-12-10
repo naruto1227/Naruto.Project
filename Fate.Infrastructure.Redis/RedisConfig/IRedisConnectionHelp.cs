@@ -24,7 +24,7 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         /// redis 连接
         /// </summary>
 
-        string RedisConnectionConfig { get; }
+        string[] RedisConnectionConfig { get; }
         /// <summary>
         /// 默认超时时间
         /// </summary>

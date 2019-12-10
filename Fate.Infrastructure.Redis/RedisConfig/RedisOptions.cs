@@ -11,9 +11,9 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         /// </summary>
         public RedisPrefixKey RedisPrefix { get; set; } = new RedisPrefixKey();
         /// <summary>
-        /// redis的连接地址多个逗号隔开
+        /// redis的连接地址
         /// </summary>
-        public string Connection { get; set; } = "127.0.0.1:6379";
+        public string[] Connection { get; set; }
 
         /// <summary>
         /// Redis的默认存储库
@@ -30,9 +30,9 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         /// </summary>
         public int IsOpenSentinel { get; set; } = 0;
         /// <summary>
-        /// 哨兵的地址 多个逗号隔开
+        /// 哨兵的地址 
         /// </summary>
-        public string RedisSentinelIp { get; set; }
+        public string[] RedisSentinelIp { get; set; }
 
         /// <summary>
         /// 连接超时时间 单位毫秒 默认 300ms
