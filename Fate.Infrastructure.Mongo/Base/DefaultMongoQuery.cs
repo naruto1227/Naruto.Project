@@ -320,9 +320,9 @@ namespace Fate.Infrastructure.Mongo.Base
             //验证分页参数
             if (options == null)
                 options = new FindOptions<T>();
-            if (pageIndex > 0 && options.Skip <= 0)
+            if (pageIndex > 0 && (options.Skip == null || options.Skip <= 0))
                 options.Skip = (pageIndex - 1) * pageSize;
-            if (pageSize > 0 && options.Limit <= 0)
+            if (pageSize > 0 && (options.Limit == null || options.Limit <= 0))
                 options.Limit = pageSize;
 
             return await infrastructure.Exec(async database =>
@@ -353,9 +353,9 @@ namespace Fate.Infrastructure.Mongo.Base
             //验证分页参数
             if (options == null)
                 options = new FindOptions<T>();
-            if (pageIndex > 0 && options.Skip <= 0)
+            if (pageIndex > 0 && (options.Skip == null || options.Skip <= 0))
                 options.Skip = (pageIndex - 1) * pageSize;
-            if (pageSize > 0 && options.Limit <= 0)
+            if (pageSize > 0 && (options.Limit == null || options.Limit <= 0))
                 options.Limit = pageSize;
 
             return await infrastructure.Exec(async database =>
