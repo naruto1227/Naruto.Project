@@ -32,3 +32,4 @@
 >6. 在 ConnectionString的options里添加 <b>maxPoolSize=xx</b> ，即可将客户端连接池中的连接数限制在xx以内。
 >7. 如何保证数据写入到大多数节点后才返回
 在 ConnectionString的options里添加 <b>w=majority</b> ，即可保证写请求成功写入大多数节点才向客户端确认。
+>8. <b>*在事务中操作的时候不存在的集合需要自行创建</b>
