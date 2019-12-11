@@ -73,15 +73,15 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Replace(ServiceDescriptor
-    .Transient<IControllerActivator, ServiceBasedControllerActivator>());
+            //        services.Replace(ServiceDescriptor
+            //.Transient<IControllerActivator, ServiceBasedControllerActivator>());
             //注入响应压缩的服务
             //services.AddResponseCompression();
             //services.Configure<GzipCompressionProviderOptions>(options =>
             //{
             //    options.Level = CompressionLevel.Fastest;
             //});
-            services.AddDistributedMemoryCache();
+            //services.AddDistributedMemoryCache();
             //注入redis仓储服务
             services.AddRedisRepository(Configuration.GetSection("AppSetting:RedisConfig"));
             //注入mysql仓储   //注入多个ef配置信息
@@ -102,25 +102,25 @@ namespace Fate.Test
             var res = Configuration.GetSection("MongonConfigs").Get<List<MongoContext>>();
             //mongo服务
             services.AddMongoServices(Configuration.GetSection("MongonConfigs"));
-            //使用单号
-            //services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
-            services.AddPublishConfiguration();
+            ////使用单号
+            ////services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
+            //services.AddPublishConfiguration();
+            services.AddControllers();
+            //services.AddControllers(option =>
+            //{
+            //    option.Filters.Add(typeof(Fate.Infrastructure.Filters.TokenAuthorizationAttribute));
+            //})
+            //               .AddConfigurationManagement(options =>
+            //               {
+            //                   options.EnableDashBoard = true;
+            //                   options.RequestOptions = new RequestOptions
+            //                   {
+            //                       HttpMethod = "get",
+            //                       RequestPath = "/api/data",
 
-            services.AddControllers(option =>
-            {
-                option.Filters.Add(typeof(Fate.Infrastructure.Filters.TokenAuthorizationAttribute));
-            })
-                           .AddConfigurationManagement(options =>
-                           {
-                               options.EnableDashBoard = true;
-                               options.RequestOptions = new RequestOptions
-                               {
-                                   HttpMethod = "get",
-                                   RequestPath = "/api/data",
-
-                               };
-                               options.EnableDataRoute = true;
-                           });
+            //                   };
+            //                   options.EnableDataRoute = true;
+            //               });
             ////注入api授权服务
             //services.AddAuthentication("Bearer").AddJwtBearer("Bearer", option =>
             //{
@@ -131,7 +131,7 @@ namespace Fate.Test
             //services.AddScoped(typeof(List<>));
             //services.UseFileOptions();
 
-            services.AddFateConfiguration();
+            // services.AddFateConfiguration();
             ////邮箱服务
             //services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
             //services.BuildServiceProvider()
@@ -141,20 +141,20 @@ namespace Fate.Test
             //替换自带的di 转换为autofac 注入程序集
         }
 
-        /// <summary>
-        /// 使用autofac（在ConfigureServices之后执行）
-        /// </summary>
-        /// <param name="builder"></param>
-        public void ConfigureContainer(ContainerBuilder builder)
+        ///// <summary>
+        ///// 使用autofac（在ConfigureServices之后执行）
+        ///// </summary>
+        ///// <param name="builder"></param>
+        //public void ConfigureContainer(ContainerBuilder builder)
 
-        { //获取所有控制器类型并使用属性注入
-            var controllerBaseType = typeof(ControllerBase);
-            builder.RegisterAssemblyTypes(typeof(Program).Assembly)
-                .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
-                //启用属性注入
-                .PropertiesAutowired();
-            builder.RegisterModule(new AutofacModule());
-        }
+        //{ //获取所有控制器类型并使用属性注入
+        //    var controllerBaseType = typeof(ControllerBase);
+        //    builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+        //        .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
+        //        //启用属性注入
+        //        .PropertiesAutowired();
+        //    builder.RegisterModule(new AutofacModule());
+        //}
         /// <summary>
         /// 
         /// </summary>
@@ -165,9 +165,9 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseFateConfiguration();
+           // app.UseFateConfiguration();
             configuration2 = Configuration;
-            var redis = app.ApplicationServices.GetRequiredService<IRedisOperationHelp>();
+           // var redis = app.ApplicationServices.GetRequiredService<IRedisOperationHelp>();
             //redis.Subscribe("changeConfiguration", (channel, redisvalue) =>
             //{
 
@@ -185,7 +185,7 @@ namespace Fate.Test
             }
 
             //注入一场处理中间件
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
+           // app.UseMiddleware<ExceptionHandlerMiddleware>();
             // app.UseMiddleware<DashBoardMiddleware>();
             //app.UseAuthentication();
 
