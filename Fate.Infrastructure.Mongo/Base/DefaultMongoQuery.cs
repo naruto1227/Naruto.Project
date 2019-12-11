@@ -278,7 +278,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public List<T> FindByPage(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            return FindByPage(collectionTypeName, pageIndex, pageSize, options);
+            return FindByPage(collectionTypeName, filter, pageIndex, pageSize, options);
         }
         /// <summary>
         /// 根据条件分页查询
@@ -303,7 +303,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public List<T> FindByPage(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions options = null)
         {
-            return FindByPage(collectionTypeName, pageIndex, pageSize, options);
+            return FindByPage(collectionTypeName, filter, pageIndex, pageSize, options);
         }
         /// <summary>
         /// 分页查询
