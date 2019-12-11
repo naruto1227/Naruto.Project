@@ -14,7 +14,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
     public interface IRedisLock : IRedisDependency
     {
         /// <summary>
-        /// 锁(过期时间内有其他的访问都为false)
+        /// 将key锁住(过期时间内有其他的访问都为false)
         /// </summary>
         /// <param name="key">key </param>
         /// <param name="value">value</param>

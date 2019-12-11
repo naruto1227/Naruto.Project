@@ -40,7 +40,8 @@ namespace Fate.Infrastructure.Redis.RedisConfig
         public int ConnectTimeout { get; set; } = 300;
 
         /// <summary>
-        /// 异步超时时间 单位毫秒 默认5s
+        /// 异步超时时间 单位毫秒 默认5s(指定系统允许异步操作的时间(默认为SyncTimeout)，以毫秒为单位)
+        /// 超时时提示Timeout awaiting response
         /// </summary>
 
         public int AsyncTimeout { get; set; } = 5000;

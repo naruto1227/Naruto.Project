@@ -11,14 +11,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
     /// 2019.08.13
     /// redis操作封装类
     /// </summary>
-    public class RedisOperationHelp : IRedisOperationHelp
+    public class DefaultRedisOperationHelp : IRedisOperationHelp
     {
         private readonly IServiceProvider serviceProvider;
 
         /// <summary>
         /// 实例化连接
         /// </summary>
-        public RedisOperationHelp(IServiceProvider _serviceProvider)
+        public DefaultRedisOperationHelp(IServiceProvider _serviceProvider)
         {
             serviceProvider = _serviceProvider;
         }
