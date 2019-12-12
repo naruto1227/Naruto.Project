@@ -3,6 +3,8 @@
   <PropertyGroup>
     <Description>实体的基类</Description>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryType>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryType>
   </PropertyGroup>
 
 </Project>

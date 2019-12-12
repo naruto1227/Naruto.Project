@@ -3,6 +3,9 @@
   <PropertyGroup>
     <Description>虚拟文件系统</Description>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

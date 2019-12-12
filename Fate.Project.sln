@@ -91,7 +91,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Mongo",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseModel", "BaseModel", "{0BB7A8E8-B045-47AF-9D01-3FAE4A378004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.BaseMongo.Model", "Fate.Infrastructure.BaseMongo.Model\Fate.Infrastructure.BaseMongo.Model.csproj", "{28DCC2F4-6AF4-4C86-A409-297FBBC79DB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.BaseMongo.Model", "Fate.Infrastructure.BaseMongo.Model\Fate.Infrastructure.BaseMongo.Model.csproj", "{28DCC2F4-6AF4-4C86-A409-297FBBC79DB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

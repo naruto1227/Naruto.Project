@@ -3,16 +3,17 @@
   <PropertyGroup>
     <Description>关系型数据库的仓储封装 ,如需使用此层的数据访问，需要将RepositoryExtensions方法中的两个扩展方法，注入到Startup中，并配置参数</Description>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</PackageProjectUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fate.Infrastructure.BaseRepository.Model" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Fate.Infrastructure.BaseRepository.Model\Fate.Infrastructure.BaseRepository.Model.csproj" />
   </ItemGroup>
 
 </Project>

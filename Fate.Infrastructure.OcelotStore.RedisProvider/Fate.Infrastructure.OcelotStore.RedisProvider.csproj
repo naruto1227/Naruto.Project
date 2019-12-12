@@ -3,12 +3,13 @@
   <PropertyGroup>
     <Description>更改ocelot的接口访问获取方法从redis中获取</Description>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Fate.Infrastructure.Redis" Version="1.0.0" />
     <PackageReference Include="Ocelot" Version="13.8.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
   </ItemGroup>
 
 </Project>

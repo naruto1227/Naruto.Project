@@ -3,15 +3,15 @@
   <PropertyGroup>
     <Description>Mongo的仓储封装</Description>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</PackageProjectUrl>
   </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Infrastructure.BaseMongo.Model\Fate.Infrastructure.BaseMongo.Model.csproj" />
-  </ItemGroup>
-  <ItemGroup>
+        <PackageReference Include="Fate.Infrastructure.BaseMongo.Model" Version="1.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.0" />
-        <PackageReference Include="MongoDB.Driver" Version="2.9.3" />
+        <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.0" />
   </ItemGroup>
 </Project>
