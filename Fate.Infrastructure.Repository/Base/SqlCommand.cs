@@ -37,7 +37,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public int ExecuteNonQuery(string sql, params object[] _params)
         {
-            return ExecuteNonQueryAsync(sql, _params).GetAwaiter().GetResult();
+            return ExecuteNonQueryAsync(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
         /// <summary>
         /// 执行sql返回第一行第一列
@@ -48,7 +48,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public T ExecuteScalar<T>(string sql, params object[] _params)
         {
-            return ExecuteScalarAsync<T>(sql, _params).GetAwaiter().GetResult();
+            return ExecuteScalarAsync<T>(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<int> ExecuteNonQueryAsync(string sql, params object[] _params)

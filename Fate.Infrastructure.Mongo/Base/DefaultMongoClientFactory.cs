@@ -59,10 +59,7 @@ namespace Fate.Infrastructure.Mongo.Base
 
         public Task<Tuple<IMongoClient, MongoContext>> GetMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext
         {
-            return Task.Factory.StartNew(() =>
-             {
-                 return GetMongoClient<TMongoContext>();
-             });
+            return Task.FromResult(GetMongoClient<TMongoContext>());
         }
 
         private MongoClientSettings MongoClientSettings()

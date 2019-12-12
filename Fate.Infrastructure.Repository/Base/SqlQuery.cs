@@ -39,7 +39,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public DataTable ExecuteSqlQuery(string sql, params object[] _params)
         {
-            return ExecuteSqlQueryAsync(sql, _params).GetAwaiter().GetResult();
+            return ExecuteSqlQueryAsync(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
         /// <summary>
         /// 执行sql返回第一行第一列的数据
@@ -48,7 +48,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public T ExecuteScalar<T>(string sql, params object[] _params)
         {
-            return ExecuteScalarAsync<T>(sql, _params).GetAwaiter().GetResult();
+            return ExecuteScalarAsync<T>(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
 

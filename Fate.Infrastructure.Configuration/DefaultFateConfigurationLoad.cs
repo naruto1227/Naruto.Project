@@ -21,12 +21,9 @@ namespace Fate.Infrastructure.Configuration
         /// 从文件加载
         /// </summary>
         /// <returns></returns>
-        protected override async Task<ConcurrentDictionary<string, string>> FromFile()
+        protected override Task<ConcurrentDictionary<string, string>> FromFile()
         {
-            return await Task.Run(() =>
-            {
-                return File.ReadAllText(filePath)?.ToObject<ConcurrentDictionary<string, string>>();
-            });
+            return Task.FromResult(File.ReadAllText(filePath)?.ToObject<ConcurrentDictionary<string, string>>());
         }
         /// <summary>
         /// 从远程加载

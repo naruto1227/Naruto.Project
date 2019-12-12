@@ -50,7 +50,7 @@ namespace Fate.Infrastructure.Mapper
         {
             if (soure == null)
                 return default;
-            return Task.Run(() => mapper.Map<List<T>>(soure));
+            return Task.FromResult(mapper.Map<List<T>>(soure));
         }
 
         /// <summary>

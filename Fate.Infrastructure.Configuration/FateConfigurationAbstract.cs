@@ -58,12 +58,10 @@ namespace Fate.Infrastructure.Configuration
         /// 推送资源到磁盘中
         /// </summary>
         /// <param name="data"></param>
-        protected async Task PushFile(string data)
+        protected Task PushFile(string data)
         {
-            await Task.Run(() =>
-            {
-                File.WriteAllText(filePath, data);
-            });
+            File.WriteAllText(filePath, data);
+            return Task.CompletedTask;
         }
 
 

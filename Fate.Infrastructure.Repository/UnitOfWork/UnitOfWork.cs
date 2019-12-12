@@ -166,29 +166,27 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
                 throw new ApplicationException("当前上下文未开启读写分离服务!");
             if (unitOfWorkOptions.IsSumbitTran)
                 throw new ApplicationException("无法在开启事务的时候执行读写库的更改!");
-            await Task.Run(async () =>
+
+            //获取连接信息
+            var connec = dbContext.Value.Database.GetDbConnection();
+            //关闭连接
+            await ChangeConnecState(connec, ConnectionState.Closed);
+            //读写
+            if (readWriteEnum == ReadWriteEnum.ReadWrite)
             {
-                //获取连接信息
-                var connec = dbContext.Value.Database.GetDbConnection();
-                //关闭连接
-                await ChangeConnecState(connec, ConnectionState.Closed);
-                //读写
-                if (readWriteEnum == ReadWriteEnum.ReadWrite)
-                {
-                    //更改连接字符串
-                    connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
-                }
-                //只读
-                else if (readWriteEnum == ReadWriteEnum.Read)
-                {
-                    connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
-                }
-                //打开连接
-                await ChangeConnecState(connec, ConnectionState.Open);
-                //连接更改重新验证是否更改了数据库名
-                await ChangeDataBase();
-                unitOfWorkOptions.IsMandatory = true;
-            }).ConfigureAwait(false);
+                //更改连接字符串
+                connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
+            }
+            //只读
+            else if (readWriteEnum == ReadWriteEnum.Read)
+            {
+                connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
+            }
+            //打开连接
+            await ChangeConnecState(connec, ConnectionState.Open);
+            //连接更改重新验证是否更改了数据库名
+            await ChangeDataBase();
+            unitOfWorkOptions.IsMandatory = true;
         }
 
         /// <summary>
@@ -238,13 +236,11 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         {
             if (unitOfWorkOptions.IsSumbitTran)
                 throw new ApplicationException("无法在事务中更改数据库!");
-            await Task.Run(async () =>
-             {
-                 //开启连接
-                 await ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
-                 dbContext.Value.Database.GetDbConnection().ChangeDatabase(dataBase);
-                 unitOfWorkOptions.ChangeDataBaseName = dataBase;
-             }).ConfigureAwait(false);
+
+            //开启连接
+            await ChangeConnecState(dbContext.Value.Database.GetDbConnection(), ConnectionState.Open);
+            dbContext.Value.Database.GetDbConnection().ChangeDatabase(dataBase);
+            unitOfWorkOptions.ChangeDataBaseName = dataBase;
         }
 
         /// <summary>

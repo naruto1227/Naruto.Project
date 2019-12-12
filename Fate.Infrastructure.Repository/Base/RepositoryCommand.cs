@@ -56,15 +56,13 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public async Task BulkDeleteAsync(params T[] entities)
+        public Task BulkDeleteAsync(params T[] entities)
         {
-            await infrastructure.Exec(async repository =>
-            {
-                await Task.Run(() =>
-                {
-                    repository.Set<T>().RemoveRange(entities);
-                }).ConfigureAwait(false);
-            });
+            return infrastructure.Exec(repository =>
+           {
+               repository.Set<T>().RemoveRange(entities);
+               return Task.CompletedTask;
+           });
         }
         /// <summary>
         /// 更新单条实体
@@ -76,7 +74,7 @@ namespace Fate.Infrastructure.Repository.Base
             return infrastructure.Exec(repository =>
            {
                repository.Set<T>().Update(info);
-               return Task.FromResult(0);
+               return Task.CompletedTask;
            });
         }
         /// <summary>
@@ -107,7 +105,7 @@ namespace Fate.Infrastructure.Repository.Base
             return infrastructure.Exec(repository =>
            {
                repository.Set<T>().UpdateRange(entities);
-               return Task.FromResult(0);
+               return Task.CompletedTask;
            });
         }
         /// <summary>
