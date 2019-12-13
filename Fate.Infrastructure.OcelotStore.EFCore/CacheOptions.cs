@@ -1,5 +1,4 @@
 ﻿
-using Fate.Infrastructure.Redis.RedisConfig;
 using Fate.Infrastructure.Repository.Object;
 using System;
 using System.Collections.Generic;

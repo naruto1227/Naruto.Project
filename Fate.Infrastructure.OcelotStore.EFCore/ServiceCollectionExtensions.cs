@@ -7,8 +7,7 @@ using Fate.Infrastructure.OcelotStore.EFCore;
 using Fate.Infrastructure.Repository.UnitOfWork;
 using Fate.Infrastructure.Repository;
 using Fate.Infrastructure.Repository.Object;
-using Fate.Infrastructure.Redis;
-using Fate.Infrastructure.Redis.IRedisManage;
+
 using Ocelot.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection

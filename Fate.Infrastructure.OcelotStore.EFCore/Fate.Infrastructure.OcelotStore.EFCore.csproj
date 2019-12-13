@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fate.Infrastructure.Redis" Version="1.0.0" />
     <PackageReference Include="Fate.Infrastructure.Repository" Version="1.0.1" />
     <PackageReference Include="Ocelot" Version="13.8.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.1" />
