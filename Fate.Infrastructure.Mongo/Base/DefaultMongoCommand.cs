@@ -486,12 +486,12 @@ namespace Fate.Infrastructure.Mongo.Base
              });
         }
 
-        public bool ReplaceOne(FilterDefinition<T> filter, T replacement, UpdateOptions options = null)
+        public bool ReplaceOne(FilterDefinition<T> filter, T replacement, ReplaceOptions options = null)
         {
             return ReplaceOne(collectionTypeName, filter, replacement, options);
         }
 
-        public bool ReplaceOne(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null)
+        public bool ReplaceOne(Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null)
         {
             return ReplaceOne(collectionTypeName, filter, replacement, options);
         }
@@ -503,7 +503,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public bool ReplaceOne(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null)
+        public bool ReplaceOne(string collectionName, FilterDefinition<T> filter, T replacement, ReplaceOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -512,7 +512,7 @@ namespace Fate.Infrastructure.Mongo.Base
             });
         }
 
-        public bool ReplaceOne(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null)
+        public bool ReplaceOne(string collectionName, Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -521,12 +521,12 @@ namespace Fate.Infrastructure.Mongo.Base
             });
         }
 
-        public async Task<bool> ReplaceOneAsync(FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> ReplaceOneAsync(FilterDefinition<T> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default)
         {
             return await ReplaceOneAsync(collectionTypeName, filter, replacement, options, cancellationToken);
         }
 
-        public async Task<bool> ReplaceOneAsync(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> ReplaceOneAsync(Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default)
         {
             return await ReplaceOneAsync(collectionTypeName, filter, replacement, options, cancellationToken);
         }
@@ -539,7 +539,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<bool> ReplaceOneAsync(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> ReplaceOneAsync(string collectionName, FilterDefinition<T> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -548,7 +548,7 @@ namespace Fate.Infrastructure.Mongo.Base
             });
         }
 
-        public async Task<bool> ReplaceOneAsync(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> ReplaceOneAsync(string collectionName, Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {

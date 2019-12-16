@@ -297,7 +297,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool ReplaceOne(FilterDefinition<T> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(FilterDefinition<T> filter, T replacement, ReplaceOptions options = null);
 
         /// <summary>
         /// 替换单个文档
@@ -306,7 +306,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool ReplaceOne(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null);
 
         /// <summary>
         /// 替换单个文档
@@ -315,7 +315,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool ReplaceOne(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(string collectionName, FilterDefinition<T> filter, T replacement, ReplaceOptions options = null);
 
         /// <summary>
         /// 替换单个文档
@@ -324,7 +324,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool ReplaceOne(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null);
+        bool ReplaceOne(string collectionName, Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null);
 
         /// <summary>
         /// 查找单个并替换(返回旧数据)
@@ -641,7 +641,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> ReplaceOneAsync(FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> ReplaceOneAsync(FilterDefinition<T> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 替换单个文档
@@ -650,17 +650,7 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> ReplaceOneAsync(Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// 替换单个文档
-        /// </summary>
-        /// <param name="collectionName">集合名称</param>
-        /// <param name="filter"></param>
-        /// <param name="replacement"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        Task<bool> ReplaceOneAsync(string collectionName, FilterDefinition<T> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> ReplaceOneAsync(Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 替换单个文档
@@ -670,7 +660,17 @@ namespace Fate.Infrastructure.Mongo.Interface
         /// <param name="replacement"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> ReplaceOneAsync(string collectionName, Expression<Func<T, bool>> filter, T replacement, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> ReplaceOneAsync(string collectionName, FilterDefinition<T> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 替换单个文档
+        /// </summary>
+        /// <param name="collectionName">集合名称</param>
+        /// <param name="filter"></param>
+        /// <param name="replacement"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<bool> ReplaceOneAsync(string collectionName, Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 查找单个并替换(返回旧数据)
