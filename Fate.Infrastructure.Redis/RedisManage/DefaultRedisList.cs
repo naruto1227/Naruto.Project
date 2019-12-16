@@ -234,11 +234,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task RightPushAsync(string key, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<long> RightPushAsync(string key, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ApplicationException("值不能为空");
-            await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value, when, flags));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value, when, flags));
         }
         /// <summary>
         /// 删除并返回存储在key上的列表的第一个元素。

@@ -61,7 +61,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <returns></returns>
         long RightPush<T>(string key, List<T> value);
-                /// <summary>
+        /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
@@ -131,7 +131,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task RightPushAsync(string key, string value, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<long> RightPushAsync(string key, string value, When when = When.Always, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
         /// 删除并返回存储在key上的列表的第一个元素。
