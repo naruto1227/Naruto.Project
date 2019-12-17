@@ -40,7 +40,7 @@ namespace Fate.XUnitTest
                 options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent>(true, 100);
-                options.IsOpenMasterSlave = false;
+                options.IsOpenMasterSlave = true;
             });
             //services.AddScoped<EFCommandInterceptor>();
             //services.AddScoped<EFDiagnosticListener>();

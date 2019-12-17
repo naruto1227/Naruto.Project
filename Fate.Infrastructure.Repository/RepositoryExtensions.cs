@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Fate.Infrastructure.Repository.Interceptor;
 using System.Diagnostics;
 using Fate.Infrastructure.Repository.HostServer;
+using Fate.Infrastructure.Repository;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -47,6 +48,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
                 });
             }
+            services.AddSingleton<SlaveDbConnectionFactory>();
             services.AddScoped<UnitOfWorkOptions>();
             return services;
         }
@@ -82,13 +84,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 //写入连接字符串的线程安全集合
                 if (eFOptions.IsOpenMasterSlave)
                 {
-                    List<SlaveDbConnection> slaveDbConnections = new List<SlaveDbConnection>();
-                    eFOptions.ReadOnlyConnectionString.ToList().ForEach(readItem =>
-                    {
-                        var items = readItem.ToLower().Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-                        slaveDbConnections.Add(new SlaveDbConnection() { ConnectionString = readItem, IsAvailable = true, HostName = items.Where(a => a.Contains("datasource")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1], Port = Convert.ToInt32(items.Where(a => a.Contains("port")).FirstOrDefault()?.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)?[1]) });
-                    });
-                    SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnections);
+                    var slaveDbConnectionFactory = services.BuildServiceProvider().GetRequiredService<SlaveDbConnectionFactory>();
+                    SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnectionFactory.Get(eFOptions));
                 }
             }
 
