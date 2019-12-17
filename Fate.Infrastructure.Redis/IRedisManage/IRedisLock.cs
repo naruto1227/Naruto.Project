@@ -21,7 +21,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="expiry">过期时间</param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        bool Lock(string key, string value, TimeSpan expiry = default, CommandFlags flags = CommandFlags.None);
+        bool Lock(string key, string value, TimeSpan expiry = default);
 
         /// <summary>
         /// 锁(过期时间内有其他的访问都为false)
@@ -31,7 +31,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="expiry"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        Task<bool> LockAsync(string key, string value, TimeSpan expiry = default, CommandFlags flags = CommandFlags.None);
+        Task<bool> LockAsync(string key, string value, TimeSpan expiry = default);
         /// <summary>
         /// 释放锁
         /// </summary>
@@ -39,7 +39,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        bool Release(string key, string value, CommandFlags flags = CommandFlags.None);
+        bool Release(string key, string value);
 
         /// <summary>
         /// 释放锁
@@ -48,7 +48,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        Task<bool> ReleaseAsync(string key, string value, CommandFlags flags = CommandFlags.None);
+        Task<bool> ReleaseAsync(string key, string value);
 
     }
 }

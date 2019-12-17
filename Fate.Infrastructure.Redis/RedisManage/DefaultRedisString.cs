@@ -31,19 +31,19 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        public void Add(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public void Add(string key, string value, TimeSpan? expiry = default)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            redisBase.DoSave(db => db.StringSet(redisPrefixKey.StringPrefixKey + key, value, expiry, when, flags));
+            redisBase.DoSave(db => db.StringSet(redisPrefixKey.StringPrefixKey + key, value, expiry));
         }
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void Add<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public void Add<T>(string key, T value, TimeSpan? expiry = default)
         {
             if (value == null)
             {
@@ -51,14 +51,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
             }
             key = redisPrefixKey.StringPrefixKey + key;
             var res = redisBase.ConvertJson(value);
-            redisBase.DoSave(db => db.StringSet(key, res, expiry, when, flags));
+            redisBase.DoSave(db => db.StringSet(key, res, expiry));
         }
 
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public bool Add<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public bool Add<T>(string key, List<T> value, TimeSpan? expiry = default)
         {
             if (value == null || value.Count() <= 0)
             {
@@ -71,24 +71,24 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 li.Add(item);
             }
             var res = redisBase.ConvertJson(li);
-            return redisBase.DoSave(db => db.StringSet(key, res, expiry, when,flags));
+            return redisBase.DoSave(db => db.StringSet(key, res, expiry));
         }
 
         /// <summary>
         /// 获取字符串
         /// </summary>
-        public string Get(string key, CommandFlags flags = CommandFlags.None)
+        public string Get(string key)
         {
-            return redisBase.DoSave(db => db.StringGet(redisPrefixKey.StringPrefixKey + key, flags));
+            return redisBase.DoSave(db => db.StringGet(redisPrefixKey.StringPrefixKey + key));
         }
 
         /// <summary>
         /// 获取对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public T Get<T>(string key, CommandFlags flags = CommandFlags.None)
+        public T Get<T>(string key)
         {
-            return redisBase.ConvertObj<T>(redisBase.DoSave(db => db.StringGet(redisPrefixKey.StringPrefixKey + key, flags)));
+            return redisBase.ConvertObj<T>(redisBase.DoSave(db => db.StringGet(redisPrefixKey.StringPrefixKey + key)));
         }
 
 
@@ -99,10 +99,10 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public long Increment(string key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public long Increment(string key, long value = 1)
         {
             key = redisPrefixKey.StringPrefixKey + key;
-            return redisBase.DoSave(db => db.StringIncrement(key, value, flags));
+            return redisBase.DoSave(db => db.StringIncrement(key, value));
         }
 
         /// <summary>
@@ -111,10 +111,10 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public long Decrement(string key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public long Decrement(string key, long value = 1)
         {
             key = redisPrefixKey.StringPrefixKey + key;
-            return redisBase.DoSave(db => db.StringDecrement(key, value, flags));
+            return redisBase.DoSave(db => db.StringDecrement(key, value));
         }
         #endregion
 
@@ -122,32 +122,32 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        public async Task<bool> AddAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync(string key, string value, TimeSpan? expiry = default)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, value, expiry, when, flags));
+            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, value, expiry));
         }
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<bool> AddAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync<T>(string key, T value, TimeSpan? expiry = default)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, redisBase.ConvertJson(value), expiry, when, flags));
+            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, redisBase.ConvertJson(value), expiry));
         }
 
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<bool> AddAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<bool> AddAsync<T>(string key, List<T> value, TimeSpan? expiry = default)
         {
             if (value == null || value.Count() <= 0)
             {
@@ -159,25 +159,25 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 li.Add(item);
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(key, redisBase.ConvertJson(li), expiry, when, flags));
+            return await redisBase.DoSave(db => db.StringSetAsync(key, redisBase.ConvertJson(li), expiry));
         }
 
         /// <summary>
         /// 获取字符串
         /// </summary>
-        public async Task<string> GetAsync(string key, CommandFlags flags = CommandFlags.None)
+        public async Task<string> GetAsync(string key)
         {
-            return await redisBase.DoSave(db => db.StringGetAsync(redisPrefixKey.StringPrefixKey + key, flags));
+            return await redisBase.DoSave(db => db.StringGetAsync(redisPrefixKey.StringPrefixKey + key));
         }
 
         /// <summary>
         /// 获取对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<T> GetAsync<T>(string key, CommandFlags flags = CommandFlags.None)
+        public async Task<T> GetAsync<T>(string key)
         {
             key = redisPrefixKey.StringPrefixKey + key;
-            var value = await redisBase.DoSave(db => db.StringGetAsync(key, flags));
+            var value = await redisBase.DoSave(db => db.StringGetAsync(key));
             if (value.ToString() == null)
             {
                 return default(T);
@@ -192,10 +192,10 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public Task<long> IncrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public Task<long> IncrementAsync(string key, long value = 1)
         {
             key = redisPrefixKey.StringPrefixKey + key;
-            return redisBase.DoSave(db => db.StringIncrementAsync(key, value, flags));
+            return redisBase.DoSave(db => db.StringIncrementAsync(key, value));
         }
 
         /// <summary>
@@ -204,10 +204,10 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<long> DecrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public Task<long> DecrementAsync(string key, long value = 1)
         {
             key = redisPrefixKey.StringPrefixKey + key;
-            return redisBase.DoSave(db => db.StringDecrementAsync(key, value, flags));
+            return redisBase.DoSave(db => db.StringDecrementAsync(key, value));
         }
         #endregion
     }

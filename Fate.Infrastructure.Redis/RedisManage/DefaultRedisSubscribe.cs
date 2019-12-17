@@ -25,38 +25,38 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        public void Subscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler, CommandFlags flags = CommandFlags.None)
+        public void Subscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            subscriber.Subscribe(chanel, handler, flags);
+            subscriber.Subscribe(chanel, handler);
         }
         /// <summary>
         /// 发布消息
         /// </summary>
         /// <param name="channel">被订阅的name</param>
         /// <param name="message">需要传递的参数</param>
-        public long Publish(RedisChannel channel, RedisValue message, CommandFlags flags = CommandFlags.None)
+        public long Publish(RedisChannel channel, RedisValue message)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            return subscriber.Publish(channel, message, flags);
+            return subscriber.Publish(channel, message);
         }
         /// <summary>
         /// 取消订阅
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        public void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null, CommandFlags flags = CommandFlags.None)
+        public void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            subscriber.Unsubscribe(chanel, handler, flags);
+            subscriber.Unsubscribe(chanel, handler);
         }
         /// <summary>
         /// 取消所有的订阅
         /// </summary>
-        public void UnsubscribeAll( CommandFlags flags = CommandFlags.None)
+        public void UnsubscribeAll()
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            subscriber.UnsubscribeAll( flags);
+            subscriber.UnsubscribeAll();
         }
         #endregion
         #region 异步
@@ -65,38 +65,38 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        public async Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler, CommandFlags flags = CommandFlags.None)
+        public async Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            await subscriber.SubscribeAsync(chanel, handler, flags);
+            await subscriber.SubscribeAsync(chanel, handler);
         }
         /// <summary>
         /// 发布消息
         /// </summary>
         /// <param name="channel">被订阅的name</param>
         /// <param name="message">需要传递的参数</param>
-        public async Task<long> PublishAsync(RedisChannel channel, RedisValue message, CommandFlags flags = CommandFlags.None)
+        public async Task<long> PublishAsync(RedisChannel channel, RedisValue message)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            return await subscriber.PublishAsync(channel, message, flags);
+            return await subscriber.PublishAsync(channel, message);
         }
         /// <summary>
         /// 取消订阅
         /// </summary>
         /// <param name="chanel">订阅的名称</param>
         /// <param name="handler">需要处理的事件</param>
-        public async Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null, CommandFlags flags = CommandFlags.None)
+        public async Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            await subscriber.UnsubscribeAsync(chanel, handler, flags);
+            await subscriber.UnsubscribeAsync(chanel, handler);
         }
         /// <summary>
         /// 取消所有的订阅
         /// </summary>
-        public async Task UnsubscribeAllAsync( CommandFlags flags = CommandFlags.None)
+        public async Task UnsubscribeAllAsync()
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            await subscriber.UnsubscribeAllAsync(flags);
+            await subscriber.UnsubscribeAllAsync();
         }
         #endregion
     }

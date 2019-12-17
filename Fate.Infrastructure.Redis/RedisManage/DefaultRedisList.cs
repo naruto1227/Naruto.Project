@@ -33,14 +33,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void Add<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public void Add<T>(string key, List<T> value)
         {
             if (value != null && value.Count > 0)
             {
                 foreach (var single in value)
                 {
                     var result = redisBase.ConvertJson(single);
-                    redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, result, when, flags));
+                    redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, result));
                 }
             }
         }
@@ -49,9 +49,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
-        public List<T> Get<T>(string key, long start = 0, long stop = -1, CommandFlags flags = CommandFlags.None)
+        public List<T> Get<T>(string key, long start = 0, long stop = -1)
         {
-            var vList = redisBase.DoSave(db => db.ListRange(redisPrefixKey.ListPrefixKey + key, start, stop, flags));
+            var vList = redisBase.DoSave(db => db.ListRange(redisPrefixKey.ListPrefixKey + key, start, stop));
             List<T> result = new List<T>();
             foreach (var item in vList)
             {
@@ -65,51 +65,51 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value">value值</param>
-        public long Remove<T>(string key, T value, long count = 0, CommandFlags flags = CommandFlags.None)
+        public long Remove<T>(string key, T value, long count = 0)
         {
             if (value == null)
                 throw new ApplicationException("值不能为空");
-            return redisBase.DoSave(db => db.ListRemove(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), count, flags));
+            return redisBase.DoSave(db => db.ListRemove(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), count));
         }
         /// <summary>
         /// 删除并返回存储在key上的列表的第一个元素。
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public string LeftPop(string key, CommandFlags flags = CommandFlags.None)
+        public string LeftPop(string key)
         {
-            return redisBase.DoSave(db => db.ListLeftPop(redisPrefixKey.ListPrefixKey + key, flags));
+            return redisBase.DoSave(db => db.ListLeftPop(redisPrefixKey.ListPrefixKey + key));
         }
         /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public long RightPush(string key, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public long RightPush(string key, string value)
         {
             if (value == null)
                 throw new ApplicationException("值不能为空");
-            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, value, when, flags));
+            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, value));
         }
         /// <summary>
         /// 删除并返回存储在key上的列表的第一个元素。
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public T LeftPop<T>(string key, CommandFlags flags = CommandFlags.None)
+        public T LeftPop<T>(string key)
         {
-            return redisBase.ConvertObj<T>(redisBase.DoSave(db => db.ListLeftPop(redisPrefixKey.ListPrefixKey + key, flags)));
+            return redisBase.ConvertObj<T>(redisBase.DoSave(db => db.ListLeftPop(redisPrefixKey.ListPrefixKey + key)));
         }
         /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public long RightPush<T>(string key, T value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public long RightPush<T>(string key, T value)
         {
             if (value == null)
                 throw new ApplicationException("值不能为空");
-            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), when, flags));
+            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value)));
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -117,11 +117,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public long RightPush(string key, string[] value, CommandFlags flags = CommandFlags.None)
+        public long RightPush(string key, string[] value)
         {
             if (value == null || value.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray(), flags));
+            return redisBase.DoSave(db => db.ListRightPush(redisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -145,9 +145,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public long Length(string key, CommandFlags flags = CommandFlags.None)
+        public long Length(string key)
         {
-            return redisBase.DoSave(db => db.ListLength(redisPrefixKey.ListPrefixKey + key, flags));
+            return redisBase.DoSave(db => db.ListLength(redisPrefixKey.ListPrefixKey + key));
         }
         #endregion
 
@@ -158,14 +158,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public async Task AddAsync<T>(string key, List<T> value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task AddAsync<T>(string key, List<T> value)
         {
             if (value != null && value.Count > 0)
             {
                 foreach (var single in value)
                 {
                     var result = redisBase.ConvertJson(single);
-                    await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, result, when, flags));
+                    await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, result));
                 }
             }
         }
@@ -174,9 +174,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
-        public async Task<List<T>> GetAsync<T>(string key, long start = 0, long stop = -1, CommandFlags flags = CommandFlags.None)
+        public async Task<List<T>> GetAsync<T>(string key, long start = 0, long stop = -1)
         {
-            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop, flags));
+            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop));
             List<T> result = new List<T>();
             foreach (var item in vList)
             {
@@ -191,9 +191,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
-        public async Task<List<string>> GetAsync(string key, long start = 0, long stop = -1, CommandFlags flags = CommandFlags.None)
+        public async Task<List<string>> GetAsync(string key, long start = 0, long stop = -1)
         {
-            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop, flags));
+            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop));
             return vList.ToStringArray().ToList();
         }
 
@@ -202,11 +202,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value">value值</param>
-        public async Task<long> RemoveAsync<T>(string key, T value, long count = 0, CommandFlags flags = CommandFlags.None)
+        public async Task<long> RemoveAsync<T>(string key, T value, long count = 0)
         {
             if (value == null)
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRemoveAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), count, flags));
+            return await redisBase.DoSave(db => db.ListRemoveAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), count));
         }
 
 
@@ -215,9 +215,9 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<long> LengthAsync(string key, CommandFlags flags = CommandFlags.None)
+        public async Task<long> LengthAsync(string key)
         {
-            return await redisBase.DoSave(db => db.ListLengthAsync(redisPrefixKey.ListPrefixKey + key, flags));
+            return await redisBase.DoSave(db => db.ListLengthAsync(redisPrefixKey.ListPrefixKey + key));
         }
 
         /// <summary>
@@ -225,40 +225,40 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<string> LeftPopAsync(string key, CommandFlags flags = CommandFlags.None)
+        public async Task<string> LeftPopAsync(string key)
         {
-            return await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key, flags));
+            return await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key));
         }
         /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<long> RightPushAsync(string key, string value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<long> RightPushAsync(string key, string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value, when, flags));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value));
         }
         /// <summary>
         /// 删除并返回存储在key上的列表的第一个元素。
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<T> LeftPopAsync<T>(string key, CommandFlags flags = CommandFlags.None)
+        public async Task<T> LeftPopAsync<T>(string key)
         {
-            return redisBase.ConvertObj<T>((await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key, flags))));
+            return redisBase.ConvertObj<T>((await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key))));
         }
         /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<long> RightPushAsync<T>(string key, T value, When when = When.Always, CommandFlags flags = CommandFlags.None)
+        public async Task<long> RightPushAsync<T>(string key, T value)
         {
             if (value == null)
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), when, flags));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value)));
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -283,11 +283,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task<long> RightPushAsync(string key, string[] value, CommandFlags flags = CommandFlags.None)
+        public async Task<long> RightPushAsync(string key, string[] value)
         {
             if (value == null || value.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray(), flags));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
         }
         #endregion
 

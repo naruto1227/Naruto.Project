@@ -20,7 +20,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        bool Add<T>(string value, CommandFlags flags = CommandFlags.None);
+        bool Add<T>(string value);
 
         /// <summary>
         /// 移除
@@ -28,26 +28,26 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        bool Remove<T>(string value, CommandFlags flags = CommandFlags.None);
+        bool Remove<T>(string value);
 
         /// <summary>
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        string[] Get<T>(CommandFlags flags = CommandFlags.None);
+        string[] Get<T>();
 
         /// <summary>
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        string[] Get(string key, CommandFlags flags = CommandFlags.None);
+        string[] Get(string key);
 
         /// <summary>
         /// 新增
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        bool Add(string key, string value, CommandFlags flags = CommandFlags.None);
+        bool Add(string key, string value);
 
         /// <summary>
         /// 移除
@@ -55,7 +55,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        void Remove(string key, string value, CommandFlags flags = CommandFlags.None);
+        void Remove(string key, string value);
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        Task<bool> AddAsync<T>(string value, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync<T>(string value);
 
         /// <summary>
         /// 移除
@@ -74,26 +74,26 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        Task<bool> RemoveAsync<T>(string value, CommandFlags flags = CommandFlags.None);
+        Task<bool> RemoveAsync<T>(string value);
 
         /// <summary>
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<string[]> GetAsync<T>(CommandFlags flags = CommandFlags.None);
+        Task<string[]> GetAsync<T>();
 
         /// <summary>
         /// 取值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<string[]> GetAsync(string key, CommandFlags flags = CommandFlags.None);
+        Task<string[]> GetAsync(string key);
 
         /// <summary>
         /// 新增
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        Task<bool> AddAsync(string key, string value, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync(string key, string value);
 
         /// <summary>
         /// 移除
@@ -101,7 +101,7 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        Task<bool> RemoveAsync(string key, string value, CommandFlags flags = CommandFlags.None);
+        Task<bool> RemoveAsync(string key, string value);
 
         #endregion
     }

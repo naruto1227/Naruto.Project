@@ -18,29 +18,29 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        void Add(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        void Add(string key, string value, TimeSpan? expiry = default);
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        void Add<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        void Add<T>(string key, T value, TimeSpan? expiry = default);
 
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        bool Add<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        bool Add<T>(string key, List<T> value, TimeSpan? expiry = default);
 
         /// <summary>
         /// 获取字符串
         /// </summary>
-        string Get(string key, CommandFlags flags = CommandFlags.None);
+        string Get(string key);
 
         /// <summary>
         /// 获取对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        T Get<T>(string key, CommandFlags flags = CommandFlags.None);
+        T Get<T>(string key);
         /// <summary>
         /// 自增
         /// </summary>
@@ -48,14 +48,14 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        long Increment(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        long Increment(string key, long value = 1);
         /// <summary>
         /// 递减
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        long Decrement(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        long Decrement(string key, long value = 1);
         #endregion
 
 
@@ -64,26 +64,26 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <summary>
         /// 保存字符串
         /// </summary>
-        Task<bool> AddAsync(string key, string value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync(string key, string value, TimeSpan? expiry = default);
         /// <summary>
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<bool> AddAsync<T>(string key, T value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync<T>(string key, T value, TimeSpan? expiry = default);
         /// <summary>
         /// 保存集合对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<bool> AddAsync<T>(string key, List<T> value, TimeSpan? expiry = default, When when = When.Always, CommandFlags flags = CommandFlags.None);
+        Task<bool> AddAsync<T>(string key, List<T> value, TimeSpan? expiry = default);
         /// <summary>
         /// 获取字符串
         /// </summary>
-        Task<string> GetAsync(string key, CommandFlags flags = CommandFlags.None);
+        Task<string> GetAsync(string key);
         /// <summary>
         /// 获取对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        Task<T> GetAsync<T>(string key, CommandFlags flags = CommandFlags.None);
+        Task<T> GetAsync<T>(string key);
 
 
         /// <summary>
@@ -93,14 +93,14 @@ namespace Fate.Infrastructure.Redis.IRedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        Task<long> IncrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        Task<long> IncrementAsync(string key, long value = 1);
         /// <summary>
         /// 递减
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        Task<long> DecrementAsync(string key, long value = 1, CommandFlags flags = CommandFlags.None);
+        Task<long> DecrementAsync(string key, long value = 1);
         #endregion
     }
 }

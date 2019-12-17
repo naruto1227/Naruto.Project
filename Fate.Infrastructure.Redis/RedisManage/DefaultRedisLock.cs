@@ -32,11 +32,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="expiry">过期时间</param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public bool Lock(string key, string value, TimeSpan expiry = default, CommandFlags flags = CommandFlags.None)
+        public bool Lock(string key, string value, TimeSpan expiry = default)
         {
             return redisBase.DoSave((database) =>
             {
-                return database.LockTake(LockPrefix + key, value, expiry, flags);
+                return database.LockTake(LockPrefix + key, value, expiry);
             });
         }
 
@@ -48,11 +48,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="expiry"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public Task<bool> LockAsync(string key, string value, TimeSpan expiry, CommandFlags flags = CommandFlags.None)
+        public Task<bool> LockAsync(string key, string value, TimeSpan expiry)
         {
             return redisBase.DoSave((database) =>
             {
-                return database.LockTakeAsync(LockPrefix + key, value, expiry, flags);
+                return database.LockTakeAsync(LockPrefix + key, value, expiry);
             });
         }
         /// <summary>
@@ -62,11 +62,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public bool Release(string key, string value, CommandFlags flags = CommandFlags.None)
+        public bool Release(string key, string value)
         {
             return redisBase.DoSave((database) =>
             {
-                return database.LockRelease(LockPrefix + key, value, flags);
+                return database.LockRelease(LockPrefix + key, value);
             });
         }
 
@@ -77,11 +77,11 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public Task<bool> ReleaseAsync(string key, string value, CommandFlags flags = CommandFlags.None)
+        public Task<bool> ReleaseAsync(string key, string value)
         {
             return redisBase.DoSave((database) =>
             {
-                return database.LockReleaseAsync(LockPrefix + key, value, flags);
+                return database.LockReleaseAsync(LockPrefix + key, value);
             });
         }
     }
