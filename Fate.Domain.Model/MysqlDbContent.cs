@@ -15,6 +15,10 @@ namespace Fate.Domain.Model
         {
 
         }
+        public MysqlDbContent Clone()
+        {
+            return this.MemberwiseClone() as MysqlDbContent;
+        }
         //public DbSet<OrderNo> OrderNo { get; set; }
         public DbSet<setting> setting { get; set; }
         public DbSet<test1> test1 { get; set; }

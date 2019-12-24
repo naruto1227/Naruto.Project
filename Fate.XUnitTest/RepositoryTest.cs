@@ -36,7 +36,7 @@ namespace Fate.XUnitTest
             //注入mysql仓储   //注入多个ef配置信息
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
                 options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent>(true, 100);
@@ -52,11 +52,18 @@ namespace Fate.XUnitTest
 
             var iserverPri = services.BuildServiceProvider();
 
-            //var u0k = iserverPri.GetRequiredService<MysqlDbContent>();
+            var mysqlDbContent = iserverPri.GetRequiredService<MysqlDbContent>();
+            DbContextOptions<MysqlDbContent> options = new DbContextOptions<MysqlDbContent>();
 
-
+            var db2 = (DbContext)Activator.CreateInstance(typeof(MysqlDbContent), options);
+            var db3 = mysqlDbContent.Clone();
             //var re = iserverPri.GetRequiredService<IRepositoryFactory>();
+            mysqlDbContent.Dispose();
 
+            var list22 = db3.test1.Where(a => 1 == 1).ToList();
+            db3.Dispose();
+            list22 = db3.test1.Where(a => 1 == 1).ToList();
+            var list222 = mysqlDbContent.test1.Where(a => 1 == 1).ToList();
             //re.dbContext = u0k;
             //dbContex = u0k;
             //u0k.Dispose();
@@ -188,7 +195,7 @@ namespace Fate.XUnitTest
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var query = unit.SqlQuery();
-          await  unit.ChangeDataBase("test1");
+            await unit.ChangeDataBase("test1");
             unit.CommandTimeout = 180;
             var res = await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
         }
