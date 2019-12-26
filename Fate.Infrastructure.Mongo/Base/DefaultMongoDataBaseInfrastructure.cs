@@ -83,8 +83,8 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.ListCollectionNamesAsync(options, cancellationToken)).ToListAsync(cancellationToken);
-            });
+                return await (await database.ListCollectionNamesAsync(options, cancellationToken)).ToListAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 获取集合信息
@@ -103,8 +103,8 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.ListCollectionsAsync(options, cancellationToken)).ToListAsync(cancellationToken);
-            });
+                return await (await database.ListCollectionsAsync(options, cancellationToken)).ToListAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 重命名集合名称

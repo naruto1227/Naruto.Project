@@ -31,7 +31,7 @@ namespace Fate.Infrastructure.Consul.ServiceDiscovery
         {
             serverName.IsNull();
             //获取结果
-            var result = await consulClient.Health.Service(serverName);
+            var result = await consulClient.Health.Service(serverName).ConfigureAwait(false);
             if (result == null)
             {
                 return default;
@@ -61,7 +61,7 @@ namespace Fate.Infrastructure.Consul.ServiceDiscovery
             tag.IsNull();
 
             //获取结果
-            var result = await consulClient.Health.Service(serverName, tag);
+            var result = await consulClient.Health.Service(serverName, tag).ConfigureAwait(false);
             if (result == null)
             {
                 return default;

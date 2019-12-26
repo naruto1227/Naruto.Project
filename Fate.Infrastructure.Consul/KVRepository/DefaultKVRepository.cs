@@ -28,7 +28,7 @@ namespace Fate.Infrastructure.Consul.KVRepository
         {
             key.IsNull();
             value.IsNull();
-            var res = await consulClient.KV.Put(new KVPair(key) { Key = key, Value = value.ToBytes() });
+            var res = await consulClient.KV.Put(new KVPair(key) { Key = key, Value = value.ToBytes() }).ConfigureAwait(false);
             return res.Response;
         }
 
@@ -42,7 +42,7 @@ namespace Fate.Infrastructure.Consul.KVRepository
         {
             key.IsNull();
             value.IsNull();
-            var res = await consulClient.KV.Put(new KVPair(key) { Key = key, Value = value.ToBytes() }, option);
+            var res = await consulClient.KV.Put(new KVPair(key) { Key = key, Value = value.ToBytes() }, option).ConfigureAwait(false);
             return res.Response;
         }
 
@@ -58,7 +58,7 @@ namespace Fate.Infrastructure.Consul.KVRepository
             if (option == null)
                 throw new ArgumentNullException(nameof(option));
 
-            var res = await consulClient.KV.Get(key, option);
+            var res = await consulClient.KV.Get(key, option).ConfigureAwait(false);
             return res?.Response?.Value.CoverToString();
         }
         /// <summary>
@@ -69,7 +69,7 @@ namespace Fate.Infrastructure.Consul.KVRepository
         public async Task<string> GetAsync(string key)
         {
             key.IsNull();
-            var res = await consulClient.KV.Get(key);
+            var res = await consulClient.KV.Get(key).ConfigureAwait(false);
             return res?.Response?.Value.CoverToString();
         }
 
@@ -81,7 +81,7 @@ namespace Fate.Infrastructure.Consul.KVRepository
         public async Task<bool> DeleteAsync(string key)
         {
             key.IsNull();
-            return (await consulClient.KV.Delete(key)).Response;
+            return (await consulClient.KV.Delete(key).ConfigureAwait(false)).Response;
         }
         /// <summary>
         /// 根据条件删除
@@ -94,7 +94,7 @@ namespace Fate.Infrastructure.Consul.KVRepository
             key.IsNull();
             if (option == null)
                 throw new ArgumentNullException(nameof(option));
-            return (await consulClient.KV.Delete(key, option)).Response;
+            return (await consulClient.KV.Delete(key, option).ConfigureAwait(false)).Response;
         }
     }
 }

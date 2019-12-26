@@ -123,7 +123,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             //反射实体的信息
             var type = typeof(T);
             string key = redisPrefixKey.SetPrefixKey + type.Name;
-            return await redisBase.DoSave(db => db.SetAddAsync(key, value));
+            return await redisBase.DoSave(db => db.SetAddAsync(key, value)).ConfigureAwait(false);
         }
         /// <summary>
         /// 移除
@@ -140,7 +140,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             //反射实体的信息
             var type = typeof(T);
             string key = redisPrefixKey.SetPrefixKey + type.Name;
-            return await redisBase.DoSave(db => db.SetRemoveAsync(key, value));
+            return await redisBase.DoSave(db => db.SetRemoveAsync(key, value)).ConfigureAwait(false);
         }
         /// <summary>
         /// 取值
@@ -151,7 +151,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             //反射实体的信息
             var type = typeof(T);
             string key = redisPrefixKey.SetPrefixKey + type.Name;
-            return (await redisBase.DoSave(db => db.SetMembersAsync(key))).ToStringArray();
+            return (await redisBase.DoSave(db => db.SetMembersAsync(key)).ConfigureAwait(false)).ToStringArray();
         }
         /// <summary>
         /// 取值
@@ -159,7 +159,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <typeparam name="T"></typeparam>
         public async Task<string[]> GetAsync(string key)
         {
-            return (await redisBase.DoSave(db => db.SetMembersAsync(redisPrefixKey.SetPrefixKey + key))).ToStringArray();
+            return (await redisBase.DoSave(db => db.SetMembersAsync(redisPrefixKey.SetPrefixKey + key)).ConfigureAwait(false)).ToStringArray();
         }
         /// <summary>
         /// 新增
@@ -172,7 +172,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.SetAddAsync(redisPrefixKey.SetPrefixKey + key, value));
+            return await redisBase.DoSave(db => db.SetAddAsync(redisPrefixKey.SetPrefixKey + key, value)).ConfigureAwait(false);
         }
         /// <summary>
         /// 移除
@@ -186,7 +186,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.SetRemoveAsync(redisPrefixKey.SetPrefixKey + key, value));
+            return await redisBase.DoSave(db => db.SetRemoveAsync(redisPrefixKey.SetPrefixKey + key, value)).ConfigureAwait(false);
         }
         #endregion
     }

@@ -28,14 +28,14 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public async Task AddAsync(T info) => await infrastructure.Exec(async repository => await repository.Set<T>().AddAsync(info));
+        public async Task AddAsync(T info) => await infrastructure.Exec(async repository => await repository.Set<T>().AddAsync(info)).ConfigureAwait(false);
 
         /// <summary>
         /// 批量添加数据
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public async Task BulkAddAsync(IEnumerable<T> entities) => await infrastructure.Exec(async repository => await repository.Set<T>().AddRangeAsync(entities));
+        public async Task BulkAddAsync(IEnumerable<T> entities) => await infrastructure.Exec(async repository => await repository.Set<T>().AddRangeAsync(entities)).ConfigureAwait(false);
 
         /// <summary>
         /// 删除数据
@@ -46,7 +46,7 @@ namespace Fate.Infrastructure.Repository.Base
         {
             await infrastructure.Exec(async repository =>
             {
-                var list = await Where(condition).ToArrayAsync();
+                var list = await Where(condition).ToArrayAsync().ConfigureAwait(false);
                 if (list != null && list.Count() > 0)
                     BulkDelete(list);
             });
@@ -87,7 +87,7 @@ namespace Fate.Infrastructure.Repository.Base
         {
             await infrastructure.Exec(async repository =>
            {
-               var list = await Where(condition).ToListAsync();
+               var list = await Where(condition).ToListAsync().ConfigureAwait(false);
                if (list != null && list.Count() > 0)
                {
                    foreach (var item in list)

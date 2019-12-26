@@ -89,7 +89,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 throw new ArgumentNullException(nameof(value));
             }
             var result = redisBase.ConvertJson(value);
-            return await redisBase.DoSave(db => db.SortedSetAddAsync(redisPrefixKey.SortedSetKey + key, result, score));
+            return await redisBase.DoSave(db => db.SortedSetAddAsync(redisPrefixKey.SortedSetKey + key, result, score)).ConfigureAwait(false);
         }
         /// <summary>
         /// 获取SortedSet的数据
@@ -98,7 +98,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<T> GetAsync<T>(string key, double score, Order order = Order.Ascending, long skip = 0, long take = -1)
         {
-            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(redisPrefixKey.SortedSetKey + key, score, double.PositiveInfinity, Exclude.None, order, skip, take));
+            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(redisPrefixKey.SortedSetKey + key, score, double.PositiveInfinity, Exclude.None, order, skip, take)).ConfigureAwait(false);
             return redisBase.ConvertObj<T>(result.ToString());
         }
         /// <summary>
@@ -108,7 +108,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<long> LengthAsync(string key)
         {
-            return await redisBase.DoSave(db => db.SortedSetLengthAsync(redisPrefixKey.SortedSetKey + key));
+            return await redisBase.DoSave(db => db.SortedSetLengthAsync(redisPrefixKey.SortedSetKey + key)).ConfigureAwait(false);
         }
         /// <summary>
         /// 移除SortedSet
@@ -120,7 +120,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 throw new ArgumentNullException(nameof(value));
             }
             var result = redisBase.ConvertJson(value);
-            return await redisBase.DoSave(db => db.SortedSetRemoveAsync(redisPrefixKey.SortedSetKey + key, result));
+            return await redisBase.DoSave(db => db.SortedSetRemoveAsync(redisPrefixKey.SortedSetKey + key, result)).ConfigureAwait(false);
         }
         #endregion
     }

@@ -216,8 +216,8 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
-            });
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件查询所有数据
@@ -228,7 +228,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<List<T>> FindAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FindAsync(collectionTypeName, filter, options, cancellationToken);
+            return await FindAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件查询所有数据
@@ -241,8 +241,8 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
-            });
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件查询所有数据
@@ -253,7 +253,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FindAsync(collectionTypeName, filter, options, cancellationToken);
+            return await FindAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件分页查询
@@ -327,8 +327,8 @@ namespace Fate.Infrastructure.Mongo.Base
 
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
-            });
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件分页查询
@@ -339,7 +339,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<List<T>> FindByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FindByPageAsync(collectionTypeName, filter, pageIndex, pageSize, options, cancellationToken);
+            return await FindByPageAsync(collectionTypeName, filter, pageIndex, pageSize, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件分页查询
@@ -360,8 +360,8 @@ namespace Fate.Infrastructure.Mongo.Base
 
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken);
-            });
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).ToListAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件分页查询
@@ -372,7 +372,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<List<T>> FindByPageAsync(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FindByPageAsync(collectionTypeName, filter, pageIndex, pageSize, options, cancellationToken);
+            return await FindByPageAsync(collectionTypeName, filter, pageIndex, pageSize, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 查询第一条数据
@@ -436,8 +436,8 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).FirstOrDefaultAsync(cancellationToken);
-            });
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 查询第一条数据
@@ -448,7 +448,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<T> FirstOrDefaultAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FirstOrDefaultAsync(collectionTypeName, filter, options, cancellationToken);
+            return await FirstOrDefaultAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 查询第一条数据
@@ -461,8 +461,8 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).FirstOrDefaultAsync(cancellationToken);
-            });
+                return await (await database.GetCollection<T>(collectionName).FindAsync(filter, options, cancellationToken)).FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 查询第一条数据
@@ -473,7 +473,7 @@ namespace Fate.Infrastructure.Mongo.Base
         /// <returns></returns>
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FirstOrDefaultAsync(collectionTypeName, filter, options, cancellationToken);
+            return await FirstOrDefaultAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

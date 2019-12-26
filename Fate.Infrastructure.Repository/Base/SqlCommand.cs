@@ -75,7 +75,7 @@ namespace Fate.Infrastructure.Repository.Base
             //创建一个命令
             var command = CreateCommand(connection, sql, _params);
             //获取结果
-            var res = (await command.ExecuteScalarAsync());
+            var res = (await command.ExecuteScalarAsync().ConfigureAwait(false));
             if (res == null)
                 return default;
             return (T)res;

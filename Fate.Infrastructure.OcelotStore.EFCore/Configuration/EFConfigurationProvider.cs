@@ -33,7 +33,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore
             //当前接口的作用是网关的每次调用 都会从其中获取路由的数据
             var configRepository = builder.ApplicationServices.GetService<IInternalConfigurationRepository>();
 
-            await SetFileConfigInDataBase( fileConfigRepository, configCreator, configRepository);
+            await SetFileConfigInDataBase( fileConfigRepository, configCreator, configRepository).ConfigureAwait(false);
 
         };
         /// <summary>
@@ -49,7 +49,7 @@ namespace Fate.Infrastructure.OcelotStore.EFCore
             IInternalConfigurationCreator internalConfigCreator, IInternalConfigurationRepository internalConfigRepo)
         {
             // 从redis中获取数据
-            var fileConfigFromDataBase = await fileConfigRepo.Get();
+            var fileConfigFromDataBase = await fileConfigRepo.Get().ConfigureAwait(false);
 
             if (IsError(fileConfigFromDataBase))
             {
@@ -58,9 +58,9 @@ namespace Fate.Infrastructure.OcelotStore.EFCore
             else
             {
                 //设置存储
-                await fileConfigRepo.Set(fileConfigFromDataBase.Data);
+                await fileConfigRepo.Set(fileConfigFromDataBase.Data).ConfigureAwait(false);
                 // create the internal config from consul data
-                var internalConfig = await internalConfigCreator.Create(fileConfigFromDataBase.Data);
+                var internalConfig = await internalConfigCreator.Create(fileConfigFromDataBase.Data).ConfigureAwait(false);
 
                 if (IsError(internalConfig))
                 {

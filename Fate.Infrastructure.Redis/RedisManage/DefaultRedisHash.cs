@@ -174,7 +174,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<string> GetAsync(string key, string hashField)
         {
-            var res = await redisBase.DoSave(db => db.HashGetAsync(redisPrefixKey.HashPrefixKey + key, hashField));
+            var res = await redisBase.DoSave(db => db.HashGetAsync(redisPrefixKey.HashPrefixKey + key, hashField)).ConfigureAwait(false);
             return !res.IsNull ? res.ToString() : default;
         }
 
@@ -185,7 +185,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<Dictionary<string, string>> GetAllAsync(string key)
         {
-            var res = await redisBase.DoSave(db => db.HashGetAllAsync(redisPrefixKey.HashPrefixKey + key));
+            var res = await redisBase.DoSave(db => db.HashGetAllAsync(redisPrefixKey.HashPrefixKey + key)).ConfigureAwait(false);
             return res != null ? res.ToStringDictionary() : default;
         }
         /// <summary>
@@ -198,7 +198,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            var res = await redisBase.DoSave(db => db.HashGetAsync(redisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray()));
+            var res = await redisBase.DoSave(db => db.HashGetAsync(redisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray())).ConfigureAwait(false);
             return res != null ? res.ToStringArray() : default;
         }
         /// <summary>
@@ -240,7 +240,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<string[]> ValuesAsync(string key)
         {
-            var res = await redisBase.DoSave(db => db.HashValuesAsync(redisPrefixKey.HashPrefixKey + key));
+            var res = await redisBase.DoSave(db => db.HashValuesAsync(redisPrefixKey.HashPrefixKey + key)).ConfigureAwait(false);
             return res != null ? res.ToStringArray() : default;
         }
         #endregion

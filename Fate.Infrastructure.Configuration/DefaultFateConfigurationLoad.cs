@@ -66,7 +66,7 @@ namespace Fate.Infrastructure.Configuration
                             //如果资源存在 将资源存储再磁盘中
                             if (!string.IsNullOrWhiteSpace(res))
                             {
-                                await PushFile(res);
+                                await PushFile(res).ConfigureAwait(false);
                                 return res.ToObject<ConcurrentDictionary<string, string>>();
                             }
                         }

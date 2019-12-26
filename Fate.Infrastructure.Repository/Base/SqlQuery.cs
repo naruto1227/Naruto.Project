@@ -71,7 +71,7 @@ namespace Fate.Infrastructure.Repository.Base
             var command = CreateCommand(connection, sql, _params);
             //执行返回
             DataTable dataTable = new DataTable();
-            dataTable.Load((await command.ExecuteReaderAsync()));
+            dataTable.Load((await command.ExecuteReaderAsync().ConfigureAwait(false)));
             return dataTable;
         }
         /// <summary>
@@ -89,7 +89,7 @@ namespace Fate.Infrastructure.Repository.Base
             //创建一个命令
             var command = CreateCommand(connection, sql, _params);
             //获取结果
-            var res = (await command.ExecuteScalarAsync());
+            var res = (await command.ExecuteScalarAsync().ConfigureAwait(false));
             if (res == null)
                 return default;
             return (T)res;

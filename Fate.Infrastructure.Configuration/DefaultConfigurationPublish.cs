@@ -20,7 +20,7 @@ namespace Fate.Infrastructure.Configuration
         }
         public async Task PublishAsync()
         {
-            await redis.RedisSubscribe().PublishAsync(FateConfigurationInfrastructure.SubscribeKey, "更新配置");
+            await redis.RedisSubscribe().PublishAsync(FateConfigurationInfrastructure.SubscribeKey, "更新配置").ConfigureAwait(false);
         }
     }
 }

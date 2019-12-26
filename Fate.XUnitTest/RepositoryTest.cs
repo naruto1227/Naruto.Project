@@ -18,10 +18,15 @@ using Microsoft.EntityFrameworkCore;
 using Fate.Domain.Model;
 using Fate.Domain.Model.Entities;
 using System.Threading.Tasks;
+#if NETCOREAPP
 using Fate.Infrastructure.Repository.Interceptor;
 using MySql.Data.MySqlClient;
 using Microsoft.EntityFrameworkCore.Query;
-
+#else
+using Fate.Infrastructure.Repository.Interceptor;
+using MySql.Data.MySqlClient;
+using Microsoft.EntityFrameworkCore.Query;
+#endif
 namespace Fate.XUnitTest
 {
     public class RepositoryTest
@@ -49,7 +54,8 @@ namespace Fate.XUnitTest
         [Fact]
         public void Test()
         {
-
+            CancellationToken cancellationToken;
+            cancellationToken.ThrowIfCancellationRequested();
             var iserverPri = services.BuildServiceProvider();
 
             var mysqlDbContent = iserverPri.GetRequiredService<MysqlDbContent>();

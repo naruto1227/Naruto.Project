@@ -82,7 +82,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         public async Task<bool> RemoveAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
             key = GetKey(key, keyOperatorEnum);
-            return await redisBase.DoSave(db => db.KeyDeleteAsync(key));
+            return await redisBase.DoSave(db => db.KeyDeleteAsync(key)).ConfigureAwait(false);
         }
         /// <summary>
         /// 移除key
@@ -101,7 +101,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 item = GetKey(item, keyOperatorEnum);
                 removeList.Add(item);
             });
-            return await redisBase.DoSave(db => db.KeyDeleteAsync(redisBase.ConvertRedisKeys(removeList)));
+            return await redisBase.DoSave(db => db.KeyDeleteAsync(redisBase.ConvertRedisKeys(removeList))).ConfigureAwait(false);
         }
         /// <summary>
         /// 判断key是否存在
@@ -110,7 +110,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         public async Task<bool> ExistsAsync(string key, KeyOperatorEnum keyOperatorEnum = default)
         {
             key = GetKey(key, keyOperatorEnum);
-            return await redisBase.DoSave(db => db.KeyExistsAsync(key));
+            return await redisBase.DoSave(db => db.KeyExistsAsync(key)).ConfigureAwait(false);
         }
         #endregion
 

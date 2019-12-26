@@ -114,12 +114,12 @@ namespace Fate.Infrastructure.Mongo.Base
 
         public async Task<long> DeleteManyAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteManyAsync(collectionTypeName, filter, options, cancellationToken);
+            return await DeleteManyAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<long> DeleteManyAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteManyAsync(collectionTypeName, filter, options, cancellationToken);
+            return await DeleteManyAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 异步删除
@@ -133,18 +133,18 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                var res = await database.GetCollection<T>(collectionName).DeleteManyAsync(filter, options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).DeleteManyAsync(filter, options, cancellationToken).ConfigureAwait(false);
                 return res.DeletedCount;
-            });
+            }).ConfigureAwait(false);
         }
 
         public async Task<long> DeleteManyAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
-                var res = await database.GetCollection<T>(collectionName).DeleteManyAsync(filter, options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).DeleteManyAsync(filter, options, cancellationToken).ConfigureAwait(false);
                 return res.DeletedCount;
-            });
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 删除单个
@@ -188,28 +188,28 @@ namespace Fate.Infrastructure.Mongo.Base
 
         public async Task<bool> DeleteOneAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteOneAsync(collectionTypeName, filter, options, cancellationToken);
+            return await DeleteOneAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteOneAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteOneAsync(collectionTypeName, filter, options, cancellationToken);
+            return await DeleteOneAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteOneAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
-                var res = await database.GetCollection<T>(collectionName).DeleteOneAsync(filter, options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).DeleteOneAsync(filter, options, cancellationToken).ConfigureAwait(false);
                 return res.DeletedCount > 0;
-            });
+            }).ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteOneAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
-                var res = await database.GetCollection<T>(collectionName).DeleteOneAsync(filter, options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).DeleteOneAsync(filter, options, cancellationToken).ConfigureAwait(false);
                 return res.DeletedCount > 0;
             });
         }
@@ -523,12 +523,12 @@ namespace Fate.Infrastructure.Mongo.Base
 
         public async Task<bool> ReplaceOneAsync(FilterDefinition<T> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await ReplaceOneAsync(collectionTypeName, filter, replacement, options, cancellationToken);
+            return await ReplaceOneAsync(collectionTypeName, filter, replacement, options, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<bool> ReplaceOneAsync(Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await ReplaceOneAsync(collectionTypeName, filter, replacement, options, cancellationToken);
+            return await ReplaceOneAsync(collectionTypeName, filter, replacement, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 异步替换文档
@@ -543,18 +543,18 @@ namespace Fate.Infrastructure.Mongo.Base
         {
             return await infrastructure.Exec(async database =>
             {
-                var res = await database.GetCollection<T>(collectionName).ReplaceOneAsync(filter, replacement, options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).ReplaceOneAsync(filter, replacement, options, cancellationToken).ConfigureAwait(false);
                 return res.ModifiedCount > 0;
-            });
+            }).ConfigureAwait(false);
         }
 
         public async Task<bool> ReplaceOneAsync(string collectionName, Expression<Func<T, bool>> filter, T replacement, ReplaceOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
-                var res = await database.GetCollection<T>(collectionName).ReplaceOneAsync(filter, replacement, options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).ReplaceOneAsync(filter, replacement, options, cancellationToken).ConfigureAwait(false);
                 return res.ModifiedCount > 0;
-            });
+            }).ConfigureAwait(false);
         }
 
         public bool UpdateMany(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
@@ -629,9 +629,9 @@ namespace Fate.Infrastructure.Mongo.Base
                 if (resUpdateDefinitions.Item1 == false)
                     return false;
                 //修改
-                var res = await database.GetCollection<T>(collectionName).UpdateManyAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).UpdateManyAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken).ConfigureAwait(false);
                 return res.ModifiedCount > 0;
-            });
+            }).ConfigureAwait(false);
         }
 
         public async Task<bool> UpdateManyAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
@@ -643,9 +643,9 @@ namespace Fate.Infrastructure.Mongo.Base
                 if (resUpdateDefinitions.Item1 == false)
                     return false;
                 //修改
-                var res = await database.GetCollection<T>(collectionName).UpdateManyAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).UpdateManyAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken).ConfigureAwait(false);
                 return res.ModifiedCount > 0;
-            });
+            }).ConfigureAwait(false);
         }
 
         public bool UpdateOne(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
@@ -695,12 +695,12 @@ namespace Fate.Infrastructure.Mongo.Base
 
         public async Task<bool> UpdateOneAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await UpdateOneAsync(collectionTypeName, filter, updateField, options, cancellationToken);
+            return await UpdateOneAsync(collectionTypeName, filter, updateField, options, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await UpdateOneAsync(collectionTypeName, filter, updateField, options, cancellationToken);
+            return await UpdateOneAsync(collectionTypeName, filter, updateField, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -721,9 +721,9 @@ namespace Fate.Infrastructure.Mongo.Base
                 if (resUpdateDefinitions.Item1 == false)
                     return false;
                 //修改
-                var res = await database.GetCollection<T>(collectionName).UpdateOneAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).UpdateOneAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken).ConfigureAwait(false);
                 return res.ModifiedCount > 0;
-            });
+            }).ConfigureAwait(false);
         }
         /// <summary>
         /// 修改单个对象
@@ -743,9 +743,9 @@ namespace Fate.Infrastructure.Mongo.Base
                 if (resUpdateDefinitions.Item1 == false)
                     return false;
                 //修改
-                var res = await database.GetCollection<T>(collectionName).UpdateOneAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken);
+                var res = await database.GetCollection<T>(collectionName).UpdateOneAsync(filter, Builders<T>.Update.Combine(resUpdateDefinitions.Item2), options, cancellationToken).ConfigureAwait(false);
                 return res.ModifiedCount > 0;
-            });
+            }).ConfigureAwait(false);
         }
 
 

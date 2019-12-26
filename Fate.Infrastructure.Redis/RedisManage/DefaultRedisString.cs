@@ -128,7 +128,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, value, expiry));
+            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, value, expiry)).ConfigureAwait(false);
         }
         /// <summary>
         /// 保存对象
@@ -140,7 +140,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, redisBase.ConvertJson(value), expiry));
+            return await redisBase.DoSave(db => db.StringSetAsync(redisPrefixKey.StringPrefixKey + key, redisBase.ConvertJson(value), expiry)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 li.Add(item);
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(key, redisBase.ConvertJson(li), expiry));
+            return await redisBase.DoSave(db => db.StringSetAsync(key, redisBase.ConvertJson(li), expiry)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         public async Task<string> GetAsync(string key)
         {
-            return await redisBase.DoSave(db => db.StringGetAsync(redisPrefixKey.StringPrefixKey + key));
+            return await redisBase.DoSave(db => db.StringGetAsync(redisPrefixKey.StringPrefixKey + key)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         public async Task<T> GetAsync<T>(string key)
         {
             key = redisPrefixKey.StringPrefixKey + key;
-            var value = await redisBase.DoSave(db => db.StringGetAsync(key));
+            var value = await redisBase.DoSave(db => db.StringGetAsync(key)).ConfigureAwait(false);
             if (value.ToString() == null)
             {
                 return default(T);

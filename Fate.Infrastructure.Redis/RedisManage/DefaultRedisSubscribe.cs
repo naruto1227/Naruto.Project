@@ -68,7 +68,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         public async Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            await subscriber.SubscribeAsync(chanel, handler);
+            await subscriber.SubscribeAsync(chanel, handler).ConfigureAwait(false);
         }
         /// <summary>
         /// 发布消息
@@ -78,7 +78,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         public async Task<long> PublishAsync(RedisChannel channel, RedisValue message)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            return await subscriber.PublishAsync(channel, message);
+            return await subscriber.PublishAsync(channel, message).ConfigureAwait(false);
         }
         /// <summary>
         /// 取消订阅
@@ -88,7 +88,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         public async Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            await subscriber.UnsubscribeAsync(chanel, handler);
+            await subscriber.UnsubscribeAsync(chanel, handler).ConfigureAwait(false);
         }
         /// <summary>
         /// 取消所有的订阅
@@ -96,7 +96,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         public async Task UnsubscribeAllAsync()
         {
             var subscriber = redisBase.RedisConnection.GetSubscriber();
-            await subscriber.UnsubscribeAllAsync();
+            await subscriber.UnsubscribeAllAsync().ConfigureAwait(false);
         }
         #endregion
     }

@@ -165,7 +165,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
                 foreach (var single in value)
                 {
                     var result = redisBase.ConvertJson(single);
-                    await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, result));
+                    await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, result)).ConfigureAwait(false);
                 }
             }
         }
@@ -176,7 +176,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         public async Task<List<T>> GetAsync<T>(string key, long start = 0, long stop = -1)
         {
-            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop));
+            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop)).ConfigureAwait(false);
             List<T> result = new List<T>();
             foreach (var item in vList)
             {
@@ -193,7 +193,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="key"></param>
         public async Task<List<string>> GetAsync(string key, long start = 0, long stop = -1)
         {
-            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop));
+            var vList = await redisBase.DoSave(db => db.ListRangeAsync(redisPrefixKey.ListPrefixKey + key, start, stop)).ConfigureAwait(false);
             return vList.ToStringArray().ToList();
         }
 
@@ -206,7 +206,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         {
             if (value == null)
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRemoveAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), count));
+            return await redisBase.DoSave(db => db.ListRemoveAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value), count)).ConfigureAwait(false);
         }
 
 
@@ -217,7 +217,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<long> LengthAsync(string key)
         {
-            return await redisBase.DoSave(db => db.ListLengthAsync(redisPrefixKey.ListPrefixKey + key));
+            return await redisBase.DoSave(db => db.ListLengthAsync(redisPrefixKey.ListPrefixKey + key)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<string> LeftPopAsync(string key)
         {
-            return await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key));
+            return await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key)).ConfigureAwait(false);
         }
         /// <summary>
         /// 往最后推送一个数据
@@ -238,7 +238,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value)).ConfigureAwait(false);
         }
         /// <summary>
         /// 删除并返回存储在key上的列表的第一个元素。
@@ -247,7 +247,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <returns></returns>
         public async Task<T> LeftPopAsync<T>(string key)
         {
-            return redisBase.ConvertObj<T>((await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key))));
+            return redisBase.ConvertObj<T>((await redisBase.DoSave(db => db.ListLeftPopAsync(redisPrefixKey.ListPrefixKey + key)).ConfigureAwait(false)));
         }
         /// <summary>
         /// 往最后推送一个数据
@@ -258,7 +258,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         {
             if (value == null)
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value)));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisBase.ConvertJson(value))).ConfigureAwait(false);
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -275,7 +275,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
             {
                 redisValues.Add(redisBase.ConvertJson(item));
             });
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, redisValues.ToArray())).ConfigureAwait(false);
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -287,7 +287,7 @@ namespace Fate.Infrastructure.Redis.RedisManage
         {
             if (value == null || value.Count() <= 0)
                 throw new ApplicationException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
+            return await redisBase.DoSave(db => db.ListRightPushAsync(redisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray())).ConfigureAwait(false);
         }
         #endregion
 

@@ -60,8 +60,7 @@ namespace Fate.Infrastructure.Configuration
         /// <param name="data"></param>
         protected Task PushFile(string data)
         {
-            File.WriteAllText(filePath, data);
-            return Task.CompletedTask;
+            return Task.Factory.StartNew(() => File.WriteAllText(filePath, data));
         }
 
 
@@ -78,7 +77,7 @@ namespace Fate.Infrastructure.Configuration
             using (FileStream fileStream = new FileStream(Path.Combine(path, DateTime.Now.ToString("yyyyMMdd") + ".log"), FileMode.Append, FileAccess.Write))
             {
                 var log = Encoding.UTF8.GetBytes($"\n{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}:【message】：{message}\n");
-                await fileStream.WriteAsync(log, 0, log.Length);
+                await fileStream.WriteAsync(log, 0, log.Length).ConfigureAwait(false);
             }
         }
     }
