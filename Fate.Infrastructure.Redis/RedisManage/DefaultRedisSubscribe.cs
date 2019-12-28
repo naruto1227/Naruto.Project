@@ -11,13 +11,14 @@ namespace Fate.Infrastructure.Redis.RedisManage
     {
         private readonly IRedisBase redisBase;
 
-
+        private readonly ISubscriber subscriber;
         /// <summary>
         /// 实例化连接
         /// </summary>
         public DefaultRedisSubscribe(IRedisBase _redisBase)
         {
             redisBase = _redisBase;
+            subscriber = redisBase.RedisConnection.GetSubscriber();
         }
         #region 同步
         /// <summary>
@@ -27,7 +28,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="handler">需要处理的事件</param>
         public void Subscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             subscriber.Subscribe(chanel, handler);
         }
         /// <summary>
@@ -37,7 +37,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="message">需要传递的参数</param>
         public long Publish(RedisChannel channel, RedisValue message)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             return subscriber.Publish(channel, message);
         }
         /// <summary>
@@ -47,7 +46,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="handler">需要处理的事件</param>
         public void Unsubscribe(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             subscriber.Unsubscribe(chanel, handler);
         }
         /// <summary>
@@ -55,7 +53,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         public void UnsubscribeAll()
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             subscriber.UnsubscribeAll();
         }
         #endregion
@@ -67,7 +64,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="handler">需要处理的事件</param>
         public async Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             await subscriber.SubscribeAsync(chanel, handler).ConfigureAwait(false);
         }
         /// <summary>
@@ -77,7 +73,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="message">需要传递的参数</param>
         public async Task<long> PublishAsync(RedisChannel channel, RedisValue message)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             return await subscriber.PublishAsync(channel, message).ConfigureAwait(false);
         }
         /// <summary>
@@ -87,7 +82,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// <param name="handler">需要处理的事件</param>
         public async Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             await subscriber.UnsubscribeAsync(chanel, handler).ConfigureAwait(false);
         }
         /// <summary>
@@ -95,7 +89,6 @@ namespace Fate.Infrastructure.Redis.RedisManage
         /// </summary>
         public async Task UnsubscribeAllAsync()
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
             await subscriber.UnsubscribeAllAsync().ConfigureAwait(false);
         }
         #endregion
