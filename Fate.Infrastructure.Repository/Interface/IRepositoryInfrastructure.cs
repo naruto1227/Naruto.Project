@@ -15,12 +15,17 @@ namespace Fate.Infrastructure.Repository.Interface
     /// <typeparam name="TDbContext"></typeparam>
     public interface IRepositoryWriteInfrastructure<TDbContext> : IRepositoryInfrastructure, IRepositoryDependency where TDbContext : DbContext
     {
+        
         /// <summary>
         /// 保存
         /// </summary>
         /// <returns></returns>
         Task<int> SaveChangesAsync();
 
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <returns></returns>
         int SaveChanges();
         /// <summary>
         /// 开启事务
@@ -67,15 +72,17 @@ namespace Fate.Infrastructure.Repository.Interface
         /// 执行操作
         /// </summary>
         /// <typeparam name="TResult">返回结果</typeparam>
+        /// <param name="isforce">是否强制更改连接</param>
         /// <param name="action"></param>
         /// <returns></returns>
-        TResult Exec<TResult>(Func<DbContext, TResult> action);
+        TResult Exec<TResult>(Func<DbContext, TResult> action, bool isforce = true);
         /// <summary>
         /// 执行操作 无返回值
         /// </summary>
+        /// <param name="isforce">是否强制更改连接</param>
         /// <param name="action"></param>
         /// <returns></returns>
-        void Exec(Action<DbContext> action);
+        void Exec(Action<DbContext> action, bool isforce = true);
     }
 
 

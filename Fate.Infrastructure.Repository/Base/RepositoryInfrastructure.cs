@@ -43,18 +43,24 @@ namespace Fate.Infrastructure.Repository.Base
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action"></param>
         /// <returns></returns>
-        public TResult Exec<TResult>(Func<DbContext, TResult> action)
+        public TResult Exec<TResult>(Func<DbContext, TResult> action, bool isforce = true)
         {
-            infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (isforce)
+            {
+                infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
             return action(dbContext);
         }
         /// <summary>
         /// 无返回值
         /// </summary>
         /// <param name="action"></param>
-        public void Exec(Action<DbContext> action)
+        public void Exec(Action<DbContext> action, bool isforce = true)
         {
-            infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (isforce)
+            {
+                infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
             action(dbContext);
         }
         /// <summary>
@@ -151,18 +157,24 @@ namespace Fate.Infrastructure.Repository.Base
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action"></param>
         /// <returns></returns>
-        public TResult Exec<TResult>(Func<DbContext, TResult> action)
+        public TResult Exec<TResult>(Func<DbContext, TResult> action, bool isforce = true)
         {
-            infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (isforce)
+            {
+                infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
             return action(dbContext);
         }
         /// <summary>
         /// 无返回值
         /// </summary>
         /// <param name="action"></param>
-        public void Exec(Action<DbContext> action)
+        public void Exec(Action<DbContext> action, bool isforce = true)
         {
-            infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (isforce)
+            {
+                infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
             action(dbContext);
         }
     }
