@@ -41,8 +41,8 @@ namespace Fate.XUnitTest
             //注入mysql仓储   //注入多个ef配置信息
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-                options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;" };
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent>(true, 100);
                 options.IsOpenMasterSlave = true;
@@ -93,7 +93,7 @@ namespace Fate.XUnitTest
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             ConcurrentQueue<setting> settings1 = new ConcurrentQueue<setting>();
 
-            Parallel.For(0, 10000, (item) =>
+            Parallel.For(0, 100, (item) =>
             {
                 settings1.Enqueue(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             });
