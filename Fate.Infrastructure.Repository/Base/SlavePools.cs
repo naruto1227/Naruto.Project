@@ -27,27 +27,25 @@ namespace Fate.Infrastructure.Repository.Object
         /// <param name="dbcontext">上下文类型</param>
         internal static bool HeartBeatCheck(Type dbcontext, SlaveDbConnection slaveConnections)
         {
-            using (var tcpClient = new TcpClient())
+            using var tcpClient = new TcpClient();
+            try
             {
-                try
-                {
-                    //连接tcp服务器
-                    tcpClient.Connect(slaveConnections.HostName, slaveConnections.Port);
-                }
-                catch (Exception)
-                {
-                    slaveConnec.Where(a => a.Key == dbcontext).Select(a => a.Value).FirstOrDefault()?.ForEach(item =>
-                    {
-                        if (item == slaveConnections)
-                        {
-                            item.IsAvailable = false;
-                        }
-                    });
-                    Console.WriteLine($"SlavePools:当前{slaveConnections.ConnectionString}从库的无法连接");
-                    return false;
-                }
-                return true;
+                //连接tcp服务器
+                tcpClient.Connect(slaveConnections.HostName, slaveConnections.Port);
             }
+            catch (Exception)
+            {
+                slaveConnec.Where(a => a.Key == dbcontext).Select(a => a.Value).FirstOrDefault()?.ForEach(item =>
+                {
+                    if (item == slaveConnections)
+                    {
+                        item.IsAvailable = false;
+                    }
+                });
+                Console.WriteLine($"SlavePools:当前{slaveConnections.ConnectionString}从库的无法连接");
+                return false;
+            }
+            return true;
         }
         /// <summary>
         /// 执行定时器 验证从库的状态

@@ -108,12 +108,7 @@ namespace Fate.Infrastructure.Repository.Base
                return Task.CompletedTask;
            }, false);
         }
-        /// <summary>
-        /// 获取单条记录
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        private Task<T> FindAsync(Expression<Func<T, bool>> condition) => infrastructure.Exec(repository => Where(condition).FirstOrDefaultAsync());
+
 
         #endregion
 
@@ -195,12 +190,6 @@ namespace Fate.Infrastructure.Repository.Base
 
         #endregion
 
-        /// <summary>
-        /// 获取单条记录
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        private T Find(Expression<Func<T, bool>> condition) => infrastructure.Exec(repository => Where(condition).FirstOrDefault());
         /// <summary>
         /// 根据条件查询
         /// </summary>

@@ -22,7 +22,7 @@ namespace Fate.Infrastructure.Repository.Base
     public class RepositoryWriteInfrastructure<TDbContext> : IRepositoryWriteInfrastructure<TDbContext> where TDbContext : DbContext
     {
         //获取仓储上下文
-        private DbContext dbContext;
+        private readonly DbContext dbContext;
 
         private readonly IRepositoryInfrastructureBase infrastructureBase;
 
@@ -144,7 +144,7 @@ namespace Fate.Infrastructure.Repository.Base
     public class RepositoryReadInfrastructure<TDbContext> : IRepositoryReadInfrastructure<TDbContext> where TDbContext : DbContext
     {
         //获取仓储上下文
-        private DbContext dbContext;
+        private readonly DbContext dbContext;
         private readonly IRepositoryInfrastructureBase infrastructureBase;
         public RepositoryReadInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase _infrastructureBase)
         {
@@ -186,12 +186,12 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 工作单元参数
         /// </summary>
-        private UnitOfWorkOptions unitOfWorkOptions;
+        private readonly UnitOfWorkOptions unitOfWorkOptions;
 
         /// <summary>
         /// 参数信息
         /// </summary>
-        private IOptions<List<EFOptions>> options;
+        private readonly IOptions<List<EFOptions>> options;
 
         public RepositoryInfrastructureBase(UnitOfWorkOptions _unitOfWorkOptions, IOptions<List<EFOptions>> _options)
         {
