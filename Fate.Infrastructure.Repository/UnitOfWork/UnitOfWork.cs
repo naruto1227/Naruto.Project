@@ -185,20 +185,14 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IRepositoryQuery<T> Query<T>() where T : class, IEntity
-        {
-            return service.GetService<IRepositoryQuery<T, TDbContext>>();
-        }
+        public IRepositoryQuery<T> Query<T>() where T : class, IEntity => service.GetService<IRepositoryQuery<T, TDbContext>>();
 
         /// <summary>
         /// 执行增删改的操作
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IRepositoryCommand<T> Command<T>() where T : class, IEntity
-        {
-            return service.GetService<IRepositoryCommand<T, TDbContext>>();
-        }
+        public IRepositoryCommand<T> Command<T>() where T : class, IEntity => service.GetService<IRepositoryCommand<T, TDbContext>>();
         /// <summary>
         /// 更改数据库的名字
         /// </summary>
@@ -218,18 +212,13 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 执行sql查询操作
         /// </summary>
         /// <returns></returns>
-        public ISqlQuery SqlQuery()
-        {
-            return service.GetService<ISqlQuery<TDbContext>>();
-        }
+        public ISqlQuery SqlQuery() => service.GetService<ISqlQuery<TDbContext>>();
+
         /// <summary>
         /// 执行sql增删改操作
         /// </summary> 
         /// <returns></returns>
-        public ISqlCommand SqlCommand()
-        {
-            return service.GetService<ISqlCommand<TDbContext>>();
-        }
+        public ISqlCommand SqlCommand() => service.GetService<ISqlCommand<TDbContext>>();
         /// <summary>
         /// 释放资源
         /// </summary>
