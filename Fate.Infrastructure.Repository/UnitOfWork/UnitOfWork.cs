@@ -34,10 +34,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         public readonly Lazy<DbContext> dbContext;
 
         /// <summary>
-        /// 参数信息
-        /// </summary>
-        private IOptions<List<EFOptions>> options;
-        /// <summary>
         /// 工作单元参数
         /// </summary>
         private UnitOfWorkOptions unitOfWorkOptions;
@@ -63,7 +59,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <param name="_service"></param>
         public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IDbContextFactory _repositoryFactory)
         {
-            options = _options;
             unitOfWorkOptions = _unitOfWorkOptions;
             //获取上下文类型
             unitOfWorkOptions.DbContextType = typeof(TDbContext);

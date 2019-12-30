@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Base
 {
+
     /// <summary>
     /// 张海波
     /// 2019-12-7
@@ -43,50 +44,45 @@ namespace Fate.Infrastructure.Repository.Base
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action"></param>
         /// <returns></returns>
-        public TResult Exec<TResult>(Func<DbContext, TResult> action, bool isforce = true)
+        public TResult Exec<TResult>(Func<DbContext, TResult> action)
         {
-            if (isforce)
-            {
-                infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
             return action(dbContext);
         }
         /// <summary>
         /// 无返回值
         /// </summary>
         /// <param name="action"></param>
-        public void Exec(Action<DbContext> action, bool isforce = true)
+        public void Exec(Action<DbContext> action)
         {
-            if (isforce)
-            {
-                infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
             action(dbContext);
         }
         /// <summary>
         /// 保存
         /// </summary>
         /// <returns></returns>
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            return Exec(dbContext => dbContext.SaveChangesAsync());
+            await infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false);
+            return await Exec(dbContext => dbContext.SaveChangesAsync().ConfigureAwait(false));
         }
 
         public int SaveChanges()
         {
+            infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             return Exec(dbContext => dbContext.SaveChanges());
         }
         /// <summary>
         /// 开启事务
         /// </summary>
         /// <returns></returns>
-        public Task<IDbContextTransaction> BeginTransactionAsync()
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
         {
-            return Exec(dbContext =>
+            await infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false);
+            return await Exec(async dbContext =>
             {
                 //更改事务的状态
                 unitOfWorkOptions.IsSumbitTran = true;
-                return dbContext.Database.BeginTransactionAsync();
+                return await dbContext.Database.BeginTransactionAsync();
             });
         }
         /// <summary>
@@ -95,6 +91,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public IDbContextTransaction BeginTransaction()
         {
+            infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             return Exec(dbContext =>
              {
                  //更改事务的状态
@@ -157,24 +154,18 @@ namespace Fate.Infrastructure.Repository.Base
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action"></param>
         /// <returns></returns>
-        public TResult Exec<TResult>(Func<DbContext, TResult> action, bool isforce = true)
+        public TResult Exec<TResult>(Func<DbContext, TResult> action)
         {
-            if (isforce)
-            {
-                infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
+            infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             return action(dbContext);
         }
         /// <summary>
         /// 无返回值
         /// </summary>
         /// <param name="action"></param>
-        public void Exec(Action<DbContext> action, bool isforce = true)
+        public void Exec(Action<DbContext> action)
         {
-            if (isforce)
-            {
-                infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
+            infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             action(dbContext);
         }
     }

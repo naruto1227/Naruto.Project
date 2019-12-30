@@ -111,7 +111,7 @@ namespace Fate.XUnitTest
             // var sql = unit.Query<setting>().AsQueryable().ToSql();
             var str2 = "";
             var str = unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToSqlWithParams();
-            await unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToListAsync();
+            var res = await unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToListAsync();
         }
 
         [Fact]

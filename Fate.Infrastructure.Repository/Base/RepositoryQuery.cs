@@ -40,7 +40,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public IQueryable<T> Where(Expression<Func<T, bool>> condition) => infrastructure.Exec(repository => repository.Set<T>().Where(condition).AsQueryable());
+        public IQueryable<T> Where(Expression<Func<T, bool>> condition) => infrastructure.Exec(repository => repository.Set<T>().AsQueryable().Where(condition));
         /// <summary>
         /// sql语句查询
         /// </summary>

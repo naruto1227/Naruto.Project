@@ -28,14 +28,14 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public async Task AddAsync(T info) => await infrastructure.Exec(async repository => await repository.Set<T>().AddAsync(info),false).ConfigureAwait(false);
+        public async Task AddAsync(T info) => await infrastructure.Exec(async repository => await repository.Set<T>().AddAsync(info)).ConfigureAwait(false);
 
         /// <summary>
         /// 批量添加数据
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public async Task BulkAddAsync(IEnumerable<T> entities) => await infrastructure.Exec(async repository => await repository.Set<T>().AddRangeAsync(entities), false).ConfigureAwait(false);
+        public async Task BulkAddAsync(IEnumerable<T> entities) => await infrastructure.Exec(async repository => await repository.Set<T>().AddRangeAsync(entities)).ConfigureAwait(false);
 
         /// <summary>
         /// 删除数据
@@ -49,7 +49,7 @@ namespace Fate.Infrastructure.Repository.Base
                 var list = await Where(condition).ToArrayAsync().ConfigureAwait(false);
                 if (list != null && list.Count() > 0)
                     BulkDelete(list);
-            }, false);
+            });
         }
         /// <summary>
         /// 批量删除数据
@@ -62,7 +62,7 @@ namespace Fate.Infrastructure.Repository.Base
            {
                repository.Set<T>().RemoveRange(entities);
                return Task.CompletedTask;
-           }, false);
+           });
         }
         /// <summary>
         /// 更新单条实体
@@ -75,7 +75,7 @@ namespace Fate.Infrastructure.Repository.Base
            {
                repository.Set<T>().Update(info);
                return Task.CompletedTask;
-           }, false);
+           });
         }
         /// <summary>
         /// 更新个别的字段数据
@@ -93,7 +93,7 @@ namespace Fate.Infrastructure.Repository.Base
                    foreach (var item in list)
                        update(item);
                }
-           }, false);
+           });
         }
         /// <summary>
         /// 编辑
@@ -106,7 +106,7 @@ namespace Fate.Infrastructure.Repository.Base
            {
                repository.Set<T>().UpdateRange(entities);
                return Task.CompletedTask;
-           }, false);
+           });
         }
 
 
@@ -122,7 +122,7 @@ namespace Fate.Infrastructure.Repository.Base
             infrastructure.Exec(repository =>
             {
                 repository.Set<T>().Add(entity);
-            }, false);
+            });
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Fate.Infrastructure.Repository.Base
             infrastructure.Exec(repository =>
             {
                 repository.Set<T>().AddRange(entities);
-            }, false);
+            });
         }
 
         /// <summary>
@@ -149,20 +149,20 @@ namespace Fate.Infrastructure.Repository.Base
                 var list = Where(condition).ToArray();
                 if (list != null && list.Count() > 0)
                     BulkDelete(list);
-            }, false);
+            });
         }
         /// <summary>
         /// 删除数据
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public void BulkDelete(params T[] entities) => infrastructure.Exec(repository => repository.Set<T>().RemoveRange(entities), false);
+        public void BulkDelete(params T[] entities) => infrastructure.Exec(repository => repository.Set<T>().RemoveRange(entities));
         /// <summary>
         /// 更新单条实体
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public void Update(T info) => infrastructure.Exec(repository => repository.Set<T>().Update(info), false);
+        public void Update(T info) => infrastructure.Exec(repository => repository.Set<T>().Update(info));
         /// <summary>
         /// 更新个别的字段数据
         /// </summary>
@@ -179,14 +179,14 @@ namespace Fate.Infrastructure.Repository.Base
                     foreach (var item in list)
                         update(item);
                 }
-            }, false);
+            });
         }
         /// <summary>
         /// 编辑
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public void BulkUpdate(params T[] entities) => infrastructure.Exec(repository => repository.Set<T>().UpdateRange(entities), false);
+        public void BulkUpdate(params T[] entities) => infrastructure.Exec(repository => repository.Set<T>().UpdateRange(entities));
 
         #endregion
 
