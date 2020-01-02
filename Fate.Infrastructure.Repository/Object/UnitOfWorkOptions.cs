@@ -46,5 +46,10 @@ namespace Fate.Infrastructure.Repository.Object
         /// </summary>
         public bool IsOpenMasterSlave = false;
 
+        /// <summary>
+        /// 超时时间
+        /// </summary>
+        public int CommandTimeout { get; set; }
+
     }
 }

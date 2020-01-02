@@ -85,6 +85,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             set
             {
                 dbContext.Value.Database.SetCommandTimeout(value);
+                unitOfWorkOptions.CommandTimeout = value;
             }
         }
 
