@@ -122,6 +122,17 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="pollSize">连接池数量</param>
         public static void UseEntityFramework<TDbContext>(this EFOptions eFOptions, bool isDbContextPool = true, int pollSize = 128) where TDbContext : DbContext
         {
+            eFOptions.UseEntityFramework<TDbContext, TDbContext>(isDbContextPool, pollSize);
+        }
+        /// <summary>
+        /// 注入EFCOre 上下文 
+        /// </summary>
+        /// <typeparam name="TDbContext"></typeparam>
+        /// <param name="eFOptions"></param>
+        /// <param name="isDbContextPool">是否设置上下文池</param>
+        /// <param name="pollSize">连接池数量</param>
+        public static void UseEntityFramework<TDbContext, TSlaveDbContext>(this EFOptions eFOptions, bool isDbContextPool = true, int pollSize = 128) where TDbContext : DbContext where TSlaveDbContext : DbContext
+        {
             if (eFOptions == null)
                 throw new ArgumentNullException("值不能为空!");
             //获取上下文的实例
@@ -134,6 +145,22 @@ namespace Microsoft.Extensions.DependencyInjection
                     serviceDescriptors.AddDbContextPool<TDbContext>(eFOptions.ConfigureDbContext, pollSize);
                 else
                     serviceDescriptors.AddDbContext<TDbContext>(eFOptions.ConfigureDbContext);
+
+                //验证是否开启读写分离
+                if (eFOptions.IsOpenMasterSlave)
+                {
+                    if (typeof(TDbContext) == typeof(TSlaveDbContext))
+                    {
+                        throw new ArgumentException($"{nameof(TSlaveDbContext)}参数配置错误");
+                    }
+                    //添加slave 从库的上下文
+                    if (isDbContextPool)
+                        serviceDescriptors.AddDbContextPool<TSlaveDbContext>(eFOptions.ConfigureDbContext, pollSize);
+                    else
+                        serviceDescriptors.AddDbContext<TSlaveDbContext>(eFOptions.ConfigureDbContext);
+
+                    eFOptions.SlaveDbContextType = typeof(TSlaveDbContext);
+                }
                 using (var server = serviceDescriptors.BuildServiceProvider().CreateScope())
                 {
                     //获取master主库的连接字符串

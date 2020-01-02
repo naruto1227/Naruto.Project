@@ -16,7 +16,10 @@ namespace Fate.Infrastructure.Repository.Object
         /// master 库的连接字符串
         /// </summary>
         public string WriteReadConnectionString;
-
+        /// <summary>
+        /// 是否开启读写分离的操作 
+        /// </summary>
+        public bool IsOpenMasterSlave = false;
         /// <summary>
         /// 上下文的类型
         /// </summary>
@@ -40,11 +43,6 @@ namespace Fate.Infrastructure.Repository.Object
         /// 是否已经强制更改数据库连接 
         /// </summary>
         public bool IsMandatory = false;
-
-        /// <summary>
-        /// 是否开启读写分离的操作 
-        /// </summary>
-        public bool IsOpenMasterSlave = false;
 
         /// <summary>
         /// 超时时间

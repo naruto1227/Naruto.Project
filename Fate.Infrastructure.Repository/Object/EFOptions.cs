@@ -17,10 +17,19 @@ namespace Fate.Infrastructure.Repository.Object
         /// 上下文的配置 (必填)
         /// </summary>
         public Action<DbContextOptionsBuilder> ConfigureDbContext { get; set; }
+
+        /// <summary>
+        /// 是否开启读写分离的操作 (默认不开启)
+        /// </summary>
+        public bool IsOpenMasterSlave { get; set; } = false;
         /// <summary>
         /// ef实体的类型
         /// </summary>
         internal Type DbContextType { get; set; }
+        /// <summary>
+        /// 从库的上下文类型
+        /// </summary>
+        internal Type SlaveDbContextType { get; set; }
 
         /// <summary>
         /// 读写连接字符串的key ()
@@ -32,10 +41,7 @@ namespace Fate.Infrastructure.Repository.Object
         /// </summary>
         public string[] ReadOnlyConnectionString { get; set; }
 
-        /// <summary>
-        /// 是否开启读写分离的操作 (默认不开启)
-        /// </summary>
-        public bool IsOpenMasterSlave { get; set; } = false;
+
 
     }
 }

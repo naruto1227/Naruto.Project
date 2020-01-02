@@ -34,7 +34,7 @@ namespace Fate.Infrastructure.Repository.Base
 
         public RepositoryWriteInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase _infrastructureBase, UnitOfWorkOptions _unitOfWorkOptions)
         {
-            dbContext = _factory.Get<TDbContext>();
+            dbContext = _factory.GetMaster<TDbContext>();
             infrastructureBase = _infrastructureBase;
             unitOfWorkOptions = _unitOfWorkOptions;
         }
@@ -145,8 +145,9 @@ namespace Fate.Infrastructure.Repository.Base
         private readonly IRepositoryInfrastructureBase infrastructureBase;
         public RepositoryReadInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase _infrastructureBase)
         {
-            dbContext = _factory.Get<TDbContext>();
+            dbContext = _factory.GetSlave<TDbContext>();
             infrastructureBase = _infrastructureBase;
+            _infrastructureBase.ChangeSlave(dbContext);
         }
         /// <summary>
         /// 带返回值
@@ -211,22 +212,22 @@ namespace Fate.Infrastructure.Repository.Base
 
         public async Task ChangeMaster(DbContext dbContext)
         {
-            //验证是否开启读写分离
-            //如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
-            {
-                //设置连接为主库
-                await SetMasterConnection(dbContext).ConfigureAwait(false);
-                //更改连接的服务器为主库
-                unitOfWorkOptions.IsSlaveOrMaster = false;
-            }
+            ////验证是否开启读写分离
+            ////如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
+            //if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster && unitOfWorkOptions.IsMandatory == false)
+            //{
+            //    //设置连接为主库
+            //    await SetMasterConnection(dbContext).ConfigureAwait(false);
+            //    //更改连接的服务器为主库
+            //    unitOfWorkOptions.IsSlaveOrMaster = false;
+            //}
         }
 
         public async Task ChangeSlave(DbContext dbContext)
         {
             //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为主库的话 则 更改连接字符串为 从库的 
-            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && unitOfWorkOptions.IsSlaveOrMaster == false && unitOfWorkOptions.IsMandatory == false)
+            if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false && /*unitOfWorkOptions.IsSlaveOrMaster == false && */unitOfWorkOptions.IsMandatory == false)
             {
                 var connec = dbContext.Database.GetDbConnection();
                 //关闭连接
@@ -238,7 +239,7 @@ namespace Fate.Infrastructure.Repository.Base
                 //连接更改重新验证是否更改了数据库名
                 await ChangeDataBase(dbContext).ConfigureAwait(false);
                 //更改连接的服务器为从库
-                unitOfWorkOptions.IsSlaveOrMaster = true;
+                //unitOfWorkOptions.IsSlaveOrMaster = true;
             }
         }
 

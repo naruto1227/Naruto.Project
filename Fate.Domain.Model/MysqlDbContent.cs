@@ -8,6 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fate.Domain.Model
 {
+    public class SlaveMysqlDbContent : DbContext
+    {
+        public SlaveMysqlDbContent(DbContextOptions<SlaveMysqlDbContent> options2)
+          : base(options2)
+        {
+
+        }
+        public DbSet<setting> setting { get; set; }
+        public DbSet<test1> test1 { get; set; }
+    }
     public class MysqlDbContent : DbContext
     {
         public MysqlDbContent(DbContextOptions<MysqlDbContent> options)

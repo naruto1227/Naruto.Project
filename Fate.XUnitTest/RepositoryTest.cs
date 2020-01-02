@@ -44,7 +44,7 @@ namespace Fate.XUnitTest
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
                 options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
-                options.UseEntityFramework<MysqlDbContent>(true, 100);
+                options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
                 options.IsOpenMasterSlave = true;
             });
             //services.AddScoped<EFCommandInterceptor>();
@@ -134,7 +134,6 @@ namespace Fate.XUnitTest
         public async Task WriteRead()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-            await unit.ChangeDataBase("test1");
             var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
             str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });

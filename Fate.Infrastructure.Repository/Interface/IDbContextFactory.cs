@@ -20,11 +20,18 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="dbContext"></param>
         void Set(Type DbContextType, DbContext dbContext);
         /// <summary>
-        /// 获取指定的上下文
+        /// 获取指定的上下文 主库
+        /// </summary> 
+        /// <param name="DbContextType"></param>
+        /// <returns></returns>
+        DbContext GetMaster<TDbContext>() where TDbContext : DbContext;
+
+        /// <summary>
+        /// 获取指定的上下文 从库
         /// </summary>
         /// <param name="DbContextType"></param>
         /// <returns></returns>
-        DbContext Get<TDbContext>() where TDbContext : DbContext;
+        DbContext GetSlave<TDbContext>() where TDbContext : DbContext;
 
     }
 }
