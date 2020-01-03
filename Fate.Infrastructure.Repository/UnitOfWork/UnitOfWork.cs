@@ -84,7 +84,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         {
             set
             {
-                dbContext.Value.Database.SetCommandTimeout(value);
                 unitOfWorkOptions.CommandTimeout = value;
             }
         }
@@ -121,40 +120,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         {
             var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
             infrastructureBase.RollBackTransaction();
-        }
-
-        /// <summary>
-        /// 强制更改为只读或者读写连接字符串
-        /// </summary>
-        /// <returns></returns>
-        public async Task ChangeReadOrWriteConnection(ReadWriteEnum readWriteEnum = ReadWriteEnum.Read)
-        {
-            ////验证是否开启读写分离
-            //if (unitOfWorkOptions.IsOpenMasterSlave == false)
-            //    throw new ApplicationException("当前上下文未开启读写分离服务!");
-            //if (unitOfWorkOptions.IsSumbitTran)
-            //    throw new ApplicationException("无法在开启事务的时候执行读写库的更改!");
-
-            ////获取连接信息
-            //var connec = dbContext.Value.Database.GetDbConnection();
-            ////关闭连接
-            //await ChangeConnecState(connec, ConnectionState.Closed);
-            ////读写
-            //if (readWriteEnum == ReadWriteEnum.ReadWrite)
-            //{
-            //    //更改连接字符串
-            //    connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
-            //}
-            ////只读
-            //else if (readWriteEnum == ReadWriteEnum.Read)
-            //{
-            //    connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
-            //}
-            ////打开连接
-            //await ChangeConnecState(connec, ConnectionState.Open);
-            ////连接更改重新验证是否更改了数据库名
-            //await ChangeDataBase();
-            //unitOfWorkOptions.IsMandatory = true;
         }
 
         /// <summary>
@@ -195,13 +160,13 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <returns></returns>
         public async Task ChangeDataBase(string dataBase)
         {
-            if (unitOfWorkOptions.IsSumbitTran)
+            if (unitOfWorkOptions.IsBeginTran)
                 throw new ApplicationException("无法在事务中更改数据库!");
             var infrastructureBase = service.GetRequiredService<IRepositoryInfrastructureBase>();
 
             unitOfWorkOptions.ChangeDataBaseName = dataBase;
 
-            await infrastructureBase.SwitchDataBase(dbContext.Value).ConfigureAwait(false);
+            await infrastructureBase.SwitchDataBaseAsync(dbContext.Value).ConfigureAwait(false);
         }
 
         /// <summary>

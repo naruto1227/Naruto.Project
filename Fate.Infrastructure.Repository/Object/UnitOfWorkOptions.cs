@@ -25,9 +25,9 @@ namespace Fate.Infrastructure.Repository.Object
         /// </summary>
         public Type DbContextType = default;
         /// <summary>
-        /// 是否提交事务
+        /// 是否开启事务
         /// </summary>
-        public bool IsSumbitTran = false;
+        public bool IsBeginTran = false;
 
         /// <summary>
         /// 是否当前的连接为读库的还是主库的 true 为从库 false 为主库
@@ -40,14 +40,9 @@ namespace Fate.Infrastructure.Repository.Object
         public string ChangeDataBaseName = default;
 
         /// <summary>
-        /// 是否已经强制更改数据库连接 
-        /// </summary>
-        public bool IsMandatory = false;
-
-        /// <summary>
         /// 超时时间
         /// </summary>
-        public int CommandTimeout { get; set; }
+        public int? CommandTimeout = null;
 
     }
 }

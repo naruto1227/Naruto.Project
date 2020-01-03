@@ -15,7 +15,7 @@ namespace Fate.Infrastructure.Repository.Interface
     /// <typeparam name="TDbContext"></typeparam>
     public interface IRepositoryWriteInfrastructure<TDbContext> : IRepositoryInfrastructure, IRepositoryDependency where TDbContext : DbContext
     {
-        
+
         /// <summary>
         /// 保存
         /// </summary>
@@ -57,8 +57,11 @@ namespace Fate.Infrastructure.Repository.Interface
     /// <typeparam name="TDbContext"></typeparam>
     public interface IRepositoryReadInfrastructure<TDbContext> : IRepositoryInfrastructure, IRepositoryDependency where TDbContext : DbContext
     {
-
-
+        /// <summary>
+        /// 切换主库的上下文
+        /// </summary>
+        /// <returns></returns>
+        Task SwitchMasterDbContextAsync();
     }
 
     /// <summary>
@@ -91,22 +94,23 @@ namespace Fate.Infrastructure.Repository.Interface
     /// </summary>
     public interface IRepositoryInfrastructureBase : IRepositoryDependency
     {
+        Task SwitchDataBaseAsync(DbContext dbContext);
         /// <summary>
-        /// 更改数据库
+        /// 切换上下文配置
         /// </summary>
+        /// <param name="dbContext"></param>
         /// <returns></returns>
-        Task SwitchDataBase(DbContext dbContext);
-
+        Task SwitchAsync(DbContext dbContext);
         /// <summary>
         /// 切换从库
         /// </summary>
         /// <returns></returns>
-        Task SwitchSlave(DbContext dbContext);
-
+        Task SwitchSlaveAsync(DbContext dbContext);
+        [Obsolete("弃用")]
         /// <summary>
         /// 切换主库
         /// </summary>
         /// <returns></returns>
-        Task SwitchMaster(DbContext dbContext);
+        Task SwitchMasterAsync(DbContext dbContext);
     }
 }

@@ -145,10 +145,11 @@ namespace Fate.XUnitTest
         public async Task Tran()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-            await unit.ChangeDataBase("test1");
-            unit.BeginTransaction();
-
             var str = await unit.Query<setting>().AsQueryable().ToListAsync();
+           // await unit.ChangeDataBase("test1");
+            unit.BeginTransaction();
+            unit.CommandTimeout = 40;
+             str = await unit.Query<setting>().AsQueryable().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             await unit.SaveChangeAsync();
             //str = await unit.Query<setting>().AsQueryable().ToListAsync();

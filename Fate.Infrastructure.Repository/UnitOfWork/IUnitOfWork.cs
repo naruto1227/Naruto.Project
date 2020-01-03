@@ -75,11 +75,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         /// <returns></returns>
         ISqlCommand SqlCommand();
-        /// <summary>
-        /// 强制更改为只读或者读写连接字符串(当前作用域将不再更改)
-        /// </summary>
-        /// <returns></returns>
-        Task ChangeReadOrWriteConnection(ReadWriteEnum readWriteEnum = ReadWriteEnum.ReadWrite);
     }
 
 }
