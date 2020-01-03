@@ -95,18 +95,18 @@ namespace Fate.Infrastructure.Repository.Interface
         /// 更改数据库
         /// </summary>
         /// <returns></returns>
-        Task ChangeDataBase(DbContext dbContext);
+        Task SwitchDataBase(DbContext dbContext);
 
         /// <summary>
         /// 切换从库
         /// </summary>
         /// <returns></returns>
-        Task ChangeSlave(DbContext dbContext);
+        Task SwitchSlave(DbContext dbContext);
 
         /// <summary>
         /// 切换主库
         /// </summary>
         /// <returns></returns>
-        Task ChangeMaster(DbContext dbContext);
+        Task SwitchMaster(DbContext dbContext);
     }
 }

@@ -201,7 +201,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
 
             unitOfWorkOptions.ChangeDataBaseName = dataBase;
 
-            await infrastructureBase.ChangeDataBase(dbContext.Value).ConfigureAwait(false);
+            await infrastructureBase.SwitchDataBase(dbContext.Value).ConfigureAwait(false);
         }
 
         /// <summary>

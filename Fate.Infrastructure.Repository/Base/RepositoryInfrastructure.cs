@@ -62,13 +62,13 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task<int> SaveChangesAsync()
         {
-            await infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false);
+            await infrastructureBase.SwitchMaster(dbContext).ConfigureAwait(false);
             return await Exec(dbContext => dbContext.SaveChangesAsync().ConfigureAwait(false));
         }
 
         public int SaveChanges()
         {
-            infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            infrastructureBase.SwitchMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             return Exec(dbContext => dbContext.SaveChanges());
         }
         /// <summary>
@@ -77,7 +77,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task<IDbContextTransaction> BeginTransactionAsync()
         {
-            await infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false);
+            await infrastructureBase.SwitchMaster(dbContext).ConfigureAwait(false);
             return await Exec(async dbContext =>
             {
                 //更改事务的状态
@@ -91,7 +91,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public IDbContextTransaction BeginTransaction()
         {
-            infrastructureBase.ChangeMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            infrastructureBase.SwitchMaster(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             return Exec(dbContext =>
              {
                  //更改事务的状态
@@ -147,7 +147,7 @@ namespace Fate.Infrastructure.Repository.Base
         {
             dbContext = _factory.GetSlave<TDbContext>();
             infrastructureBase = _infrastructureBase;
-            _infrastructureBase.ChangeSlave(dbContext);
+            _infrastructureBase.SwitchSlave(dbContext);
         }
         /// <summary>
         /// 带返回值
@@ -157,7 +157,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public TResult Exec<TResult>(Func<DbContext, TResult> action)
         {
-            infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            infrastructureBase.SwitchSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             return action(dbContext);
         }
         /// <summary>
@@ -166,7 +166,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="action"></param>
         public void Exec(Action<DbContext> action)
         {
-            infrastructureBase.ChangeSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            infrastructureBase.SwitchSlave(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             action(dbContext);
         }
     }
@@ -195,7 +195,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="dbContext"></param>
         /// <returns></returns>
-        public async Task ChangeDataBase(DbContext dbContext)
+        public async Task SwitchDataBase(DbContext dbContext)
         {
             //判断是否需要切库
             if (!string.IsNullOrWhiteSpace(unitOfWorkOptions.ChangeDataBaseName))
@@ -210,7 +210,7 @@ namespace Fate.Infrastructure.Repository.Base
             }
         }
 
-        public async Task ChangeMaster(DbContext dbContext)
+        public async Task SwitchMaster(DbContext dbContext)
         {
             ////验证是否开启读写分离
             ////如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
@@ -223,7 +223,7 @@ namespace Fate.Infrastructure.Repository.Base
             //}
         }
 
-        public async Task ChangeSlave(DbContext dbContext)
+        public async Task SwitchSlave(DbContext dbContext)
         {
             //验证是否开启读写分离
             //如果当前没有开启事务 并且 当前为主库的话 则 更改连接字符串为 从库的 
@@ -237,7 +237,7 @@ namespace Fate.Infrastructure.Repository.Base
                 //开启连接
                 await ChangeConnecState(connec, ConnectionState.Open).ConfigureAwait(false);
                 //连接更改重新验证是否更改了数据库名
-                await ChangeDataBase(dbContext).ConfigureAwait(false);
+                await SwitchDataBase(dbContext).ConfigureAwait(false);
                 //更改连接的服务器为从库
                 //unitOfWorkOptions.IsSlaveOrMaster = true;
             }
@@ -275,7 +275,7 @@ namespace Fate.Infrastructure.Repository.Base
             //开启连接
             await ChangeConnecState(connec, ConnectionState.Open).ConfigureAwait(false);
             //连接更改重新验证是否更改了数据库名
-            await ChangeDataBase(dbContext).ConfigureAwait(false);
+            await SwitchDataBase(dbContext).ConfigureAwait(false);
         }
         /// <summary>
         /// 获取从库的连接字符串( 读取规则，当所有的从库无法使用的时候读取返回主库的连接字符串)
