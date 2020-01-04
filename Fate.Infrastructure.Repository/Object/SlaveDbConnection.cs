@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Fate.Infrastructure.Repository.Object
+﻿namespace Fate.Infrastructure.Repository.Object
 {
     /// <summary>
     /// 张海波

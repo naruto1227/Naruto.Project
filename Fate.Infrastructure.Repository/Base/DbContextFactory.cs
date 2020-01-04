@@ -66,21 +66,14 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="DbContextType"></param>
         /// <returns></returns>
-        public DbContext GetMaster<TDbContext>() where TDbContext : DbContext
-        {
-            return _masterDbContexts[typeof(TDbContext)];
-        }
+        public DbContext GetMaster<TDbContext>() where TDbContext : DbContext=> _masterDbContexts[typeof(TDbContext)];
         /// <summary>
         /// 获取上下文
         /// </summary>
         /// <param name="DbContextType"></param>
         /// <returns></returns>
-        public DbContext GetSlave<TDbContext>() where TDbContext : DbContext
-        {
-            if (IsSetMasterSlave(typeof(TDbContext)))
-                return _slaveDbContexts[typeof(TDbContext)];
-            return GetMaster<TDbContext>();
-        }
+        public DbContext GetSlave<TDbContext>() where TDbContext : DbContext => _slaveDbContexts[typeof(TDbContext)];
+
         /// <summary>
         /// 验证是否开启主从
         /// </summary>

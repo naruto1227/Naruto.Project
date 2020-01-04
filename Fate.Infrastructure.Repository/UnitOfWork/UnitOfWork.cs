@@ -4,18 +4,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Fate.Infrastructure.BaseRepository.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Fate.Infrastructure.Repository.Interface;
 using Microsoft.Extensions.Options;
 using Fate.Infrastructure.Repository.Object;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Fate.Infrastructure.Repository.Interceptor;
+
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Data.Common;
 
 namespace Fate.Infrastructure.Repository.UnitOfWork
 {
@@ -27,11 +24,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
     public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext> where TDbContext : DbContext
     {
         #region  paramater
-
-        /// <summary>
-        /// 当前上下文
-        /// </summary>
-        public readonly Lazy<DbContext> dbContext;
 
         /// <summary>
         /// 工作单元参数
@@ -60,20 +52,19 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IDbContextFactory _repositoryFactory)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
-            //获取上下文类型
-            unitOfWorkOptions.DbContextType = typeof(TDbContext);
+
             //获取上下文
             var _dbContext = _service.GetService(unitOfWorkOptions.DbContextType) as DbContext;
-            //获取当前的上下文
-            dbContext = new Lazy<DbContext>(() => _dbContext);
+            //设置上下文工厂
+            _repositoryFactory.Set(unitOfWorkOptions?.DbContextType, _dbContext);
             //获取主库的连接
             var dbInfo = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault();
+            //获取上下文类型
+            unitOfWorkOptions.DbContextType = typeof(TDbContext);
             unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
             //是否开启读写分离操作
             unitOfWorkOptions.IsOpenMasterSlave = dbInfo.IsOpenMasterSlave;
 
-            //设置上下文工厂
-            _repositoryFactory.Set(unitOfWorkOptions?.DbContextType, dbContext?.Value);
             service = _service;
         }
 
@@ -158,15 +149,13 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 更改数据库的名字
         /// </summary>
         /// <returns></returns>
-        public async Task ChangeDataBase(string dataBase)
+        public Task ChangeDataBaseAsync(string dataBase)
         {
             if (unitOfWorkOptions.IsBeginTran)
                 throw new ApplicationException("无法在事务中更改数据库!");
             var infrastructureBase = service.GetRequiredService<IRepositoryInfrastructureBase>();
-
             unitOfWorkOptions.ChangeDataBaseName = dataBase;
-
-            await infrastructureBase.SwitchDataBaseAsync(dbContext.Value).ConfigureAwait(false);
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -185,10 +174,8 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         public void Dispose()
         {
-            dbContext.Value?.Dispose();
             dbContextTransaction?.Dispose();
             GC.SuppressFinalize(this);
         }
-
     }
 }

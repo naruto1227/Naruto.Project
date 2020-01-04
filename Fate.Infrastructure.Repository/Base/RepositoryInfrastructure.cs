@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -82,13 +81,14 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task<IDbContextTransaction> BeginTransactionAsync()
         {
+            //更改事务的状态
+            unitOfWorkOptions.IsBeginTran = true;
+            //切换配置
             await infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false);
             //切换从库的连接上下文
             await serviceProvider.GetRequiredService<IRepositoryReadInfrastructure<TDbContext>>().SwitchMasterDbContextAsync().ConfigureAwait(false);
             return await Exec(async dbContext =>
             {
-                //更改事务的状态
-                unitOfWorkOptions.IsBeginTran = true;
                 return await dbContext.Database.BeginTransactionAsync();
             });
         }
@@ -98,14 +98,14 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public IDbContextTransaction BeginTransaction()
         {
+            //更改事务的状态
+            unitOfWorkOptions.IsBeginTran = true;
             //切换配置
             infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             //切换从库的连接上下文
             serviceProvider.GetRequiredService<IRepositoryReadInfrastructure<TDbContext>>().SwitchMasterDbContextAsync().ConfigureAwait(false);
             return Exec(dbContext =>
              {
-                 //更改事务的状态
-                 unitOfWorkOptions.IsBeginTran = true;
                  return dbContext.Database.BeginTransaction();
              });
         }
@@ -150,14 +150,15 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 是否为主库的上下文
         /// </summary>
-        private readonly bool IsMaster = false;
+        private bool IsMaster = false;
         public RepositoryReadInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase _infrastructureBase, UnitOfWorkOptions _unitOfWorkOptions)
         {
             factory = _factory;
             infrastructureBase = _infrastructureBase;
             unitOfWorkOptions = _unitOfWorkOptions;
             //验证是否开启了事务 如果开启了事务 就获取主库的连接
-            if (_unitOfWorkOptions.IsBeginTran)
+            //或者没有开启读写分离 直接使用 主库的数据
+            if (_unitOfWorkOptions.IsBeginTran || !_unitOfWorkOptions.IsOpenMasterSlave)
             {
                 dbContext = _factory.GetMaster<TDbContext>();
                 IsMaster = true;
@@ -165,7 +166,7 @@ namespace Fate.Infrastructure.Repository.Base
             else
             {
                 dbContext = _factory.GetSlave<TDbContext>();
-                _infrastructureBase.SwitchSlaveAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult(); ;
+                _infrastructureBase.SwitchSlaveAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
         /// <summary>
@@ -197,6 +198,7 @@ namespace Fate.Infrastructure.Repository.Base
         {
             if (!IsMaster && unitOfWorkOptions.IsOpenMasterSlave)
                 dbContext = factory.GetMaster<TDbContext>();
+            IsMaster = true;
             return Task.CompletedTask;
         }
     }
@@ -226,21 +228,6 @@ namespace Fate.Infrastructure.Repository.Base
             await SwitchDataBaseAsync(dbContext).ConfigureAwait(false);
             await SwitchCommandTimeoutAsync(dbContext).ConfigureAwait(false);
         }
-
-
-        [Obsolete("弃用")]
-        public async Task SwitchMasterAsync(DbContext dbContext)
-        {
-            ////验证是否开启读写分离
-            ////如果当前没有开启事务 并且 当前为从库的话 则 更改连接字符串为 主库的 
-            //if (unitOfWorkOptions.IsOpenMasterSlave && unitOfWorkOptions.IsSumbitTran == false)
-            //{
-            //    //设置连接为主库
-            //    await SetMasterConnection(dbContext).ConfigureAwait(false);
-            //    //更改连接的服务器为主库
-            //    unitOfWorkOptions.IsSlaveOrMaster = false;
-            //}
-        }
         public async Task SwitchSlaveAsync(DbContext dbContext)
         {
             //验证是否开启读写分离
@@ -254,10 +241,8 @@ namespace Fate.Infrastructure.Repository.Base
                 connec.ConnectionString = SlaveConnection(unitOfWorkOptions.DbContextType);
                 //开启连接
                 await ChangeConnecState(connec, ConnectionState.Open).ConfigureAwait(false);
-                //连接更改重新验证是否更改了数据库名
-                await SwitchDataBaseAsync(dbContext).ConfigureAwait(false);
-                //更改连接的服务器为从库
-                //unitOfWorkOptions.IsSlaveOrMaster = true;
+                //检查配置的更改
+                await SwitchAsync(dbContext).ConfigureAwait(false);
             }
         }
 
@@ -271,11 +256,11 @@ namespace Fate.Infrastructure.Repository.Base
             //判断是否需要切库
             if (!string.IsNullOrWhiteSpace(unitOfWorkOptions.ChangeDataBaseName))
             {
-                //验证连接是否打开
-                await ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open).ConfigureAwait(false);
                 //验证当前的库是否相等
                 if (!dbContext.Database.GetDbConnection().Database.ToLower().Equals(unitOfWorkOptions.ChangeDataBaseName))
                 {
+                    //验证连接是否打开
+                    await ChangeConnecState(dbContext.Database.GetDbConnection(), ConnectionState.Open).ConfigureAwait(false);
                     await dbContext.Database.GetDbConnection().ChangeDatabaseAsync(unitOfWorkOptions.ChangeDataBaseName).ConfigureAwait(false);
                 }
             }
@@ -310,22 +295,6 @@ namespace Fate.Infrastructure.Repository.Base
                 await connec.OpenAsync().ConfigureAwait(false);
                 return;
             }
-        }
-
-        /// <summary>
-        /// 设置主库的连接
-        /// </summary>
-        private async Task SetMasterConnection(DbContext dbContext)
-        {
-            var connec = dbContext.Database.GetDbConnection();
-            //关闭连接
-            await ChangeConnecState(connec, ConnectionState.Closed);
-            //更改连接
-            connec.ConnectionString = unitOfWorkOptions.WriteReadConnectionString;
-            //开启连接
-            await ChangeConnecState(connec, ConnectionState.Open).ConfigureAwait(false);
-            //连接更改重新验证是否更改了数据库名
-            await SwitchDataBaseAsync(dbContext).ConfigureAwait(false);
         }
         /// <summary>
         /// 获取从库的连接字符串( 读取规则，当所有的从库无法使用的时候读取返回主库的连接字符串)

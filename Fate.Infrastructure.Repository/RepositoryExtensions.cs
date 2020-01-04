@@ -4,10 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Fate.Infrastructure.Repository.Object;
-
 using Microsoft.EntityFrameworkCore;
-using Fate.Infrastructure.Repository.Interceptor;
-using System.Diagnostics;
 using Fate.Infrastructure.Repository.HostServer;
 using Fate.Infrastructure.Repository;
 
@@ -97,11 +94,6 @@ namespace Microsoft.Extensions.DependencyInjection
                     a.Add(item);
                 }
             });
-
-            //注入拦截器
-            //services.AddScoped<EFCommandInterceptor>();
-            //services.AddScoped<EFDiagnosticListener>();
-            //DiagnosticListener.AllListeners.Subscribe(services.BuildServiceProvider().GetRequiredService<EFDiagnosticListener>());
 
             //当从库有信息则执行定时服务
             if (SlavePools.slaveConnec.Count > 0)

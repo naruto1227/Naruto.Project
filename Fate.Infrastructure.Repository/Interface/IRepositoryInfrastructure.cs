@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Interface
@@ -106,11 +104,5 @@ namespace Fate.Infrastructure.Repository.Interface
         /// </summary>
         /// <returns></returns>
         Task SwitchSlaveAsync(DbContext dbContext);
-        [Obsolete("弃用")]
-        /// <summary>
-        /// 切换主库
-        /// </summary>
-        /// <returns></returns>
-        Task SwitchMasterAsync(DbContext dbContext);
     }
 }

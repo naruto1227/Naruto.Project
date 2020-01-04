@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using System.Threading.Tasks;
-using Fate.Infrastructure.Repository.Object;
+
 using Fate.Infrastructure.Repository.Interface;
 using Fate.Infrastructure.BaseRepository.Model;
-using Microsoft.EntityFrameworkCore;
+
 namespace Fate.Infrastructure.Repository.UnitOfWork
 {
     public interface IUnitOfWork
@@ -63,7 +61,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 更改数据库
         /// </summary>
         /// <returns></returns>
-        Task ChangeDataBase(string dataBase);
+        Task ChangeDataBaseAsync(string dataBase);
 
         /// <summary>
         /// 返回sql查询的对象

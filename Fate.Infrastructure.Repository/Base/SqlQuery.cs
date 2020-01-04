@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Fate.Infrastructure.Repository.Object;
 
 namespace Fate.Infrastructure.Repository.Base
 {
@@ -24,11 +25,18 @@ namespace Fate.Infrastructure.Repository.Base
         private readonly IRepositoryReadInfrastructure<TDbContext> infrastructure;
 
         /// <summary>
+        /// 工作单元参数设置
+        /// </summary>
+        private readonly UnitOfWorkOptions unitOfWorkOptions;
+
+
+        /// <summary>
         /// 构造获取上下文工厂
         /// </summary>
-        public SqlQuery(IRepositoryReadInfrastructure<TDbContext> _infrastructure)
+        public SqlQuery(IRepositoryReadInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions _unitOfWorkOptions)
         {
             infrastructure = _infrastructure;
+            unitOfWorkOptions = _unitOfWorkOptions;
         }
         #region 同步
         /// <summary>
@@ -140,9 +148,9 @@ namespace Fate.Infrastructure.Repository.Base
                 }
             }
             //设置超时时间
-            if (infrastructure.Exec(repository => repository.Database.GetCommandTimeout()) != null)
+            if (unitOfWorkOptions.CommandTimeout != null)
             {
-                int.TryParse(infrastructure.Exec(repository => repository.Database.GetCommandTimeout()?.ToString()), out var commandTimeout);
+                int.TryParse(unitOfWorkOptions.CommandTimeout.ToString(), out var commandTimeout);
                 command.CommandTimeout = commandTimeout;
             }
             return command;

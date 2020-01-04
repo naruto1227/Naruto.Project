@@ -95,7 +95,7 @@ namespace Fate.Test.Controllers
         }
         public async Task test5()
         {
-            await unitOfWork.ChangeDataBase("test2");
+            await unitOfWork.ChangeDataBaseAsync("test2");
             var str = await unitOfWork.Query<test1>().AsQueryable().ToListAsync();
         }
         public async Task testredis2()

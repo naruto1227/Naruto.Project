@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
+using Fate.Infrastructure.Repository.Object;
+
 namespace Fate.Infrastructure.Repository.Base
 {
     /// <summary>
@@ -21,13 +23,17 @@ namespace Fate.Infrastructure.Repository.Base
         /// 获取读写的基础设施
         /// </summary>
         private readonly IRepositoryWriteInfrastructure<TDbContext> infrastructure;
-
+        /// <summary>
+        /// 工作单元参数设置
+        /// </summary>
+        private readonly UnitOfWorkOptions unitOfWorkOptions;
         /// <summary>
         /// 构造获取上下文工厂
         /// </summary>
-        public SqlCommand(IRepositoryWriteInfrastructure<TDbContext> _infrastructure)
+        public SqlCommand(IRepositoryWriteInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions _unitOfWorkOptions)
         {
             infrastructure = _infrastructure;
+            unitOfWorkOptions = _unitOfWorkOptions;
         }
         /// <summary>
         /// 执行sql 返回受影响的行数
@@ -131,9 +137,9 @@ namespace Fate.Infrastructure.Repository.Base
                 command.Transaction = currentTransaction.GetDbTransaction();
             }
             //设置超时时间
-            if (infrastructure.Exec(repository => repository.Database.GetCommandTimeout()) != null)
+            if (unitOfWorkOptions.CommandTimeout != null)
             {
-                int.TryParse(infrastructure.Exec(repository => repository.Database.GetCommandTimeout()?.ToString()), out var commandTimeout);
+                int.TryParse(unitOfWorkOptions.CommandTimeout.ToString(), out var commandTimeout);
                 command.CommandTimeout = commandTimeout;
             }
             return command;

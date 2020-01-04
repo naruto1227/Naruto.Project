@@ -42,7 +42,7 @@ namespace Fate.XUnitTest
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-                options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
+                options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=192.168.1.6;Port=3307;UserId=hai;Password=123456;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
                 options.IsOpenMasterSlave = true;
@@ -119,13 +119,13 @@ namespace Fate.XUnitTest
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             unit.CommandTimeout = 40;
-            await unit.ChangeDataBase("test1");
+            await unit.ChangeDataBaseAsync("test1");
 
             var str = await unit.Query<setting>().AsQueryable().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             await unit.SaveChangeAsync();
             str = await unit.Query<setting>().AsQueryable().ToListAsync();
-            await unit.ChangeDataBase("test");
+            await unit.ChangeDataBaseAsync("test");
             str = await unit.Query<setting>().AsQueryable().ToListAsync();
 
         }
@@ -146,16 +146,17 @@ namespace Fate.XUnitTest
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var str = await unit.Query<setting>().AsQueryable().ToListAsync();
-           // await unit.ChangeDataBase("test1");
+            await unit.ChangeDataBaseAsync("test1");
             unit.BeginTransaction();
             unit.CommandTimeout = 40;
-             str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             await unit.SaveChangeAsync();
             //str = await unit.Query<setting>().AsQueryable().ToListAsync();
             //await unit.ChangeDataBase("test");
-            //str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
             unit.CommitTransaction();
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
         }
 
         [Fact]
@@ -175,8 +176,10 @@ namespace Fate.XUnitTest
         public void DataTableTest()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            unit.CommandTimeout = 40;
             var dt = unit.SqlQuery().ExecuteSqlQuery("select  * from setting");
-
+            unit.ChangeDataBaseAsync("test1");
+            dt = unit.SqlQuery().ExecuteSqlQuery("select  * from setting");
         }
         [Fact]
         public async Task DataTableAsyncTest()
@@ -189,8 +192,9 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task ExecSqlTest()
         {
-            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>(); await unit.ChangeDataBase("test1");
-            unit.BeginTransaction();
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            await unit.ChangeDataBaseAsync("test1");
+            await unit.BeginTransactionAsync();
 
             unit.CommandTimeout = 180;
             var res = await unit.SqlCommand().ExecuteNonQueryAsync("delete from setting");
@@ -201,7 +205,7 @@ namespace Fate.XUnitTest
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var query = unit.SqlQuery();
-            await unit.ChangeDataBase("test1");
+            await unit.ChangeDataBaseAsync("test1");
             unit.CommandTimeout = 180;
             var res = await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
         }

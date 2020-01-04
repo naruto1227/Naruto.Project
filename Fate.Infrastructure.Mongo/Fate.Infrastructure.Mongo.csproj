@@ -8,10 +8,12 @@
     <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-        <PackageReference Include="Fate.Infrastructure.BaseMongo.Model" Version="1.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.0" />
         <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Infrastructure.BaseMongo.Model\Fate.Infrastructure.BaseMongo.Model.csproj" />
   </ItemGroup>
 </Project>
