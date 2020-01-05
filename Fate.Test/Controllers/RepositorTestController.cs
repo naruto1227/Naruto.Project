@@ -28,7 +28,7 @@ namespace Fate.Test.Controllers
         public async Task<IActionResult> test()
         {
             List<setting> settings = new List<setting>();
-            for (int i = 0; i < 1000000; i++)
+            for (int i = 0; i < 10; i++)
             {
                 settings.Add(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             }

@@ -88,7 +88,7 @@ namespace Fate.Test
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
-                options.ReadOnlyConnectionString = Configuration.GetConnectionString("ReadMysqlConnection").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                options.ReadOnlyConnectionString = Configuration.GetSection("ConnectionString:ReadMysqlConnection").Get<string[]>();
                 //
                 options.UseEntityFramework<MysqlDbContent>();
                 options.IsOpenMasterSlave = false;
@@ -165,9 +165,9 @@ namespace Fate.Test
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-           // app.UseFateConfiguration();
+            // app.UseFateConfiguration();
             configuration2 = Configuration;
-           // var redis = app.ApplicationServices.GetRequiredService<IRedisOperationHelp>();
+            // var redis = app.ApplicationServices.GetRequiredService<IRedisOperationHelp>();
             //redis.Subscribe("changeConfiguration", (channel, redisvalue) =>
             //{
 
@@ -185,7 +185,7 @@ namespace Fate.Test
             }
 
             //注入一场处理中间件
-           // app.UseMiddleware<ExceptionHandlerMiddleware>();
+            // app.UseMiddleware<ExceptionHandlerMiddleware>();
             // app.UseMiddleware<DashBoardMiddleware>();
             //app.UseAuthentication();
 

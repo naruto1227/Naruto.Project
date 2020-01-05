@@ -52,18 +52,18 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IDbContextFactory _repositoryFactory)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
+            //获取上下文类型
+            unitOfWorkOptions.DbContextType = typeof(TDbContext);
+            //获取主库的连接
+            var dbInfo = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault();
 
+            unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
+            //是否开启读写分离操作
+            unitOfWorkOptions.IsOpenMasterSlave = dbInfo.IsOpenMasterSlave;
             //获取上下文
             var _dbContext = _service.GetService(unitOfWorkOptions.DbContextType) as DbContext;
             //设置上下文工厂
             _repositoryFactory.Set(unitOfWorkOptions?.DbContextType, _dbContext);
-            //获取主库的连接
-            var dbInfo = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault();
-            //获取上下文类型
-            unitOfWorkOptions.DbContextType = typeof(TDbContext);
-            unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
-            //是否开启读写分离操作
-            unitOfWorkOptions.IsOpenMasterSlave = dbInfo.IsOpenMasterSlave;
 
             service = _service;
         }
