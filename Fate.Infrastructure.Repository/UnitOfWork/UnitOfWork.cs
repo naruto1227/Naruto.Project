@@ -153,7 +153,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         {
             if (unitOfWorkOptions.IsBeginTran)
                 throw new ApplicationException("无法在事务中更改数据库!");
-            var infrastructureBase = service.GetRequiredService<IRepositoryInfrastructureBase>();
             unitOfWorkOptions.ChangeDataBaseName = dataBase;
             return Task.CompletedTask;
         }

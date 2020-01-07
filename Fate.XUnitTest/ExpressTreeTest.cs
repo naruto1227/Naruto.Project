@@ -33,10 +33,6 @@ namespace Fate.XUnitTest
                 //
                 options.UseEntityFramework<MysqlDbContent>();
             });
-            //打开拦截器
-            serviceDescriptors.AddScoped<EFDiagnosticListener>();
-            serviceDescriptors.AddScoped<EFCommandInterceptor>();
-            DiagnosticListener.AllListeners.Subscribe(serviceDescriptors.BuildServiceProvider().GetService<EFDiagnosticListener>());
             unit = serviceDescriptors.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
         }
 

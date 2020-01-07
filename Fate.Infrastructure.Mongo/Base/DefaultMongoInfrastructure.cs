@@ -55,10 +55,8 @@ namespace Fate.Infrastructure.Mongo.Base
         /// </summary>
         private void ChangeDataBase()
         {
-            if (!mongoContextOptions.ChangeDataBase.IsNullOrEmpty())
-            {
+            if (!mongoContextOptions.ChangeDataBase.IsNullOrEmpty() && !mongoDatabase.Value.DatabaseNamespace.DatabaseName.Equals(mongoContextOptions.ChangeDataBase))
                 mongoDatabase = new Lazy<IMongoDatabase>(mongoClient.GetDatabase(mongoContextOptions.ChangeDataBase));
-            }
         }
     }
 
