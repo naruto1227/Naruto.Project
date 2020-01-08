@@ -30,12 +30,12 @@ namespace Microsoft.Extensions.Configuration
         /// <returns></returns>
         public static IServiceCollection AddFateConfiguration(this IServiceCollection services)
         {
-            services.AddSingleton<IReloadData, DefaultReloadData>();
-
+            services.AddSingleton<IReloadData, DefaultReloadDataRedisProvider>();
+            services.AddSingleton<IFateConfigurationLoadAbstract, DefaultFateConfigurationLoad>();
             return services;
         }
         /// <summary>
-        /// 注入发布服务
+        /// 注入发布服务 （用于热更新）
         /// </summary>
         /// <param name="this"></param>
         /// <returns></returns>
@@ -43,6 +43,11 @@ namespace Microsoft.Extensions.Configuration
         {
             return @this.AddSingleton<IConfigurationPublish, DefaultConfigurationPublish>();
         }
+        /// <summary>
+        /// 订阅服务 实现 热更新
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
         public static IApplicationBuilder UseFateConfiguration(this IApplicationBuilder app)
         {
             app.ApplicationServices.GetRequiredService<IReloadData>().SubscribeReloadAsync(null).ConfigureAwait(false).GetAwaiter().GetResult();

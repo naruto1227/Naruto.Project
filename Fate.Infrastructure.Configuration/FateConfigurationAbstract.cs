@@ -9,10 +9,19 @@ namespace Fate.Infrastructure.Configuration
 {
     /// <summary>
     /// 张海波
-    /// 2019-11-21
-    /// 配置数据加载的抽象接口
+    /// 2020-01-08
+    /// 数据加载的抽象接口
     /// </summary>
-    public abstract class FateConfigurationLoadAbstract
+    public interface IFateConfigurationLoadAbstract
+    {
+        Task<ConcurrentDictionary<string, string>> LoadConfiguration();
+    }
+    /// <summary>
+    /// 张海波
+    /// 2019-11-21
+    /// 配置数据加载的抽象类
+    /// </summary>
+    public abstract class FateConfigurationLoadAbstract : IFateConfigurationLoadAbstract
     {
         /// <summary>
         /// 加载资源

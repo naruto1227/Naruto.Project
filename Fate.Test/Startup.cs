@@ -131,7 +131,7 @@ namespace Fate.Test
             //services.AddScoped(typeof(List<>));
             //services.UseFileOptions();
 
-            // services.AddFateConfiguration();
+           // services.AddFateConfiguration();
             ////邮箱服务
             //services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
             //services.BuildServiceProvider()

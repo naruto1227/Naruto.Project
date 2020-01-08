@@ -18,7 +18,7 @@ namespace Fate.Infrastructure.Configuration
     public class FateConfigurationProvider : ConfigurationProvider
     {
 
-        private readonly FateConfigurationLoadAbstract fateConfiguration = new DefaultFateConfigurationLoad();
+        private readonly IFateConfigurationLoadAbstract fateConfiguration = new DefaultFateConfigurationLoad();
 
         /// <summary>
         /// 加载配置

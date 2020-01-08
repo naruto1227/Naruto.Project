@@ -42,7 +42,7 @@ namespace Fate.Infrastructure.Configuration
                 //网关地址
                 httpClient.BaseAddress = new Uri(configurationOptions.BaseUrl);
                 //超时时间
-                httpClient.Timeout = TimeSpan.FromSeconds(15);
+                httpClient.Timeout = TimeSpan.FromSeconds(10);
 
                 using (HttpRequestMessage httpRequestMessag = new HttpRequestMessage())
                 {
