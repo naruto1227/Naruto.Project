@@ -14,7 +14,7 @@ namespace Fate.Infrastructure.NPOI
     /// 作者：ZhangHaiBo
     /// 日期：2016/1/15
     /// </summary>
-    public sealed class ExportHelper
+    public static class ExportHelper
     {
         /// <summary>
         /// 由DataSet导出Excel(多个工作谱)
@@ -24,7 +24,7 @@ namespace Fate.Infrastructure.NPOI
         /// <param name="colorIndex">表头颜色的样式  列：NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index</param>
         /// <param name="colorTrue">是否显示表头的颜色  默认显示</param>
         /// <returns></returns>
-        public static string ToExcel(DataSet sourceDs, string filePath , bool colorTrue = true, short colorIndex = 22)
+        public static string ToExcel(this DataSet sourceDs, string filePath, bool colorTrue = true, short colorIndex = 22)
         {
 
             if (string.IsNullOrEmpty(filePath))
@@ -95,7 +95,7 @@ namespace Fate.Infrastructure.NPOI
         /// <param name="colorIndex">表头颜色的样式  列：NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index</param>
         /// <param name="colorTrue">是否显示表头颜色 默认 是</param>
         /// <returns></returns>
-        public static string ToExcelOne(DataSet sourceDs, string filePath , string sheetTableName = "result", int growthIndex = 3, bool colorTrue = true, short colorIndex = 22)
+        public static string ToExcelOne(this DataSet sourceDs, string filePath, string sheetTableName = "result", int growthIndex = 3, bool colorTrue = true, short colorIndex = 22)
         {
             if (string.IsNullOrEmpty(filePath))
             {
@@ -169,7 +169,7 @@ namespace Fate.Infrastructure.NPOI
         /// <param name="colorIndex">表头颜色的样式  列：NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index</param>
         /// <param name="colorTrue">是否显示表头颜色 默认 是</param>
         /// <returns></returns>
-        public static string ToExcel(DataTable sourceTable, string[] colAliasNames, string sheetName = "result", string filePath = null, IDictionary<string, string> colDataFormats = null, bool colorTrue = true, short colorIndex = 22)
+        public static string ToExcel(this DataTable sourceTable, string[] colAliasNames, string sheetName = "result", string filePath = null, IDictionary<string, string> colDataFormats = null, bool colorTrue = true, short colorIndex = 22)
         {
             if (sourceTable.Rows.Count <= 0) return null;
 
@@ -250,7 +250,7 @@ namespace Fate.Infrastructure.NPOI
         /// <param name="colorIndex">表头颜色的样式  列：NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index</param>
         /// <param name="colorTrue">是否显示表头颜色 默认 是</param>
         /// <returns></returns>
-        public static string ToExcel(DataTable sourceTable, string sheetName = "result", string filePath = null, string[] colNames = null, IDictionary<string, string> colAliasNames = null, IDictionary<string, string> colDataFormats = null, int sheetSize = 0, bool colorTrue = true, short colorIndex = 22)
+        public static string ToExcel(this DataTable sourceTable, string sheetName = "result", string filePath = null, string[] colNames = null, IDictionary<string, string> colAliasNames = null, IDictionary<string, string> colDataFormats = null, int sheetSize = 0, bool colorTrue = true, short colorIndex = 22)
         {
             if (sourceTable.Rows.Count <= 0) return null;
 
