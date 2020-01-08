@@ -41,7 +41,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public int ExecuteNonQuery(string sql, params object[] _params)
+        public int ExecuteNonQuery(string sql, object[] _params = default)
         {
             return ExecuteNonQueryAsync(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
@@ -52,19 +52,18 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public T ExecuteScalar<T>(string sql, params object[] _params)
+        public T ExecuteScalar<T>(string sql, object[] _params = default)
         {
             return ExecuteScalarAsync<T>(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<int> ExecuteNonQueryAsync(string sql, params object[] _params)
+        public async Task<int> ExecuteNonQueryAsync(string sql, object[] _params = default)
         {
             CheckSql(sql);
             //获取连接
             var connection = await GetConnection();
-            //创建一个命令
-            var command = CreateCommand(connection, sql, _params);
-            return await command.ExecuteNonQueryAsync();
+            //执行命令
+            return await ExecCommand(connection, async command => await command.ExecuteNonQueryAsync(), sql, _params).ConfigureAwait(false);
         }
         /// <summary>
         /// 执行sql返回第一行第一列
@@ -73,18 +72,19 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public async Task<T> ExecuteScalarAsync<T>(string sql, params object[] _params)
+        public async Task<T> ExecuteScalarAsync<T>(string sql, object[] _params = default)
         {
             CheckSql(sql);
             //获取连接
             var connection = await GetConnection();
-            //创建一个命令
-            var command = CreateCommand(connection, sql, _params);
-            //获取结果
-            var res = (await command.ExecuteScalarAsync().ConfigureAwait(false));
-            if (res == null)
-                return default;
-            return (T)res;
+            //执行命令
+            return await ExecCommand(connection, async command =>
+              {
+                  var res = await command.ExecuteScalarAsync().ConfigureAwait(false);
+                  if (res == null)
+                      return default;
+                  return (T)res;
+              }, sql, _params);
         }
         #region base
         /// <summary>
@@ -116,33 +116,27 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="_params"></param>
-        private DbCommand CreateCommand(DbConnection dbConnection, string sql, params object[] _params)
+        private TResult ExecCommand<TResult>(DbConnection dbConnection, Func<DbCommand, TResult> func, string sql, object[] _params)
         {
             //创建一个命令
             var command = dbConnection.CreateCommand();
             command.CommandText = sql;
             if (_params != null && _params.Count() > 0)
-            {
-                foreach (var item in _params)
-                {
-                    command.Parameters.Add(item);
-                }
-            }
+                command.Parameters.AddRange(_params);
             //获取当前执行的事务
             var currentTransaction = infrastructure.Exec(repository => repository.Database.CurrentTransaction);
             //判断是否开启了事务
             if (currentTransaction != null)
-            {
                 //绑定事务
                 command.Transaction = currentTransaction.GetDbTransaction();
-            }
             //设置超时时间
             if (unitOfWorkOptions.CommandTimeout != null)
             {
                 int.TryParse(unitOfWorkOptions.CommandTimeout.ToString(), out var commandTimeout);
                 command.CommandTimeout = commandTimeout;
             }
-            return command;
+            //执行命令
+            return func.Invoke(command);
         }
         #endregion
     }

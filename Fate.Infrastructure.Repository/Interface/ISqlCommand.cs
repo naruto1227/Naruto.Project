@@ -11,14 +11,14 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        Task<int> ExecuteNonQueryAsync(string sql, params object[] _params);
+        Task<int> ExecuteNonQueryAsync(string sql,  object[] _params=default);
         /// <summary>
         /// 执行增删改的操作 返回受影响的行数
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        int ExecuteNonQuery(string sql, params object[] _params);
+        int ExecuteNonQuery(string sql,  object[] _params = default);
     }
     /// <summary>
     /// 张海波

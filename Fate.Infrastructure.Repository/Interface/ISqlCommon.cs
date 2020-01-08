@@ -14,13 +14,13 @@ namespace Fate.Infrastructure.Repository.Interface
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T ExecuteScalar<T>(string sql, params object[] _params);
+        T ExecuteScalar<T>(string sql,  object[] _params = default);
 
         /// <summary>
         /// 执行sql语句返回第一行第一列的数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<T> ExecuteScalarAsync<T>(string sql, params object[] _params);
+        Task<T> ExecuteScalarAsync<T>(string sql,  object[] _params = default);
     }
 }

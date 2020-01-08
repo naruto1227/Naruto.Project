@@ -15,7 +15,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        DataTable ExecuteSqlQuery(string sql, params object[] _params);
+        DataTable ExecuteSqlQuery(string sql,  object[] _params = default);
 
         /// <summary>
         /// 执行sql的异步查询操作 (返回DataTable)
@@ -24,7 +24,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        Task<DataTable> ExecuteSqlQueryAsync(string sql, params object[] _params);
+        Task<DataTable> ExecuteSqlQueryAsync(string sql,  object[] _params = default);
         #endregion
     }
     /// <summary>
