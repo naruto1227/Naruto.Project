@@ -1,5 +1,6 @@
 ﻿
 using NPOI.HSSF.UserModel;
+using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -84,18 +85,15 @@ namespace Fate.Infrastructure.NPOI
         public static ICellStyle GetCellStyle(IWorkbook workbook, bool isHeaderRow = false,short colorIndex=22)
         {
             ICellStyle style = workbook.CreateCellStyle();
-
             if (isHeaderRow)
             {
                 style.FillPattern = FillPattern.SolidForeground; ;
-              
                 style.FillForegroundColor = colorIndex;
-              
-                IFont f = workbook.CreateFont();
-                f.Boldweight = (short)FontBoldWeight.Bold;
-                style.SetFont(f);
             }
-
+            style.RightBorderColor = HSSFColor.Black.Index;
+            style.Alignment = HorizontalAlignment.Center;
+            //设置垂直居中
+            style.VerticalAlignment = VerticalAlignment.Center;
             style.BorderBottom = BorderStyle.Thin;
             style.BorderLeft = BorderStyle.Thin;
             style.BorderRight = BorderStyle.Thin;
