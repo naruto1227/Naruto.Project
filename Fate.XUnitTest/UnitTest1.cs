@@ -18,15 +18,18 @@ namespace Fate.XUnitTest
         public void Test1()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("列一");
+            dt.Columns.Add("test");
             for (int i = 0; i < 10; i++)
             {
                 DataRow dr = dt.NewRow();
-                dr["列一"] = 1;
+                dr["test"] = 1;
                 dt.Rows.Add(dr);
             }
 
-            ExportHelper.ToExcel(dt, new string[] { "列一" }, "result", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.xlsx"));
+            ExportHelper.ToExcel(dt, "result", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.xlsx"), null, new Dictionary<string, string>
+            {
+                { "test","测试"}
+            });
         }
 
         /// <summary>
