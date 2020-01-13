@@ -15,14 +15,45 @@ namespace Fate.Infrastructure.Repository.Base
     /// <summary>
     /// 张海波
     /// 2019-10-26
-    /// 执行sql语句的查询操作
+    /// 执行sql语句的从库查询操作
     /// </summary>
-    public class SqlQuery<TDbContext> : ISqlQuery<TDbContext> where TDbContext : DbContext
+    public class SqlQuery<TDbContext> : SqlQueryAbstract, ISqlQuery<TDbContext> where TDbContext : DbContext
     {
         /// <summary>
-        /// 获取读的基础设施
+        /// 构造获取上下文工厂
         /// </summary>
-        private readonly IRepositoryReadInfrastructure<TDbContext> infrastructure;
+        public SqlQuery(IRepositoryReadInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions _unitOfWorkOptions) : base(_infrastructure, _unitOfWorkOptions)
+        {
+        }
+    }
+
+    /// <summary>
+    /// 张海波
+    /// 2019-10-26
+    /// 执行sql语句的主库查询操作
+    /// </summary>
+    public class SqlMasterQuery<TDbContext> : SqlQueryAbstract, ISqlMasterQuery<TDbContext> where TDbContext : DbContext
+    {
+        /// <summary>
+        /// 构造获取上下文工厂
+        /// </summary>
+        public SqlMasterQuery(IRepositoryWriteInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions _unitOfWorkOptions) : base(_infrastructure, _unitOfWorkOptions)
+        {
+        }
+    }
+
+
+    /// <summary>
+    /// 张海波
+    /// 2019-10-26
+    /// 执行sql语句的抽象查询操作
+    /// </summary>
+    public abstract class SqlQueryAbstract : ISqlQuery
+    {
+        /// <summary>
+        /// 获取基础设施
+        /// </summary>
+        private readonly IRepositoryInfrastructure infrastructure;
 
         /// <summary>
         /// 工作单元参数设置
@@ -33,7 +64,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 构造获取上下文工厂
         /// </summary>
-        public SqlQuery(IRepositoryReadInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions _unitOfWorkOptions)
+        public SqlQueryAbstract(IRepositoryInfrastructure _infrastructure, UnitOfWorkOptions _unitOfWorkOptions)
         {
             infrastructure = _infrastructure;
             unitOfWorkOptions = _unitOfWorkOptions;
@@ -45,7 +76,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public DataTable ExecuteSqlQuery(string sql, object[] _params = default)
+        public virtual DataTable ExecuteSqlQuery(string sql, object[] _params = default)
         {
             return ExecuteSqlQueryAsync(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
@@ -54,7 +85,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T ExecuteScalar<T>(string sql, object[] _params = default)
+        public virtual T ExecuteScalar<T>(string sql, object[] _params = default)
         {
             return ExecuteScalarAsync<T>(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
@@ -71,19 +102,19 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public async Task<DataTable> ExecuteSqlQueryAsync(string sql, object[] _params = default)
+        public virtual async Task<DataTable> ExecuteSqlQueryAsync(string sql, object[] _params = default)
         {
             CheckSql(sql);
             //获取连接
             var connection = await GetConnection();
             //执行脚本
             return await ExecCommand(connection, async command =>
-              {
-                  //执行返回
-                  DataTable dataTable = new DataTable();
-                  dataTable.Load((await command.ExecuteReaderAsync().ConfigureAwait(false)));
-                  return dataTable;
-              }, sql, _params);
+            {
+                //执行返回
+                DataTable dataTable = new DataTable();
+                dataTable.Load((await command.ExecuteReaderAsync().ConfigureAwait(false)));
+                return dataTable;
+            }, sql, _params);
         }
         /// <summary>
         /// 执行sql返回第一行第一列
@@ -92,19 +123,19 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public async Task<T> ExecuteScalarAsync<T>(string sql, object[] _params = default)
+        public virtual async Task<T> ExecuteScalarAsync<T>(string sql, object[] _params = default)
         {
             CheckSql(sql);
             //获取连接
             var connection = await GetConnection();
             ///执行命令
             return await ExecCommand(connection, async command =>
-             {
-                 var res = (await command.ExecuteScalarAsync().ConfigureAwait(false));
-                 if (res == null)
-                     return default;
-                 return (T)res;
-             }, sql, _params);
+            {
+                var res = (await command.ExecuteScalarAsync().ConfigureAwait(false));
+                if (res == null)
+                    return default;
+                return (T)res;
+            }, sql, _params);
         }
         #endregion
 
@@ -114,7 +145,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// 获取连接
         /// </summary>
         /// <returns></returns>
-        private async Task<DbConnection> GetConnection()
+        protected virtual async Task<DbConnection> GetConnection()
         {
             //获取连接
             var connection = infrastructure.Exec(repository => repository.Database.GetDbConnection());
@@ -129,7 +160,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 检查sql语句
         /// <param name="sql"></param>
-        private void CheckSql(string sql)
+        protected virtual void CheckSql(string sql)
         {
             if (string.IsNullOrWhiteSpace(sql))
                 throw new ArgumentNullException(nameof(sql));
@@ -139,7 +170,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="_params"></param>
-        private TResult ExecCommand<TResult>(DbConnection dbConnection, Func<DbCommand, TResult> func, string sql, object[] _params)
+        protected virtual TResult ExecCommand<TResult>(DbConnection dbConnection, Func<DbCommand, TResult> func, string sql, object[] _params)
         {
             //创建一个命令
             var command = dbConnection.CreateCommand();

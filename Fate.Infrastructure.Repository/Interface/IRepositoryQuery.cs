@@ -6,6 +6,22 @@ using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Interface
 {
+    /// <summary>
+    /// 张海波
+    /// 2020-01-13
+    /// 主库的查询
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TDbContext"></typeparam>
+    public interface IRepositoryMasterQuery<T, TDbContext> : IRepositoryQuery<T>, IRepositoryDependency where T : IEntity
+    {
+
+    }
+    /// <summary>
+    /// 从库的查询
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TDbContext"></typeparam>
     public interface IRepositoryQuery<T, TDbContext> : IRepositoryQuery<T>, IRepositoryDependency where T : IEntity
     {
 

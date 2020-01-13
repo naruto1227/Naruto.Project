@@ -46,9 +46,10 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 执行 查询的操作
         /// </summary>
+        /// <param name="isMaster">是否访问主库</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IRepositoryQuery<T> Query<T>() where T : class, IEntity;
+        IRepositoryQuery<T> Query<T>(bool isMaster = false) where T : class, IEntity;
 
         /// <summary>
         /// 执行增删改的操作
@@ -66,8 +67,9 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 返回sql查询的对象
         /// </summary>
+        /// <param name="isMaster">是否在主库上执行</param>
         /// <returns></returns>
-        ISqlQuery SqlQuery();
+        ISqlQuery SqlQuery(bool isMaster = false);
         /// <summary>
         /// 返回sql增删改的对象
         /// </summary>

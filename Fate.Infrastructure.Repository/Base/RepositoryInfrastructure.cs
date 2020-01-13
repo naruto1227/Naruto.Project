@@ -24,7 +24,7 @@ namespace Fate.Infrastructure.Repository.Base
     public class RepositoryWriteInfrastructure<TDbContext> : IRepositoryWriteInfrastructure<TDbContext> where TDbContext : DbContext
     {
         //获取仓储上下文
-        private readonly DbContext dbContext;
+        private readonly DbContext masterDbContext;
 
         private readonly IRepositoryInfrastructureBase infrastructureBase;
 
@@ -37,7 +37,7 @@ namespace Fate.Infrastructure.Repository.Base
 
         public RepositoryWriteInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase _infrastructureBase, UnitOfWorkOptions _unitOfWorkOptions, IServiceProvider _serviceProvider)
         {
-            dbContext = _factory.GetMaster<TDbContext>();
+            masterDbContext = _factory.GetMaster<TDbContext>();
             infrastructureBase = _infrastructureBase;
             unitOfWorkOptions = _unitOfWorkOptions;
             serviceProvider = _serviceProvider;
@@ -50,7 +50,8 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public TResult Exec<TResult>(Func<DbContext, TResult> action)
         {
-            return action(dbContext);
+            infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            return action(masterDbContext);
         }
         /// <summary>
         /// 无返回值
@@ -58,7 +59,8 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="action"></param>
         public void Exec(Action<DbContext> action)
         {
-            action(dbContext);
+            infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            action(masterDbContext);
         }
         /// <summary>
         /// 保存
@@ -66,13 +68,13 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task<int> SaveChangesAsync()
         {
-            await infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false);
+            await infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false);
             return await Exec(dbContext => dbContext.SaveChangesAsync().ConfigureAwait(false));
         }
 
         public int SaveChanges()
         {
-            infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             return Exec(dbContext => dbContext.SaveChanges());
         }
         /// <summary>
@@ -84,7 +86,7 @@ namespace Fate.Infrastructure.Repository.Base
             //更改事务的状态
             unitOfWorkOptions.IsBeginTran = true;
             //切换配置
-            await infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false);
+            await infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false);
             //切换从库的连接上下文
             await serviceProvider.GetRequiredService<IRepositoryReadInfrastructure<TDbContext>>().SwitchMasterDbContextAsync().ConfigureAwait(false);
             return await Exec(async dbContext =>
@@ -101,7 +103,7 @@ namespace Fate.Infrastructure.Repository.Base
             //更改事务的状态
             unitOfWorkOptions.IsBeginTran = true;
             //切换配置
-            infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             //切换从库的连接上下文
             serviceProvider.GetRequiredService<IRepositoryReadInfrastructure<TDbContext>>().SwitchMasterDbContextAsync().ConfigureAwait(false);
             return Exec(dbContext =>
@@ -143,9 +145,12 @@ namespace Fate.Infrastructure.Repository.Base
     public class RepositoryReadInfrastructure<TDbContext> : IRepositoryReadInfrastructure<TDbContext> where TDbContext : DbContext
     {
         //获取仓储上下文
-        private DbContext dbContext;
+        private DbContext slaveDbContext;
+        //上下文工厂
         private readonly IDbContextFactory factory;
+        //基础设施
         private readonly IRepositoryInfrastructureBase infrastructureBase;
+        //工作单元参数信息
         private readonly UnitOfWorkOptions unitOfWorkOptions;
         /// <summary>
         /// 是否为主库的上下文
@@ -160,13 +165,13 @@ namespace Fate.Infrastructure.Repository.Base
             //或者没有开启读写分离 直接使用 主库的数据
             if (_unitOfWorkOptions.IsBeginTran || !_unitOfWorkOptions.IsOpenMasterSlave)
             {
-                dbContext = _factory.GetMaster<TDbContext>();
+                slaveDbContext = _factory.GetMaster<TDbContext>();
                 IsMaster = true;
             }
             else
             {
-                dbContext = _factory.GetSlave<TDbContext>();
-                _infrastructureBase.SwitchSlaveAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+                slaveDbContext = _factory.GetSlave<TDbContext>();
+                _infrastructureBase.SwitchSlaveAsync(slaveDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
         /// <summary>
@@ -177,8 +182,8 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public TResult Exec<TResult>(Func<DbContext, TResult> action)
         {
-            infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
-            return action(dbContext);
+            infrastructureBase.SwitchAsync(slaveDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            return action(slaveDbContext);
         }
         /// <summary>
         /// 无返回值
@@ -186,8 +191,8 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="action"></param>
         public void Exec(Action<DbContext> action)
         {
-            infrastructureBase.SwitchAsync(dbContext).ConfigureAwait(false).GetAwaiter().GetResult();
-            action(dbContext);
+            infrastructureBase.SwitchAsync(slaveDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
+            action(slaveDbContext);
         }
 
         /// <summary>
@@ -197,7 +202,7 @@ namespace Fate.Infrastructure.Repository.Base
         public Task SwitchMasterDbContextAsync()
         {
             if (!IsMaster && unitOfWorkOptions.IsOpenMasterSlave)
-                dbContext = factory.GetMaster<TDbContext>();
+                slaveDbContext = factory.GetMaster<TDbContext>();
             IsMaster = true;
             return Task.CompletedTask;
         }

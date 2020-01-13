@@ -34,4 +34,38 @@ namespace Fate.Domain.Model
         public DbSet<test1> test1 { get; set; }
 
     }
+
+    public class TestDbContent : DbContext
+    {
+        public TestDbContent(DbContextOptions<TestDbContent> options)
+           : base(options)
+        {
+
+        }
+        public TestDbContent Clone()
+        {
+            return this.MemberwiseClone() as TestDbContent;
+        }
+        //public DbSet<OrderNo> OrderNo { get; set; }
+        public DbSet<setting> setting { get; set; }
+        public DbSet<test1> test1 { get; set; }
+
+    }
+
+    public class SlaveTestDbContent : DbContext
+    {
+        public SlaveTestDbContent(DbContextOptions<SlaveTestDbContent> options)
+           : base(options)
+        {
+
+        }
+        public SlaveTestDbContent Clone()
+        {
+            return this.MemberwiseClone() as SlaveTestDbContent;
+        }
+        //public DbSet<OrderNo> OrderNo { get; set; }
+        public DbSet<setting> setting { get; set; }
+        public DbSet<test1> test1 { get; set; }
+
+    }
 }

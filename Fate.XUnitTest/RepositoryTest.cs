@@ -42,10 +42,17 @@ namespace Fate.XUnitTest
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-                options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=192.168.1.6;Port=3307;UserId=hai;Password=123456;Charset=utf8;" };
+                options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
                 options.IsOpenMasterSlave = true;
+            }, Test =>
+            {
+                Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                Test.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
+                //
+                Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
+                Test.IsOpenMasterSlave = true;
             });
             //services.AddScoped<EFCommandInterceptor>();
             //services.AddScoped<EFDiagnosticListener>();
@@ -129,15 +136,31 @@ namespace Fate.XUnitTest
             str = await unit.Query<setting>().AsQueryable().ToListAsync();
 
         }
+        [Fact]
+        public async Task ManyContextWriteRead()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var unit2 = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<TestDbContent>>();
+            var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            str = await unit2.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
 
+            str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+            await unit.SaveChangeAsync();
+            str = await unit.Query<setting>(true).AsQueryable().AsNoTracking().ToListAsync();
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
+
+        }
         [Fact]
         public async Task WriteRead()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+
             str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             await unit.SaveChangeAsync();
+            str = await unit.Query<setting>(true).AsQueryable().AsNoTracking().ToListAsync();
             str = await unit.Query<setting>().AsQueryable().ToListAsync();
 
         }
@@ -205,9 +228,12 @@ namespace Fate.XUnitTest
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             var query = unit.SqlQuery();
-            await unit.ChangeDataBaseAsync("test1");
+          //  await unit.ChangeDataBaseAsync("test1");
             unit.CommandTimeout = 180;
             var res = await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
+            unit.CommandTimeout = 110;
+            res = await unit.SqlQuery(true).ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
+            await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
         }
     }
 

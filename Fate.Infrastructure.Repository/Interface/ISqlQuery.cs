@@ -15,7 +15,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        DataTable ExecuteSqlQuery(string sql,  object[] _params = default);
+        DataTable ExecuteSqlQuery(string sql, object[] _params = default);
 
         /// <summary>
         /// 执行sql的异步查询操作 (返回DataTable)
@@ -24,15 +24,25 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        Task<DataTable> ExecuteSqlQueryAsync(string sql,  object[] _params = default);
+        Task<DataTable> ExecuteSqlQueryAsync(string sql, object[] _params = default);
         #endregion
     }
     /// <summary>
     /// 张海波
     /// 2019-10-26
-    /// 执行sql语句的查询操作
+    /// 执行sql语句的从库查询操作
     /// </summary>
     public interface ISqlQuery<TDbContext> : ISqlQuery, IRepositoryDependency where TDbContext : DbContext
+    {
+
+    }
+
+    /// <summary>
+    /// 张海波
+    /// 2019-10-26
+    /// 执行sql语句的主库查询操作
+    /// </summary>
+    public interface ISqlMasterQuery<TDbContext> : ISqlQuery, IRepositoryDependency where TDbContext : DbContext
     {
 
     }
