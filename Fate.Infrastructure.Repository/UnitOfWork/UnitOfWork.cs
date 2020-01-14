@@ -68,16 +68,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             service = _service;
         }
 
-        /// <summary>
-        /// 超时时间
-        /// </summary>
-        public int CommandTimeout
-        {
-            set
-            {
-                unitOfWorkOptions.CommandTimeout = value;
-            }
-        }
+        #region 事务操作
 
         /// <summary>
         /// 开始事务
@@ -105,6 +96,15 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             infrastructureBase.CommitTransaction();
         }
         /// <summary>
+        /// 提交事务
+        /// </summary>
+        public Task CommitTransactionAsync()
+        {
+            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
+            infrastructureBase.CommitTransaction();
+            return Task.CompletedTask;
+        }
+        /// <summary>
         /// 回滚事务
         /// </summary>
         public void RollBackTransaction()
@@ -112,6 +112,19 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
             infrastructureBase.RollBackTransaction();
         }
+        /// <summary>
+        /// 回滚事务
+        /// </summary>
+        public Task RollBackTransactionAsync()
+        {
+            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
+            infrastructureBase.RollBackTransaction();
+            return Task.CompletedTask;
+        }
+
+        #endregion
+
+        #region EFCore 保存
 
         /// <summary>
         /// 异步提交
@@ -131,6 +144,10 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
             return infrastructureBase.SaveChanges();
         }
+
+        #endregion
+
+        #region EFCore仓储 
 
         /// <summary>
         /// 执行 查询的操作
@@ -152,6 +169,9 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <returns></returns>
         public IRepositoryCommand<T> Command<T>() where T : class, IEntity => service.GetService<IRepositoryCommand<T, TDbContext>>();
 
+        #endregion
+
+        #region  ado操作
 
         /// <summary>
         /// 执行sql查询操作
@@ -172,6 +192,10 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <returns></returns>
         public ISqlCommand SqlCommand() => service.GetService<ISqlCommand<TDbContext>>();
 
+        #endregion
+
+        #region 切换数据库
+
         /// <summary>
         /// 更改数据库的名字
         /// </summary>
@@ -183,6 +207,24 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             unitOfWorkOptions.ChangeDataBaseName = dataBase;
             return Task.CompletedTask;
         }
+
+        #endregion
+
+        #region 超时时间设置
+
+        /// <summary>
+        /// 超时时间
+        /// </summary>
+        public int CommandTimeout
+        {
+            set
+            {
+                unitOfWorkOptions.CommandTimeout = value;
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 释放资源
         /// </summary>

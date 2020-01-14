@@ -38,11 +38,20 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 提交事务
         /// </summary>
         void CommitTransaction();
+
+        /// <summary>
+        /// 提交事务
+        /// </summary>
+        Task CommitTransactionAsync();
         /// <summary>
         /// 事务回滚
         /// </summary>
         void RollBackTransaction();
 
+        /// <summary>
+        /// 事务回滚
+        /// </summary>
+        Task RollBackTransactionAsync();
         /// <summary>
         /// 执行 查询的操作
         /// </summary>
