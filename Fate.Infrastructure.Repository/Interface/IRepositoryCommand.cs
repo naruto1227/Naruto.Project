@@ -38,6 +38,9 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="info"></param>
         /// <returns></returns>
         Task BulkDeleteAsync(params T[] entities);
+
+        Task BulkDeleteAsync(Expression<Func<T, bool>> condition);
+
         /// <summary>
         /// 修改
         /// </summary>
@@ -93,6 +96,13 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="info"></param>
         /// <returns></returns>
         void BulkDelete(params T[] entities);
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        void BulkDelete(Expression<Func<T, bool>> condition);
 
         /// <summary>
         /// 修改

@@ -40,6 +40,10 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         private IDbContextTransaction dbContextTransaction;
 
+        /// <summary>
+        /// 仓储的中介者对象
+        /// </summary>
+        private readonly IRepositoryMediator<TDbContext> repositoryMediator;
 
         #endregion
 
@@ -49,7 +53,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         /// <param name="_options"></param>
         /// <param name="_service"></param>
-        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IDbContextFactory _repositoryFactory)
+        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IDbContextFactory _repositoryFactory, IRepositoryMediator<TDbContext> _repositoryMediator)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
             //获取上下文类型
@@ -66,6 +70,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             _repositoryFactory.Set(unitOfWorkOptions?.DbContextType, _dbContext);
 
             service = _service;
+            repositoryMediator = _repositoryMediator;
         }
 
         #region 事务操作
@@ -73,52 +78,34 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 开始事务
         /// </summary>
-        public void BeginTransaction()
-        {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            dbContextTransaction = infrastructureBase.BeginTransaction();
-        }
+        public void BeginTransaction() => dbContextTransaction = repositoryMediator.BeginTransaction();
 
         /// <summary>
         /// 开始事务
         /// </summary>
-        public async Task BeginTransactionAsync()
-        {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            dbContextTransaction = await infrastructureBase.BeginTransactionAsync();
-        }
+        public async Task BeginTransactionAsync() => dbContextTransaction = await repositoryMediator.BeginTransactionAsync();
         /// <summary>
         /// 提交事务
         /// </summary>
-        public void CommitTransaction()
-        {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            infrastructureBase.CommitTransaction();
-        }
+        public void CommitTransaction() => repositoryMediator.CommitTransaction();
         /// <summary>
         /// 提交事务
         /// </summary>
         public Task CommitTransactionAsync()
         {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            infrastructureBase.CommitTransaction();
+            repositoryMediator.CommitTransaction();
             return Task.CompletedTask;
         }
         /// <summary>
         /// 回滚事务
         /// </summary>
-        public void RollBackTransaction()
-        {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            infrastructureBase.RollBackTransaction();
-        }
+        public void RollBackTransaction() => repositoryMediator.RollBackTransaction();
         /// <summary>
         /// 回滚事务
         /// </summary>
         public Task RollBackTransactionAsync()
         {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            infrastructureBase.RollBackTransaction();
+            repositoryMediator.RollBackTransaction();
             return Task.CompletedTask;
         }
 
@@ -130,20 +117,12 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 异步提交
         /// </summary>
         /// <returns></returns>
-        public async Task<int> SaveChangeAsync()
-        {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            return await infrastructureBase.SaveChangesAsync();
-        }
+        public async Task<int> SaveChangeAsync() => await repositoryMediator.SaveChangeAsync();
         /// <summary>
         /// 同步提交
         /// </summary>
         /// <returns></returns>
-        public int SaveChanges()
-        {
-            var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
-            return infrastructureBase.SaveChanges();
-        }
+        public int SaveChanges() => repositoryMediator.SaveChanges();
 
         #endregion
 
@@ -155,19 +134,13 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <param name="isMaster">是否访问主库</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IRepositoryQuery<T> Query<T>(bool isMaster = false) where T : class, IEntity
-        {
-            if (isMaster)
-                return service.GetService<IRepositoryMasterQuery<T, TDbContext>>();
-            else
-                return service.GetService<IRepositoryQuery<T, TDbContext>>();
-        }
+        public IRepositoryQuery<T> Query<T>(bool isMaster = false) where T : class, IEntity => repositoryMediator.Query<T>(isMaster);
         /// <summary>
         /// 执行增删改的操作
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IRepositoryCommand<T> Command<T>() where T : class, IEntity => service.GetService<IRepositoryCommand<T, TDbContext>>();
+        public IRepositoryCommand<T> Command<T>() where T : class, IEntity => repositoryMediator.Command<T>();
 
         #endregion
 
@@ -178,19 +151,13 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         /// <param name="isMaster">是否在主库上执行</param>
         /// <returns></returns>
-        public ISqlQuery SqlQuery(bool isMaster = false)
-        {
-            if (isMaster)
-                return service.GetService<ISqlMasterQuery<TDbContext>>();
-            else
-                return service.GetService<ISqlQuery<TDbContext>>();
-        }
+        public ISqlQuery SqlQuery(bool isMaster = false) => repositoryMediator.SqlQuery(isMaster);
 
         /// <summary>
         /// 执行sql增删改操作
         /// </summary> 
         /// <returns></returns>
-        public ISqlCommand SqlCommand() => service.GetService<ISqlCommand<TDbContext>>();
+        public ISqlCommand SqlCommand() => repositoryMediator.SqlCommand();
 
         #endregion
 

@@ -64,6 +64,21 @@ namespace Fate.Infrastructure.Repository.Base
                return Task.CompletedTask;
            });
         }
+
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public async Task BulkDeleteAsync(Expression<Func<T, bool>> condition)
+        {
+            await infrastructure.Exec(async repository =>
+            {
+                var list = await Where(condition).ToListAsync();
+                if (list != null && list.Count() > 0)
+                    repository.Set<T>().RemoveRange(list);
+            });
+        }
         /// <summary>
         /// 更新单条实体
         /// </summary>
@@ -157,6 +172,22 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="condition"></param>
         /// <returns></returns>
         public void BulkDelete(params T[] entities) => infrastructure.Exec(repository => repository.Set<T>().RemoveRange(entities));
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public void BulkDelete(Expression<Func<T, bool>> condition)
+        {
+            infrastructure.Exec(repository =>
+            {
+                var list = Where(condition).ToList();
+                if (list != null && list.Count() > 0)
+                    repository.Set<T>().RemoveRange(list);
+            });
+        }
+
         /// <summary>
         /// 更新单条实体
         /// </summary>
