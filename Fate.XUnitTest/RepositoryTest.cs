@@ -38,43 +38,43 @@ namespace Fate.XUnitTest
         public RepositoryTest()
         {
             services.AddScoped(typeof(IRepositoryFactory), typeof(RepositoryFactory));
-            ////注入mysql仓储   //注入多个ef配置信息
-            //services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
-            //{
-            //    options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-            //    options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
-            //    //
-            //    options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
-            //    options.IsOpenMasterSlave = true;
-            //}, Test =>
-            //{
-            //    Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-            //    Test.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
-            //    //
-            //    Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
-            //    Test.IsOpenMasterSlave = true;
-            //});
-
             //注入mysql仓储   //注入多个ef配置信息
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=192.168.18.227;Port=3308;UserId=hai;Password=123456;Charset=utf8mb4;").AddInterceptors(new EFDbCommandInterceptor());
-                options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=192.168.18.227;Port=3309;UserId=hairead;Password=123456;Charset=utf8mb4;"
-                ,"Database=test;DataSource=192.168.18.227;Port=3310;UserId=hairead;Password=123456;Charset=utf8mb4;"
-                };
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
                 options.IsOpenMasterSlave = true;
             }, Test =>
             {
-                Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=192.168.18.227;Port=3308;UserId=hai;Password=123456;Charset=utf8mb4;").AddInterceptors(new EFDbCommandInterceptor());
-                Test.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=192.168.18.227;Port=3309;UserId=hairead;Password=123456;Charset=utf8mb4;"
-                ,"Database=test;DataSource=192.168.18.227;Port=3310;UserId=hairead;Password=123456;Charset=utf8mb4;"
-                };
+                Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                Test.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
                 Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
                 Test.IsOpenMasterSlave = true;
             });
+
+            ////注入mysql仓储   //注入多个ef配置信息
+            //services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
+            //{
+            //    options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=192.168.18.227;Port=3308;UserId=hai;Password=123456;Charset=utf8mb4;").AddInterceptors(new EFDbCommandInterceptor());
+            //    options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=192.168.18.227;Port=3309;UserId=hairead;Password=123456;Charset=utf8mb4;"
+            //    ,"Database=test;DataSource=192.168.18.227;Port=3310;UserId=hairead;Password=123456;Charset=utf8mb4;"
+            //    };
+            //    //
+            //    options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
+            //    options.IsOpenMasterSlave = true;
+            //}, Test =>
+            //{
+            //    Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=192.168.18.227;Port=3308;UserId=hai;Password=123456;Charset=utf8mb4;").AddInterceptors(new EFDbCommandInterceptor());
+            //    Test.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=192.168.18.227;Port=3309;UserId=hairead;Password=123456;Charset=utf8mb4;"
+            //    ,"Database=test;DataSource=192.168.18.227;Port=3310;UserId=hairead;Password=123456;Charset=utf8mb4;"
+            //    };
+            //    //
+            //    Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
+            //    Test.IsOpenMasterSlave = true;
+            //});
         }
         [Fact]
         public void Test()
@@ -89,12 +89,35 @@ namespace Fate.XUnitTest
             var db2 = (DbContext)Activator.CreateInstance(typeof(MysqlDbContent), options);
             var db3 = mysqlDbContent.Clone();
             //var re = iserverPri.GetRequiredService<IRepositoryFactory>();
+            var list22 = mysqlDbContent.test1.Where(a => 1 == 1).ToList();
             mysqlDbContent.Dispose();
 
-            var list22 = db3.test1.Where(a => 1 == 1).ToList();
+            list22 = db3.test1.Where(a => 1 == 1).ToList();
             db3.Dispose();
             list22 = db3.test1.Where(a => 1 == 1).ToList();
             var list222 = mysqlDbContent.test1.Where(a => 1 == 1).ToList();
+
+            mysqlDbContent.setting.Add(new setting()
+            {
+                Contact = "",
+                Description = "",
+                DuringTime = "",
+                Integral = 1,
+                Rule = ""
+            });
+            db3.Database.GetDbConnection().Close();
+            db3.Database.GetDbConnection().ConnectionString = "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;";
+            db3.Database.GetDbConnection().Open();
+            db3.setting.Add(new setting()
+            {
+                Contact = "",
+                Description = "",
+                DuringTime = "",
+                Integral = 1,
+                Rule = ""
+            });
+
+            mysqlDbContent.SaveChanges();
             //re.dbContext = u0k;
             //dbContex = u0k;
             //u0k.Dispose();
