@@ -30,10 +30,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         private UnitOfWorkOptions unitOfWorkOptions;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly IServiceProvider service;
 
         /// <summary>
         /// 上下文事务
@@ -69,7 +65,6 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
             //设置上下文工厂
             _repositoryFactory.Set(unitOfWorkOptions?.DbContextType, _dbContext);
 
-            service = _service;
             repositoryMediator = _repositoryMediator;
         }
 
