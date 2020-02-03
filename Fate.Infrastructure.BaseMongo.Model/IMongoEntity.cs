@@ -1,9 +1,10 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace Fate.Infrastructure.BaseMongo.Model
 {
-
+    [BsonIgnoreExtraElements(Inherited = true)]
     /// <summary>
     /// 张海波
     /// 2019-12-1
@@ -11,6 +12,7 @@ namespace Fate.Infrastructure.BaseMongo.Model
     /// </summary>
     public abstract class IMongoEntity 
     {
+        [BsonRepresentation(BsonType.ObjectId)]
         /// <summary>
         /// mongodb的主键id  不可改 字段名称必须为此名称
         /// </summary>

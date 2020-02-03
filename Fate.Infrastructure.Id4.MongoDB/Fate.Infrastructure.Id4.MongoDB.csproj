@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fate.Infrastructure.Id4.Entities\Fate.Infrastructure.Id4.Entities.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Mongo\Fate.Infrastructure.Mongo.csproj" />
+  </ItemGroup>
+
+</Project>

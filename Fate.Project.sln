@@ -87,6 +87,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseModel", "BaseModel", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.BaseMongo.Model", "Fate.Infrastructure.BaseMongo.Model\Fate.Infrastructure.BaseMongo.Model.csproj", "{28DCC2F4-6AF4-4C86-A409-297FBBC79DB1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer4", "IdentityServer4", "{D0F5DB8F-1016-4D05-9DBB-6EF7F5802C37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.Id4.MongoDB", "Fate.Infrastructure.Id4.MongoDB\Fate.Infrastructure.Id4.MongoDB.csproj", "{1797F00C-9A18-41E4-B73E-5BB7328E47C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.Id4.Entities", "Fate.Infrastructure.Id4.Entities\Fate.Infrastructure.Id4.Entities.csproj", "{DF1F7A89-D681-477B-9E94-204AAB212DFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +203,14 @@ Global
 		{28DCC2F4-6AF4-4C86-A409-297FBBC79DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28DCC2F4-6AF4-4C86-A409-297FBBC79DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28DCC2F4-6AF4-4C86-A409-297FBBC79DB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1797F00C-9A18-41E4-B73E-5BB7328E47C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1797F00C-9A18-41E4-B73E-5BB7328E47C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1797F00C-9A18-41E4-B73E-5BB7328E47C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1797F00C-9A18-41E4-B73E-5BB7328E47C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF1F7A89-D681-477B-9E94-204AAB212DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF1F7A89-D681-477B-9E94-204AAB212DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF1F7A89-D681-477B-9E94-204AAB212DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF1F7A89-D681-477B-9E94-204AAB212DFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -240,6 +254,9 @@ Global
 		{E2AFC917-33E6-44FE-89D3-C00CD23328EB} = {3575B4A0-B3E0-4982-9D79-E863DE07D1FF}
 		{0BB7A8E8-B045-47AF-9D01-3FAE4A378004} = {3575B4A0-B3E0-4982-9D79-E863DE07D1FF}
 		{28DCC2F4-6AF4-4C86-A409-297FBBC79DB1} = {0BB7A8E8-B045-47AF-9D01-3FAE4A378004}
+		{D0F5DB8F-1016-4D05-9DBB-6EF7F5802C37} = {4A8F666D-71AD-40C6-8DBF-37341F67CE79}
+		{1797F00C-9A18-41E4-B73E-5BB7328E47C5} = {D0F5DB8F-1016-4D05-9DBB-6EF7F5802C37}
+		{DF1F7A89-D681-477B-9E94-204AAB212DFE} = {D0F5DB8F-1016-4D05-9DBB-6EF7F5802C37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}

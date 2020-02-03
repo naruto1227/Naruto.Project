@@ -37,6 +37,14 @@ namespace Fate.XUnitTest
 
         public int Age { get; set; }
     }
+
+    public class Test3DTO : IMongoEntity
+    {
+
+        public string testkey { get; set; }
+
+        public TestDTO2 testDTO2 { get; set; }
+    }
     public class MongoQueryTest
     {
         private IServiceCollection services = new ServiceCollection();

@@ -20,7 +20,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27021", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.104:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
                 //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
@@ -51,6 +51,23 @@ namespace Fate.XUnitTest
                 });
                 await mongoRepository.Command<TestDTO>().BulkWriteAsync(list);
             }
+        }
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Insert2()
+        {
+            await mongoRepository.Command<Test3DTO>().InsertOneAsync("test44", new Test3DTO()
+            {
+                testkey = Guid.NewGuid().ToString(),
+                testDTO2 = new TestDTO2()
+                {
+                    Name = "长哈"
+                }
+            });
+            var res = await mongoRepository.Query<Test3DTO>().AsQueryable("test44").ToListAsync();
         }
         /// <summary>
         /// 添加
