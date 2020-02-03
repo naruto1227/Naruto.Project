@@ -48,7 +48,7 @@ using Fate.Infrastructure.Redis.IRedisManage;
 using Microsoft.Extensions.Hosting;
 using Fate.Infrastructure.AutofacDependencyInjection;
 using Fate.Test.TestClass;
-using Fate.Infrastructure.Mongo.Object;
+using Fate.Infrastructure.MongoDB.Object;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 

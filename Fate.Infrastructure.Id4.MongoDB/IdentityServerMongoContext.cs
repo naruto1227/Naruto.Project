@@ -1,4 +1,4 @@
-﻿using Fate.Infrastructure.Mongo.Object;
+﻿using Fate.Infrastructure.MongoDB.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;

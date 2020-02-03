@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fate.Infrastructure.Id4.Entities\Fate.Infrastructure.Id4.Entities.csproj" />
-    <ProjectReference Include="..\Fate.Infrastructure.Mongo\Fate.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.MongoDB\Fate.Infrastructure.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>

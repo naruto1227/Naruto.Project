@@ -28,7 +28,7 @@
     <ProjectReference Include="..\Fate.Infrastructure.CAP.Subscribe\Fate.Infrastructure.CAP.Subscribe.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.Configuration.Management\Fate.Infrastructure.Configuration.Management.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.Configuration\Fate.Infrastructure.Configuration.csproj" />
-    <ProjectReference Include="..\Fate.Infrastructure.Mongo\Fate.Infrastructure.Mongo.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.MongoDB\Fate.Infrastructure.MongoDB.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.OcelotStore.Redis\Fate.Infrastructure.OcelotStore.Redis.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure\Fate.Infrastructure.csproj" />

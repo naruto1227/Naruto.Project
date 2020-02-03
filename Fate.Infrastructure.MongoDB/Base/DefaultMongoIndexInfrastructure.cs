@@ -1,5 +1,5 @@
-﻿using Fate.Infrastructure.Mongo.Interface;
-using Fate.Infrastructure.Mongo.Object;
+﻿using Fate.Infrastructure.MongoDB.Interface;
+using Fate.Infrastructure.MongoDB.Object;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fate.Infrastructure.Mongo.Base
+namespace Fate.Infrastructure.MongoDB.Base
 {
     /// <summary>
     /// 张海波

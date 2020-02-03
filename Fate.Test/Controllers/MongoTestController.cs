@@ -20,7 +20,7 @@ using Fate.Domain.Model;
 using Fate.Infrastructure.Email;
 using Fate.Infrastructure.Interface;
 using Microsoft.Extensions.DependencyInjection;
-using Fate.Infrastructure.Mongo.Interface;
+using Fate.Infrastructure.MongoDB.Interface;
 using Fate.Test.TestClass;
 
 namespace Fate.Test

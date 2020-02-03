@@ -1,6 +1,6 @@
 ﻿using Fate.Infrastructure.BaseMongo.Model;
-using Fate.Infrastructure.Mongo.Interface;
-using Fate.Infrastructure.Mongo.Object;
+using Fate.Infrastructure.MongoDB.Interface;
+using Fate.Infrastructure.MongoDB.Object;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;

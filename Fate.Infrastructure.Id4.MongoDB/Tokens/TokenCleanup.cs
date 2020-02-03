@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Fate.Infrastructure.Id4.MongoDB.Options;
-using Fate.Infrastructure.Mongo.Interface;
+using Fate.Infrastructure.MongoDB.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;

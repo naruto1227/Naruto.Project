@@ -1,4 +1,4 @@
-﻿using Fate.Infrastructure.Mongo.Interface;
+﻿using Fate.Infrastructure.MongoDB.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;

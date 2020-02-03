@@ -1,13 +1,13 @@
 ﻿using Fate.Infrastructure.BaseMongo.Model;
-using Fate.Infrastructure.Mongo.Interface;
-using Fate.Infrastructure.Mongo.Object;
+using Fate.Infrastructure.MongoDB.Interface;
+using Fate.Infrastructure.MongoDB.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
-namespace Fate.Infrastructure.Mongo.Base
+namespace Fate.Infrastructure.MongoDB.Base
 {
     /// <summary>
     /// 张海波

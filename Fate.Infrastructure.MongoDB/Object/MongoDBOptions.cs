@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fate.Infrastructure.Mongo.Object
+namespace Fate.Infrastructure.MongoDB.Object
 {
     /// <summary>
     /// 张海波

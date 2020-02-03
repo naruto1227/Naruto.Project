@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fate.Infrastructure.Id4.MongoDB;
-using Fate.Infrastructure.Mongo.Interface;
+using Fate.Infrastructure.MongoDB.Interface;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using Microsoft.Extensions.Logging;

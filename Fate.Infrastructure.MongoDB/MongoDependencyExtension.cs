@@ -1,7 +1,7 @@
 ﻿
-using Fate.Infrastructure.Mongo.Base;
-using Fate.Infrastructure.Mongo.Interface;
-using Fate.Infrastructure.Mongo.Object;
+using Fate.Infrastructure.MongoDB.Base;
+using Fate.Infrastructure.MongoDB.Interface;
+using Fate.Infrastructure.MongoDB.Object;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
