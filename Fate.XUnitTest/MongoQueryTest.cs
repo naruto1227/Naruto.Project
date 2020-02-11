@@ -67,7 +67,7 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task BsonDocument()
         {
-            var list = await mongoRepository.Query<BsonDocument>().FindAsync(Builders<BsonDocument>.Filter.Eq("name", "hai"));
+            var list = await mongoRepository.Query<BsonDocument>().ToListAsync(Builders<BsonDocument>.Filter.Eq("name", "hai"));
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Find()
         {
-            var res = await mongoRepository.Query<TestDTO>().FindAsync(a => true);
+            var res = await mongoRepository.Query<TestDTO>().ToListAsync(a => true);
             //   res = mongoRepository.Query<TestDTO>().Find("test2", a => true);
         }
 

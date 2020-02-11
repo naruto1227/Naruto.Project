@@ -45,7 +45,7 @@ namespace Fate.Test
                     Name = "张三" + i
                 });
             }
-            await mongoRepository.Command<TestDTO>().InsertManyAsync(list);
+            await mongoRepository.Command<TestDTO>().BulkAddAsync(list);
         }
     }
 }

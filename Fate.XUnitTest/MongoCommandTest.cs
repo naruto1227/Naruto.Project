@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Fate.XUnitTest
 {
-    public class MongoCommandTest
+    public partial class MongoCommandTest
     {
         private IServiceCollection services = new ServiceCollection();
         private readonly IMongoRepository<TestMongoContext> mongoRepository;
@@ -20,7 +20,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.104:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.107:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
                 //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
@@ -28,7 +28,7 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task BsonDocument()
         {
-            await mongoRepository.Command<BsonDocument>().InsertOneAsync(new BsonDocument
+            await mongoRepository.Command<BsonDocument>().AddAsync(new BsonDocument
             {
                 { "name","hai"},
                 { "age","nian"}
@@ -59,7 +59,7 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Insert2()
         {
-            await mongoRepository.Command<Test3DTO>().InsertOneAsync("test44", new Test3DTO()
+            await mongoRepository.Command<Test3DTO>().AddAsync("test44", new Test3DTO()
             {
                 testkey = Guid.NewGuid().ToString(),
                 testDTO2 = new TestDTO2()
@@ -79,28 +79,28 @@ namespace Fate.XUnitTest
             Parallel.For(0, 30000, async item =>
              {
                  // await mongoRepository.ChangeDataBase("test2");
-                 mongoRepository.Command<TestDTO>().InsertOne(new TestDTO()
+                 mongoRepository.Command<TestDTO>().Add(new TestDTO()
                  {
                      Name = "王五"
                  });
 
-                 await mongoRepository.Command<TestDTO>().InsertOneAsync(new TestDTO()
+                 await mongoRepository.Command<TestDTO>().AddAsync(new TestDTO()
                  {
                      Name = "王五"
                  });
-                 var list = await mongoRepository.Query<TestDTO>().FindAsync(a => a.Name == "王五");
+                 var list = await mongoRepository.Query<TestDTO>().ToListAsync(a => a.Name == "王五");
 
-                 mongoRepository.Command<TestDTO>().InsertMany(new List<TestDTO>()
+                 mongoRepository.Command<TestDTO>().BulkAdd(new List<TestDTO>()
              {
                new TestDTO(){  Name="王五"},
                new TestDTO(){  Name="王五", Age=11}
              });
-                 await mongoRepository.Command<TestDTO>().InsertManyAsync(new List<TestDTO>()
+                 await mongoRepository.Command<TestDTO>().BulkAddAsync(new List<TestDTO>()
              {
                new TestDTO(){  Name="王五"},
                new TestDTO(){  Name="王五", Age=11}
              });
-                 list = await mongoRepository.Query<TestDTO>().FindAsync(Builders<TestDTO>.Filter.Eq(a => a.Name, "王五"));
+                 list = await mongoRepository.Query<TestDTO>().ToListAsync(Builders<TestDTO>.Filter.Eq(a => a.Name, "王五"));
              });
         }
         /// <summary>
@@ -111,17 +111,17 @@ namespace Fate.XUnitTest
 
         public async Task Delete()
         {
-            mongoRepository.Command<TestDTO>().DeleteOne(a => a.Age == null);
+            mongoRepository.Command<TestDTO>().Delete(a => a.Age == null);
 
-            await mongoRepository.Command<TestDTO>().DeleteOneAsync(a => a.Age == null);
+            await mongoRepository.Command<TestDTO>().DeleteAsync(a => a.Age == null);
 
-            var list = await mongoRepository.Query<TestDTO>().FindAsync(a => true);
+            var list = await mongoRepository.Query<TestDTO>().ToListAsync(a => true);
 
-            mongoRepository.Command<TestDTO>().DeleteMany(a => a.Age == null);
+            mongoRepository.Command<TestDTO>().BulkDelete(a => a.Age == null);
 
-            await mongoRepository.Command<TestDTO>().DeleteManyAsync(a => a.Age == 11);
+            await mongoRepository.Command<TestDTO>().BulkDeleteAsync(a => a.Age == 11);
 
-            list = await mongoRepository.Query<TestDTO>().FindAsync(a => true);
+            list = await mongoRepository.Query<TestDTO>().ToListAsync(a => true);
         }
         /// <summary>
         /// 替换
@@ -154,7 +154,20 @@ namespace Fate.XUnitTest
             };
             // mongoRepository.Command<TestDTO>().UpdateOne(a => a.Name == "李四", updateField);
 
-            await mongoRepository.Command<TestDTO>().UpdateOneAsync(a => a.Name == "张三", updateField);
+            await mongoRepository.Command<TestDTO>().UpdateAsync(a => a.Name == "张三", updateField);
+        }
+    }
+
+    public partial class MongoCommandTest
+    {
+        [Fact]
+        public async Task TestIdentity()
+        {
+            await mongoRepository.Command<Microsoft.AspNetCore.Identity.IdentityUser>().AddAsync(new Microsoft.AspNetCore.Identity.IdentityUser()
+            {
+                UserName = "1111"
+            });
+            var res = await mongoRepository.Query<Microsoft.AspNetCore.Identity.IdentityUser>().AsQueryable().ToListAsync();
         }
     }
 }

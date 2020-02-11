@@ -63,7 +63,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         {
             var names = scopeNames.ToArray();
 
-            var results = await Context.Query<Entities.ApiResource>().FindAsync(x => scopeNames.Contains(x.Name));
+            var results = await Context.Query<Entities.ApiResource>().ToListAsync(x => scopeNames.Contains(x.Name));
             var models = results.Select(x => x.ToModel()).ToArray();
 
             Logger.LogDebug("Found {scopes} API scopes in database", models.SelectMany(x => x.Scopes).Select(x => x.Name));
@@ -80,7 +80,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         {
             var scopes = scopeNames.ToArray();
 
-            var results = await Context.Query<Entities.IdentityResource>().FindAsync(x => scopeNames.Contains(x.Name));
+            var results = await Context.Query<Entities.IdentityResource>().ToListAsync(x => scopeNames.Contains(x.Name));
 
             Logger.LogDebug("Found {scopes} identity scopes in database", results.Select(x => x.Name));
 
@@ -94,8 +94,8 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         public virtual async Task<Resources> GetAllResourcesAsync()
         {
             var result = new Resources(
-                (await Context.Query<Entities.IdentityResource>().FindAsync(x =>true)).Select(x => x.ToModel()),
-                (await Context.Query<Entities.ApiResource>().FindAsync(x => true)).Select(x => x.ToModel())
+                (await Context.Query<Entities.IdentityResource>().ToListAsync(x =>true)).Select(x => x.ToModel()),
+                (await Context.Query<Entities.ApiResource>().ToListAsync(x => true)).Select(x => x.ToModel())
             );
 
             Logger.LogDebug("Found {scopes} as all scopes in database", result.IdentityResources.Select(x => x.Name).Union(result.ApiResources.SelectMany(x => x.Scopes).Select(x => x.Name)));

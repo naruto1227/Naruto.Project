@@ -55,7 +55,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
                 Logger.LogDebug("{persistedGrantKey} not found in database", token.Key);
 
                 var persistedGrant = token.ToEntity();
-                await Context.Command<Entities.PersistedGrant>().InsertOneAsync(persistedGrant);
+                await Context.Command<Entities.PersistedGrant>().AddAsync(persistedGrant);
             }
             else
             {
@@ -63,7 +63,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
                 //更新实体传输
                 token.UpdateEntity(existing);
                 //执行命令
-                await Context.Command<Entities.PersistedGrant>().UpdateOneAsync(x => x.Key == token.Key, new Dictionary<string, object>()
+                await Context.Command<Entities.PersistedGrant>().UpdateAsync(x => x.Key == token.Key, new Dictionary<string, object>()
                 {
                     { "Type",token.Type},
                     { "SubjectId",token.SubjectId},
@@ -97,7 +97,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         /// <returns></returns>
         public virtual async Task<IEnumerable<IdentityServer4.Models.PersistedGrant>> GetAllAsync(string subjectId)
         {
-            var persistedGrants = await Context.Query<Entities.PersistedGrant>().FindAsync(x => x.SubjectId == subjectId);
+            var persistedGrants = await Context.Query<Entities.PersistedGrant>().ToListAsync(x => x.SubjectId == subjectId);
             var model = persistedGrants.Select(x => x.ToModel());
 
             Logger.LogDebug("{persistedGrantCount} persisted grants found for {subjectId}", persistedGrants.Count, subjectId);
@@ -112,7 +112,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         /// <returns></returns>
         public virtual async Task RemoveAsync(string key)
         {
-            await Context.Command<Entities.PersistedGrant>().DeleteOneAsync(x => x.Key == key);
+            await Context.Command<Entities.PersistedGrant>().DeleteAsync(x => x.Key == key);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         /// <returns></returns>
         public virtual async Task RemoveAllAsync(string subjectId, string clientId)
         {
-            await Context.Command<Entities.PersistedGrant>().DeleteManyAsync(x => x.SubjectId == subjectId && x.ClientId == clientId);
+            await Context.Command<Entities.PersistedGrant>().BulkDeleteAsync(x => x.SubjectId == subjectId && x.ClientId == clientId);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         /// <returns></returns>
         public virtual async Task RemoveAllAsync(string subjectId, string clientId, string type)
         {
-            await Context.Command<Entities.PersistedGrant>().DeleteManyAsync(x => x.SubjectId == subjectId && x.ClientId == clientId && x.Type == type);
+            await Context.Command<Entities.PersistedGrant>().BulkDeleteAsync(x => x.SubjectId == subjectId && x.ClientId == clientId && x.Type == type);
         }
     }
 }

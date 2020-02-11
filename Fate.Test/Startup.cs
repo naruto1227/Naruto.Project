@@ -48,7 +48,6 @@ using Fate.Infrastructure.Redis.IRedisManage;
 using Microsoft.Extensions.Hosting;
 using Fate.Infrastructure.AutofacDependencyInjection;
 using Fate.Test.TestClass;
-using Fate.Infrastructure.MongoDB.Object;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
@@ -99,9 +98,9 @@ namespace Fate.Test
                 configureOptions.UseEntityFramework<ConfigurationDbContent>();
             }
             );
-            var res = Configuration.GetSection("MongonConfigs").Get<List<MongoContext>>();
-            //mongo服务
-            services.AddMongoServices(Configuration.GetSection("MongonConfigs"));
+            //var res = Configuration.GetSection("MongonConfigs").Get<List<MongoContext>>();
+            ////mongo服务
+            //services.AddMongoServices(Configuration.GetSection("MongonConfigs"));
             ////使用单号
             ////services.UseOrderNo<IUnitOfWork<MysqlDbContent>>();
             //services.AddPublishConfiguration();
@@ -163,7 +162,7 @@ namespace Fate.Test
         /// <param name="loggerFactory"></param>
         /// <param name="options1"></param>
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,TestMongo testMongo=null)
         {
             // app.UseFateConfiguration();
             configuration2 = Configuration;

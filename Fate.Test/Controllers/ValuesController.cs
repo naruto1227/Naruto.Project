@@ -8,6 +8,7 @@ using Fate.Domain.Model;
 using Fate.Domain.Model.Entities;
 using Fate.Infrastructure.Redis.IRedisManage;
 using Fate.Infrastructure.Repository.UnitOfWork;
+using Fate.Test.TestClass;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fate.Test.Controllers
@@ -22,7 +23,7 @@ namespace Fate.Test.Controllers
         private readonly MysqlDbContent mysqlDbContent;
 
         private readonly IUnitOfWork<MysqlDbContent> unitOfWork;
-        public ValuesController(MysqlDbContent _mysqlDbContent, IUnitOfWork<MysqlDbContent> _unitOfWork)
+        public ValuesController(MysqlDbContent _mysqlDbContent, IUnitOfWork<MysqlDbContent> _unitOfWork,TestMongo testMongo=null)
         {
             mysqlDbContent = _mysqlDbContent;
             unitOfWork = _unitOfWork;

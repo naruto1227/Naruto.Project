@@ -125,7 +125,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Tokens
                     if (tokenCleanupNotification == null)
                     {
                         var result = await mongoDBRepository.Command<Entities.PersistedGrant>()
-                            .DeleteManyAsync(x => x.Expiration < DateTime.UtcNow)
+                            .BulkDeleteAsync(x => x.Expiration < DateTime.UtcNow)
                             .ConfigureAwait(false);
 
                         _logger.LogInformation("Cleared {tokenCount} tokens", result);
@@ -147,7 +147,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Tokens
                         if (expired.Count > 0)
                         {
                             var ids = expired.Select(x => x._id).ToArray();
-                            await mongoDBRepository.Command<Entities.PersistedGrant>().DeleteManyAsync(x => ids.Contains(x._id)).ConfigureAwait(false);
+                            await mongoDBRepository.Command<Entities.PersistedGrant>().BulkDeleteAsync(x => ids.Contains(x._id)).ConfigureAwait(false);
 
                             // notification
                             await tokenCleanupNotification.PersistedGrantsRemovedAsync(expired);

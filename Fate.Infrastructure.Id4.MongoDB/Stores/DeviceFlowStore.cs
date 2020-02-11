@@ -60,7 +60,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         /// <returns></returns>
         public virtual async Task StoreDeviceAuthorizationAsync(string deviceCode, string userCode, DeviceCode data)
         {
-            await Context.Command<Entities.DeviceFlowCodes>().InsertOneAsync(ToEntity(data, deviceCode, userCode));
+            await Context.Command<Entities.DeviceFlowCodes>().AddAsync(ToEntity(data, deviceCode, userCode));
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
             var entity = ToEntity(data, existing.DeviceCode, userCode);
             Logger.LogDebug("{userCode} found in database", userCode);
             //更新数据
-            Context.Command<Entities.DeviceFlowCodes>().UpdateOne(a => a.UserCode == userCode, new System.Collections.Generic.Dictionary<string, object>()
+            Context.Command<Entities.DeviceFlowCodes>().Update(a => a.UserCode == userCode, new System.Collections.Generic.Dictionary<string, object>()
             {
                 { "SubjectId", data.Subject?.FindFirst(JwtClaimTypes.Subject).Value},
                 { "Data",entity.Data}
@@ -126,7 +126,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         {
             Logger.LogDebug("removing {deviceCode} device code from database", deviceCode);
             //删除数据
-            await Context.Command<Entities.DeviceFlowCodes>().DeleteOneAsync(a => a.DeviceCode == deviceCode);
+            await Context.Command<Entities.DeviceFlowCodes>().DeleteAsync(a => a.DeviceCode == deviceCode);
         }
 
         /// <summary>
