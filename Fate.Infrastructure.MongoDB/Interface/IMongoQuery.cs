@@ -51,7 +51,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> Find(string collectionName, FilterDefinition<T> filter, FindOptions options = null);
+        List<T> ToList(string collectionName, FilterDefinition<T> filter, FindOptions options = null);
 
         /// <summary>
         /// 查询多条数据
@@ -59,7 +59,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> Find(FilterDefinition<T> filter, FindOptions options = null);
+        List<T> ToList(FilterDefinition<T> filter, FindOptions options = null);
 
         /// <summary>
         /// 获取单条数据
@@ -126,7 +126,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> Find(string collectionName, Expression<Func<T, bool>> filter, FindOptions options = null);
+        List<T> ToList(string collectionName, Expression<Func<T, bool>> filter, FindOptions options = null);
 
         /// <summary>
         /// 查询多条数据
@@ -134,7 +134,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        List<T> Find(Expression<Func<T, bool>> filter, FindOptions options = null);
+        List<T> ToList(Expression<Func<T, bool>> filter, FindOptions options = null);
 
         /// <summary>
         /// 获取单条数据
@@ -206,7 +206,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<T>> FindAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> ToListAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 查询多条数据
@@ -214,7 +214,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<T>> FindAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> ToListAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="collectionName">集合的名称</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<T>> FindAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> ToListAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 查询多条数据
@@ -291,7 +291,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter">条件筛选</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<T>> FindAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
+        Task<List<T>> ToListAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default);
 
 
         /// <summary>

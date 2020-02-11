@@ -78,14 +78,14 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public long DeleteMany(FilterDefinition<T> filter, DeleteOptions options = null)
+        public long BulkDelete(FilterDefinition<T> filter, DeleteOptions options = null)
         {
-            return DeleteMany(collectionTypeName, filter, options);
+            return BulkDelete(collectionTypeName, filter, options);
         }
 
-        public long DeleteMany(Expression<Func<T, bool>> filter, DeleteOptions options = null)
+        public long BulkDelete(Expression<Func<T, bool>> filter, DeleteOptions options = null)
         {
-            return DeleteMany(collectionTypeName, filter, options);
+            return BulkDelete(collectionTypeName, filter, options);
         }
         /// <summary>
         /// 删除多条数据
@@ -94,7 +94,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public long DeleteMany(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null)
+        public long BulkDelete(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -103,7 +103,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public long DeleteMany(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null)
+        public long BulkDelete(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -112,14 +112,14 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public async Task<long> DeleteManyAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<long> BulkDeleteAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteManyAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
+            return await BulkDeleteAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<long> DeleteManyAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<long> BulkDeleteAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteManyAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
+            return await BulkDeleteAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 异步删除
@@ -129,7 +129,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<long> DeleteManyAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<long> BulkDeleteAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -138,7 +138,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             }).ConfigureAwait(false);
         }
 
-        public async Task<long> DeleteManyAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<long> BulkDeleteAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -152,14 +152,14 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public bool DeleteOne(FilterDefinition<T> filter, DeleteOptions options = null)
+        public bool Delete(FilterDefinition<T> filter, DeleteOptions options = null)
         {
-            return DeleteOne(collectionTypeName, filter, options);
+            return Delete(collectionTypeName, filter, options);
         }
 
-        public bool DeleteOne(Expression<Func<T, bool>> filter, DeleteOptions options = null)
+        public bool Delete(Expression<Func<T, bool>> filter, DeleteOptions options = null)
         {
-            return DeleteOne(collectionTypeName, filter, options);
+            return Delete(collectionTypeName, filter, options);
         }
         /// <summary>
         /// 删除单个
@@ -168,7 +168,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public bool DeleteOne(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null)
+        public bool Delete(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -177,7 +177,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public bool DeleteOne(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null)
+        public bool Delete(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -186,17 +186,17 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public async Task<bool> DeleteOneAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteOneAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
+            return await DeleteAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteOneAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteOneAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
+            return await DeleteAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<bool> DeleteOneAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -205,7 +205,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             }).ConfigureAwait(false);
         }
 
-        public async Task<bool> DeleteOneAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -406,9 +406,9 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public void InsertMany(IEnumerable<T> documents, InsertManyOptions options = null)
+        public void BulkAdd(IEnumerable<T> documents, InsertManyOptions options = null)
         {
-            InsertMany(collectionTypeName, documents, options);
+            BulkAdd(collectionTypeName, documents, options);
         }
         /// <summary>
         /// 同步添加多条记录
@@ -416,7 +416,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="collectionName"></param>
         /// <param name="documents"></param>
         /// <param name="options"></param>
-        public void InsertMany(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null)
+        public void BulkAdd(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null)
         {
             infrastructure.Exec(database =>
            {
@@ -424,9 +424,9 @@ namespace Fate.Infrastructure.MongoDB.Base
            });
         }
 
-        public Task InsertManyAsync(IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default)
+        public Task BulkAddAsync(IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default)
         {
-            return InsertManyAsync(collectionTypeName, documents, options, cancellationToken);
+            return BulkAddAsync(collectionTypeName, documents, options, cancellationToken);
         }
         /// <summary>
         /// 异步添加多条数据
@@ -436,7 +436,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task InsertManyAsync(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default)
+        public Task BulkAddAsync(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default)
         {
             return infrastructure.Exec(database =>
              {
@@ -448,9 +448,9 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// </summary>
         /// <param name="document"></param>
         /// <param name="options"></param>
-        public void InsertOne(T document, InsertOneOptions options = null)
+        public void Add(T document, InsertOneOptions options = null)
         {
-            InsertOne(collectionTypeName, document, options);
+            Add(collectionTypeName, document, options);
         }
         /// <summary>
         /// 新增一条记录
@@ -458,7 +458,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="document"></param>
         /// <param name="collectionName">集合名称(表名)</param>
         /// <param name="options"></param>
-        public void InsertOne(string collectionName, T document, InsertOneOptions options = null)
+        public void Add(string collectionName, T document, InsertOneOptions options = null)
         {
             infrastructure.Exec(database =>
             {
@@ -466,9 +466,9 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public Task InsertOneAsync(T document, InsertOneOptions options = null, CancellationToken cancellationToken = default)
+        public Task AddAsync(T document, InsertOneOptions options = null, CancellationToken cancellationToken = default)
         {
-            return InsertOneAsync(collectionTypeName, document, options, cancellationToken);
+            return AddAsync(collectionTypeName, document, options, cancellationToken);
         }
         /// <summary>
         /// 异步新增
@@ -478,7 +478,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task InsertOneAsync(string collectionName, T document, InsertOneOptions options = null, CancellationToken cancellationToken = default)
+        public Task AddAsync(string collectionName, T document, InsertOneOptions options = null, CancellationToken cancellationToken = default)
         {
             return infrastructure.Exec(database =>
              {
@@ -557,17 +557,17 @@ namespace Fate.Infrastructure.MongoDB.Base
             }).ConfigureAwait(false);
         }
 
-        public bool UpdateMany(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool BulkUpdate(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
-            return UpdateMany(collectionTypeName, filter, updateField, options);
+            return BulkUpdate(collectionTypeName, filter, updateField, options);
         }
 
-        public bool UpdateMany(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool BulkUpdate(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
-            return UpdateMany(collectionTypeName, filter, updateField, options);
+            return BulkUpdate(collectionTypeName, filter, updateField, options);
         }
 
-        public bool UpdateMany(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool BulkUpdate(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -588,7 +588,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="updateField">需要更新的字段</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public bool UpdateMany(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool BulkUpdate(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -602,14 +602,14 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public Task<bool> UpdateManyAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public Task<bool> BulkUpdateAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            return UpdateManyAsync(collectionTypeName, filter, updateField, options);
+            return BulkUpdateAsync(collectionTypeName, filter, updateField, options);
         }
 
-        public Task<bool> UpdateManyAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public Task<bool> BulkUpdateAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            return UpdateManyAsync(collectionTypeName, filter, updateField, options);
+            return BulkUpdateAsync(collectionTypeName, filter, updateField, options);
         }
         /// <summary>
         /// 更新多条记录
@@ -620,7 +620,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateManyAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> BulkUpdateAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -634,7 +634,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             }).ConfigureAwait(false);
         }
 
-        public async Task<bool> UpdateManyAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> BulkUpdateAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -648,14 +648,14 @@ namespace Fate.Infrastructure.MongoDB.Base
             }).ConfigureAwait(false);
         }
 
-        public bool UpdateOne(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool Update(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
-            return UpdateOne(collectionTypeName, filter, updateField, options);
+            return Update(collectionTypeName, filter, updateField, options);
         }
 
-        public bool UpdateOne(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool Update(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
-            return UpdateOne(collectionTypeName, filter, updateField, options);
+            return Update(collectionTypeName, filter, updateField, options);
         }
         /// <summary>
         /// 修改单个实体信息 
@@ -665,7 +665,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="updateField">需要修改的字段的值</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public bool UpdateOne(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool Update(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
             return infrastructure.Exec(database =>
              {
@@ -679,7 +679,7 @@ namespace Fate.Infrastructure.MongoDB.Base
              });
         }
 
-        public bool UpdateOne(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
+        public bool Update(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -695,12 +695,12 @@ namespace Fate.Infrastructure.MongoDB.Base
 
         public async Task<bool> UpdateOneAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await UpdateOneAsync(collectionTypeName, filter, updateField, options, cancellationToken).ConfigureAwait(false);
+            return await UpdateAsync(collectionTypeName, filter, updateField, options, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await UpdateOneAsync(collectionTypeName, filter, updateField, options, cancellationToken).ConfigureAwait(false);
+            return await UpdateAsync(collectionTypeName, filter, updateField, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -712,7 +712,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateOneAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -734,7 +734,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateOneAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {

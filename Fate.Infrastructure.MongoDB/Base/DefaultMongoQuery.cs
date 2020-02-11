@@ -162,7 +162,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public List<T> Find(string collectionName, FilterDefinition<T> filter, FindOptions options = null)
+        public List<T> ToList(string collectionName, FilterDefinition<T> filter, FindOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -176,9 +176,9 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public List<T> Find(FilterDefinition<T> filter, FindOptions options = null)
+        public List<T> ToList(FilterDefinition<T> filter, FindOptions options = null)
         {
-            return Find(collectionTypeName, filter, options);
+            return ToList(collectionTypeName, filter, options);
         }
         /// <summary>
         /// 根据条件查询所有数据
@@ -187,7 +187,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public List<T> Find(string collectionName, Expression<Func<T, bool>> filter, FindOptions options = null)
+        public List<T> ToList(string collectionName, Expression<Func<T, bool>> filter, FindOptions options = null)
         {
             return infrastructure.Exec(database =>
             {
@@ -201,9 +201,9 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public List<T> Find(Expression<Func<T, bool>> filter, FindOptions options = null)
+        public List<T> ToList(Expression<Func<T, bool>> filter, FindOptions options = null)
         {
-            return Find(collectionTypeName, filter, options);
+            return ToList(collectionTypeName, filter, options);
         }
         /// <summary>
         /// 根据条件查询所有数据
@@ -212,7 +212,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public async Task<List<T>> FindAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> ToListAsync(string collectionName, FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -226,9 +226,9 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public async Task<List<T>> FindAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> ToListAsync(FilterDefinition<T> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FindAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
+            return await ToListAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件查询所有数据
@@ -237,7 +237,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public async Task<List<T>> FindAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> ToListAsync(string collectionName, Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
             return await infrastructure.Exec(async database =>
             {
@@ -251,9 +251,9 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public async Task<List<T>> FindAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
+        public async Task<List<T>> ToListAsync(Expression<Func<T, bool>> filter, FindOptions<T> options = null, CancellationToken cancellationToken = default)
         {
-            return await FindAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
+            return await ToListAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// 根据条件分页查询

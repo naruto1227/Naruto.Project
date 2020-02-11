@@ -37,14 +37,14 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// </summary>
         /// <param name="document"></param>
         /// <param name="options"></param>
-        void InsertOne(T document, InsertOneOptions options = null);
+        void Add(T document, InsertOneOptions options = null);
 
         /// <summary>
         /// 添加多条数据
         /// </summary>
         /// <param name="documents"></param>
         /// <param name="options"></param>
-        void InsertMany(IEnumerable<T> documents, InsertManyOptions options = null);
+        void BulkAdd(IEnumerable<T> documents, InsertManyOptions options = null);
 
         /// <summary>
         /// 添加单条数据
@@ -52,7 +52,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="document"></param>
         /// <param name="collectionName">集合名称</param>
         /// <param name="options"></param>
-        void InsertOne(string collectionName, T document, InsertOneOptions options = null);
+        void Add(string collectionName, T document, InsertOneOptions options = null);
 
         /// <summary>
         /// 添加多条数据
@@ -60,7 +60,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="documents"></param>
         /// <param name="collectionName">集合名称</param>
         /// <param name="options"></param>
-        void InsertMany(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null);
+        void BulkAdd(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null);
 
         /// <summary>
         /// 批量写
@@ -85,7 +85,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool DeleteOne(FilterDefinition<T> filter, DeleteOptions options = null);
+        bool Delete(FilterDefinition<T> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除单个
@@ -93,7 +93,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool DeleteOne(Expression<Func<T, bool>> filter, DeleteOptions options = null);
+        bool Delete(Expression<Func<T, bool>> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除单个
@@ -101,7 +101,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool DeleteOne(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null);
+        bool Delete(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除单个
@@ -109,7 +109,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool DeleteOne(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null);
+        bool Delete(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除多条
@@ -117,7 +117,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        long DeleteMany(FilterDefinition<T> filter, DeleteOptions options = null);
+        long BulkDelete(FilterDefinition<T> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除多条
@@ -125,7 +125,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        long DeleteMany(Expression<Func<T, bool>> filter, DeleteOptions options = null);
+        long BulkDelete(Expression<Func<T, bool>> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除多条
@@ -133,7 +133,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        long DeleteMany(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null);
+        long BulkDelete(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 删除多条
@@ -141,7 +141,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        long DeleteMany(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null);
+        long BulkDelete(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null);
 
         /// <summary>
         /// 查找一个数据 并且删除掉
@@ -183,7 +183,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateOne(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool Update(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新单条
@@ -193,7 +193,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateOne(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool Update(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新单个
@@ -203,7 +203,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateOne(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool Update(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新单条
@@ -213,7 +213,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateOne(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool Update(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新多条数据
@@ -223,7 +223,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateMany(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool BulkUpdate(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新多条数据
@@ -233,7 +233,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateMany(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool BulkUpdate(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
         /// <summary>
         /// 更新多条数据
         /// </summary>
@@ -242,7 +242,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateMany(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool BulkUpdate(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 更新多条数据
@@ -252,7 +252,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool UpdateMany(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
+        bool BulkUpdate(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null);
 
         /// <summary>
         /// 查找一条数据并且更新(返回旧数据)
@@ -370,14 +370,14 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// </summary>
         /// <param name="document"></param>
         /// <param name="options"></param>
-        Task InsertOneAsync(T document, InsertOneOptions options = null, CancellationToken cancellationToken = default);
+        Task AddAsync(T document, InsertOneOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 添加多条数据
         /// </summary>
         /// <param name="documents"></param>
         /// <param name="options"></param>
-        Task InsertManyAsync(IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default);
+        Task BulkAddAsync(IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 添加单条数据
@@ -385,7 +385,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="collectionName">集合名称</param>
         /// <param name="document"></param>
         /// <param name="options"></param>
-        Task InsertOneAsync(string collectionName, T document, InsertOneOptions options = null, CancellationToken cancellationToken = default);
+        Task AddAsync(string collectionName, T document, InsertOneOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 添加多条数据
@@ -393,7 +393,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="collectionName">集合名称</param>
         /// <param name="documents"></param>
         /// <param name="options"></param>
-        Task InsertManyAsync(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default);
+        Task BulkAddAsync(string collectionName, IEnumerable<T> documents, InsertManyOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 批量写
@@ -418,7 +418,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> DeleteOneAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除单个
@@ -435,7 +435,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> DeleteOneAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除单个
@@ -444,7 +444,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> DeleteOneAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除多条
@@ -452,7 +452,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<long> DeleteManyAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> BulkDeleteAsync(FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除多条
@@ -460,16 +460,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<long> DeleteManyAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// 删除多条
-        /// </summary>
-        /// <param name="collectionName">集合名称</param>
-        /// <param name="filter"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        Task<long> DeleteManyAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> BulkDeleteAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除多条
@@ -478,7 +469,16 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<long> DeleteManyAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<long> BulkDeleteAsync(string collectionName, FilterDefinition<T> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 删除多条
+        /// </summary>
+        /// <param name="collectionName">集合名称</param>
+        /// <param name="filter"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Task<long> BulkDeleteAsync(string collectionName, Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 查找一个数据 并且删除掉(返回旧数据)
@@ -532,7 +532,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新单个
         /// </summary>
@@ -542,7 +542,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateOneAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 更新单条
@@ -553,7 +553,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateOneAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新多条数据
         /// </summary>
@@ -562,7 +562,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateManyAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> BulkUpdateAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 更新多条数据
@@ -572,7 +572,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateManyAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> BulkUpdateAsync(Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新多条数据
         /// </summary>
@@ -582,7 +582,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateManyAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> BulkUpdateAsync(string collectionName, FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -594,7 +594,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateManyAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> BulkUpdateAsync(string collectionName, Expression<Func<T, bool>> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 查找一条数据并且更新(返回旧数据)
