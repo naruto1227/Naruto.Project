@@ -426,7 +426,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> DeleteOneAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除单个

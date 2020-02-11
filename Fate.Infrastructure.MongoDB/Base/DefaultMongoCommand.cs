@@ -191,7 +191,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             return await DeleteAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<bool> DeleteOneAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(Expression<Func<T, bool>> filter, DeleteOptions options = null, CancellationToken cancellationToken = default)
         {
             return await DeleteAsync(collectionTypeName, filter, options, cancellationToken).ConfigureAwait(false);
         }
