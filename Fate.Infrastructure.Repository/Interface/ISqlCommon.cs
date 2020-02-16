@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Interface
 {
@@ -21,6 +22,6 @@ namespace Fate.Infrastructure.Repository.Interface
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<T> ExecuteScalarAsync<T>(string sql,  object[] _params = default);
+        Task<T> ExecuteScalarAsync<T>(string sql,  object[] _params = default, CancellationToken cancellationToken = default);
     }
 }

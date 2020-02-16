@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Base
@@ -37,8 +38,9 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 开始事务
         /// </summary>
-        public Task<IDbContextTransaction> BeginTransactionAsync()
+        public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
             return infrastructureBase.BeginTransactionAsync();
         }
@@ -53,8 +55,9 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 提交事务
         /// </summary>
-        public Task CommitTransactionAsync()
+        public Task CommitTransactionAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
             infrastructureBase.CommitTransaction();
             return Task.CompletedTask;
@@ -70,8 +73,9 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 回滚事务
         /// </summary>
-        public Task RollBackTransactionAsync()
+        public Task RollBackTransactionAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
             infrastructureBase.RollBackTransaction();
             return Task.CompletedTask;
@@ -85,8 +89,9 @@ namespace Fate.Infrastructure.Repository.Base
         /// 异步提交
         /// </summary>
         /// <returns></returns>
-        public async Task<int> SaveChangeAsync()
+        public async Task<int> SaveChangeAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var infrastructureBase = service.GetRequiredService<IRepositoryWriteInfrastructure<TDbContext>>();
             return await infrastructureBase.SaveChangesAsync();
         }

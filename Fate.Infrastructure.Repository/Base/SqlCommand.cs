@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using Fate.Infrastructure.Repository.Object;
+using System.Threading;
 
 namespace Fate.Infrastructure.Repository.Base
 {
@@ -57,13 +58,14 @@ namespace Fate.Infrastructure.Repository.Base
             return ExecuteScalarAsync<T>(sql, _params).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<int> ExecuteNonQueryAsync(string sql, object[] _params = default)
+        public async Task<int> ExecuteNonQueryAsync(string sql, object[] _params = default, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             CheckSql(sql);
             //获取连接
-            var connection = await GetConnection();
+            var connection = await GetConnection(cancellationToken);
             //执行命令
-            return await ExecCommand(connection, async command => await command.ExecuteNonQueryAsync(), sql, _params).ConfigureAwait(false);
+            return await ExecCommand(connection, async command => await command.ExecuteNonQueryAsync(cancellationToken), sql, _params).ConfigureAwait(false);
         }
         /// <summary>
         /// 执行sql返回第一行第一列
@@ -72,15 +74,16 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public async Task<T> ExecuteScalarAsync<T>(string sql, object[] _params = default)
+        public async Task<T> ExecuteScalarAsync<T>(string sql, object[] _params = default, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             CheckSql(sql);
             //获取连接
-            var connection = await GetConnection();
+            var connection = await GetConnection(cancellationToken);
             //执行命令
             return await ExecCommand(connection, async command =>
               {
-                  var res = await command.ExecuteScalarAsync().ConfigureAwait(false);
+                  var res = await command.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
                   if (res == null)
                       return default;
                   return (T)res;
@@ -91,14 +94,15 @@ namespace Fate.Infrastructure.Repository.Base
         /// 获取连接
         /// </summary>
         /// <returns></returns>
-        private async Task<DbConnection> GetConnection()
+        private async Task<DbConnection> GetConnection(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             //获取连接
             var connection = infrastructure.Exec(repository => repository.Database.GetDbConnection());
             //验证连接是否开启
             if (connection.State == ConnectionState.Closed)
             {
-                await connection.OpenAsync();
+                await connection.OpenAsync(cancellationToken);
             }
             return connection;
         }

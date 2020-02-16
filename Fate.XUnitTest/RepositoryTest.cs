@@ -138,6 +138,8 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task bulkAdd()
         {
+            CancellationTokenSource cancellationToken = new CancellationTokenSource();
+
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
             ConcurrentQueue<setting> settings1 = new ConcurrentQueue<setting>();
 
@@ -145,8 +147,8 @@ namespace Fate.XUnitTest
             {
                 settings1.Enqueue(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
             });
-            await unit.Command<setting>().BulkAddAsync(settings1);
-            await unit.SaveChangeAsync();
+            await unit.Command<setting>().BulkAddAsync(settings1, cancellationToken.Token);
+            await unit.SaveChangeAsync(cancellationToken.Token);
         }
         [Fact]
         public async Task Query()
@@ -257,7 +259,7 @@ namespace Fate.XUnitTest
         public async Task ExecSqlTest()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-            await unit.ChangeDataBaseAsync("test1");
+            //await unit.ChangeDataBaseAsync("test1");
             await unit.BeginTransactionAsync();
 
             unit.CommandTimeout = 180;

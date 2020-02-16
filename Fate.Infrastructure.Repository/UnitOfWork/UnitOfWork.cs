@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Threading;
 
 namespace Fate.Infrastructure.Repository.UnitOfWork
 {
@@ -78,7 +79,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 开始事务
         /// </summary>
-        public async Task BeginTransactionAsync() => dbContextTransaction = await repositoryMediator.BeginTransactionAsync();
+        public async Task BeginTransactionAsync(CancellationToken cancellationToken = default) => dbContextTransaction = await repositoryMediator.BeginTransactionAsync(cancellationToken);
         /// <summary>
         /// 提交事务
         /// </summary>
@@ -86,9 +87,9 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 提交事务
         /// </summary>
-        public Task CommitTransactionAsync()
+        public Task CommitTransactionAsync(CancellationToken cancellationToken = default)
         {
-            repositoryMediator.CommitTransaction();
+            repositoryMediator.CommitTransactionAsync(cancellationToken);
             return Task.CompletedTask;
         }
         /// <summary>
@@ -98,9 +99,9 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 回滚事务
         /// </summary>
-        public Task RollBackTransactionAsync()
+        public Task RollBackTransactionAsync(CancellationToken cancellationToken = default)
         {
-            repositoryMediator.RollBackTransaction();
+            repositoryMediator.RollBackTransactionAsync();
             return Task.CompletedTask;
         }
 
@@ -112,7 +113,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 异步提交
         /// </summary>
         /// <returns></returns>
-        public async Task<int> SaveChangeAsync() => await repositoryMediator.SaveChangeAsync();
+        public async Task<int> SaveChangeAsync(CancellationToken cancellationToken = default) => await repositoryMediator.SaveChangeAsync(cancellationToken);
         /// <summary>
         /// 同步提交
         /// </summary>

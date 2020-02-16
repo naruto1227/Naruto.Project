@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using Fate.Infrastructure.Repository.Interface;
 using Fate.Infrastructure.BaseRepository.Model;
+using System.Threading;
 
 namespace Fate.Infrastructure.Repository.UnitOfWork
 {
@@ -21,7 +22,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 异步提交
         /// </summary>
         /// <returns></returns>
-        Task<int> SaveChangeAsync();
+        Task<int> SaveChangeAsync(CancellationToken cancellationToken = default);
         /// <summary>
         /// 开启事务
         /// </summary>
@@ -32,7 +33,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// 异步开始事务
         /// </summary>
         /// <returns></returns>
-        Task BeginTransactionAsync();
+        Task BeginTransactionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 提交事务
@@ -42,7 +43,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 提交事务
         /// </summary>
-        Task CommitTransactionAsync();
+        Task CommitTransactionAsync(CancellationToken cancellationToken = default);
         /// <summary>
         /// 事务回滚
         /// </summary>
@@ -51,7 +52,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 事务回滚
         /// </summary>
-        Task RollBackTransactionAsync();
+        Task RollBackTransactionAsync(CancellationToken cancellationToken = default);
         /// <summary>
         /// 执行 查询的操作
         /// </summary>

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading;
 
 namespace Fate.Infrastructure.Repository.Base
 {
@@ -66,10 +67,10 @@ namespace Fate.Infrastructure.Repository.Base
         /// 保存
         /// </summary>
         /// <returns></returns>
-        public async Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             await infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false);
-            return await Exec(dbContext => dbContext.SaveChangesAsync().ConfigureAwait(false));
+            return await Exec(dbContext => dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false));
         }
 
         public int SaveChanges()
@@ -81,7 +82,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// 开启事务
         /// </summary>
         /// <returns></returns>
-        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
             //更改事务的状态
             unitOfWorkOptions.IsBeginTran = true;
@@ -91,7 +92,7 @@ namespace Fate.Infrastructure.Repository.Base
             await serviceProvider.GetRequiredService<IRepositoryReadInfrastructure<TDbContext>>().SwitchMasterDbContextAsync().ConfigureAwait(false);
             return await Exec(async dbContext =>
             {
-                return await dbContext.Database.BeginTransactionAsync();
+                return await dbContext.Database.BeginTransactionAsync(cancellationToken);
             });
         }
         /// <summary>

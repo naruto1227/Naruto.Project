@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Interface
@@ -11,7 +12,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        Task<int> ExecuteNonQueryAsync(string sql,  object[] _params=default);
+        Task<int> ExecuteNonQueryAsync(string sql,  object[] _params=default, CancellationToken cancellationToken = default);
         /// <summary>
         /// 执行增删改的操作 返回受影响的行数
         /// </summary>

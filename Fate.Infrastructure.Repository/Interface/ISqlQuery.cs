@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Interface
@@ -24,7 +25,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        Task<DataTable> ExecuteSqlQueryAsync(string sql, object[] _params = default);
+        Task<DataTable> ExecuteSqlQueryAsync(string sql, object[] _params = default,CancellationToken cancellationToken = default);
         #endregion
     }
     /// <summary>

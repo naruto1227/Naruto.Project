@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Fate.Infrastructure.Repository.Object;
+using System.Threading;
 
 namespace Fate.Infrastructure.Repository.Base
 {
@@ -102,11 +103,12 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public virtual async Task<DataTable> ExecuteSqlQueryAsync(string sql, object[] _params = default)
+        public virtual async Task<DataTable> ExecuteSqlQueryAsync(string sql, object[] _params = default, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             CheckSql(sql);
             //获取连接
-            var connection = await GetConnection();
+            var connection = await GetConnection(cancellationToken);
             //执行脚本
             return await ExecCommand(connection, async command =>
             {
@@ -123,11 +125,12 @@ namespace Fate.Infrastructure.Repository.Base
         /// <param name="sql"></param>
         /// <param name="_params"></param>
         /// <returns></returns>
-        public virtual async Task<T> ExecuteScalarAsync<T>(string sql, object[] _params = default)
+        public virtual async Task<T> ExecuteScalarAsync<T>(string sql, object[] _params = default, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             CheckSql(sql);
             //获取连接
-            var connection = await GetConnection();
+            var connection = await GetConnection(cancellationToken);
             ///执行命令
             return await ExecCommand(connection, async command =>
             {
@@ -145,14 +148,15 @@ namespace Fate.Infrastructure.Repository.Base
         /// 获取连接
         /// </summary>
         /// <returns></returns>
-        protected virtual async Task<DbConnection> GetConnection()
+        protected virtual async Task<DbConnection> GetConnection(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             //获取连接
             var connection = infrastructure.Exec(repository => repository.Database.GetDbConnection());
             //验证连接是否开启
             if (connection.State == ConnectionState.Closed)
             {
-                await connection.OpenAsync();
+                await connection.OpenAsync(cancellationToken);
             }
             return connection;
         }

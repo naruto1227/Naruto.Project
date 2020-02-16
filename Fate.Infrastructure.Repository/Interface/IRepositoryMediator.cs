@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fate.Infrastructure.Repository.Interface
@@ -24,7 +25,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// 异步提交
         /// </summary>
         /// <returns></returns>
-        Task<int> SaveChangeAsync();
+        Task<int> SaveChangeAsync(CancellationToken cancellationToken = default);
         /// <summary>
         /// 开启事务
         /// </summary>
@@ -35,7 +36,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// 异步开始事务
         /// </summary>
         /// <returns></returns>
-        Task<IDbContextTransaction> BeginTransactionAsync();
+        Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 提交事务
@@ -45,7 +46,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <summary>
         /// 提交事务
         /// </summary>
-        Task CommitTransactionAsync();
+        Task CommitTransactionAsync(CancellationToken cancellationToken = default);
         /// <summary>
         /// 事务回滚
         /// </summary>
@@ -54,7 +55,7 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <summary>
         /// 事务回滚
         /// </summary>
-        Task RollBackTransactionAsync();
+        Task RollBackTransactionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 执行 查询的操作
