@@ -45,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
                 });
             }
-            services.AddSingleton<SlaveDbConnectionFactory>();
+            services.AddSingleton<ISlaveDbConnectionFactory, DefaultSlaveDbConnectionFactory>();
             services.AddScoped<UnitOfWorkOptions>();
             return services;
         }
@@ -81,7 +81,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 //写入连接字符串的线程安全集合
                 if (eFOptions.IsOpenMasterSlave)
                 {
-                    var slaveDbConnectionFactory = services.BuildServiceProvider().GetRequiredService<SlaveDbConnectionFactory>();
+                    var slaveDbConnectionFactory = services.BuildServiceProvider().GetRequiredService<ISlaveDbConnectionFactory>();
                     SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnectionFactory.Get(eFOptions));
                 }
             }
