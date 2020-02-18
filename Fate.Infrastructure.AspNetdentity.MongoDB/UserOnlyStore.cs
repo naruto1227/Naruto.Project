@@ -182,7 +182,7 @@ namespace Microsoft.AspNetCore.Identity.MongoDB
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
             var id = ConvertIdFromString(userId);
-            return Context.Query<TUser>().FirstOrDefaultAsync(MongoDB.Driver.Builders<TUser>.Filter.Eq(a => a.Id, id), null, cancellationToken);
+            return Context.Query<TUser>().FirstOrDefaultAsync(Builders<TUser>.Filter.Eq(a => a.Id, id), null, cancellationToken);
         }
 
 
