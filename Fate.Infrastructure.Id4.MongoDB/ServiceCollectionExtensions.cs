@@ -16,7 +16,7 @@ namespace Fate.Infrastructure.Id4.MongoDB
         /// <summary>
         /// Configures implementation of IClientStore, IResourceStore, and ICorsPolicyService with IdentityServer.
         /// </summary>
-        public static IIdentityServerBuilder AddConfigurationStore(
+        public static IIdentityServerBuilder AddMongoDBConfigurationStore(
             this IIdentityServerBuilder builder)
         {
             //注入替换的服务
@@ -32,7 +32,7 @@ namespace Fate.Infrastructure.Id4.MongoDB
         /// <summary>
         /// Configures caching for IClientStore, IResourceStore, and ICorsPolicyService with IdentityServer.
         /// </summary>
-        public static IIdentityServerBuilder AddConfigurationStoreCache(
+        public static IIdentityServerBuilder AddMongoDBConfigurationStoreCache(
             this IIdentityServerBuilder builder)
         {
             builder.AddInMemoryCaching();
@@ -46,7 +46,7 @@ namespace Fate.Infrastructure.Id4.MongoDB
         /// <summary>
         /// Configures implementation of IPersistedGrantStore with IdentityServer.
         /// </summary>
-        public static IIdentityServerBuilder AddOperationalStore(
+        public static IIdentityServerBuilder AddMongoDBOperationalStore(
             this IIdentityServerBuilder builder,
             Action<TokenCleanupOptions> tokenCleanUpOptionsAction = null)
         {
