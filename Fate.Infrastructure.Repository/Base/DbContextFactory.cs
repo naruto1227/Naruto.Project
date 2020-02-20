@@ -66,7 +66,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="DbContextType"></param>
         /// <returns></returns>
-        public DbContext GetMaster<TDbContext>() where TDbContext : DbContext=> _masterDbContexts[typeof(TDbContext)];
+        public DbContext GetMaster<TDbContext>() where TDbContext : DbContext => _masterDbContexts[typeof(TDbContext)];
         /// <summary>
         /// 获取上下文
         /// </summary>
@@ -75,18 +75,10 @@ namespace Fate.Infrastructure.Repository.Base
         public DbContext GetSlave<TDbContext>() where TDbContext : DbContext => _slaveDbContexts[typeof(TDbContext)];
 
         /// <summary>
-        /// 验证是否开启主从
+        /// 获取所有的激活的主库上下文类型
         /// </summary>
-        /// <param name="DbContextType"></param>
         /// <returns></returns>
-        private bool IsSetMasterSlave(Type DbContextType)
-        {
-            var nowEFOption = GetEfOption(DbContextType);
-            if (nowEFOption != null && nowEFOption.IsOpenMasterSlave)
-                return true;
-            return false;
-        }
-
+        public IEnumerable<Type> GetAllMasterType() => _masterDbContexts?.Select(a => a.Key);
         /// <summary>
         /// 获取efoption
         /// </summary>

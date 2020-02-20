@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace Fate.Infrastructure.Repository.Interface
 {
@@ -29,6 +30,12 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="DbContextType"></param>
         /// <returns></returns>
         DbContext GetSlave<TDbContext>() where TDbContext : DbContext;
+
+        /// <summary>
+        /// 获取所有的激活的主库上下文类型
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Type> GetAllMasterType();
 
     }
 }

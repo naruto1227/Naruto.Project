@@ -84,6 +84,9 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
+            //验证是否开启事务
+            if (unitOfWorkOptions.IsBeginTran)
+                return Exec(dbContext => dbContext.Database.CurrentTransaction);
             //更改事务的状态
             unitOfWorkOptions.IsBeginTran = true;
             //切换配置
@@ -101,6 +104,9 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         public IDbContextTransaction BeginTransaction()
         {
+            //验证是否开启事务
+            if (unitOfWorkOptions.IsBeginTran)
+                return Exec(dbContext => dbContext.Database.CurrentTransaction);
             //更改事务的状态
             unitOfWorkOptions.IsBeginTran = true;
             //切换配置
@@ -117,6 +123,8 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         public void CommitTransaction()
         {
+            if (unitOfWorkOptions.IsBeginTran == false)
+                throw new InvalidOperationException("当前事务未开启!");
             Exec(dbContext =>
             {
                 dbContext.Database.CommitTransaction();
@@ -129,6 +137,8 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         public void RollBackTransaction()
         {
+            if (unitOfWorkOptions.IsBeginTran == false)
+                throw new InvalidOperationException("当前事务未开启!");
             Exec(dbContext =>
             {
                 dbContext.Database.RollbackTransaction();

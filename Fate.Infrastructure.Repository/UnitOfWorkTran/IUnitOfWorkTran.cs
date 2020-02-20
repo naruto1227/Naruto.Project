@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fate.Infrastructure.Repository.Interface;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -11,14 +12,14 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
     /// 2020-02-19
     /// 当前接口 用于多工作单元时 批量操作事务
     /// </summary>
-    public interface IUnitOfWorkTran
+    public interface IUnitOfWorkTran : IRepositoryDependency
     {
         /// <summary>
         /// 开启事务
         /// </summary>
         /// <returns></returns>
         void BeginTransaction();
-         
+
         /// <summary>
         /// 异步开始事务
         /// </summary>

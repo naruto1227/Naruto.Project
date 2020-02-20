@@ -37,7 +37,7 @@ namespace Fate.XUnitTest
 
         public RepositoryTest()
         {
-            services.AddScoped(typeof(IRepositoryFactory), typeof(RepositoryFactory));
+            // services.AddScoped(typeof(IRepositoryFactory), typeof(RepositoryFactory));
             //注入mysql仓储   //注入多个ef配置信息
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
@@ -140,7 +140,8 @@ namespace Fate.XUnitTest
         {
             CancellationTokenSource cancellationToken = new CancellationTokenSource();
 
-            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var unit = services.BuildServiceProvider().GetService(typeof(IUnitOfWork<>).MakeGenericType(typeof(MysqlDbContent))) as IUnitOfWork;
+
             ConcurrentQueue<setting> settings1 = new ConcurrentQueue<setting>();
 
             Parallel.For(0, 100, (item) =>
@@ -210,19 +211,22 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Tran()
         {
-            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-            var str = await unit.Query<setting>().AsQueryable().ToListAsync();
-            await unit.ChangeDataBaseAsync("test1");
-            await unit.BeginTransactionAsync();
-            unit.CommandTimeout = 40;
-            str = await unit.Query<setting>().AsQueryable().ToListAsync();
-            await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
-            await unit.SaveChangeAsync();
-            //str = await unit.Query<setting>().AsQueryable().ToListAsync();
-            //await unit.ChangeDataBase("test");
-            str = await unit.Query<setting>().AsQueryable().ToListAsync();
-            await unit.CommitTransactionAsync();
-            str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            using (var servicesScope = services.BuildServiceProvider().CreateScope())
+            {
+                var unit = servicesScope.ServiceProvider.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+                var str = await unit.Query<setting>().AsQueryable().ToListAsync();
+                await unit.ChangeDataBaseAsync("test1");
+                await unit.BeginTransactionAsync();
+                unit.CommandTimeout = 40;
+                str = await unit.Query<setting>().AsQueryable().ToListAsync();
+                await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+                await unit.SaveChangeAsync();
+                //str = await unit.Query<setting>().AsQueryable().ToListAsync();
+                //await unit.ChangeDataBase("test");
+                str = await unit.Query<setting>().AsQueryable().ToListAsync();
+                await unit.CommitTransactionAsync();
+                str = await unit.Query<setting>().AsQueryable().ToListAsync();
+            }
         }
 
         [Fact]
@@ -235,7 +239,7 @@ namespace Fate.XUnitTest
             await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
 
             await unit.SaveChangeAsync();
-            unit.CommitTransaction();
+            await unit.CommitTransactionAsync();
         }
 
         [Fact]
@@ -277,6 +281,29 @@ namespace Fate.XUnitTest
             unit.CommandTimeout = 110;
             res = await unit.SqlQuery(true).ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
             await query.ExecuteScalarAsync<int>("select Id from setting where Id=@id and Rule=@rule", new MySqlParameter[] { new MySqlParameter("id", "12"), new MySqlParameter("rule", "1") });
+        }
+
+        /// <summary>
+        /// 测试多工作单元的事务批量提交方式
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task MoreUok()
+        {
+            using (var scope = services.BuildServiceProvider().CreateScope())
+            {
+                var IUnitOfWork2 = scope.ServiceProvider.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+                var IUnitOfWork3 = scope.ServiceProvider.GetRequiredService<IUnitOfWork<TestDbContent>>();
+                var unitOfWorkTran = scope.ServiceProvider.GetRequiredService<IUnitOfWorkTran>();
+                //统一开启事务
+                await unitOfWorkTran.BeginTransactionAsync();
+                await IUnitOfWork2.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+                await IUnitOfWork2.SaveChangeAsync();
+                await IUnitOfWork3.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+                await IUnitOfWork3.SaveChangeAsync();
+                //统一提交事务
+                await unitOfWorkTran.CommitTransactionAsync();
+            }
         }
     }
 
