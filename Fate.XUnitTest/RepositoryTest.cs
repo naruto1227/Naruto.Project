@@ -52,7 +52,7 @@ namespace Fate.XUnitTest
                 Test.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
                 Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
-                Test.IsOpenMasterSlave = true;
+                Test.IsOpenMasterSlave = false;
             });
 
             ////注入mysql仓储   //注入多个ef配置信息
@@ -199,6 +199,22 @@ namespace Fate.XUnitTest
         public async Task WriteRead()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
+            await unit.Command<setting>().AddAsync(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+            await unit.SaveChangeAsync();
+            str = await unit.Query<setting>(true).AsQueryable().AsNoTracking().ToListAsync();
+            str = await unit.Query<setting>().AsQueryable().ToListAsync();
+
+        }
+        [Fact]
+        public async Task MoreUokWriteRead()
+        {
+            var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+            var unit2 = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<TestDbContent>>();
+            unit.CommandTimeout = 180;
+            await unit2.ChangeDataBaseAsync("test1");
+            var res2 = await unit2.Query<setting>().AsQueryable().ToListAsync();
             var str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();
 
             str = await unit.Query<setting>().AsQueryable().AsNoTracking().ToListAsync();

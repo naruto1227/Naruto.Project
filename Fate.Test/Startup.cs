@@ -47,7 +47,7 @@ using Fate.Infrastructure.Configuration.Management;
 using Fate.Infrastructure.Redis.IRedisManage;
 using Microsoft.Extensions.Hosting;
 using Fate.Infrastructure.AutofacDependencyInjection;
-using Fate.Test.TestClass;
+
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
@@ -162,7 +162,7 @@ namespace Fate.Test
         /// <param name="loggerFactory"></param>
         /// <param name="options1"></param>
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,TestMongo testMongo=null)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             // app.UseFateConfiguration();
             configuration2 = Configuration;

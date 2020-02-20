@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Fate.Application.Services;
 using Fate.Domain.Model;
 using Fate.Domain.Model.Entities;
+using Fate.Infrastructure.Configuration.Management.DB;
 using Fate.Infrastructure.Redis.IRedisManage;
 using Fate.Infrastructure.Repository.UnitOfWork;
-using Fate.Test.TestClass;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fate.Test.Controllers
@@ -23,7 +23,7 @@ namespace Fate.Test.Controllers
         private readonly MysqlDbContent mysqlDbContent;
 
         private readonly IUnitOfWork<MysqlDbContent> unitOfWork;
-        public ValuesController(MysqlDbContent _mysqlDbContent, IUnitOfWork<MysqlDbContent> _unitOfWork,TestMongo testMongo=null)
+        public ValuesController(MysqlDbContent _mysqlDbContent, IUnitOfWork<MysqlDbContent> _unitOfWork,IUnitOfWork<ConfigurationDbContent> unitOf)
         {
             mysqlDbContent = _mysqlDbContent;
             unitOfWork = _unitOfWork;
@@ -39,10 +39,6 @@ namespace Fate.Test.Controllers
 
             //list22 = db3.test1.Where(a => 1 == 1).ToList();
             //db3.Dispose();
-            ThreadPool.QueueUserWorkItem((e) =>
-            {
-                unitOfWork.Query<setting>().AsQueryable().ToList();
-            });
           
             // Redis.RedisString().Add(Guid.NewGuid().ToString(), "1");
             return new string[] { "value1", "value2" };
