@@ -27,16 +27,16 @@ namespace Fate.Infrastructure.Repository.Base
         //获取仓储上下文
         private readonly DbContext masterDbContext;
 
-        private readonly IRepositoryInfrastructureBase infrastructureBase;
+        private readonly IRepositoryInfrastructureBase<TDbContext> infrastructureBase;
 
         /// <summary>
         /// 工作单元参数
         /// </summary>
-        private readonly UnitOfWorkOptions unitOfWorkOptions;
+        private readonly UnitOfWorkOptions<TDbContext> unitOfWorkOptions;
 
         private readonly IServiceProvider serviceProvider;
 
-        public RepositoryWriteInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase _infrastructureBase, UnitOfWorkOptions _unitOfWorkOptions, IServiceProvider _serviceProvider)
+        public RepositoryWriteInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase<TDbContext> _infrastructureBase, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IServiceProvider _serviceProvider)
         {
             masterDbContext = _factory.GetMaster<TDbContext>();
             infrastructureBase = _infrastructureBase;
@@ -160,14 +160,14 @@ namespace Fate.Infrastructure.Repository.Base
         //上下文工厂
         private readonly IDbContextFactory factory;
         //基础设施
-        private readonly IRepositoryInfrastructureBase infrastructureBase;
+        private readonly IRepositoryInfrastructureBase<TDbContext> infrastructureBase;
         //工作单元参数信息
-        private readonly UnitOfWorkOptions unitOfWorkOptions;
+        private readonly UnitOfWorkOptions<TDbContext> unitOfWorkOptions;
         /// <summary>
         /// 是否为主库的上下文
         /// </summary>
         private bool IsMaster = false;
-        public RepositoryReadInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase _infrastructureBase, UnitOfWorkOptions _unitOfWorkOptions)
+        public RepositoryReadInfrastructure(IDbContextFactory _factory, IRepositoryInfrastructureBase<TDbContext> _infrastructureBase, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions)
         {
             factory = _factory;
             infrastructureBase = _infrastructureBase;
@@ -221,19 +221,19 @@ namespace Fate.Infrastructure.Repository.Base
     /// <summary>
     /// 基础设施的底层方法
     /// </summary>
-    public class RepositoryInfrastructureBase : IRepositoryInfrastructureBase
+    public class RepositoryInfrastructureBase<TDbContext> : IRepositoryInfrastructureBase<TDbContext> where TDbContext : DbContext
     {
         /// <summary>
         /// 工作单元参数
         /// </summary>
-        private readonly UnitOfWorkOptions unitOfWorkOptions;
+        private readonly UnitOfWorkOptions<TDbContext> unitOfWorkOptions;
 
         /// <summary>
         /// 参数信息
         /// </summary>
         private readonly IOptions<List<EFOptions>> options;
 
-        public RepositoryInfrastructureBase(UnitOfWorkOptions _unitOfWorkOptions, IOptions<List<EFOptions>> _options)
+        public RepositoryInfrastructureBase(UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IOptions<List<EFOptions>> _options)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
             options = _options;

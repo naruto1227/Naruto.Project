@@ -29,7 +29,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// <summary>
         /// 工作单元参数
         /// </summary>
-        private UnitOfWorkOptions unitOfWorkOptions;
+        private UnitOfWorkOptions<TDbContext> unitOfWorkOptions;
 
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         /// <param name="_options"></param>
         /// <param name="_service"></param>
-        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions _unitOfWorkOptions, IDbContextFactory _repositoryFactory, IRepositoryMediator<TDbContext> _repositoryMediator)
+        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IDbContextFactory _repositoryFactory, IRepositoryMediator<TDbContext> _repositoryMediator)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
             //获取上下文类型

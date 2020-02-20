@@ -23,7 +23,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 构造获取上下文工厂
         /// </summary>
-        public SqlQuery(IRepositoryReadInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions _unitOfWorkOptions) : base(_infrastructure, _unitOfWorkOptions)
+        public SqlQuery(IRepositoryReadInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions) : base(_infrastructure, _unitOfWorkOptions)
         {
         }
     }
@@ -38,7 +38,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 构造获取上下文工厂
         /// </summary>
-        public SqlMasterQuery(IRepositoryWriteInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions _unitOfWorkOptions) : base(_infrastructure, _unitOfWorkOptions)
+        public SqlMasterQuery(IRepositoryWriteInfrastructure<TDbContext> _infrastructure, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions) : base(_infrastructure, _unitOfWorkOptions)
         {
         }
     }

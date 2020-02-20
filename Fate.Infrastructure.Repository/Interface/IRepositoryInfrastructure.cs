@@ -91,7 +91,7 @@ namespace Fate.Infrastructure.Repository.Interface
     /// 2019-12-29
     /// 仓储的基础设施的底层操作
     /// </summary>
-    public interface IRepositoryInfrastructureBase : IRepositoryDependency
+    public interface IRepositoryInfrastructureBase<TDbContext> : IRepositoryDependency where TDbContext : DbContext
     {
         Task SwitchDataBaseAsync(DbContext dbContext);
         /// <summary>

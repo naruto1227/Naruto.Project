@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Fate.Infrastructure.Repository.Object
 {
@@ -7,7 +8,7 @@ namespace Fate.Infrastructure.Repository.Object
     /// 2019.08.13
     /// 工作单元的参数
     /// </summary>
-    public class UnitOfWorkOptions
+    public abstract class UnitOfWorkOptions
     {
         /// <summary>
         /// master 库的连接字符串
@@ -41,5 +42,13 @@ namespace Fate.Infrastructure.Repository.Object
         /// </summary>
         public int? CommandTimeout = null;
 
+    }
+    /// <summary>
+    /// 张海波
+    /// 2020-02-20
+    /// 工作单元的参数
+    /// </summary>
+    public class UnitOfWorkOptions<TDbContext>: UnitOfWorkOptions where TDbContext : DbContext
+    {
     }
 }
