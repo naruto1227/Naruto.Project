@@ -76,17 +76,17 @@ namespace Fate.XUnitTest
             var iserverPri = services.BuildServiceProvider();
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-             Parallel.For(0, 100, async (item) =>
-             {
-                 using (var server = iserverPri.CreateScope())
-                 {
-                     var unitOfWork = server.ServiceProvider.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
-                   //  await unitOfWork.ChangeReadOrWriteConnection(Fate.Infrastructure.Repository.Object.ReadWriteEnum.ReadWrite);
+            Parallel.For(0, 100, async (item) =>
+            {
+                using (var server = iserverPri.CreateScope())
+                {
+                    var unitOfWork = server.ServiceProvider.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+                     //  await unitOfWork.ChangeReadOrWriteConnection(Fate.Infrastructure.Repository.Object.ReadWriteEnum.ReadWrite);
                      await unitOfWork.Query<setting>().AsQueryable().ToListAsync();
-                     await unitOfWork.Command<setting>().AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
-                     await unitOfWork.SaveChangeAsync();
-                 }
-             });
+                    await unitOfWork.Command<setting>().AddAsync(new setting() { Contact = "111sdsd", DuringTime = "1", Description = "1", Integral = 1, Rule = "1" });
+                    await unitOfWork.SaveChangeAsync();
+                }
+            });
 
             //for (int i = 0; i < 100; i++)
             //{

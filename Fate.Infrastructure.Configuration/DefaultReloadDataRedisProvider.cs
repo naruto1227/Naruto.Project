@@ -30,7 +30,7 @@ namespace Fate.Infrastructure.Configuration
             await redis.RedisSubscribe().SubscribeAsync(FateConfigurationInfrastructure.SubscribeKey, async (channel, value) =>
               {
                   //重新获取数据
-                  var data = await fateConfigurationLoad.LoadConfiguration();
+                  var data = await fateConfigurationLoad.LoadConfiguration().ConfigureAwait(false);
                   data.ToList().ForEach(item =>
                   {
                       configuration[item.Key] = item.Value;

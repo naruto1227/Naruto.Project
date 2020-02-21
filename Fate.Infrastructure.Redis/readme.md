@@ -1,5 +1,12 @@
 ﻿>## 使用说明
 >> 1. 使用此层服务，只需要 在Startup 注入 <b>RedisDependencyExtension</b>  中的扩展方法，配置redis的参数，注入的方法为单例
+>>```c#
+            //注入redis仓储服务
+            services.AddRedisRepository(options =>
+            {
+                options.Connection = new string[] { "127.0.0.1:6379" };
+                options.RedisPrefix = new Infrastructure.Redis.RedisConfig.RedisPrefixKey();
+            });
 >> 2. 操作redis的时候 使用<b>IRedisOperationHelp</b> 接口 来进行数据的操作
 
 ## 接口对象说明

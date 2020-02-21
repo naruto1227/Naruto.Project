@@ -1,4 +1,12 @@
-﻿## 接口对象说明
+﻿## 使用说明
+>1.使用的时候先将<b>MongoDependencyExtension</b>中的服务注入
+>```c#
+            services.AddMongoServices(options =>
+            {
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020", ContextTypeName = "TestMongoContext", DataBase = "test" });
+            });
+>2 操作的时候从容器中获取<b>IMongoRepository\<TMongoContext></b>接口服务,进行MongoDB仓储的操作
+## 接口对象说明
 >| 类 | 默认实现类 | 注释 |
 >| :-----:| :----: | :----: |
 >| MongoDependencyExtension |  | 依赖注入扩展 |

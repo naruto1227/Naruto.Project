@@ -19,8 +19,8 @@ namespace Fate.Infrastructure.Consul.ServiceRegister
     {
         private readonly IConsulClient consulClient;
 
-        private readonly IHostingEnvironment env;
-        public DefaultServiceRegisterManage(IConsulClientFactory _consulClient, IOptions<ConsulClientOptions> option, IHostingEnvironment _env)
+        private readonly IWebHostEnvironment env;
+        public DefaultServiceRegisterManage(IConsulClientFactory _consulClient, IOptions<ConsulClientOptions> option, IWebHostEnvironment _env)
         {
             consulClient = _consulClient.Get(option?.Value);
             env = _env;
