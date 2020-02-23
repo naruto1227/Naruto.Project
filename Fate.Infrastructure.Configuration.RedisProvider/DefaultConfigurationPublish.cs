@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fate.Infrastructure.Configuration
+namespace Fate.Infrastructure.Configuration.RedisProvider
 {
     /// <summary>
-    /// 发布的默认实现
+    /// 张海波
+    /// 2020-02-23
+    /// 基于redis的发布的默认实现
     /// </summary>
     public class DefaultConfigurationPublish : IConfigurationPublish
     {
-
         private readonly IRedisOperationHelp redis;
 
         public DefaultConfigurationPublish(IRedisOperationHelp _redis)

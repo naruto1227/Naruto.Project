@@ -19,7 +19,7 @@ namespace Fate.Test.Configuration
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-           //services.AddPublishConfiguration();
+            //services.AddPublishConfiguration();
             //services.AddRedisRepository(option =>
             //{
             //    option.Connection = new string[] { "127.0.0.1:6379" };
@@ -31,10 +31,7 @@ namespace Fate.Test.Configuration
                     configureOptions.UseEntityFramework<ConfigurationDbContent>();
                 });
 
-            services.AddControllers().AddConfigurationManagement(option =>
-            {
-               // option.EnableDashBoard = true;
-            });
+            services.AddControllers().AddConfigurationManagement();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

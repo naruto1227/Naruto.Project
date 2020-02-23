@@ -156,7 +156,7 @@
     <EmbeddedResource Include="Dashboard\Content\pages\index.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fate.Infrastructure.Configuration\Fate.Infrastructure.Configuration.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Configuration.RedisProvider\Fate.Infrastructure.Configuration.RedisProvider.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 ﻿using Fate.Infrastructure.Configuration.Management;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Fate.Infrastructure.Configuration.Management.Dashboard;
 using Fate.Infrastructure.Configuration.Management.Dashboard.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;

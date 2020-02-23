@@ -8,14 +8,14 @@ namespace Fate.Infrastructure.Configuration
     /// <summary>
     /// 张海波
     /// 2019-11-21
-    /// 数据重载的接口
+    /// 订阅数据重载的接口
     /// </summary>
-    public interface IReloadData
+    public interface ISubscribeReloadData
     {
         /// <summary>
         /// 重新加载
         /// </summary>
         /// <returns></returns>
-        Task SubscribeReloadAsync(object obj);
+        Task ReloadAsync(object obj);
     }
 }

@@ -6,9 +6,6 @@ using Fate.Infrastructure.Configuration.Management.Dashboard.Interface;
 using Fate.Infrastructure.Configuration.Management.DB;
 using Fate.Infrastructure.Configuration.Management.Object;
 using Microsoft.AspNetCore.Mvc;
-
-
-
 namespace Fate.Infrastructure.Configuration.Management.Dashboard.Controllers
 {
     /// <summary>
