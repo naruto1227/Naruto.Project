@@ -11,7 +11,7 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard
     /// </summary>
     public class DashboardResult
     {
-        public int code = 0;
+        public int code { get; set; } = 0;
         /// <summary>
         /// 返回的数据
         /// </summary>
@@ -21,10 +21,6 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard
         /// </summary>
 
         public string msg { get; set; } = "操作成功";
-        /// <summary>
-        /// 错误消息
-        /// </summary>
-        public string failMsg { get; set; }
         /// <summary>
         /// 总数
         /// </summary>

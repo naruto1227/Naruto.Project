@@ -82,7 +82,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDataRoute)
             {
-                services.AddScoped(typeof(IStartupFilter), typeof(COnfigurationDataStartupFilter));
+                services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationDataStartupFilter));
             }
 
             //if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDashBoard)

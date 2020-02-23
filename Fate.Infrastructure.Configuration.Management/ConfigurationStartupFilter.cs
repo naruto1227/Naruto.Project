@@ -14,7 +14,7 @@ namespace Fate.Infrastructure.Configuration.Management
     /// 2019-11-18
     /// 启用获取配置数据中间件
     /// </summary>
-    public class COnfigurationDataStartupFilter : IStartupFilter
+    public class ConfigurationDataStartupFilter : IStartupFilter
     {
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {

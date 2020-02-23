@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Fate.Infrastructure.Redis.IRedisManage;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
 {
@@ -21,11 +21,11 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
     {
         private readonly IUnitOfWork<ConfigurationDbContent> unitOfWork;
 
-        private readonly IConfigurationPublish publish;
-        public DefaultConfigurationServices(IUnitOfWork<ConfigurationDbContent> _unitOfWork, IConfigurationPublish _publish)
+        private readonly IServiceProvider serviceProvider;
+        public DefaultConfigurationServices(IUnitOfWork<ConfigurationDbContent> _unitOfWork, IServiceProvider _serviceProvider)
         {
             unitOfWork = _unitOfWork;
-            publish = _publish;
+            serviceProvider = _serviceProvider;
         }
         /// <summary>
         /// 新增
@@ -36,11 +36,17 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
         {
             if (info == null)
                 return default;
+            info.Id = Guid.NewGuid().ToString();
             await unitOfWork.Command<ConfigurationEndPoint>().AddAsync(info);
             var res = await SaveChangeAsync();
             if (res)
             {
-                await publish.PublishAsync();
+                //当注入了热更新的服务 就发送给消息
+                var publish = serviceProvider.GetService<IConfigurationPublish>();
+                if (publish != null)
+                {
+                    await publish.PublishAsync();
+                }
             }
             return res;
         }
@@ -98,7 +104,12 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Services
             var res = await SaveChangeAsync();
             if (res)
             {
-                await publish.PublishAsync();
+                //当注入了热更新的服务 就发送给消息
+                var publish = serviceProvider.GetService<IConfigurationPublish>();
+                if (publish != null)
+                {
+                    await publish.PublishAsync();
+                }
             }
             return res;
         }

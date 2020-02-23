@@ -86,18 +86,9 @@ namespace Fate.Infrastructure.Configuration.Management.Dashboard.Controllers
         /// 获取配置信息
         /// </summary>
         /// <returns></returns>
-        [HttpGet("querylist")]
-        public async Task<IActionResult> Query(int page, int limit)
+        [HttpGet]
+        public async Task<IActionResult> Query([FromQuery]QueryConfigurationDTO info)
         {
-            string group = Request.Query["group"].ToString();
-            int.TryParse(Request.Query["environmentType"], out int environmentType);
-            var info = new QueryConfigurationDTO()
-            {
-                Page = page,
-                Group = group,
-                EnvironmentType = environmentType,
-                Limit = limit
-            };
             var list = await services.QueryConfiguration(info);
             return Ok(list);
         }
