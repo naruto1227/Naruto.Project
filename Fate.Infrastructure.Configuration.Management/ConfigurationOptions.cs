@@ -13,11 +13,6 @@ namespace Fate.Infrastructure.Configuration.Management
     public class ConfigurationOptions
     {
         /// <summary>
-        /// 是否启用面板(默认不启动)
-        /// </summary>
-        public bool EnableDashBoard { get; set; } = false;
-
-        /// <summary>
         /// 是否启用接口路由 默认不启用
         /// </summary>
         public bool EnableDataRoute { get; set; } = false;
