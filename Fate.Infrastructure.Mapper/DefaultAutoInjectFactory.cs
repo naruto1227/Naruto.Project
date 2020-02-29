@@ -29,7 +29,7 @@ namespace Fate.Infrastructure.Mapper
             {
                 Assembly assembly = Assembly.Load(item.Assembly.FullName);
                 //获取所有的标记了特性的类型
-                var autoInjectType = assembly.GetTypes().Where(a => a.GetCustomAttribute(typeof(AutoInjectDtoAttribute)) != null).ToList();
+                var autoInjectType = assembly.GetTypes().Where(a => a.IsDefined(typeof(AutoInjectDtoAttribute))).ToList();
                 if (autoInjectType != null && autoInjectType.Count() > 0)
                 {
                     List<MapperOptions> list = new List<MapperOptions>();
@@ -37,8 +37,11 @@ namespace Fate.Infrastructure.Mapper
                     {
                         //实例化对象 获取特性 的数据
                         MapperOptions mapperOptions = GetAutoInjectAttr(itemType);
-                        mapperOptions.IgnoreName = GetFieldIgnoreAttrName(itemType);
-                        list.Add(mapperOptions);
+                        if (mapperOptions != null)
+                        {
+                            mapperOptions.IgnoreName = GetFieldIgnoreAttrName(itemType);
+                            list.Add(mapperOptions);
+                        }
                     });
                     readOnlyList = list;
                 }
@@ -55,33 +58,44 @@ namespace Fate.Infrastructure.Mapper
             //获取特性
             var customAttrbutes = itemType.CustomAttributes.Where(a => a.AttributeType == typeof(AutoInjectDtoAttribute)).FirstOrDefault();
             if (customAttrbutes == null)
-                throw new ArgumentNullException("DefaultAutoInjectFactory:参数异常");
-            var soureType = customAttrbutes.NamedArguments.Where(a => a.MemberName == "SoureType").Select(a => a.TypedValue.Value).FirstOrDefault() as Type;
-            var targetType = customAttrbutes.NamedArguments.Where(a => a.MemberName == "TargetType").Select(a => a.TypedValue.Value).FirstOrDefault() as Type;
-
-            var reverseMap = customAttrbutes.NamedArguments.Where(a => a.MemberName == "ReverseMap").Select(a => a.TypedValue.Value).FirstOrDefault();
+                return default;
+            var soureType = GetAttrbutesValue(customAttrbutes, "SoureType") as Type;
+            var targetType = GetAttrbutesValue(customAttrbutes, "TargetType") as Type;
+            var reverseMap = GetAttrbutesValue(customAttrbutes, "ReverseMap");
 
             return new MapperOptions(soureType, targetType, reverseMap);
         }
 
+        private object GetAttrbutesValue(CustomAttributeData customAttrbutes, string memberName)
+        {
+            return customAttrbutes.NamedArguments.Where(a => a.MemberName == memberName).Select(a => a.TypedValue.Value).FirstOrDefault();
+        }
         /// <summary>
-        /// 获取字段的标识为忽略的特性
+        /// 获取属性字段的标识为忽略的特性
         /// </summary>
         /// <param name="itemType"></param>
         /// <returns></returns>
         private IReadOnlyList<string> GetFieldIgnoreAttrName(Type itemType)
         {
-            //获取所有的字段
-            var properties = itemType.GetProperties();
-            if (properties == null)
-                throw new ArgumentNullException("DefaultAutoInjectFactory:无任何字段需要映射");
-            //获取所有的标记了忽略的字段
-            var fidles = properties.Where(a => a.GetCustomAttribute(typeof(AutoInjectIgnoreAttribute)) != null).ToList();
-            if (fidles == null || fidles.Count() <= 0)
-                return default;
-
             var list = new List<string>();
-            fidles.ForEach(item => list.Add(item.Name));
+
+            //获取所有的属性
+            var properties = itemType.GetProperties();
+            if (properties != null && properties.Count() > 0)
+            {
+                //获取所有的标记了忽略的字段
+                var propsList = properties.Where(a => a.IsDefined(typeof(AutoInjectIgnoreAttribute))).ToList();
+                if (propsList != null && propsList.Count() > 0)
+                    propsList.ForEach(item => list.Add(item.Name));
+            }
+            //获取字段
+            var fields = itemType.GetFields();
+            if (fields != null && fields.Count() > 0)
+            {
+                var fieldsList = fields.Where(a => a.IsDefined(typeof(AutoInjectIgnoreAttribute))).ToList();
+                if (fieldsList != null && fieldsList.Count() > 0)
+                    fieldsList.ForEach(item => list.Add(item.Name));
+            }
             return list;
         }
 

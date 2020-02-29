@@ -16,6 +16,8 @@ namespace Fate.XUnitTest
         public int MyProperty { get; set; }
         [AutoInjectIgnore]
         public int MyProperty2 { get; set; }
+
+        public int mysdas;
     }
 
     public class TestDto2
@@ -23,8 +25,25 @@ namespace Fate.XUnitTest
         public int MyProperty { get; set; }
 
         public int MyProperty2 { get; set; }
+        public int mysdas;
+    }
+    [AutoInjectDto(SoureType = typeof(TestDto3), TargetType = typeof(TestDto4), ReverseMap = true)]
+    public class TestDto3
+    {
+        public int MyProperty { get; set; }
+       [AutoInjectIgnore]
+        public int MyProperty2 { get; set; }
+        [AutoInjectIgnore]
+        public int mysdas;
     }
 
+    public class TestDto4
+    {
+        public int MyProperty { get; set; }
+
+        public int MyProperty2 { get; set; }
+        public int mysdas;
+    }
     public class MyProFile : Profile
     {
         public MyProFile()
@@ -48,10 +67,12 @@ namespace Fate.XUnitTest
             {
                 var mapper = service.ServiceProvider.GetRequiredService<IEntityMapper>();
 
-                var res = mapper.MapperTo<TestDto2>(new TestDto() { MyProperty = 1 });
+                var res = mapper.MapperTo<TestDto2>(new TestDto() { MyProperty = 1, mysdas = 1 });
                 var res3 = mapper.MapperTo(new TestDto() { MyProperty = 2, MyProperty2 = 123123 }, res);
                 var res2 = mapper.MapperTo<TestDto>(new TestDto() { MyProperty = 123123 });
                 var res4 = mapper.MapperToList<TestDto>(new List<TestDto>() { new TestDto { MyProperty = 123123 } });
+
+               var res5= mapper.MapperTo<TestDto4>(new TestDto3() { MyProperty = 1, mysdas = 1 });
             }
         }
     }
