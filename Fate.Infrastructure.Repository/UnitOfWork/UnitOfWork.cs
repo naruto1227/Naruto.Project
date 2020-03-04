@@ -193,7 +193,7 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         public void Dispose()
         {
-           // dbContextTransaction?.Dispose();
+            dbContextTransaction?.Dispose();
             GC.SuppressFinalize(this);
         }
     }
