@@ -17,7 +17,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27021", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27021", DataBase = "test" });
                 //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
@@ -29,8 +29,8 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task CreateOneIndex()
         {
-            mongoRepository.IndexInfrastructure<TestDTO>().CreateOne(new CreateIndexModel<TestDTO>(Builders<TestDTO>.IndexKeys.Ascending(a => a.Hobbit)));
-            await mongoRepository.IndexInfrastructure<TestDTO>().CreateOneAsync(new CreateIndexModel<TestDTO>(Builders<TestDTO>.IndexKeys.Descending("Name")));
+            mongoRepository.Index<TestDTO>().CreateOne(new CreateIndexModel<TestDTO>(Builders<TestDTO>.IndexKeys.Ascending(a => a.Hobbit)));
+            await mongoRepository.Index<TestDTO>().CreateOneAsync(new CreateIndexModel<TestDTO>(Builders<TestDTO>.IndexKeys.Descending("Name")));
         }
         /// <summary>
         /// 删除索引
@@ -39,8 +39,8 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task DropIndex()
         {
-            mongoRepository.IndexInfrastructure<TestDTO>().DropOne("Name_-1");
-            await mongoRepository.IndexInfrastructure<TestDTO>().DropOneAsync("Hobbit_1");
+            mongoRepository.Index<TestDTO>().DropOne("Name_-1");
+            await mongoRepository.Index<TestDTO>().DropOneAsync("Hobbit_1");
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Fate.XUnitTest
 
             idnexs.Add(new CreateIndexModel<TestDTO>(Builders<TestDTO>.IndexKeys.Ascending(a => a.Hobbit)));
             idnexs.Add(new CreateIndexModel<TestDTO>(Builders<TestDTO>.IndexKeys.Ascending(a => a.Name)));
-            await mongoRepository.IndexInfrastructure<TestDTO>().CreateManyAsync(idnexs);
+            await mongoRepository.Index<TestDTO>().CreateManyAsync(idnexs);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task DropAll()
         {
-            await mongoRepository.IndexInfrastructure<TestDTO>().DropAllAsync();
+            await mongoRepository.Index<TestDTO>().DropAllAsync();
         }
     }
 }

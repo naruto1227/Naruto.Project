@@ -1,4 +1,6 @@
-﻿using Fate.Infrastructure.MongoDB.Interface;
+﻿using DotNetCore.CAP.Infrastructure;
+using Fate.Infrastructure.Infrastructure;
+using Fate.Infrastructure.MongoDB.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -20,8 +22,9 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.107:27017", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.106:27017", DataBase = "test1" });
                 //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.106:27017", DataBase = "test2" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
@@ -59,15 +62,17 @@ namespace Fate.XUnitTest
         [Fact]
         public async Task Insert2()
         {
-            await mongoRepository.Command<Test3DTO>().AddAsync("test44", new Test3DTO()
+            await mongoRepository.ChangeDataBase("test3333");
+            await mongoRepository.Command<Test3DTO>().AddAsync(new Test3DTO()
             {
+                Id = new SnowflakeId(1, 1).NextId(),
                 testkey = Guid.NewGuid().ToString(),
                 testDTO2 = new TestDTO2()
                 {
                     Name = "长哈"
                 }
             });
-            var res = await mongoRepository.Query<Test3DTO>().AsQueryable("test44").ToListAsync();
+            var res = await mongoRepository.Query<Test3DTO>().AsQueryable().ToListAsync();
         }
         /// <summary>
         /// 添加

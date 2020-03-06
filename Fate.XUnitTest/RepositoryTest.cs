@@ -18,6 +18,8 @@ using Microsoft.EntityFrameworkCore;
 using Fate.Domain.Model;
 using Fate.Domain.Model.Entities;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Metadata;
 #if NETCOREAPP
 using Fate.Infrastructure.Repository.Interceptor;
 using MySql.Data.MySqlClient;
@@ -49,7 +51,7 @@ namespace Fate.XUnitTest
             }, Test =>
             {
                 Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-                Test.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
+                Test.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
                 //
                 Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
                 Test.IsOpenMasterSlave = false;
@@ -319,6 +321,52 @@ namespace Fate.XUnitTest
                 await IUnitOfWork3.SaveChangeAsync();
                 //统一提交事务
                 await unitOfWorkTran.CommitTransactionAsync();
+            }
+        }
+
+
+        /// <summary>
+        /// 测试跨上下文事务 使用
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task MoreUok2()
+        {
+            using (var scope = services.BuildServiceProvider().CreateScope())
+            {
+                var mysqlDbContent = scope.ServiceProvider.GetRequiredService<MysqlDbContent>();
+                var testDbContent = scope.ServiceProvider.GetRequiredService<TestDbContent>();
+                //开启事务
+                var tran = await mysqlDbContent.Database.BeginTransactionAsync();
+
+                //使用事务
+                await testDbContent.Database.UseTransactionAsync(tran.GetDbTransaction());
+
+                mysqlDbContent.setting.Add(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+
+                testDbContent.setting.Add(new setting() { Contact = "1", Description = "1", DuringTime = "1", Integral = 1, Rule = "1" });
+                await mysqlDbContent.SaveChangesAsync();
+                await testDbContent.SaveChangesAsync();
+                await tran.CommitAsync();
+
+            }
+        }
+
+        /// <summary>
+        /// 测试切换table
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ChangeTable()
+        {
+            using (var scope = services.BuildServiceProvider().CreateScope())
+            {
+                var mysqlDbContent = scope.ServiceProvider.GetRequiredService<MysqlDbContent>();
+                if (mysqlDbContent.Model.FindEntityType(typeof(setting)) is IConventionEntityType conventionEntityType)
+                {
+                    conventionEntityType.SetTableName("setting_2019");
+                }
+              var tss=  mysqlDbContent.setting.AsQueryable().ToSqlWithParams();
             }
         }
     }

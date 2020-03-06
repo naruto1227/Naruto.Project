@@ -12,7 +12,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
     /// 索引的操作
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IMongoIndexInfrastructure<T> where T : class
+    public interface IMongoIndex<T> where T : class
     {
         #region 同步
 
@@ -137,7 +137,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
     /// 2019-12-5
     /// mongo的索引操作
     /// </summary>
-    public interface IMongoIndexInfrastructure<T, TMongoContext> : IMongoIndexInfrastructure<T> where T : class where TMongoContext : MongoContext
+    public interface IMongoIndexInfrastructure<T, TMongoContext> : IMongoIndex<T> where T : class where TMongoContext : MongoContext
     {
 
     }

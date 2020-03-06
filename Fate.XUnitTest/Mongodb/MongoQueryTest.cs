@@ -31,16 +31,17 @@ namespace Fate.XUnitTest
         public int Hobbit { get; set; }
     }
 
-    public class TestDTO2 : IMongoEntity
+    public class TestDTO2
     {
+        public long Id { get; set; }
         public string Name { get; set; }
 
         public int Age { get; set; }
     }
 
-    public class Test3DTO : IMongoEntity
+    public class Test3DTO
     {
-
+        public long Id { get; set; }
         public string testkey { get; set; }
 
         public TestDTO2 testDTO2 { get; set; }
@@ -53,7 +54,7 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020", ContextTypeName = "TestMongoContext", DataBase = "test" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020", DataBase = "test" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
@@ -120,10 +121,10 @@ namespace Fate.XUnitTest
         {
             services.Configure<List<MongoContext>>(a =>
             {
-                a.Add(new TestMongoContext() { ConnectionString = "123", ContextTypeName = typeof(TestMongoContext).Name });
-                a.Add(new Test2MongoContext() { ConnectionString = "123222", ContextTypeName = typeof(Test2MongoContext).Name });
+                a.Add(new TestMongoContext() { ConnectionString = "123"});
+                a.Add(new Test2MongoContext() { ConnectionString = "123222"});
             });
-            services.AddSingleton(new TestMongoContext() { ConnectionString = "1212", ContextTypeName = typeof(TestMongoContext).Name });
+            services.AddSingleton(new TestMongoContext() { ConnectionString = "1212"});
 
             var res = services.BuildServiceProvider().GetRequiredService<IOptions<List<MongoContext>>>();
             var res2 = services.BuildServiceProvider().GetRequiredService<TestMongoContext>();

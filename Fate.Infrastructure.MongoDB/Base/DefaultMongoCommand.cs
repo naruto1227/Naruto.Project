@@ -23,14 +23,14 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <summary>
         /// 读写的基础设施
         /// </summary>
-        private readonly IMongoInfrastructureBase<TMongoContext> infrastructure;
+        private readonly IMongoInfrastructure<TMongoContext> infrastructure;
         /// <summary>
         /// 实体的类型名
         /// </summary>
         private readonly string collectionTypeName = typeof(T).Name;
 
 
-        public DefaultMongoCommand(IMongoInfrastructureBase<TMongoContext> _infrastructure)
+        public DefaultMongoCommand(IMongoInfrastructure<TMongoContext> _infrastructure)
         {
             infrastructure = _infrastructure;
         }

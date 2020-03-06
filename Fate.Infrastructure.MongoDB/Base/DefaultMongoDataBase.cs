@@ -16,12 +16,12 @@ namespace Fate.Infrastructure.MongoDB.Base
     /// IMongoDataBase基础功能接口实现
     /// </summary>
     /// <typeparam name="TMongoContext"></typeparam>
-    public class DefaultMongoDataBaseInfrastructure<TMongoContext> : IMongoDataBaseInfrastructure<TMongoContext> where TMongoContext : MongoContext
+    public class DefaultMongoDataBase<TMongoContext> : IMongoDataBaseInfrastructure<TMongoContext> where TMongoContext : MongoContext
     {
 
-        private readonly IMongoInfrastructureBase<TMongoContext> infrastructure;
+        private readonly IMongoInfrastructure<TMongoContext> infrastructure;
 
-        public DefaultMongoDataBaseInfrastructure(IMongoInfrastructureBase<TMongoContext> _infrastructure)
+        public DefaultMongoDataBase(IMongoInfrastructure<TMongoContext> _infrastructure)
         {
             infrastructure = _infrastructure;
         }

@@ -44,13 +44,15 @@ namespace Microsoft.Extensions.DependencyInjection
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddSingleton<IMongoClientFactory, DefaultMongoClientFactory>();
-            services.AddScoped<MongoContextOptions>();
+            services.AddScoped(typeof(MongoContextOptions<>));
             services.AddScoped(typeof(IMongoQuery<,>), typeof(DefaultMongoQuery<,>));
             services.AddScoped(typeof(IMongoCommand<,>), typeof(DefaultMongoCommand<,>));
             services.AddScoped(typeof(IMongoRepository<>), typeof(DefaultMongoRepository<>));
-            services.AddScoped(typeof(IMongoInfrastructureBase<>), typeof(MongoInfrastructureBase<>));
-            services.AddScoped(typeof(IMongoDataBaseInfrastructure<>), typeof(DefaultMongoDataBaseInfrastructure<>));
-            services.AddScoped(typeof(IMongoIndexInfrastructure<,>), typeof(DefaultMongoIndexInfrastructure<,>));
+            services.AddScoped(typeof(IMongoInfrastructure<>), typeof(MongoInfrastructure<>));
+            services.AddScoped(typeof(IMongoDataBaseInfrastructure<>), typeof(DefaultMongoDataBase<>));
+            services.AddScoped(typeof(IMongoIndexInfrastructure<,>), typeof(DefaultMongoIndex<,>));
+            services.AddScoped(typeof(IMongoGridFS<>), typeof(DefaultMongoGridFS<>));
+            services.AddScoped(typeof(IMongoGridFSInfrastructure<>),typeof(DefaultMongoGridFSInfrastructure<>));
             return services;
         }
     }

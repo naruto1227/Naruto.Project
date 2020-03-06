@@ -25,7 +25,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// </summary>
         private MongoContextOptions mongoContextOptions;
 
-        public DefaultMongoRepository(IServiceProvider _serviceProvider, MongoContextOptions _mongoContextOptions)
+        public DefaultMongoRepository(IServiceProvider _serviceProvider, MongoContextOptions<TMongoContext> _mongoContextOptions)
         {
             serviceProvider = _serviceProvider;
 
@@ -50,37 +50,33 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IMongoCommand<T> Command<T>() where T : class
-        {
-            return serviceProvider.GetRequiredService<IMongoCommand<T, TMongoContext>>();
-        }
+        public IMongoCommand<T> Command<T>() where T : class => serviceProvider.GetRequiredService<IMongoCommand<T, TMongoContext>>();
+
         /// <summary>
         /// 获取查询操作
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IMongoQuery<T> Query<T>() where T : class
-        {
-            return serviceProvider.GetRequiredService<IMongoQuery<T, TMongoContext>>();
-        }
+        public IMongoQuery<T> Query<T>() where T : class => serviceProvider.GetRequiredService<IMongoQuery<T, TMongoContext>>();
 
         /// <summary>
         /// database的操作
         /// </summary>
         /// <returns></returns>
-        public IMongoDataBaseInfrastructure DataBaseInfrastructure()
-        {
-            return serviceProvider.GetRequiredService<IMongoDataBaseInfrastructure<TMongoContext>>();
-        }
+        public IMongoDataBase DataBase() => serviceProvider.GetRequiredService<IMongoDataBaseInfrastructure<TMongoContext>>();
 
         /// <summary>
         /// 索引的操作
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IMongoIndexInfrastructure<T> IndexInfrastructure<T>() where T : class
-        {
-            return serviceProvider.GetRequiredService<IMongoIndexInfrastructure<T, TMongoContext>>();
-        }
+        public IMongoIndex<T> Index<T>() where T : class => serviceProvider.GetRequiredService<IMongoIndexInfrastructure<T, TMongoContext>>();
+
+
+        /// <summary>
+        /// 操作GridFS对象进行文件操作
+        /// </summary>
+        /// <returns></returns>
+        public IMongoGridFS GridFS() => serviceProvider.GetRequiredService<IMongoGridFS<TMongoContext>>();
     }
 }

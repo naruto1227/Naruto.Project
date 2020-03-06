@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 namespace Fate.Infrastructure.MongoDB.Interface
 {
     /// <summary>
+    /// 
     /// 张海波
     /// 2019-12-5
     /// IMongoDataBase基础功能接口
     /// </summary>
-    public interface IMongoDataBaseInfrastructure
+    public interface IMongoDataBase
     {
         #region 同步
         /// <summary>
@@ -119,7 +120,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
     /// IMongoDataBase基础功能泛型接口
     /// </summary>
     /// <typeparam name="TMongoContext"></typeparam>
-    public interface IMongoDataBaseInfrastructure<TMongoContext> : IMongoDataBaseInfrastructure where TMongoContext : MongoContext
+    public interface IMongoDataBaseInfrastructure<TMongoContext> : IMongoDataBase where TMongoContext : MongoContext
     {
 
     }

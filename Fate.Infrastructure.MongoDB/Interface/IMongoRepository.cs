@@ -39,13 +39,18 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// database的操作
         /// </summary>
         /// <returns></returns>
-        IMongoDataBaseInfrastructure DataBaseInfrastructure();
+        IMongoDataBase DataBase();
 
         /// <summary>
         /// 索引的操作
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IMongoIndexInfrastructure<T> IndexInfrastructure<T>() where T : class;
+        IMongoIndex<T> Index<T>() where T : class;
+        /// <summary>
+        /// 操作GridFS对象进行文件操作
+        /// </summary>
+        /// <returns></returns>
+        IMongoGridFS GridFS();
     }
 }

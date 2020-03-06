@@ -22,12 +22,12 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <summary>
         /// mongoclient的对象池
         /// </summary>
-        private readonly ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>> MongoClientPool;
+        private readonly ConcurrentDictionary<Type, Tuple<IMongoClient, MongoContext>> MongoClientPool;
 
         public DefaultMongoClientFactory(IOptions<List<MongoContext>> _mongoContexts)
         {
             mongoContexts = _mongoContexts;
-            MongoClientPool = new ConcurrentDictionary<string, Tuple<IMongoClient, MongoContext>>();
+            MongoClientPool = new ConcurrentDictionary<Type, Tuple<IMongoClient, MongoContext>>();
         }
         /// <summary>
         /// 获取客户端
@@ -36,14 +36,14 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// <returns></returns>
         public Tuple<IMongoClient, MongoContext> GetMongoClient<TMongoContext>() where TMongoContext : MongoContext
         {
-            var contextType = typeof(TMongoContext).Name;
+            var contextType = typeof(TMongoContext);
             //从内存中读取mongodb客户端
             var mongoClientInfo = MongoClientPool.Where(a => a.Key == contextType).Select(a => a.Value).FirstOrDefault();
             if (mongoClientInfo != null)
                 return mongoClientInfo;
 
             //获取上下文信息
-            var mongoContextInfo = mongoContexts.Value.Where(a => a.ContextTypeName == contextType).FirstOrDefault();
+            var mongoContextInfo = mongoContexts.Value.Where(a => a.GetType() == contextType).FirstOrDefault();
             mongoContextInfo.CheckNull();
             //实例化mongo客户端信息
             mongoClientInfo = new Tuple<IMongoClient, MongoContext>(new MongoClient(mongoContextInfo.ConnectionString), mongoContextInfo);
@@ -60,13 +60,6 @@ namespace Fate.Infrastructure.MongoDB.Base
         public Task<Tuple<IMongoClient, MongoContext>> GetMongoClientAsync<TMongoContext>() where TMongoContext : MongoContext
         {
             return Task.FromResult(GetMongoClient<TMongoContext>());
-        }
-
-        private MongoClientSettings MongoClientSettings()
-        {
-            return new MongoClientSettings()
-            {
-            };
         }
     }
 }

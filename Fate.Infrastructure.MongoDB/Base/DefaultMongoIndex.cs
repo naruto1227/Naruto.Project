@@ -16,12 +16,12 @@ namespace Fate.Infrastructure.MongoDB.Base
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TMongoContext"></typeparam>
-    public class DefaultMongoIndexInfrastructure<T, TMongoContext> : IMongoIndexInfrastructure<T, TMongoContext> where T : class where TMongoContext : MongoContext
+    public class DefaultMongoIndex<T, TMongoContext> : IMongoIndexInfrastructure<T, TMongoContext> where T : class where TMongoContext : MongoContext
     {
         /// <summary>
         ///基础设施
         /// </summary>
-        private readonly IMongoInfrastructureBase<TMongoContext> infrastructure;
+        private readonly IMongoInfrastructure<TMongoContext> infrastructure;
 
         /// <summary>
         /// 实体的类型名
@@ -29,7 +29,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         private readonly string collectionTypeName = typeof(T).Name;
 
 
-        public DefaultMongoIndexInfrastructure(IMongoInfrastructureBase<TMongoContext> _infrastructure)
+        public DefaultMongoIndex(IMongoInfrastructure<TMongoContext> _infrastructure)
         {
             infrastructure = _infrastructure;
         }
