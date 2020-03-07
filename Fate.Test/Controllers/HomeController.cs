@@ -11,7 +11,7 @@ using Fate.Infrastructure.Redis.IRedisManage;
 using Microsoft.AspNetCore.Authorization;
 using Fate.Domain.Model.Entities;
 using Fate.Infrastructure.AutofacDependencyInjection;
-using Fate.Infrastructure.Infrastructure;
+using Fate.Infrastructure;
 using Fate.Infrastructure.Repository;
 using StackExchange.Redis;
 using Fate.Application.Services;
