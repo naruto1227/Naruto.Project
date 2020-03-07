@@ -6,6 +6,8 @@ using System.Text;
 
 using System.Net.Sockets;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+
 namespace Fate.Infrastructure.Repository.Object
 {
     /// <summary>
@@ -20,6 +22,18 @@ namespace Fate.Infrastructure.Repository.Object
         /// </summary>
         internal static ConcurrentDictionary<Type, List<SlaveDbConnection>> slaveConnec = new ConcurrentDictionary<Type, List<SlaveDbConnection>>();
 
+        /// <summary>
+        /// 日志
+        /// </summary>
+        private static ILogger logger;
+        static SlavePools()
+        {
+            var loggerFactory = LoggerFactory.Create(a =>
+            {
+                a.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger("SlavePools");
+        }
         /// <summary>
         /// 执行心跳检查 检查从库是否正在运行
         /// </summary>
@@ -42,7 +56,7 @@ namespace Fate.Infrastructure.Repository.Object
                         item.IsAvailable = false;
                     }
                 });
-                Console.WriteLine($"SlavePools:当前{slaveConnections.ConnectionString}从库的无法连接");
+                logger.LogInformation($"SlavePools:当前{slaveConnections.ConnectionString}从库的无法连接");
                 return false;
             }
             return true;
@@ -68,6 +82,7 @@ namespace Fate.Infrastructure.Repository.Object
                               catch
                               {
                                   item.IsAvailable = false;
+                                  logger.LogInformation($"TimerHeartBeatCheck:当前{item.ConnectionString}无法连接");
                               }
                           }
                       });
