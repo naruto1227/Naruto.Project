@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using XC.RSAUtil;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     /// <summary>
     /// RSA 加密 解密

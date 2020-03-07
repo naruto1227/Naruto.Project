@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     /// <summary>
     /// 去重

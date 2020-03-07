@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     /// <summary>
     /// 正则表达式验证器

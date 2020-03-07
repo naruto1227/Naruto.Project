@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     /// <summary>
     /// 使用方法app.UseGlobalCore();

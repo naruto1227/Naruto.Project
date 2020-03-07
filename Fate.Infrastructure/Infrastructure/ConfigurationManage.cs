@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     public static class ConfigurationManage
     {

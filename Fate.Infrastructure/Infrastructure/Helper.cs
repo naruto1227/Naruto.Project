@@ -6,7 +6,7 @@ using System.Text;
 using System.Reflection;
 using System.Linq;
 
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     /// <summary>
     /// 帮助类

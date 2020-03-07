@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Fate.Infrastructure.Extensions;
-
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     public class SnowFlakeHelper
     {

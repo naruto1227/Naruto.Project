@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Fate.Infrastructure.Interface;
-namespace Fate.Infrastructure.Infrastructure
+namespace Fate.Infrastructure
 {
     /// <summary>
     /// 定义一个json返回类型 用于接口的返回
