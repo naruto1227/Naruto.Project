@@ -99,9 +99,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.AspNetd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Test.Configuration", "Fate.Test.Configuration\Fate.Test.Configuration.csproj", "{825770AC-2455-4B8D-A77F-5FBA1EB18CD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.Configuration.RedisProvider", "Fate.Infrastructure.Configuration.RedisProvider\Fate.Infrastructure.Configuration.RedisProvider.csproj", "{2C0CB831-3445-4BA0-AB54-8550B9F07B6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.Configuration.RedisProvider", "Fate.Infrastructure.Configuration.RedisProvider\Fate.Infrastructure.Configuration.RedisProvider.csproj", "{2C0CB831-3445-4BA0-AB54-8550B9F07B6F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dashboard", "Dashboard", "{172BD6F0-3B48-4785-81B9-54A721883B12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Test.Id4Mongodb", "Fate.Test.Id4Mongodb\Fate.Test.Id4Mongodb.csproj", "{3BCEED36-318C-413E-96A2-9433405AAEBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -233,6 +235,10 @@ Global
 		{2C0CB831-3445-4BA0-AB54-8550B9F07B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C0CB831-3445-4BA0-AB54-8550B9F07B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C0CB831-3445-4BA0-AB54-8550B9F07B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BCEED36-318C-413E-96A2-9433405AAEBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BCEED36-318C-413E-96A2-9433405AAEBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BCEED36-318C-413E-96A2-9433405AAEBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BCEED36-318C-413E-96A2-9433405AAEBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -284,6 +290,7 @@ Global
 		{825770AC-2455-4B8D-A77F-5FBA1EB18CD1} = {28527CF0-C1A2-45F9-8934-339FD8914EC1}
 		{2C0CB831-3445-4BA0-AB54-8550B9F07B6F} = {BCCD954F-FDCF-4B73-9786-3B12B93E5F16}
 		{172BD6F0-3B48-4785-81B9-54A721883B12} = {BCCD954F-FDCF-4B73-9786-3B12B93E5F16}
+		{3BCEED36-318C-413E-96A2-9433405AAEBF} = {28527CF0-C1A2-45F9-8934-339FD8914EC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD3A20A-C1CF-4D8C-B35E-4DA8F4C1B5B8}

@@ -1,4 +1,6 @@
-﻿using Fate.Infrastructure.MongoDB.Interface;
+﻿using DotNetCore.CAP.Infrastructure;
+using Fate.Infrastructure;
+using Fate.Infrastructure.MongoDB.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using System;
@@ -41,8 +43,8 @@ namespace Fate.XUnitTest.Mongodb
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.106:27017", DataBase = "test1", BucketName = "ceshi" });
-                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.106:27017", DataBase = "test2", BucketName = "ceshi" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test1", BucketName = "ceshi" });
+                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test2", BucketName = "ceshi" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
@@ -436,5 +438,13 @@ namespace Fate.XUnitTest.Mongodb
             FindById(fileId);
         }
         #endregion
+
+        [Fact]
+        public void TestObjectId()
+        {
+            MongoDB.Bson.ObjectId.Parse("123456789012345678901234");
+            var o = MongoDB.Bson.ObjectId.GenerateNewId();
+            var o2 = MongoDB.Bson.ObjectId.Empty;
+        }
     }
 }

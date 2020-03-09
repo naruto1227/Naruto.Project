@@ -22,9 +22,9 @@ namespace Fate.XUnitTest
         {
             services.AddMongoServices(options =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.106:27017", DataBase = "test1" });
+                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test1" });
                 //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
-                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.106:27017", DataBase = "test2" });
+                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test2" });
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
@@ -65,14 +65,30 @@ namespace Fate.XUnitTest
             await mongoRepository.ChangeDataBase("test3333");
             await mongoRepository.Command<Test3DTO>().AddAsync(new Test3DTO()
             {
-                Id = new SnowflakeId(1, 1).NextId(),
+                Id = 1,
                 testkey = Guid.NewGuid().ToString(),
                 testDTO2 = new TestDTO2()
                 {
                     Name = "长哈"
                 }
             });
+            MongoDB.Bson.ObjectId.GenerateNewId();
             var res = await mongoRepository.Query<Test3DTO>().AsQueryable().ToListAsync();
+        }
+
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Insert3()
+        {
+            await mongoRepository.ChangeDataBase("test44");
+            await mongoRepository.Command<TestDTO>().AddAsync(new TestDTO()
+            {
+                Hobbit = 11
+            });
+            var res = await mongoRepository.Query<TestDTO>().AsQueryable().ToListAsync();
         }
         /// <summary>
         /// 添加

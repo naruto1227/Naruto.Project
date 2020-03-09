@@ -87,10 +87,10 @@ namespace Fate.Test
             services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
-                options.ReadOnlyConnectionString = Configuration.GetSection("ConnectionString:ReadMysqlConnection").Get<string[]>();
+                options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=33;UserId=hairead;Password=hai123;Charset=utf8;" };
                 //
-                options.UseEntityFramework<MysqlDbContent>();
-                options.IsOpenMasterSlave = false;
+                options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>();
+                options.IsOpenMasterSlave = true;
             },
             configureOptions =>
             {
@@ -130,7 +130,7 @@ namespace Fate.Test
             //services.AddScoped(typeof(List<>));
             //services.UseFileOptions();
 
-           // services.AddFateConfiguration();
+            // services.AddFateConfiguration();
             ////邮箱服务
             //services.AddEmailServer(Configuration.GetSection("AppSetting:EmailConfig"));
             //services.BuildServiceProvider()
