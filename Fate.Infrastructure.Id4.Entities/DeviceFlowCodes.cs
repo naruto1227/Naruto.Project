@@ -3,12 +3,12 @@
 namespace Fate.Infrastructure.Id4.Entities
 {
     /// <summary>
-    /// Entity for device flow codes
+    /// 设备代码
     /// </summary>
     public class DeviceFlowCodes : BaseMongo.Model.IMongoEntity
     {
         /// <summary>
-        /// Gets or sets the device code.
+        /// 设备代码
         /// </summary>
         /// <value>
         /// The device code.
@@ -16,7 +16,7 @@ namespace Fate.Infrastructure.Id4.Entities
         public string DeviceCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the user code.
+        /// 用户代码
         /// </summary>
         /// <value>
         /// The user code.
@@ -24,7 +24,7 @@ namespace Fate.Infrastructure.Id4.Entities
         public string UserCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the subject identifier.
+        /// 同意的主题Id
         /// </summary>
         /// <value>
         /// The subject identifier.
@@ -32,7 +32,7 @@ namespace Fate.Infrastructure.Id4.Entities
         public string SubjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets the client identifier.
+        /// 同意的客户端id名称
         /// </summary>
         /// <value>
         /// The client identifier.
@@ -45,7 +45,7 @@ namespace Fate.Infrastructure.Id4.Entities
         /// <value>
         /// The creation time.
         /// </value>
-        public DateTime CreationTime { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Gets or sets the expiration.

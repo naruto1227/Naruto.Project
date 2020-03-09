@@ -1,18 +1,21 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-#pragma warning disable 1591
+﻿
 
 namespace Fate.Infrastructure.Id4.Entities
 {
+    [NoCollection]
+    /// <summary>
+    /// 客户端声明
+    /// </summary>
     public class ClientClaim : BaseMongo.Model.IMongoEntity
     {
-        public int Id { get; set; }
+        /// <summary>
+        /// 声明的类型
+        /// </summary>
         public string Type { get; set; }
+        /// <summary>
+        /// 声明的值
+        /// </summary>
         public string Value { get; set; }
 
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
     }
 }

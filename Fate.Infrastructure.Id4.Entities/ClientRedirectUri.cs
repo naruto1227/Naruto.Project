@@ -1,17 +1,17 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-#pragma warning disable 1591
+﻿
 
 namespace Fate.Infrastructure.Id4.Entities
 {
+    [NoCollection]
+    /// <summary>
+    /// oidc 登录成功的跳转地址
+    /// </summary>
     public class ClientRedirectUri : BaseMongo.Model.IMongoEntity
     {
-        public int Id { get; set; }
+        /// <summary>
+        /// 重定向地址
+        /// </summary>
         public string RedirectUri { get; set; }
 
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
     }
 }

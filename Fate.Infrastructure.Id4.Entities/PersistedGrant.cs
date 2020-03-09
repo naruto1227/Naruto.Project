@@ -1,18 +1,22 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-#pragma warning disable 1591
-
+﻿
 using System;
 
 namespace Fate.Infrastructure.Id4.Entities
 {
+    /// <summary>
+    /// 授权信息
+    /// </summary>
     public class PersistedGrant : BaseMongo.Model.IMongoEntity
     {
         public string Key { get; set; }
         public string Type { get; set; }
+        /// <summary>
+        /// 同意的主题Id
+        /// </summary>
         public string SubjectId { get; set; }
+        /// <summary>
+        /// 同意的客户端Id名称
+        /// </summary>
         public string ClientId { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime? Expiration { get; set; }

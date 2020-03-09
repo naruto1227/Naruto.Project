@@ -1,17 +1,16 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-#pragma warning disable 1591
+﻿
 
 namespace Fate.Infrastructure.Id4.Entities
 {
+    /// <summary>
+    /// oidc注销之后跳转地址
+    /// </summary>
+    [NoCollection]
     public class ClientPostLogoutRedirectUri : BaseMongo.Model.IMongoEntity
     {
-        public int Id { get; set; }
+        /// <summary>
+        /// 重定向地址
+        /// </summary>
         public string PostLogoutRedirectUri { get; set; }
-
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
     }
 }
