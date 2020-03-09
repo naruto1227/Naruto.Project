@@ -1,6 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
+﻿
 
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +10,12 @@ using IdentityServer4.Stores;
 using Microsoft.Extensions.Logging;
 using Entities = Fate.Infrastructure.Id4.Entities;
 using Fate.Infrastructure.Id4.Entities.Mappers;
+using System;
 
 namespace Fate.Infrastructure.Id4.MongoDB.Stores
 {
     /// <summary>
-    /// Implementation of IPersistedGrantStore thats uses EF.
+    /// Implementation of IPersistedGrantStore thats uses MongoDB.
     /// </summary>
     /// <seealso cref="IdentityServer4.Stores.IPersistedGrantStore" />
     public class PersistedGrantStore : IPersistedGrantStore
@@ -38,12 +37,12 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         /// <param name="logger">The logger.</param>
         public PersistedGrantStore(IMongoRepository<IdentityServerMongoContext> context, ILogger<PersistedGrantStore> logger)
         {
-            Context = context;
+            Context = context ?? throw new ArgumentNullException(nameof(context));
             Logger = logger;
         }
 
         /// <summary>
-        /// Stores the asynchronous.
+        /// 新增授权信息
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>

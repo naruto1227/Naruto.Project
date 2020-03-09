@@ -106,7 +106,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Tokens
         }
 
         /// <summary>
-        /// Method to clear expired persisted grants.
+        /// 清理过期的授权信息
         /// </summary>
         /// <returns></returns>
         public async Task RemoveExpiredGrantsAsync()
@@ -119,9 +119,11 @@ namespace Fate.Infrastructure.Id4.MongoDB.Tokens
 
                 using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
+                    //获取仓储
                     var mongoDBRepository = serviceScope.ServiceProvider.GetService<IMongoRepository<IdentityServerMongoContext>>();
-
+                    //获取通知的接口
                     var tokenCleanupNotification = serviceScope.ServiceProvider.GetService<IOperationalStoreNotification>();
+                    //如果没有实现通知接口的话 就执行删除过期的数据
                     if (tokenCleanupNotification == null)
                     {
                         var result = await mongoDBRepository.Command<Entities.PersistedGrant>()
@@ -131,7 +133,8 @@ namespace Fate.Infrastructure.Id4.MongoDB.Tokens
                         _logger.LogInformation("Cleared {tokenCount} tokens", result);
                         return;
                     }
-
+                    //如果有实现 验证条数 当found小于TokenCleanupBatchSize
+                    //的时候代表此数据已全部删除不再执行
                     while (found >= _options.TokenCleanupBatchSize)
                     {
                         //获取过期的条数
@@ -140,16 +143,17 @@ namespace Fate.Infrastructure.Id4.MongoDB.Tokens
                             .Take(_options.TokenCleanupBatchSize)
                             .ToListAsync()
                             .ConfigureAwait(false);
-
+                        //获取删除的总条数
                         found = expired.Count;
                         _logger.LogInformation("Clearing {tokenCount} tokens", found);
 
+                        //如果有数据就删除
                         if (expired.Count > 0)
                         {
-                            var ids = expired.Select(x => x._id).ToArray();
-                            await mongoDBRepository.Command<Entities.PersistedGrant>().BulkDeleteAsync(x => ids.Contains(x._id)).ConfigureAwait(false);
+                            var ids = expired.Select(x => x.Id).ToArray();
+                            await mongoDBRepository.Command<Entities.PersistedGrant>().BulkDeleteAsync(x => ids.Contains(x.Id)).ConfigureAwait(false);
 
-                            // notification
+                            //通知接口处理 已经删除的数据
                             await tokenCleanupNotification.PersistedGrantsRemovedAsync(expired);
                         }
                     }

@@ -1,7 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +13,7 @@ using Fate.Infrastructure.Id4.Entities.Mappers;
 namespace Fate.Infrastructure.Id4.MongoDB.Stores
 {
     /// <summary>
-    /// Implementation of IResourceStore thats uses EF.
+    /// Implementation of IResourceStore thats uses MongoDB.
     /// </summary>
     /// <seealso cref="IdentityServer4.Stores.IResourceStore" />
     public class ResourceStore : IResourceStore
@@ -94,7 +91,7 @@ namespace Fate.Infrastructure.Id4.MongoDB.Stores
         public virtual async Task<Resources> GetAllResourcesAsync()
         {
             var result = new Resources(
-                (await Context.Query<Entities.IdentityResource>().ToListAsync(x =>true)).Select(x => x.ToModel()),
+                (await Context.Query<Entities.IdentityResource>().ToListAsync(x => true)).Select(x => x.ToModel()),
                 (await Context.Query<Entities.ApiResource>().ToListAsync(x => true)).Select(x => x.ToModel())
             );
 

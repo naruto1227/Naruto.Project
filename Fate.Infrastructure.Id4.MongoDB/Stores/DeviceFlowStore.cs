@@ -1,6 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
+﻿
 
 using System;
 using System.Linq;
@@ -16,7 +14,7 @@ using Entities = Fate.Infrastructure.Id4.Entities;
 namespace Fate.Infrastructure.Id4.MongoDB.Stores
 {
     /// <summary>
-    /// Implementation of IDeviceFlowStore thats uses EF.
+    /// Implementation of IDeviceFlowStore thats uses MongoDB.
     /// </summary>
     /// <seealso cref="IdentityServer4.Stores.IDeviceFlowStore" />
     public class DeviceFlowStore : IDeviceFlowStore

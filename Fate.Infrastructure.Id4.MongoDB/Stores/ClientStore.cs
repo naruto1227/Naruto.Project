@@ -1,6 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
+﻿
 
 using System;
 using System.Linq;
@@ -18,7 +16,7 @@ using Fate.Infrastructure.Id4.Entities.Mappers;
 namespace Fate.Infrastructure.Id4.MongoDB.Stores
 {
     /// <summary>
-    /// Implementation of IClientStore thats uses EF.
+    /// Implementation of IClientStore thats uses MongoDB.
     /// </summary>
     /// <seealso cref="IdentityServer4.Stores.IClientStore" />
     public class ClientStore : IClientStore

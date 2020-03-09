@@ -4,12 +4,12 @@ using Entities = Fate.Infrastructure.Id4.Entities;
 namespace Fate.Infrastructure.Id4.MongoDB.Tokens
 {
     /// <summary>
-    /// Interface to model notifications from the TokenCleanup feature.
+    /// 当授权信息移除的时候 发送通知接口
     /// </summary>
     public interface IOperationalStoreNotification
     {
         /// <summary>
-        /// Notification for persisted grants being removed.
+        /// 通知数据已经被移除
         /// </summary>
         /// <param name="persistedGrants"></param>
         /// <returns></returns>

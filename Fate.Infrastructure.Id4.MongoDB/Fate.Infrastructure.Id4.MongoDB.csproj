@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Stores\ResourceStore.cs~RF2e8155a.TMP" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fate.Infrastructure.Id4.Entities\Fate.Infrastructure.Id4.Entities.csproj" />
     <ProjectReference Include="..\Fate.Infrastructure.MongoDB\Fate.Infrastructure.MongoDB.csproj" />

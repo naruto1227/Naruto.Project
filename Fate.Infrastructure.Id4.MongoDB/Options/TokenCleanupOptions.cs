@@ -3,29 +3,19 @@
     public class TokenCleanupOptions
     {
         /// <summary>
-        /// Gets or sets a value indicating whether stale entries will be automatically cleaned up from the database.
-        /// This is implemented by perodically connecting to the database (according to the TokenCleanupInterval) from the hosting application.
-        /// Defaults to false.
+        /// 验证是否开启定时器 ，执行清理过期的授权 信息
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if [enable token cleanup]; otherwise, <c>false</c>.
-        /// </value>
         public bool EnableTokenCleanup { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the token cleanup interval (in seconds). The default is 3600 (1 hour).
+        /// 定时器执行的间隔时间  默认1小时
         /// </summary>
-        /// <value>
-        /// The token cleanup interval.
-        /// </value>
         public int TokenCleanupInterval { get; set; } = 3600;
 
         /// <summary>
-        /// Gets or sets the number of records to remove at a time. Defaults to 100.
+        /// 每次清理的条数. 默认100
+        /// （当IOperationalStoreNotification接口有实现的时候此字段才有用）
         /// </summary>
-        /// <value>
-        /// The size of the token cleanup batch.
-        /// </value>
         public int TokenCleanupBatchSize { get; set; } = 100;
     }
 }
