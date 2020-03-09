@@ -2,11 +2,12 @@
 
 namespace Fate.Infrastructure.Id4.Entities
 {
-    [NoCollection]
+    
     /// <summary>
-    /// api资源的声明
+    /// api资源的属性
     /// </summary>
-    public class ApiResourceClaim : UserClaim
+    public class ApiResourceProperty : Property
     {
+
     }
 }

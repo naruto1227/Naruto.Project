@@ -3,7 +3,7 @@ using System;
 
 namespace Fate.Infrastructure.Id4.Entities
 {
-    [NoCollection]
+    
     public abstract class Secret : BaseMongo.Model.IMongoEntity
     {
         /// <summary>

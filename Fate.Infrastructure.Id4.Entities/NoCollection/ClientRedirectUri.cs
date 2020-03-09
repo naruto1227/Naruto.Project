@@ -2,7 +2,7 @@
 
 namespace Fate.Infrastructure.Id4.Entities
 {
-    [NoCollection]
+    
     /// <summary>
     /// oidc 登录成功的跳转地址
     /// </summary>

@@ -5,7 +5,7 @@ namespace Fate.Infrastructure.Id4.Entities
     /// <summary>
     /// oidc注销之后跳转地址
     /// </summary>
-    [NoCollection]
+    
     public class ClientPostLogoutRedirectUri : BaseMongo.Model.IMongoEntity
     {
         /// <summary>

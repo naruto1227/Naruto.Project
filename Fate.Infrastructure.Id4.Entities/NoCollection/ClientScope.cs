@@ -2,7 +2,7 @@
 
 namespace Fate.Infrastructure.Id4.Entities
 {
-    [NoCollection]
+    
     /// <summary>
     /// 客户端范围
     /// </summary>

@@ -2,10 +2,10 @@
 namespace Fate.Infrastructure.Id4.Entities
 {
     /// <summary>
-    /// api范围的声明
+    /// api密钥
     /// </summary>
-    [NoCollection]
-    public class ApiScopeClaim : UserClaim
+    
+    public class ApiSecret : Secret
     {
 
     }

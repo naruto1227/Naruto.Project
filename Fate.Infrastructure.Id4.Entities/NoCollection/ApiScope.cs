@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Fate.Infrastructure.Id4.Entities
 {
-    [NoCollection]
+    
     /// <summary>
     /// api的范围
     /// </summary>

@@ -2,7 +2,7 @@
 
 namespace Fate.Infrastructure.Id4.Entities
 {
-    [NoCollection]
+    
     /// <summary>
     /// 客户端IdPs(入侵检测与防御系统)
     /// </summary>

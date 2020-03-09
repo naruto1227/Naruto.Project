@@ -2,19 +2,20 @@
 
 namespace Fate.Infrastructure.Id4.Entities
 {
+    
     /// <summary>
-    /// 属性
+    /// 客户端声明
     /// </summary>
-    [NoCollection]
-    public abstract class Property : BaseMongo.Model.IMongoEntity
+    public class ClientClaim : BaseMongo.Model.IMongoEntity
     {
         /// <summary>
-        /// 属性名
+        /// 声明的类型
         /// </summary>
-        public string Key { get; set; }
+        public string Type { get; set; }
         /// <summary>
-        /// 属性值
+        /// 声明的值
         /// </summary>
         public string Value { get; set; }
+
     }
 }
