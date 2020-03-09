@@ -36,6 +36,7 @@
 >1.  当从mongodb中取数据的时候，如果实体类中不存在mongo中的字段，不然序列化的时候报错，mongodb中的字段必须都包含在实体类中。
 >2.   mongodb读取的时候区分大小写。
 >3.   当实体中不存在Id或者id或者_id 字段的时候，这个时候实体只需要继承<b>IMongoEntity</b>接口对象即可
+>4. 当主键id为ObjectId的时候（继承于接口<b>IMongoEntity</b>，并且Id的值会自动生成），如需自己赋值的话，此Id必须为长度=24的字符串,或者使用<b>ObjectId.GenerateNewId()</b>生成一个ObjectId,如果主键id为其它类型的则不需要
 >5. 如果需要实现读写分离在 ConnectionString 的options里添加<b>readPreference=secondaryPreferred</b>，设置读请求为Secondary节点优先
 >6. 在 ConnectionString的options里添加 <b>maxPoolSize=xx</b> ，即可将客户端连接池中的连接数限制在xx以内。
 >7. 如何保证数据写入到大多数节点后才返回
