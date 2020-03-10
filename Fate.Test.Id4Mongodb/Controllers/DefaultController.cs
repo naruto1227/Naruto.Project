@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Fate.Test.Id4Mongodb.Controllers
 {
@@ -15,27 +17,14 @@ namespace Fate.Test.Id4Mongodb.Controllers
     [ApiController]
     public class DefaultController : ControllerBase
     {
-        [Authorize]
+
         [HttpGet]
-        public string Get()
-        {
-            return "hello api";
-        }
-        [HttpPost]
         /// <summary>
         /// 获取授权的token
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> ConnectionToken()
+        public async Task<IActionResult> ConnectionToken()
         {
-            #region 接收参数
-            //客户id
-            var clientId = Request.Form["clientId"];
-            //客户密钥
-            var clientSecret = Request.Form["clientSecret"];
-            //权限范围
-            var scope = Request.Form["scope"];
-            #endregion
             var client = new HttpClient();
             ////从元数据中发现终结点,查找IdentityServer
             //var disco = await client.GetDiscoveryDocumentAsync(ConfigurationManage.GetAppSetting("AuthorityUrl"));
@@ -48,12 +37,13 @@ namespace Fate.Test.Id4Mongodb.Controllers
             //通过客户端访问
             var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
             {
-                Address = "http://localhost:5000" + "/connect/token",//disco.TokenEndpoint,
-                ClientId = clientId,//"ro.client",
-                ClientSecret = clientSecret, //"secret",
-                Scope = scope//"api1",
+                Address = $"http://localhost:5000" + "/connect/token",//disco.TokenEndpoint,
+                ClientId = "test",
+                ClientSecret = "123456",
+                Scope = "api",
             });
-            return new JsonResult(tokenResponse.Json);
+           
+            return Ok(tokenResponse.Json);
         }
     }
 }
