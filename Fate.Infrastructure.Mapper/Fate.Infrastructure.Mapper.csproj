@@ -4,8 +4,8 @@
     <Description>实体映射</Description>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>zhanghaibo</Authors>
-    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.Project</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.Project</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

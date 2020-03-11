@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Fate.Infrastructure.BaseRepository.Model;
 
-namespace Fate.Infrastructure.OcelotStore.EFCore
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
     /// <summary>
     /// 张海波

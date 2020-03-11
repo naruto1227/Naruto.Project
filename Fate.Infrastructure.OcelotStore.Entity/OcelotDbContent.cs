@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Fate.Infrastructure.OcelotStore.EFCore.DB;
+using Fate.Infrastructure.OcelotStore.Entity;
 
-namespace Fate.Infrastructure.OcelotStore.EFCore
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
     /// <summary>
     /// 张海波

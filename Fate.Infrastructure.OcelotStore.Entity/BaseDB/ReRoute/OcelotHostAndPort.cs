@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Fate.Infrastructure.OcelotStore.EFCore.DB
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
     [Table("OcelotHostAndPort")]
     /// <summary>

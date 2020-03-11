@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Fate.Infrastructure.OcelotStore.EFCore.DB
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
     /// <summary>
-    /// (单条记录)
+    /// 缓存的配置
+    /// Ocelot可以对下游请求结果进行缓存 ，目前缓存的功能还不是很强大。它主要是依赖于CacheManager 来实现的，我们只需要在路由下添加以下配置即可
+    /// 单条记录
     /// </summary>
-    [Table("OcelotAuthenticationOption")]
-    /// <summary>
-    /// 认证中心
-    /// </summary>
-    public class OcelotAuthenticationOption: BaseRepository.Model.IEntity
+    [Table("OcelotCacheOptions")]
+    public class OcelotCacheOptions : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键id
@@ -25,11 +24,10 @@ namespace Fate.Infrastructure.OcelotStore.EFCore.DB
         /// <summary>
         /// 
         /// </summary>
-        public string AuthenticationProviderKey { get; set; }
+        public int TtlSeconds { get; set; }
         /// <summary>
-        /// 允许的范围 多个参数逗号分隔
+        /// 
         /// </summary>
-        public string AllowedScopes { get; set; }
-        //public List<string> AllowedScopes { get; set; }
+        public string Region { get; set; }
     }
 }

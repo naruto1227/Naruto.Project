@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Fate.Infrastructure.OcelotStore.EFCore.DB
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
     /// <summary>
     /// 服务发现的实体配置

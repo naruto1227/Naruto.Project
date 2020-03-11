@@ -4,8 +4,8 @@
     <Description>关系型数据库的仓储封装 ,如需使用此层的数据访问，需要将RepositoryExtensions方法中的两个扩展方法，注入到Startup中，并配置参数</Description>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>zhanghaibo</Authors>
-    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.DDD</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.Project</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.Project</PackageProjectUrl>
     <Version>1.0.2</Version>
   </PropertyGroup>
 

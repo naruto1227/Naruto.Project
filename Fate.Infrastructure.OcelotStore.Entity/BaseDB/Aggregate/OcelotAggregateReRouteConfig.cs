@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Fate.Infrastructure.OcelotStore.EFCore.DB
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
     /// <summary>
     /// 请求聚合路由的配置

@@ -1,37 +1,37 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Fate.Infrastructure.OcelotStore.EFCore.DB
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
-
-    [Table("OcelotHeaderTransform")]
+    [Table("OcelotDictionaryClaims")]
     /// <summary>
-    /// ocelot的请求头转发
+    /// 字典的配置
     /// </summary>
-    public class OcelotHeaderTransform : BaseRepository.Model.IEntity
+    public class OcelotDictionaryClaims : BaseRepository.Model.IEntity
     {
         /// <summary>
         /// 主键Id
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// 父节点的id
         /// </summary>
         public int ParentId { get; set; }
         /// <summary>
-        /// 改变的是上游的值 还是 下游的值 0 上游 1 下游响应
+        /// 存放的字典的类型  0 AddHeadersToRequest  1 AddClaimsToRequest 2 RouteClaimsRequirement 3   AddQueriesToRequest
         /// </summary>
-        public int IsUpOrDown { get; set; }
+        public int Type { get; set; }
 
         /// <summary>
-        /// 请求头
+        /// 关键字
         /// </summary>
-        public string Header { get; set; }
+        public string Key { get; set; }
 
         /// <summary>
-        /// 需要替换的值
+        /// 值
         /// </summary>
         public string Value { get; set; }
     }

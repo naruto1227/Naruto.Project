@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
-
+using Fate.Infrastructure.OcelotStore.Entity;
 namespace Fate.Infrastructure.OcelotStore.EFCore
 {
     /// <summary>

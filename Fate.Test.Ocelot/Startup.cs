@@ -11,13 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Microsoft.Extensions.Options;
-using Ocelot.Cache;
-using Ocelot.Configuration.File;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Fate.Infrastructure.Repository.UnitOfWork;
-using Fate.Infrastructure.OcelotStore.EFCore.DB;
 
 namespace Fate.Test.Ocelot
 {

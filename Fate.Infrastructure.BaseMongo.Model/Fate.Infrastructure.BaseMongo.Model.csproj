@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>zhanghaibo</Authors>
-    <RepositoryType>https://github.com/zhanghaiboshiwo/Fate.DDD</RepositoryType>
+    <RepositoryType>https://github.com/zhanghaiboshiwo/Fate.Project</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

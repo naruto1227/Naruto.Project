@@ -9,7 +9,7 @@ using Fate.Infrastructure.Repository;
 using Fate.Infrastructure.Repository.Object;
 
 using Ocelot.DependencyInjection;
-
+using Fate.Infrastructure.OcelotStore.Entity;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>

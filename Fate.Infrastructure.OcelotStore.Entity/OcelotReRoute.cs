@@ -1,10 +1,10 @@
-﻿using Ocelot.Configuration.File;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Fate.Infrastructure.OcelotStore.EFCore.DB
+namespace Fate.Infrastructure.OcelotStore.Entity
 {
     [Table("OcelotReRoute")]
     /// <summary>
