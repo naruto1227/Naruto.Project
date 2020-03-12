@@ -135,7 +135,7 @@ namespace Fate.Infrastructure.Repository.Base
             return await ExecCommand(connection, async command =>
             {
                 var res = (await command.ExecuteScalarAsync().ConfigureAwait(false));
-                if (res == null)
+                if (res == null || res.GetType() == typeof(DBNull))
                     return default;
                 return (T)res;
             }, sql, _params);
