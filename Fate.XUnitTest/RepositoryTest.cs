@@ -248,6 +248,16 @@ namespace Fate.XUnitTest
         }
 
         [Fact]
+        public async Task ToSqlTest()
+        {
+            using (var servicesScope = services.BuildServiceProvider().CreateScope())
+            {
+                var unit = servicesScope.ServiceProvider.GetRequiredService<IUnitOfWork<MysqlDbContent>>();
+                var sql = unit.Query<setting>().AsQueryable().Where(a => a.Contact.Contains("asdsa")).ToSqlWithParams();
+            }
+        }
+
+        [Fact]
         public async Task Tran2()
         {
             var unit = services.BuildServiceProvider().GetRequiredService<IUnitOfWork<MysqlDbContent>>();
@@ -366,7 +376,7 @@ namespace Fate.XUnitTest
                 {
                     conventionEntityType.SetTableName("setting_2019");
                 }
-              var tss=  mysqlDbContent.setting.AsQueryable().ToSqlWithParams();
+                var tss = mysqlDbContent.setting.AsQueryable().ToSqlWithParams();
             }
         }
     }
