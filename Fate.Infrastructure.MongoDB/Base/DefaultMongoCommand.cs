@@ -693,7 +693,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             });
         }
 
-        public async Task<bool> UpdateOneAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             return await UpdateAsync(collectionTypeName, filter, updateField, options, cancellationToken).ConfigureAwait(false);
         }

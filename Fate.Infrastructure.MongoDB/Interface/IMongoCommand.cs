@@ -522,7 +522,7 @@ namespace Fate.Infrastructure.MongoDB.Interface
         /// <param name="update"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<bool> UpdateOneAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
+        Task<bool> UpdateAsync(FilterDefinition<T> filter, Dictionary<string, object> updateField, UpdateOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 更新单条
