@@ -165,27 +165,34 @@ namespace Fate.Infrastructure.NPOI
                     cell.SetCellValue(value);
                     break;
                 case "System.DateTime": //日期类型
-                    DateTime dateV;
-                    if (DateTime.TryParse(value, out dateV))
+
+                    if (DateTime.TryParse(value, out var dateV))
                     {
                         cell.SetCellValue(dateV);
                     }
                     dataFormatStr = "yyyy/mm/dd hh:mm:ss";
                     break;
                 case "System.Boolean": //布尔型
-                    bool boolV = false;
-                    if (bool.TryParse(value, out boolV))
+                    if (bool.TryParse(value, out var boolV))
                     {
                         cell.SetCellType(CellType.Boolean);
                         cell.SetCellValue(boolV);
                     }
                     break;
                 case "System.Int16": //整型
+                    cell.SetCellType(CellType.String);
+                    cell.SetCellValue(value);
+                    break;
                 case "System.Int32":
+                    cell.SetCellType(CellType.String);
+                    cell.SetCellValue(value);
+                    break;
                 case "System.Int64":
+                    cell.SetCellType(CellType.String);
+                    cell.SetCellValue(value);
+                    break;
                 case "System.Byte":
-                    int intV = 0;
-                    if (int.TryParse(value, out intV))
+                    if (int.TryParse(value, out var intV))
                     {
                         cell.SetCellType(CellType.Numeric);
                         cell.SetCellValue(intV);
@@ -193,9 +200,16 @@ namespace Fate.Infrastructure.NPOI
                     dataFormatStr = "0";
                     break;
                 case "System.Decimal": //浮点型
+
+                    if (double.TryParse(value, out var dec))
+                    {
+                        cell.SetCellType(CellType.Numeric);
+                        cell.SetCellValue(dec);
+                    }
+                    dataFormatStr = "0.0000";
+                    break;
                 case "System.Double":
-                    double doubV = 0;
-                    if (double.TryParse(value, out doubV))
+                    if (double.TryParse(value, out var doubV))
                     {
                         cell.SetCellType(CellType.Numeric);
                         cell.SetCellValue(doubV);
@@ -207,7 +221,7 @@ namespace Fate.Infrastructure.NPOI
                     cell.SetCellValue("");
                     break;
                 default:
-                    cell.SetCellType(CellType.Unknown);
+                    cell.SetCellType(CellType.String);
                     cell.SetCellValue(value);
                     break;
             }
