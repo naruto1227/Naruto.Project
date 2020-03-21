@@ -97,8 +97,7 @@ namespace Fate.Infrastructure.MongoDB.Base
         /// </summary>
         private readonly MongoContext currentMongoContext;
 
-        public DefaultMongoGridFSInfrastructure(MongoContextOptions<TMongoContext> _mongoContextOptions, IMongoClientFactory _mongoClientFactory, IOptions
-           <List<MongoContext>> mongoContexts)
+        public DefaultMongoGridFSInfrastructure(MongoContextOptions<TMongoContext> _mongoContextOptions, IMongoClientFactory _mongoClientFactory, IServiceProvider serviceProvider)
         {
             currentContextOptions = _mongoContextOptions;
             //获取mongo客户端信息
@@ -106,7 +105,7 @@ namespace Fate.Infrastructure.MongoDB.Base
             //获取客户端
             currentMongoClient = mongoClientInfo.Item1;
             //获取当前上下文信息
-            currentMongoContext = mongoContexts.Value.Where(a => a.GetType() == typeof(TMongoContext)).FirstOrDefault();
+            currentMongoContext = serviceProvider.GetService(MergeNamedType.Get(typeof(TMongoContext).Name)) as TMongoContext;
             //构建GridFS对象   
             gridFSBucket = Build(currentMongoClient.GetDatabase(mongoClientInfo.Item2.DataBase), currentMongoContext.BucketName);
         }

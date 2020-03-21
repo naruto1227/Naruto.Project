@@ -18,15 +18,15 @@ namespace Fate.Infrastructure.MongoDB.Base
     /// </summary>
     public class DefaultMongoClientFactory : IMongoClientFactory
     {
-        private readonly IOptions<List<MongoContext>> mongoContexts;
+        private readonly IServiceProvider serviceProvider;
         /// <summary>
         /// mongoclient的对象池
         /// </summary>
         private readonly ConcurrentDictionary<Type, Tuple<IMongoClient, MongoContext>> MongoClientPool;
 
-        public DefaultMongoClientFactory(IOptions<List<MongoContext>> _mongoContexts)
+        public DefaultMongoClientFactory(IServiceProvider _serviceProvider)
         {
-            mongoContexts = _mongoContexts;
+            serviceProvider = _serviceProvider;
             MongoClientPool = new ConcurrentDictionary<Type, Tuple<IMongoClient, MongoContext>>();
         }
         /// <summary>
@@ -43,7 +43,8 @@ namespace Fate.Infrastructure.MongoDB.Base
                 return mongoClientInfo;
 
             //获取上下文信息
-            var mongoContextInfo = mongoContexts.Value.Where(a => a.GetType() == contextType).FirstOrDefault();
+            var mongoContextInfo = serviceProvider.GetService(MergeNamedType.Get(contextType.Name)) as TMongoContext;
+
             mongoContextInfo.CheckNull();
             //实例化mongo客户端信息
             mongoClientInfo = new Tuple<IMongoClient, MongoContext>(new MongoClient(mongoContextInfo.ConnectionString), mongoContextInfo);

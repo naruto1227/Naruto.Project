@@ -3,6 +3,7 @@ using Fate.Infrastructure.MongoDB.Base;
 using Fate.Infrastructure.MongoDB.Interface;
 using Fate.Infrastructure.MongoDB.Object;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,40 +20,37 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMongoServices(this IServiceCollection services, Action<List<MongoContext>> options)
+        public static IServiceCollection AddMongoServices(this IServiceCollection services)
         {
-            services.Configure(options);
-            services.AddServices();
+            if (services.BuildServiceProvider().GetService<IMongoClientFactory>() != null)
+                return services;
+            services.TryAddSingleton<IMongoClientFactory, DefaultMongoClientFactory>();
+            services.TryAddScoped(typeof(MongoContextOptions<>));
+            services.TryAddScoped(typeof(IMongoQuery<,>), typeof(DefaultMongoQuery<,>));
+            services.TryAddScoped(typeof(IMongoCommand<,>), typeof(DefaultMongoCommand<,>));
+            services.TryAddScoped(typeof(IMongoRepository<>), typeof(DefaultMongoRepository<>));
+            services.TryAddScoped(typeof(IMongoInfrastructure<>), typeof(MongoInfrastructure<>));
+            services.TryAddScoped(typeof(IMongoDataBaseInfrastructure<>), typeof(DefaultMongoDataBase<>));
+            services.TryAddScoped(typeof(IMongoIndexInfrastructure<,>), typeof(DefaultMongoIndex<,>));
+            services.TryAddScoped(typeof(IMongoGridFS<>), typeof(DefaultMongoGridFS<>));
+            services.TryAddScoped(typeof(IMongoGridFSInfrastructure<>), typeof(DefaultMongoGridFSInfrastructure<>));
             return services;
         }
+
+
         /// <summary>
-        /// 注入服务
+        /// 注入服务配置
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMongoServices(this IServiceCollection services, IConfiguration options)
+        public static IServiceCollection AddMongoContext<TMongoContext>(this IServiceCollection services, Action<TMongoContext> options) where TMongoContext : MongoContext, new()
         {
-            services.Configure<List<MongoContext>>(options);
-            services.AddServices();
-            return services;
-        }
-        /// <summary>
-        /// 注入服务
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        private static IServiceCollection AddServices(this IServiceCollection services)
-        {
-            services.AddSingleton<IMongoClientFactory, DefaultMongoClientFactory>();
-            services.AddScoped(typeof(MongoContextOptions<>));
-            services.AddScoped(typeof(IMongoQuery<,>), typeof(DefaultMongoQuery<,>));
-            services.AddScoped(typeof(IMongoCommand<,>), typeof(DefaultMongoCommand<,>));
-            services.AddScoped(typeof(IMongoRepository<>), typeof(DefaultMongoRepository<>));
-            services.AddScoped(typeof(IMongoInfrastructure<>), typeof(MongoInfrastructure<>));
-            services.AddScoped(typeof(IMongoDataBaseInfrastructure<>), typeof(DefaultMongoDataBase<>));
-            services.AddScoped(typeof(IMongoIndexInfrastructure<,>), typeof(DefaultMongoIndex<,>));
-            services.AddScoped(typeof(IMongoGridFS<>), typeof(DefaultMongoGridFS<>));
-            services.AddScoped(typeof(IMongoGridFSInfrastructure<>),typeof(DefaultMongoGridFSInfrastructure<>));
+            TMongoContext mongoContext = new TMongoContext();
+            options?.Invoke(mongoContext);
+
+            //注入配置服务
+            services.Add(new ServiceDescriptor(MergeNamedType.Merge(typeof(TMongoContext).Name, typeof(TMongoContext)), serviceProvider => mongoContext, ServiceLifetime.Singleton));
+
             return services;
         }
     }
