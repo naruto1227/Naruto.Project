@@ -84,15 +84,18 @@ namespace Fate.Test
             //注入redis仓储服务
             services.AddRedisRepository(Configuration.GetSection("AppSetting:RedisConfig"));
             //注入mysql仓储   //注入多个ef配置信息
-            services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
+            services.AddRepository();
+
+            services.AddEFOption(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"));
                 options.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=33;UserId=hairead;Password=hai123;Charset=utf8;" };
                 //
                 options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>();
                 options.IsOpenMasterSlave = true;
-            },
-            configureOptions =>
+            }
+            );
+            services.AddEFOption(configureOptions =>
             {
                 configureOptions.ConfigureDbContext = context => context.UseMySql("Database=ConfigurationDB;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;");
                 configureOptions.UseEntityFramework<ConfigurationDbContent>();

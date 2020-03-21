@@ -29,7 +29,7 @@ namespace Fate.Test.Ocelot
         {
             services.AddSingleton<Test2DefinedAggregator>();
             services.AddOcelot()
-                .AddEFCache(options =>
+                .AddOcelotEFCache(options =>
             {
                 options.EFOptions = ef => ef.ConfigureDbContext = context => context.UseMySql(Configuration.GetConnectionString("OcelotMysqlConnection"));
             }).AddRedisProvider(option =>

@@ -24,14 +24,11 @@ namespace Fate.Test.Configuration
             //{
             //    option.Connection = new string[] { "127.0.0.1:6379" };
             //});
-            services.AddRepositoryServer()
-                .AddRepositoryEFOptionServer(configureOptions =>
-                {
-                    configureOptions.ConfigureDbContext = context => context.UseMySql("Database=ConfigurationDB;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;");
-                    configureOptions.UseEntityFramework<ConfigurationDbContent>();
-                });
-
-            services.AddControllers().AddConfigurationManagement();
+        
+            services.AddControllers().AddConfigurationManagement(new Infrastructure.Configuration.Management.OcelotEFOption
+            {
+                ConfigureDbContext = context => context.UseMySql("Database=ConfigurationDB;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;"),
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,4 @@
-﻿using DotNetCore.CAP.Infrastructure;
+﻿
 using Fate.Infrastructure;
 using Fate.Infrastructure.MongoDB.Interface;
 using Microsoft.Extensions.DependencyInjection;

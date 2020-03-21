@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Fate.Infrastructure.Configuration.Management.Dashboard.Interface;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Fate.Infrastructure.Configuration.Management.Dashboard.Services;
 using System;
 using Fate.Infrastructure.VirtualFile;
 using System.Collections.Generic;
+using Fate.Infrastructure.Configuration.Management.DB;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -21,8 +21,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="mvcBuilder"></param>
         /// <returns></returns>
-        public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder)
+        public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder, OcelotEFOption ocelotEFOption)
         {
+            mvcBuilder.Services.AddOcelotRepository(ocelotEFOption);
             mvcBuilder.Services.AddServices();
             //注入mvc扩展
             mvcBuilder.ConfigureApplicationPartManager(a =>
@@ -36,10 +37,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="mvcBuilder"></param>
         /// <returns></returns>
-        public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder, Action<ConfigurationOptions> option)
+        public static IMvcBuilder AddConfigurationManagement(this IMvcBuilder mvcBuilder, OcelotEFOption ocelotEFOption, Action<ConfigurationOptions> option)
         {
             mvcBuilder.Services.Configure(option);
-            mvcBuilder.AddConfigurationManagement();
+            mvcBuilder.AddConfigurationManagement(ocelotEFOption);
             return mvcBuilder;
         }
         /// <summary>
@@ -47,8 +48,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="mvcBuilder"></param>
         /// <returns></returns>
-        public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder)
+        public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder, OcelotEFOption ocelotEFOption)
         {
+            mvcBuilder.Services.AddOcelotRepository(ocelotEFOption);
             mvcBuilder.Services.AddServices();
             //注入mvc扩展
             mvcBuilder.ConfigureApplicationPartManager(a =>
@@ -62,13 +64,30 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="mvcBuilder"></param>
         /// <returns></returns>
-        public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder, Action<ConfigurationOptions> option)
+        public static IMvcCoreBuilder AddConfigurationManagement(this IMvcCoreBuilder mvcBuilder, OcelotEFOption ocelotEFOption, Action<ConfigurationOptions> option)
         {
             mvcBuilder.Services.Configure(option);
-            mvcBuilder.AddConfigurationManagement();
+            mvcBuilder.AddConfigurationManagement(ocelotEFOption);
             return mvcBuilder;
         }
-
+        /// <summary>
+        /// 注入ocelot仓储服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="ocelotEFOption"></param>
+        /// <returns></returns>
+        private static IServiceCollection AddOcelotRepository(this IServiceCollection services, OcelotEFOption ocelotEFOption)
+        {
+            services.AddRepository()
+               .AddEFOption(configureOptions =>
+               {
+                   configureOptions.ConfigureDbContext = ocelotEFOption.ConfigureDbContext;
+                   configureOptions.UseEntityFramework<ConfigurationDbContent, SlaveConfigurationDbContent>();
+                   configureOptions.IsOpenMasterSlave = ocelotEFOption.IsOpenMasterSlave;
+                   configureOptions.ReadOnlyConnectionString = ocelotEFOption.ReadOnlyConnectionString;
+               });
+            return services;
+        }
         /// <summary>
         /// 注入服务
         /// </summary>
@@ -83,11 +102,6 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationDataStartupFilter));
             }
-
-            //if (services.BuildServiceProvider().GetRequiredService<IOptions<ConfigurationOptions>>().Value.EnableDashBoard)
-            //{
-            //    services.AddScoped(typeof(IStartupFilter), typeof(ConfigurationStartupFilter));
-            //}
             SetResoure();
             services.AddVirtualFileServices(options =>
             {

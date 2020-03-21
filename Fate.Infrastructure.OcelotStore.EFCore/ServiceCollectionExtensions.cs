@@ -22,29 +22,29 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="ocelotBuilder"></param>
         /// <returns></returns>
-        public static IOcelotBuilder AddEFCache(this IOcelotBuilder ocelotBuilder, Action<CacheOptions> options)
+        public static IOcelotBuilder AddOcelotEFCache(this IOcelotBuilder ocelotBuilder, Action<CacheOptions> options)
         {
             //获取数据
             CacheOptions cacheOptions = new CacheOptions();
             options?.Invoke(cacheOptions);
 
-            EFOptions eFOptions = new EFOptions();
+            OcelotEFOption eFOptions = new OcelotEFOption();
             cacheOptions?.EFOptions.Invoke(eFOptions);
-            //验证仓储服务是否注册
-            if (ocelotBuilder.Services.BuildServiceProvider().GetService<IUnitOfWork>() == null)
-            {
-                ocelotBuilder.Services.AddRepositoryServer();
-            }
-            //注入仓储
-            ocelotBuilder.Services.AddRepositoryEFOptionServer(ocelot =>
+
+            #region  注入仓储
+
+            ocelotBuilder.Services.AddRepository();
+
+            ocelotBuilder.Services.AddEFOption(ocelot =>
             {
                 ocelot.ConfigureDbContext = eFOptions.ConfigureDbContext;
                 ocelot.ReadOnlyConnectionString = eFOptions.ReadOnlyConnectionString;
                 //
-                ocelot.UseEntityFramework<OcelotDbContent>();
+                ocelot.UseEntityFramework<OcelotDbContent, SlaveOcelotDbContent>();
                 ocelot.IsOpenMasterSlave = eFOptions.IsOpenMasterSlave;
             });
 
+            #endregion
 
             //更改扩展方式
             ocelotBuilder.Services.RemoveAll(typeof(IFileConfigurationRepository));
