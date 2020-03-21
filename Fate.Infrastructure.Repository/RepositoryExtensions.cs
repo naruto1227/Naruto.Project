@@ -7,6 +7,8 @@ using Fate.Infrastructure.Repository.Object;
 using Microsoft.EntityFrameworkCore;
 using Fate.Infrastructure.Repository.HostServer;
 using Fate.Infrastructure.Repository;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Fate.Infrastructure.Repository.Interface;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,15 +22,20 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// 扩展服务
         /// </summary>
-        private static List<Action<IServiceCollection>> Extension = new List<Action<IServiceCollection>>();
+        private static Dictionary<Type, Action<IServiceCollection>> Extension = new Dictionary<Type, Action<IServiceCollection>>();
+
+        #region 注入服务
 
         /// <summary>
         /// 注入仓储服务(依赖注入)
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddRepositoryServer(this IServiceCollection services)
+        public static IServiceCollection AddRepository(this IServiceCollection services)
         {
+            //验证仓储服务是否已经注入 注入了话就
+            if (services.BuildServiceProvider().GetService<ISlaveDbConnectionFactory>() != null)
+                return services;
             //获取当前层的所有的类型
             var types = Assembly.Load(Assembly.GetAssembly(typeof(RepositoryExtensions)).GetName()).GetTypes();
             //获取需要通过接口的实现来依赖注入的类型
@@ -41,69 +48,51 @@ namespace Microsoft.Extensions.DependencyInjection
                     var classType = repositoryDependencyTypes.Where(a => a.IsClass && a.GetInterface(item.Name) != null).FirstOrDefault();
                     if (classType != null)
                     {
-                        services.AddScoped(item, classType);
+                        services.TryAddScoped(item, classType);
                     }
                 });
             }
-            services.AddSingleton<ISlaveDbConnectionFactory, DefaultSlaveDbConnectionFactory>();
-            services.AddScoped(typeof(UnitOfWorkOptions<>));
+            services.TryAddSingleton<ISlaveDbConnectionFactory, DefaultSlaveDbConnectionFactory>();
+            services.TryAddScoped(typeof(UnitOfWorkOptions<>));
             return services;
         }
+
+        #endregion
+
+        #region 注入仓储对应的EF信息
 
         /// <summary>
         /// 注入上下文的实例类型
         /// </summary>
         /// <returns></returns>
-        public static IServiceCollection AddRepositoryEFOptionServer(this IServiceCollection services, params Action<EFOptions>[] action)
+        public static IServiceCollection AddEFOption(this IServiceCollection services, Action<EFOptions> action)
         {
-            if (action == null || action.Count() <= 0)
-            {
-                throw new ArgumentNullException("值不能为空!");
-            }
+            EFOptions eFOptions = new EFOptions();
+            action?.Invoke(eFOptions);
+            if (eFOptions == null)
+                throw new ArgumentNullException(nameof(action));
+            //注入上下文服务扩展
+            Extension[eFOptions.DbContextType](services);
 
-            //获取参数 并执行委托
-            List<EFOptions> efOptionsList = new List<EFOptions>();
-            for (int i = 0; i < action.Count(); i++)
+            //验证
+            if (eFOptions.IsOpenMasterSlave && (eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0))
             {
-                EFOptions eFOptions = new EFOptions();
-                action[i]?.Invoke(eFOptions);
-                if (eFOptions == null)
-                    continue;
-                //注入上下文服务扩展
-                Extension[i](services);
-                //加入集合配置
-                efOptionsList.Add(eFOptions);
-                //验证
-                if (eFOptions.IsOpenMasterSlave && (eFOptions.ReadOnlyConnectionString == null || eFOptions.ReadOnlyConnectionString.Count() <= 0))
-                {
-                    throw new ArgumentException("检测到开启了读写分离但是未指定只读的连接字符串!");
-                }
-                //写入连接字符串的线程安全集合
-                if (eFOptions.IsOpenMasterSlave)
-                {
-                    var slaveDbConnectionFactory = services.BuildServiceProvider().GetRequiredService<ISlaveDbConnectionFactory>();
-                    SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnectionFactory.Get(eFOptions));
-                }
+                throw new ArgumentException("检测到开启了读写分离但是未指定只读的连接字符串!");
             }
-
-            //注入配置
-            services.Configure<List<EFOptions>>(a =>
+            //写入连接字符串的线程安全集合
+            if (eFOptions.IsOpenMasterSlave)
             {
-                foreach (var item in efOptionsList)
-                {
-                    a.Add(item);
-                }
-            });
-
-            //当从库有信息则执行定时服务
-            if (SlavePools.slaveConnec.Count > 0)
-            {
-                //注入后台服务
-                services.AddHostedService<MasterSlaveHostServer>();
+                var slaveDbConnectionFactory = services.BuildServiceProvider().GetRequiredService<ISlaveDbConnectionFactory>();
+                SlavePools.slaveConnec.TryAdd(eFOptions.DbContextType, slaveDbConnectionFactory.Get(eFOptions));
             }
-            Extension.Clear();
+            //注入配置服务
+            services.Add(new ServiceDescriptor(MergeNamedType.Merge(eFOptions.DbContextType.Name, typeof(EFOptions)), serviceProvider => eFOptions, ServiceLifetime.Singleton));
             return services;
         }
+
+        #endregion
+
+        #region  注入EntityFramework实体信息
 
         /// <summary>
         /// 注入EFCOre 上下文 
@@ -160,7 +149,23 @@ namespace Microsoft.Extensions.DependencyInjection
                     eFOptions.WriteReadConnectionString = dbContent.Database.GetDbConnection().ConnectionString;
                 }
             }
-            Extension.Add(DbContextExtension);
+            Extension.Add(eFOptions.DbContextType, DbContextExtension);
         }
+
+        #endregion
+
+        #region 注入仓储的心跳检查 
+
+        /// <summary>
+        /// 注入仓储的心跳检查
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddRepositoryHealthCheck(this IServiceCollection services)
+        {
+            return services.AddHostedService<MasterSlaveHostServer>();
+        }
+
+        #endregion
     }
 }

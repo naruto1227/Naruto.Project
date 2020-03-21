@@ -26,16 +26,11 @@ namespace Fate.Infrastructure.Repository.Base
         /// 从库的连接实例
         /// </summary>
         private ConcurrentDictionary<Type, DbContext> _slaveDbContexts { get; set; }
-        /// <summary>
-        /// ef参数
-        /// </summary>
-        private readonly IOptions<List<EFOptions>> efOptions;
 
-        public DbContextFactory(IServiceProvider _serviceProvider, IOptions<List<EFOptions>> _efOptions)
+        public DbContextFactory(IServiceProvider _serviceProvider)
         {
             _masterDbContexts = new ConcurrentDictionary<Type, DbContext>();
             _slaveDbContexts = new ConcurrentDictionary<Type, DbContext>();
-            efOptions = _efOptions;
             serviceProvider = _serviceProvider;
         }
         /// <summary>
@@ -86,7 +81,7 @@ namespace Fate.Infrastructure.Repository.Base
         /// <returns></returns>
         private EFOptions GetEfOption(Type DbContextType)
         {
-            return efOptions.Value.Where(a => a.DbContextType == DbContextType).FirstOrDefault();
+            return serviceProvider.GetService(MergeNamedType.Get(DbContextType.Name)) as EFOptions;
         }
         void IDisposable.Dispose()
         {

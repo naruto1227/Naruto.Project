@@ -231,12 +231,12 @@ namespace Fate.Infrastructure.Repository.Base
         /// <summary>
         /// 参数信息
         /// </summary>
-        private readonly IOptions<List<EFOptions>> options;
+        private readonly EFOptions options;
 
-        public RepositoryInfrastructureBase(UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IOptions<List<EFOptions>> _options)
+        public RepositoryInfrastructureBase(UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IServiceProvider serviceProvider)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
-            options = _options;
+            options = serviceProvider.GetService(MergeNamedType.Get(_unitOfWorkOptions.DbContextType.Name)) as EFOptions;
         }
 
         public async Task SwitchAsync(DbContext dbContext)
@@ -330,7 +330,7 @@ namespace Fate.Infrastructure.Repository.Base
 
             if (slaveInfo == null)
             {
-                return options.Value.Where(a => a.DbContextType == dbContextType).Select(a => a.WriteReadConnectionString).FirstOrDefault();
+                return options.WriteReadConnectionString;
             }
             //进行心跳检查
             var isBeat = SlavePools.HeartBeatCheck(dbContextType, slaveInfo);

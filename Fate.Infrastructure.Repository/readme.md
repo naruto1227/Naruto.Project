@@ -28,7 +28,7 @@
             //注入仓储依赖的服务   
             services.AddRepositoryServer()
             //注入ef配置信息
-            .AddRepositoryEFOptionServer(options =>
+            .AddEFOption(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=;Password=;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
                 options.ReadOnlyConnectionString = new string[] { "Database=;DataSource=;Port=3306;UserId=;Password=;Charset=utf8;" };
@@ -37,4 +37,4 @@
                 options.IsOpenMasterSlave = true;
             });
 >> 2. 当前仓储使用的数据库的读写分离,工作单元，CQRS,分库，仓储的生命周期为Scoped作用域，
->> 3. 所有的操作都需要使用<b>IUnitOfWork\<TDbContext></b>进行 ,具体操作请看单元测试中的使用
+>> 3. 所有的操作都需要使用<b>IUnitOfWork\<TDbContext></b>进行，其中<b>TDbContext为主库的上下文</b> ,具体操作请看单元测试中的使用

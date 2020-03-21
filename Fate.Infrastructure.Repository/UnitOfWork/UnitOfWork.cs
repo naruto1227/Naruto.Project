@@ -50,13 +50,13 @@ namespace Fate.Infrastructure.Repository.UnitOfWork
         /// </summary>
         /// <param name="_options"></param>
         /// <param name="_service"></param>
-        public UnitOfWork(IOptions<List<EFOptions>> _options, IServiceProvider _service, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IDbContextFactory _repositoryFactory, IRepositoryMediator<TDbContext> _repositoryMediator)
+        public UnitOfWork(IServiceProvider _service, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IDbContextFactory _repositoryFactory, IRepositoryMediator<TDbContext> _repositoryMediator)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
             //获取上下文类型
             unitOfWorkOptions.DbContextType = typeof(TDbContext);
-            //获取主库的连接
-            var dbInfo = _options.Value.Where(a => a.DbContextType == unitOfWorkOptions.DbContextType).FirstOrDefault();
+            //获取ef的配置信息
+            var dbInfo = _service.GetService(MergeNamedType.Get(unitOfWorkOptions.DbContextType.Name)) as EFOptions;
 
             unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
             //是否开启读写分离操作
