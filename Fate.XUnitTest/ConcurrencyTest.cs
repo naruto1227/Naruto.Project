@@ -27,7 +27,7 @@ namespace Fate.XUnitTest
         {
             services.AddScoped(typeof(IRepositoryFactory), typeof(RepositoryFactory));
             //注入mysql仓储   //注入多个ef配置信息
-            services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
+            services.AddRepository().AddEFOption(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;");
                 //

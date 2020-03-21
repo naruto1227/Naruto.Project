@@ -20,6 +20,7 @@ using Fate.Domain.Model.Entities;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Fate.Infrastructure.Repository.Object;
 #if NETCOREAPP
 using Fate.Infrastructure.Repository.Interceptor;
 using MySql.Data.MySqlClient;
@@ -41,21 +42,21 @@ namespace Fate.XUnitTest
         {
             // services.AddScoped(typeof(IRepositoryFactory), typeof(RepositoryFactory));
             //注入mysql仓储   //注入多个ef配置信息
-            services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
-            {
-                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-                options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
-                //
-                options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
-                options.IsOpenMasterSlave = true;
-            }, Test =>
-            {
-                Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
-                Test.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
-                //
-                Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
-                Test.IsOpenMasterSlave = false;
-            });
+            //services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
+            //{
+            //    options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+            //    options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
+            //    //
+            //    options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
+            //    options.IsOpenMasterSlave = true;
+            //}, Test =>
+            //{
+            //    Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+            //    Test.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
+            //    //
+            //    Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
+            //    Test.IsOpenMasterSlave = false;
+            //});
 
             ////注入mysql仓储   //注入多个ef配置信息
             //services.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
@@ -77,6 +78,28 @@ namespace Fate.XUnitTest
             //    Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
             //    Test.IsOpenMasterSlave = true;
             //});
+
+
+            services.AddRepository();
+
+            services.AddEFOption(options =>
+            {
+                options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                options.ReadOnlyConnectionString = new string[] { "Database=test1;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
+                //
+                options.UseEntityFramework<MysqlDbContent, SlaveMysqlDbContent>(true, 100);
+                options.IsOpenMasterSlave = true;
+            });
+
+            services.AddRepository();
+            services.AddEFOption(Test =>
+            {
+                Test.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;").AddInterceptors(new EFDbCommandInterceptor());
+                Test.ReadOnlyConnectionString = new string[] { "Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hai123;Charset=utf8;" };
+                //
+                Test.UseEntityFramework<TestDbContent, SlaveTestDbContent>(true, 100);
+                Test.IsOpenMasterSlave = false;
+            });
         }
         [Fact]
         public void Test()
@@ -84,7 +107,6 @@ namespace Fate.XUnitTest
             CancellationToken cancellationToken;
             cancellationToken.ThrowIfCancellationRequested();
             var iserverPri = services.BuildServiceProvider();
-
             var mysqlDbContent = iserverPri.GetRequiredService<MysqlDbContent>();
             DbContextOptions<MysqlDbContent> options = new DbContextOptions<MysqlDbContent>();
 

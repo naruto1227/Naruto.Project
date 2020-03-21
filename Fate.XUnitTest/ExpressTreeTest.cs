@@ -26,7 +26,7 @@ namespace Fate.XUnitTest
         public ExpressTreeTest()
         {
             //注入mysql仓储 
-            serviceDescriptors.AddRepositoryServer().AddRepositoryEFOptionServer(options =>
+            serviceDescriptors.AddRepository().AddEFOption(options =>
             {
                 options.ConfigureDbContext = context => context.UseMySql("Database=test;DataSource=127.0.0.1;Port=3306;UserId=root;Password=hks360;Charset=utf8;");
 

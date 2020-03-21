@@ -6,14 +6,14 @@
     <Authors>zhanghaibo</Authors>
     <RepositoryUrl>https://github.com/zhanghaiboshiwo/Fate.Project</RepositoryUrl>
     <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Fate.Project</PackageProjectUrl>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Fate.Infrastructure.BaseRepository.Model" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.2" />
   </ItemGroup>
 
 </Project>

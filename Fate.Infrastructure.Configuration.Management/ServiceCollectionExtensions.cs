@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     /// 注入配置界面
     /// </summary>
-    public static class ServiceCollectionExtensions
+    public static class ConfigurationExtensions
     {
         /// <summary>
         /// 注入配置界面
@@ -27,7 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //注入mvc扩展
             mvcBuilder.ConfigureApplicationPartManager(a =>
             {
-                a.ApplicationParts.Add(new AssemblyPart(typeof(ServiceCollectionExtensions).Assembly));
+                a.ApplicationParts.Add(new AssemblyPart(typeof(ConfigurationExtensions).Assembly));
             });
             return mvcBuilder;
         }
@@ -53,7 +53,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //注入mvc扩展
             mvcBuilder.ConfigureApplicationPartManager(a =>
             {
-                a.ApplicationParts.Add(new AssemblyPart(typeof(ServiceCollectionExtensions).Assembly));
+                a.ApplicationParts.Add(new AssemblyPart(typeof(ConfigurationExtensions).Assembly));
             });
             return mvcBuilder;
         }
@@ -91,7 +91,7 @@ namespace Microsoft.Extensions.DependencyInjection
             SetResoure();
             services.AddVirtualFileServices(options =>
             {
-                options.ResouresAssembly = typeof(ServiceCollectionExtensions).Assembly;
+                options.ResouresAssembly = typeof(ConfigurationExtensions).Assembly;
                 options.ResouresDirectoryPrefix = $"{ options.ResouresAssembly.GetName().Name}.Dashboard.Content";
 
             });

@@ -49,7 +49,7 @@ namespace Fate.XUnitTest
             {
                 list.Add(new TestEntity() { Id = i, Name = i.ToString(), Title = i.ToString() });
             }
-
+           
             var res = list.ToDataTable();
         }
     }

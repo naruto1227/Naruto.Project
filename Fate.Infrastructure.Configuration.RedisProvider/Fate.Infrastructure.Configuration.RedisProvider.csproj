@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fate.Infrastructure.Redis" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Fate.Infrastructure.Configuration\Fate.Infrastructure.Configuration.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Redis\Fate.Infrastructure.Redis.csproj" />
   </ItemGroup>
 
 </Project>

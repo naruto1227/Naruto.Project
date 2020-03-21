@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fate.Infrastructure.Repository" Version="1.0.0" />
+    <PackageReference Include="Fate.Infrastructure.Repository" Version="1.0.3" />
     <PackageReference Include="Fate.Infrastructure.VirtualFile" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Dashboard\Content\css\code.css" />
@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fate.Infrastructure.Configuration.RedisProvider\Fate.Infrastructure.Configuration.RedisProvider.csproj" />
+    <ProjectReference Include="..\Fate.Infrastructure.Repository\Fate.Infrastructure.Repository.csproj" />
   </ItemGroup>
 
 </Project>
