@@ -1,6 +1,7 @@
 
 using System;
 using System.Reflection;
+using Fate.Infrastructure.AspNetdentity.MongoDB;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.MongoDB;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -14,14 +15,13 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class IdentityMongoDBBuilderExtensions
     {
         /// <summary>
-        /// Adds an Entity Framework implementation of identity information stores.
+        /// ×¢ÈëmongodbµÄ´æ´¢
         /// </summary>
-        /// <typeparam name="TContext">The Entity Framework database context to use.</typeparam>
-        /// <param name="builder">The <see cref="IdentityBuilder"/> instance this method extends.</param>
-        /// <returns>The <see cref="IdentityBuilder"/> instance this method extends.</returns>
-        public static IdentityBuilder AddMongoDBStores(this IdentityBuilder builder)
-
+        public static IdentityBuilder AddMongoDBStores(this IdentityBuilder builder, Action<AspNetdentityMongoContext> context)
         {
+            //×¢Èë²Ö´¢
+            builder.Services.AddMongoServices()
+                .AddMongoContext(context);
             AddStores(builder.Services, builder.UserType, builder.RoleType);
             return builder;
         }

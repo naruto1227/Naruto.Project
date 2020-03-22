@@ -20,11 +20,21 @@ namespace Fate.XUnitTest
         private readonly IMongoRepository<TestMongoContext> mongoRepository;
         public MongoCommandTest()
         {
-            services.AddMongoServices(options =>
+            //services.AddMongoServices(options =>
+            //{
+            //    options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test1" });
+            //    //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
+            //    options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test2" });
+            //});
+            services.AddMongoServices();
+            services.AddMongoContext<TestMongoContext>(a =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test1" });
-                //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
-                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test2" });
+                a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test1";
+            });
+            services.AddMongoServices();
+            services.AddMongoContext<Test2MongoContext>(a =>
+            {
+                a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test2";
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }

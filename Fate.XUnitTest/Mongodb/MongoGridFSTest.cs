@@ -41,10 +41,15 @@ namespace Fate.XUnitTest.Mongodb
         private readonly IMongoRepository<TestMongoContext> mongoRepository;
         public MongoGridFSTest()
         {
-            services.AddMongoServices(options =>
+            services.AddMongoServices();
+            services.AddMongoContext<TestMongoContext>(a =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test1", BucketName = "ceshi" });
-                options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "test2", BucketName = "ceshi" });
+                a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test1";
+            });
+            services.AddMongoServices();
+            services.AddMongoContext<Test2MongoContext>(a =>
+            {
+                a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test2";
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }

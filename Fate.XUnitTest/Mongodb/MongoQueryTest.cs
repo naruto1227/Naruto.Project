@@ -52,9 +52,15 @@ namespace Fate.XUnitTest
         private readonly IMongoRepository<TestMongoContext> mongoRepository;
         public MongoQueryTest()
         {
-            services.AddMongoServices(options =>
+            services.AddMongoServices();
+            services.AddMongoContext<TestMongoContext>(a =>
             {
-                options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020", DataBase = "test" });
+                a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test1";
+            });
+            services.AddMongoServices();
+            services.AddMongoContext<Test2MongoContext>(a =>
+            {
+                a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test2";
             });
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
@@ -77,8 +83,11 @@ namespace Fate.XUnitTest
             var repository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
             var res = await repository.Query<TestDTO>().CountAsync("test2", a => 1 == 1);
             var res2 = await repository.Query<TestDTO2>().CountAsync("test2", a => 1 == 1);
-            res = await repository.Query<TestDTO>().CountAsync("test2", a => 1 == 1);
-            res2 = await repository.Query<TestDTO2>().CountAsync("test2", a => 1 == 1);
+
+            var repository2 = services.BuildServiceProvider().GetRequiredService<IMongoRepository<Test2MongoContext>>();
+
+            res = await repository2.Query<TestDTO>().CountAsync("test2", a => 1 == 1);
+            res2 = await repository2.Query<TestDTO2>().CountAsync("test2", a => 1 == 1);
         }
 
         [Fact]

@@ -16,14 +16,12 @@ namespace Fate.Test.Id4Mongodb
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            services.AddMongoServices(options =>
-            {
-                options.Add(new IdentityServerMongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "identityserver" });
-            });
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddMongoDBConfigurationStore()
+                .AddMongoDBConfigurationStore(a =>
+                {
+                    a.ConnectionString = "mongodb://192.168.0.109:27017"; a.DataBase = "identityserver";
+                })
                 .AddMongoDBOperationalStore();
 
             services.AddControllers().AddNewtonsoftJson();
