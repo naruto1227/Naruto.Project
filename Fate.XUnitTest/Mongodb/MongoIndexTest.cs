@@ -15,11 +15,7 @@ namespace Fate.XUnitTest
         private readonly IMongoRepository<TestMongoContext> mongoRepository;
         public MongoIndexTest()
         {
-            //services.AddMongoServices(options =>
-            //{
-            //    options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27021", DataBase = "test" });
-            //    //options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.18.227:27017,192.168.18.227:27018,192.168.18.227:27019,192.168.18.227:27020?readPreference=secondaryPreferred", ContextTypeName = "TestMongoContext", DataBase = "test" });
-            //});
+           
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
         /// <summary>

@@ -24,12 +24,7 @@ namespace Fate.XUnitTest
         private readonly IMongoRepository<TestMongoContext> mongoRepository;
         public TestId4ForMongodb()
         {
-            //services.AddMongoServices(options =>
-            //{
-            //    options.Add(new TestMongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "identityserver" });
-            //    options.Add(new Test2MongoContext() { ConnectionString = "mongodb://192.168.0.109:27017", DataBase = "identityserver" });
-            //});
-
+            
             mongoRepository = services.BuildServiceProvider().GetRequiredService<IMongoRepository<TestMongoContext>>();
         }
         /// <summary>

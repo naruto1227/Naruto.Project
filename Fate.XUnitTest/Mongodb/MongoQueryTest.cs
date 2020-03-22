@@ -57,7 +57,6 @@ namespace Fate.XUnitTest
             {
                 a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test1";
             });
-            services.AddMongoServices();
             services.AddMongoContext<Test2MongoContext>(a =>
             {
                 a.ConnectionString = "mongodb://192.168.0.104:27017"; a.DataBase = "test2";
