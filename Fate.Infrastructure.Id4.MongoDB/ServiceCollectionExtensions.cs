@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Fate.Infrastructure.Id4.MongoDB
 {
-    public static class ServiceCollectionExtensions
+    public static class MongoDBServiceCollectionExtensions
     {
         /// <summary>
         /// 注入对象存储   使用mongodb实现
