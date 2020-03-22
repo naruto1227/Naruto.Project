@@ -105,7 +105,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dashboard", "Dashboard", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Test.Id4Mongodb", "Fate.Test.Id4Mongodb\Fate.Test.Id4Mongodb.csproj", "{3BCEED36-318C-413E-96A2-9433405AAEBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fate.Infrastructure.OcelotStore.Entity", "Fate.Infrastructure.OcelotStore.Entity\Fate.Infrastructure.OcelotStore.Entity.csproj", "{346F614E-7208-4F83-A540-47E1E1ECA273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fate.Infrastructure.OcelotStore.Entity", "Fate.Infrastructure.OcelotStore.Entity\Fate.Infrastructure.OcelotStore.Entity.csproj", "{346F614E-7208-4F83-A540-47E1E1ECA273}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
