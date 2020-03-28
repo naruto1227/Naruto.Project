@@ -83,6 +83,20 @@ namespace Fate.Infrastructure.Repository.Interface
         /// <param name="action"></param>
         /// <returns></returns>
         void Exec(Action<DbContext> action);
+
+        /// <summary>
+        /// 执行操作
+        /// </summary>
+        /// <typeparam name="TResult">返回结果</typeparam>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        Task<TResult> ExecAsync<TResult>(Func<DbContext, TResult> action);
+        /// <summary>
+        /// 执行操作 无返回值
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        Task ExecAsync(Action<DbContext> action);
     }
 
 

@@ -43,6 +43,8 @@ namespace Fate.Infrastructure.Repository.Base
             unitOfWorkOptions = _unitOfWorkOptions;
             serviceProvider = _serviceProvider;
         }
+
+        #region exec 
         /// <summary>
         /// 带返回值
         /// </summary>
@@ -63,6 +65,29 @@ namespace Fate.Infrastructure.Repository.Base
             infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             action(masterDbContext);
         }
+
+        /// <summary>
+        /// 带返回值
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public async Task<TResult> ExecAsync<TResult>(Func<DbContext, TResult> action)
+        {
+            await infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false);
+            return action(masterDbContext);
+        }
+        /// <summary>
+        /// 无返回值
+        /// </summary>
+        /// <param name="action"></param>
+        public async Task ExecAsync(Action<DbContext> action)
+        {
+            await infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false);
+            action(masterDbContext);
+        }
+        #endregion
+
         /// <summary>
         /// 保存
         /// </summary>
@@ -70,7 +95,7 @@ namespace Fate.Infrastructure.Repository.Base
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             await infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false);
-            return await Exec(dbContext => dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false));
+            return await await ExecAsync(dbContext => dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false));
         }
 
         public int SaveChanges()
@@ -93,7 +118,7 @@ namespace Fate.Infrastructure.Repository.Base
             await infrastructureBase.SwitchAsync(masterDbContext).ConfigureAwait(false);
             //切换从库的连接上下文
             await serviceProvider.GetRequiredService<IRepositoryReadInfrastructure<TDbContext>>().SwitchMasterDbContextAsync().ConfigureAwait(false);
-            return await Exec(async dbContext =>
+            return await await ExecAsync(async dbContext =>
             {
                 return await dbContext.Database.BeginTransactionAsync(cancellationToken);
             });
@@ -185,6 +210,9 @@ namespace Fate.Infrastructure.Repository.Base
                 _infrastructureBase.SwitchSlaveAsync(slaveDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
+
+        #region exec 
+
         /// <summary>
         /// 带返回值
         /// </summary>
@@ -205,6 +233,29 @@ namespace Fate.Infrastructure.Repository.Base
             infrastructureBase.SwitchAsync(slaveDbContext).ConfigureAwait(false).GetAwaiter().GetResult();
             action(slaveDbContext);
         }
+
+        /// <summary>
+        /// 带返回值
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public async Task<TResult> ExecAsync<TResult>(Func<DbContext, TResult> action)
+        {
+            await infrastructureBase.SwitchAsync(slaveDbContext).ConfigureAwait(false);
+            return action(slaveDbContext);
+        }
+        /// <summary>
+        /// 无返回值
+        /// </summary>
+        /// <param name="action"></param>
+        public async Task ExecAsync(Action<DbContext> action)
+        {
+            await infrastructureBase.SwitchAsync(slaveDbContext).ConfigureAwait(false);
+            action(slaveDbContext);
+        }
+
+        #endregion
 
         /// <summary>
         /// 切换主库的上下文

@@ -29,14 +29,14 @@ namespace Fate.Infrastructure.Repository.Base
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public async Task AddAsync(T info, CancellationToken cancellationToken = default) => await infrastructure.Exec(async repository => await repository.Set<T>().AddAsync(info, cancellationToken)).ConfigureAwait(false);
+        public async Task AddAsync(T info, CancellationToken cancellationToken = default) => await await infrastructure.ExecAsync(async repository => await repository.Set<T>().AddAsync(info, cancellationToken)).ConfigureAwait(false);
 
         /// <summary>
         /// 批量添加数据
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public async Task BulkAddAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default) => await infrastructure.Exec(async repository => await repository.Set<T>().AddRangeAsync(entities, cancellationToken)).ConfigureAwait(false);
+        public async Task BulkAddAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default) => await await infrastructure.ExecAsync(async repository => await repository.Set<T>().AddRangeAsync(entities, cancellationToken)).ConfigureAwait(false);
 
         /// <summary>
         /// 删除数据
@@ -46,22 +46,22 @@ namespace Fate.Infrastructure.Repository.Base
         public async Task DeleteAsync(Expression<Func<T, bool>> condition, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await infrastructure.Exec(async repository =>
-            {
-                var list = await Where(condition).ToArrayAsync().ConfigureAwait(false);
-                if (list != null && list.Count() > 0)
-                    BulkDelete(list);
-            });
+            await await infrastructure.ExecAsync(async repository =>
+             {
+                 var list = await Where(condition).ToArrayAsync().ConfigureAwait(false);
+                 if (list != null && list.Count() > 0)
+                     BulkDelete(list);
+             });
         }
         /// <summary>
         /// 批量删除数据
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public Task BulkDeleteAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+        public async Task BulkDeleteAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return infrastructure.Exec(repository =>
+            await await infrastructure.ExecAsync(repository =>
            {
                repository.Set<T>().RemoveRange(entities);
                return Task.CompletedTask;
@@ -76,22 +76,22 @@ namespace Fate.Infrastructure.Repository.Base
         public async Task BulkDeleteAsync(Expression<Func<T, bool>> condition, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await infrastructure.Exec(async repository =>
-            {
-                var list = await Where(condition).ToListAsync();
-                if (list != null && list.Count() > 0)
-                    repository.Set<T>().RemoveRange(list);
-            });
+            await await infrastructure.ExecAsync(async repository =>
+             {
+                 var list = await Where(condition).ToListAsync();
+                 if (list != null && list.Count() > 0)
+                     repository.Set<T>().RemoveRange(list);
+             });
         }
         /// <summary>
         /// 更新单条实体
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public Task UpdateAsync(T info, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(T info, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return infrastructure.Exec(repository =>
+            await await infrastructure.ExecAsync(repository =>
            {
                repository.Set<T>().Update(info);
                return Task.CompletedTask;
@@ -106,25 +106,25 @@ namespace Fate.Infrastructure.Repository.Base
         public async Task UpdateAsync(Expression<Func<T, bool>> condition, Func<T, T> update, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await infrastructure.Exec(async repository =>
-           {
-               var list = await Where(condition).ToListAsync().ConfigureAwait(false);
-               if (list != null && list.Count() > 0)
-               {
-                   foreach (var item in list)
-                       update(item);
-               }
-           });
+            await await infrastructure.ExecAsync(async repository =>
+            {
+                var list = await Where(condition).ToListAsync().ConfigureAwait(false);
+                if (list != null && list.Count() > 0)
+                {
+                    foreach (var item in list)
+                        update(item);
+                }
+            });
         }
         /// <summary>
         /// 编辑
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public Task BulkUpdateAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+        public async Task BulkUpdateAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return infrastructure.Exec(repository =>
+            await await infrastructure.ExecAsync(repository =>
            {
                repository.Set<T>().UpdateRange(entities);
                return Task.CompletedTask;
