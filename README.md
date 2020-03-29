@@ -22,7 +22,7 @@
 >| <b>Naruto.VirtualFile</b> | <b>Naruto.VirtualFile</b> | 维护 | 虚拟文件系统 |
 >|<b>Naruto.Mongo</b> | <b>Naruto.Mongo</b>| 维护  | MongoDB仓储 |
 >| <b>Naruto.Configuration.Management</b> | | 维护 | 配置中心的面板和配置中间件提供 |
->| <b>Fate.Domain.Event</b> | | 维护 | 实现领域服务的事件总线，底板使用的Redis作为数据存储，缓存订阅的事件 |
->| <b>Fate.Domain</b> | |  | 领域层，业务的核心层，负责需求的书写 |
->| <b>Fate.Domain.Model</b> | |  | 领域实体层 |
->| <b>Fate.Application</b> | |  | 应用层 |
+>| <b>Naruto.Domain.Event</b> | | 维护 | 实现领域服务的事件总线，底板使用的Redis作为数据存储，缓存订阅的事件 |
+>| <b>Naruto.Domain</b> | |  | 领域层，业务的核心层，负责需求的书写 |
+>| <b>Naruto.Domain.Model</b> | |  | 领域实体层 |
+>| <b>Naruto.Application</b> | |  | 应用层 |
