@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/Naruto/css/oksub.css">
+    <script type="text/javascript" src="/Naruto/js/okLoading.js"></script>
+</head>
+<body>
+    <div class="ok-body">
+        <!--模糊搜索区域-->
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 ok-search">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">群组名称</label>
+                    <div class="layui-input-inline">
+
+                        <input class="layui-input" placeholder="群组名称" autocomplete="off" name="group" id="group">
+                    </div>
+                    </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">环境变量</label>
+                    <div class="layui-input-inline">
+
+                        <select id="environmentType" style="text-align:center">
+                            <option value="-1" selected="selected">-全部-</option>
+                            <option value="0">-测试-</option>
+                            <option value="1">-预发-</option>
+                            <option value="2">-正式-</option>
+                        </select>
+                    </div>
+                    <button class="layui-btn" lay-submit="" lay-filter="search">
+                        <i class="layui-icon">&#xe615;</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!--数据表格-->
+        <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+    </div>
+    <!--js逻辑-->
+    <script src="/Naruto/js/layui.js"></script>
+    <script>
+        layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils"], function () {
+            let table = layui.table;
+            let form = layui.form;
+            let laydate = layui.laydate;
+            let okLayer = layui.okLayer;
+            let okUtils = layui.okUtils;
+            let $ = layui.jquery;
+
+            laydate.render({ elem: "#startTime", type: "datetime" });
+            laydate.render({ elem: "#endTime", type: "datetime" });
+            okLoading.close($);
+            let userTable = table.render({
+                elem: '#tableId',
+                url: "/api/Management/Configuration",
+                limit: 20,
+                page: true,
+                toolbar: true,
+                toolbar: "#toolbarTpl",
+                size: "sm",
+                cols: [[
+                    { type: "checkbox", fixed: "left", align: 'center' },
+                    { field: "id", title: "ID", sort: true, align: 'center' },
+                    { field: "key", title: "配置的key", align: 'center' },
+                    { field: "value", title: "配置的值", align: 'center' },
+                    {
+                        field: 'environmentType', title: '环境变量', align: 'center', width: 150, templet: function (d) {
+                            var str = "<span style='color:red'>测试</span>";
+                            if (d.environmentType == 1) {
+                                str = "<span style='color:chartreuse'>预发</span>";
+                            }
+                            else if (d.environmentType == 2) {
+                                str = " <span style='color:green'>正式</span>";
+                            }
+                            return str;
+                        }
+                    },
+                    { field: "group", title: "所属组", align: 'center' },
+                    { field: "remark", title: "备注", align: 'center' },
+                    { field: "createTime", title: "创建时间", align: 'center' },
+                    { title: "操作", width: 100, align: "center", fixed: "right", templet: "#operationTpl" }
+                ]],
+                done: function (res, curr, count) {
+                    console.info(res, curr, count);
+                },
+                where: {
+                    group: $("#group").val(),
+                    environmentType: $("body").find("#environmentType option:selected").val()
+                }
+            });
+
+            form.on("submit(search)", function (data) {
+                userTable.reload({
+                    where: data.field,
+                    page: { curr: 1 }
+                });
+                return false;
+            });
+
+            table.on("toolbar(tableFilter)", function (obj) {
+                switch (obj.event) {
+                    case "batchDel":
+                        batchDel();
+                        break;
+                    case "add":
+                        add();
+                        break;
+                }
+            });
+
+            table.on("tool(tableFilter)", function (obj) {
+                let data = obj.data;
+                switch (obj.event) {
+                    case "edit":
+                        edit(data);
+                        break;
+                    case "del":
+                        del(data.id);
+                        break;
+                }
+            });
+            function batchDel() {
+                okLayer.confirm("确定要批量删除吗？", function (index) {
+                    layer.close(index);
+                    let idsStr = okUtils.tableBatchCheck(table);
+                    if (idsStr) {
+                        okUtils.ajax("api/Management/Configuration/"+idsStr, "delete", null, true).done(function (response) {
+                            console.log(response);
+                            okUtils.tableSuccessMsg(response.msg);
+                        }).fail(function (error) {
+                            console.log(error)
+                        });
+                    }
+                });
+            }
+
+            function add() {
+                okLayer.open("新增配置", "configuration-add.html", "50%", "80%", null, function () {
+                    userTable.reload();
+                })
+            }
+
+            function edit(data) {
+                okLayer.open("更新配置", "configuration-edit.html?id="+data.id,"50%", "80%",null)
+            }
+
+             function del(id) {
+                okLayer.confirm("确定要删除吗？", function () {
+                    okUtils.ajax("api/Management/Configuration/"+id, "delete", null, true).done(function (response) {
+                        console.log(response);
+                        okUtils.tableSuccessMsg(response.msg);
+                    }).fail(function (error) {
+                        console.log(error)
+                    });
+                })
+            }
+        })
+    </script>
+    <!-- 头工具栏模板 -->
+    <script type="text/html" id="toolbarTpl">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDel">批量删除</button>
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加配置</button>
+        </div>
+    </script>
+    <!-- 行工具栏模板 -->
+    <script type="text/html" id="operationTpl">
+        <a href="javascript:" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+        <a href="javascript:" title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+    </script>
+</body>
+</html>

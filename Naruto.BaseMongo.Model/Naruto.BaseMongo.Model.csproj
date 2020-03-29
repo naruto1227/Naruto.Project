@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryType>https://github.com/zhanghaiboshiwo/Naruto.Project</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Bson" Version="2.10.2" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Naruto.DDD\Naruto.Test\Naruto.Test.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.1.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.Application\Naruto.Application.csproj" />
+    <ProjectReference Include="..\Naruto.Consul\Naruto.Consul.csproj" />
+    <ProjectReference Include="..\Naruto.AutofacDependencyInjection\Naruto.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Naruto.CAP.Subscribe\Naruto.CAP.Subscribe.csproj" />
+    <ProjectReference Include="..\Naruto.Configuration.Management\Naruto.Configuration.Management.csproj" />
+    <ProjectReference Include="..\Naruto.Configuration\Naruto.Configuration.csproj" />
+    <ProjectReference Include="..\Naruto.OcelotStore.Redis\Naruto.OcelotStore.Redis.csproj" />
+    <ProjectReference Include="..\Naruto.Redis\Naruto.Redis.csproj" />
+    <ProjectReference Include="..\Naruto.Infrastructure\Naruto.Infrastructure.csproj" />
+    <ProjectReference Include="..\Naruto.Domain.Event\Naruto.Domain.Event.csproj" />
+    <ProjectReference Include="..\Naruto.Domain.Model\Naruto.Domain.Model.csproj" />
+    <ProjectReference Include="..\Naruto.Domain\Naruto.Domain.csproj" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
+</Project>

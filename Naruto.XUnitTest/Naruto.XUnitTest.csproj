@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="AgileObjects.ReadableExpressions" Version="2.3.2" />
+    <PackageReference Include="ExpressionTreeToString" Version="2.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.Application\Naruto.Application.csproj" />
+    <ProjectReference Include="..\Naruto.Consul\Naruto.Consul.csproj" />
+    <ProjectReference Include="..\Naruto.AutofacDependencyInjection\Naruto.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Naruto.CAP.Subscribe\Naruto.CAP.Subscribe.csproj" />
+    <ProjectReference Include="..\Naruto.Id4.Entities\Naruto.Id4.Entities.csproj" />
+    <ProjectReference Include="..\Naruto.Mapper\Naruto.Mapper.csproj" />
+    <ProjectReference Include="..\Naruto.MongoDB\Naruto.MongoDB.csproj" />
+    <ProjectReference Include="..\Naruto.OcelotStore.EFCore\Naruto.OcelotStore.EFCore.csproj" />
+    <ProjectReference Include="..\Naruto.OcelotStore.Redis\Naruto.OcelotStore.Redis.csproj" />
+    <ProjectReference Include="..\Naruto.Redis\Naruto.Redis.csproj" />
+    <ProjectReference Include="..\Naruto.Repository\Naruto.Repository.csproj" />
+    <ProjectReference Include="..\Naruto.Infrastructure\Naruto.Infrastructure.csproj" />
+    <ProjectReference Include="..\Naruto.Domain.Event\Naruto.Domain.Event.csproj" />
+    <ProjectReference Include="..\Naruto.Domain.Model\Naruto.Domain.Model.csproj" />
+    <ProjectReference Include="..\Naruto.Domain\Naruto.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>ocelot网关的配置存储方式替代为mysql存储</Description>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryType></RepositoryType>
+    <RepositoryUrl>https://github.com/zhanghaiboshiwo/Naruto.Project</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Naruto.Project</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ocelot" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.OcelotStore.Entity\Naruto.OcelotStore.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

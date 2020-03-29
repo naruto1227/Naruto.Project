@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.AutofacDependencyInjection\Naruto.AutofacDependencyInjection.csproj" />
+    <ProjectReference Include="..\Naruto.OcelotStore.EFCore\Naruto.OcelotStore.EFCore.csproj" />
+    <ProjectReference Include="..\Naruto.OcelotStore.RedisProvider\Naruto.OcelotStore.RedisProvider.csproj" />
+  </ItemGroup>
+
+</Project>

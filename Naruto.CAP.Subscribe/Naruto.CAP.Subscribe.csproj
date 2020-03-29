@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>CAPRabbitMQ的订阅服务都写在此层</Description>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.BaseRibbitMQ\Naruto.BaseRibbitMQ.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,162 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>配置中心的参数配置存储到数据库</Description>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Naruto.Project</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Dashboard\Content\css\code.css" />
+    <None Remove="Dashboard\Content\css\common.css" />
+    <None Remove="Dashboard\Content\css\iconfont.css" />
+    <None Remove="Dashboard\Content\css\index.css" />
+    <None Remove="Dashboard\Content\css\jquery.contextMenu.css" />
+    <None Remove="Dashboard\Content\css\laydate.css" />
+    <None Remove="Dashboard\Content\css\layer.css" />
+    <None Remove="Dashboard\Content\css\layui.css" />
+    <None Remove="Dashboard\Content\css\layui.mobile.css" />
+    <None Remove="Dashboard\Content\css\nprogress.css" />
+    <None Remove="Dashboard\Content\css\okadmin.animate.css" />
+    <None Remove="Dashboard\Content\css\okadmin.css" />
+    <None Remove="Dashboard\Content\css\okadmin.theme.css" />
+    <None Remove="Dashboard\Content\css\okLoading.css" />
+    <None Remove="Dashboard\Content\css\oksub.css" />
+    <None Remove="Dashboard\Content\css\toastr.min.css" />
+    <None Remove="Dashboard\Content\font\iconfont.woff" />
+    <None Remove="Dashboard\Content\font\iconfont.woff2" />
+    <None Remove="Dashboard\Content\images\gif\loading-0.gif" />
+    <None Remove="Dashboard\Content\images\gif\loading-1.gif" />
+    <None Remove="Dashboard\Content\images\gif\loading-2.gif" />
+    <None Remove="Dashboard\Content\images\png\avatar.png" />
+    <None Remove="Dashboard\Content\images\png\icon-ext.png" />
+    <None Remove="Dashboard\Content\images\png\icon.png" />
+    <None Remove="Dashboard\Content\json\navs.json" />
+    <None Remove="Dashboard\Content\js\carousel.js" />
+    <None Remove="Dashboard\Content\js\code.js" />
+    <None Remove="Dashboard\Content\js\colorpicker.js" />
+    <None Remove="Dashboard\Content\js\element.js" />
+    <None Remove="Dashboard\Content\js\flow.js" />
+    <None Remove="Dashboard\Content\js\form.js" />
+    <None Remove="Dashboard\Content\js\jquery.js" />
+    <None Remove="Dashboard\Content\js\laydate.js" />
+    <None Remove="Dashboard\Content\js\layedit.js" />
+    <None Remove="Dashboard\Content\js\layer.js" />
+    <None Remove="Dashboard\Content\js\laypage.js" />
+    <None Remove="Dashboard\Content\js\laytpl.js" />
+    <None Remove="Dashboard\Content\js\layui.all.js" />
+    <None Remove="Dashboard\Content\js\layui.js" />
+    <None Remove="Dashboard\Content\js\MD5.js" />
+    <None Remove="Dashboard\Content\js\mobile.js" />
+    <None Remove="Dashboard\Content\js\okadmin.js" />
+    <None Remove="Dashboard\Content\js\okBarcode.js" />
+    <None Remove="Dashboard\Content\js\okContextMenu.js" />
+    <None Remove="Dashboard\Content\js\okCookie.js" />
+    <None Remove="Dashboard\Content\js\okCountUp.js" />
+    <None Remove="Dashboard\Content\js\okGVerify.js" />
+    <None Remove="Dashboard\Content\js\okLayer.js" />
+    <None Remove="Dashboard\Content\js\okLoading.js" />
+    <None Remove="Dashboard\Content\js\okMd5.js" />
+    <None Remove="Dashboard\Content\js\okNprogress.js" />
+    <None Remove="Dashboard\Content\js\okSweetAlert2.js" />
+    <None Remove="Dashboard\Content\js\okTab.js" />
+    <None Remove="Dashboard\Content\js\okToastr.js" />
+    <None Remove="Dashboard\Content\js\okUtils.js" />
+    <None Remove="Dashboard\Content\js\rate.js" />
+    <None Remove="Dashboard\Content\js\slider.js" />
+    <None Remove="Dashboard\Content\js\table.js" />
+    <None Remove="Dashboard\Content\js\transfer.js" />
+    <None Remove="Dashboard\Content\js\tree.js" />
+    <None Remove="Dashboard\Content\js\upload.js" />
+    <None Remove="Dashboard\Content\js\util.js" />
+    <None Remove="Dashboard\Content\pages\configuration-add.html" />
+    <None Remove="Dashboard\Content\pages\configuration-edit.html" />
+    <None Remove="Dashboard\Content\pages\configuration.html" />
+    <None Remove="Dashboard\Content\pages\console.html" />
+    <None Remove="Dashboard\Content\pages\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dashboard\Content\css\code.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\common.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\iconfont.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\index.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\jquery.contextMenu.css" />
+    <EmbeddedResource Include="Dashboard\Content\font\iconfont.woff" />
+    <EmbeddedResource Include="Dashboard\Content\font\iconfont.woff2" />
+    <EmbeddedResource Include="Dashboard\Content\images\png\avatar.png" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\laydate.css" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\layer.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\layui.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\layui.mobile.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\nprogress.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\okadmin.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\okadmin.theme.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\okLoading.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\oksub.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\toastr.min.css" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\loading-0.gif" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\loading-1.gif" />
+    <EmbeddedResource Include="Dashboard\Content\images\gif\loading-2.gif" />
+    <EmbeddedResource Include="Dashboard\Content\images\png\icon-ext.png" />
+    <EmbeddedResource Include="Dashboard\Content\js\css\icon.png" />
+    <EmbeddedResource Include="Dashboard\Content\json\navs.json" />
+    <EmbeddedResource Include="Dashboard\Content\js\carousel.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\code.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\colorpicker.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\element.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\flow.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\form.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\jquery.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\laydate.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\layedit.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\layer.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\laypage.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\laytpl.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\layui.all.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\layui.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\MD5.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\mobile.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okadmin.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okBarcode.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okContextMenu.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okCookie.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okCountUp.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okGVerify.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okLayer.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okLoading.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okMd5.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okNprogress.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okSweetAlert2.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okTab.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okToastr.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\okUtils.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\rate.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\slider.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\table.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\transfer.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\tree.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\upload.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\util.js" />
+    <EmbeddedResource Include="Dashboard\Content\pages\configuration-add.html" />
+    <EmbeddedResource Include="Dashboard\Content\pages\configuration-edit.html" />
+    <EmbeddedResource Include="Dashboard\Content\pages\configuration.html" />
+    <EmbeddedResource Include="Dashboard\Content\pages\console.html" />
+    <EmbeddedResource Include="Dashboard\Content\pages\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.Configuration.RedisProvider\Naruto.Configuration.RedisProvider.csproj" />
+    <ProjectReference Include="..\Naruto.Repository\Naruto.Repository.csproj" />
+    <ProjectReference Include="..\Naruto.VirtualFile\Naruto.VirtualFile.csproj" />
+  </ItemGroup>
+
+</Project>

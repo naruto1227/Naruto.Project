@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.Redis\Naruto.Redis.csproj" />
+    <ProjectReference Include="..\Naruto.Repository\Naruto.Repository.csproj" />
+    <ProjectReference Include="..\Naruto.Infrastructure\Naruto.Infrastructure.csproj" />
+    <ProjectReference Include="..\Naruto.Domain.Event\Naruto.Domain.Event.csproj" />
+    <ProjectReference Include="..\Naruto.Domain.Model\Naruto.Domain.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>

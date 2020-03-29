@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.Infrastructure\Naruto.Infrastructure.csproj" />
+    <ProjectReference Include="..\Naruto.Domain.Model\Naruto.Domain.Model.csproj" />
+    <ProjectReference Include="..\Naruto.Domain\Naruto.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

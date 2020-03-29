@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>消息队列</Description>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naruto.BaseRibbitMQ\Naruto.BaseRibbitMQ.csproj" />
+  </ItemGroup>
+
+</Project>

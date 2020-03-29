@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>实体的基类</Description>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>zhanghaibo</Authors>
+    <RepositoryType>https://github.com/zhanghaiboshiwo/Naruto.Project</RepositoryType>
+  </PropertyGroup>
+
+</Project>
