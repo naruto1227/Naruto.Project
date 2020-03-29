@@ -87,7 +87,7 @@ namespace Fate.XUnitTest
                 AllowedGrantTypes = new List<ClientGrantType>()
                 {
                      new ClientGrantType{
-                          GrantType=GrantTypes.ClientCredentials.FirstOrDefault()
+                          GrantType=GrantType.ClientCredentials,
                      }
                 },
                 AllowedScopes = new List<ClientScope>()
