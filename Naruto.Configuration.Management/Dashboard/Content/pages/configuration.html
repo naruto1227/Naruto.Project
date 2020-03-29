@@ -22,9 +22,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">环境变量</label>
                     <div class="layui-input-inline">
-
                         <select id="environmentType" style="text-align:center">
-                            <option value="-1" selected="selected">-全部-</option>
+                            <option value="-1">-全部-</option>
                             <option value="0">-测试-</option>
                             <option value="1">-预发-</option>
                             <option value="2">-正式-</option>
@@ -88,13 +87,16 @@
                 },
                 where: {
                     group: $("#group").val(),
-                    environmentType: $("body").find("#environmentType option:selected").val()
+                    environmentType: $("body").find("#environmentType").val()
                 }
             });
 
             form.on("submit(search)", function (data) {
                 userTable.reload({
-                    where: data.field,
+                    where: {
+                        group: $("#group").val(),
+                        environmentType: $("body").find("#environmentType").val()
+                    },
                     page: { curr: 1 }
                 });
                 return false;

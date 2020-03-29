@@ -6,7 +6,7 @@
     <Authors>zhanghaibo</Authors>
     <RepositoryUrl>https://github.com/zhanghaiboshiwo/Naruto.Project</RepositoryUrl>
     <PackageProjectUrl>https://github.com/zhanghaiboshiwo/Naruto.Project</PackageProjectUrl>
-    <Version>1.0.3</Version>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
