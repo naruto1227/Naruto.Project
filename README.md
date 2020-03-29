@@ -1,4 +1,4 @@
-﻿# Fate.Project 
+﻿# Naruto.Project 
 > 本框架采用的.Net Core 3.1 的框架，实现了Redis,EFCore,MongoDB,VirtualFile,Consul,Ocelot,Mapper,AutoFac,RabbitMQ,IdentityServer4的一套分布式快速开发的框架.
 ## 层说明
 >| 程序集| Nuget| 状态 |注释 |
