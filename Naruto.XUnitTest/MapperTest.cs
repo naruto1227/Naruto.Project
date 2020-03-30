@@ -9,6 +9,7 @@ using Naruto.Mapper.Attributes;
 using AutoMapper;
 using Naruto.Infrastructure.ExpressTree;
 using System.Linq.Expressions;
+using ExpressionTreeToString;
 
 namespace Naruto.XUnitTest
 {
@@ -104,6 +105,10 @@ namespace Naruto.XUnitTest
         public object o { get; set; }
 
         public TestDto8 settig2 { get; set; }
+
+        public List<string> test15 { get; set; }
+
+        public string[] test16 { get; set; }
     }
 
     public class TestDto8
@@ -156,6 +161,10 @@ namespace Naruto.XUnitTest
         public object o { get; set; }
 
         public TestDto8 settig2 { get; set; }
+
+        public List<string> test15 { get; set; }
+
+        public string[] test16 { get; set; }
     }
     public class MapperTest
     {
@@ -168,12 +177,13 @@ namespace Naruto.XUnitTest
         [Fact]
         public void ExpressionMapper()
         {
-           // var ress = Expression.Convert(Expression.Constant(default), typeof(TestDto7));
+
             var res = ExpressionMapper<TestDto7, TestDto8>.To(new TestDto7()
             {
                 Contact = "1",
-                Description = ""
-            });
+                Description = "",
+                test15 = new List<string>() { "111" }
+            }, new string[] { "test15" });
         }
         [Fact]
         public void EntityMapper()

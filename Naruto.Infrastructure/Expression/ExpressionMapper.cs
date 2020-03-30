@@ -48,7 +48,7 @@ namespace Naruto.Infrastructure.ExpressTree
                 var memberBind = Expression.Bind(item,
                     Expression.Condition(//校检忽略的字段
                     contains,
-                 CheckType(item.PropertyType),
+                 Expression.Default(item.PropertyType),
                      Expression.Property(inParamter, typeof(TIn).GetProperty(item.Name))
                     ));
 
@@ -68,7 +68,7 @@ namespace Naruto.Infrastructure.ExpressTree
                     item,
                     Expression.Condition(//校检忽略的字段
                         contains,
-                        CheckType(item.FieldType),
+                        Expression.Default(item.FieldType),
                         Expression.Field(inParamter, typeof(TIn).GetField(item.Name))
                         )
                     );
@@ -89,48 +89,47 @@ namespace Naruto.Infrastructure.ExpressTree
         }
 
 
-        /// <summary>
-        /// 校检类型 返回对应的表达式
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private static Expression CheckType(Type type)
-        {
-            return Expression.Convert(Expression.Constant(default), type);
-            //if (type == typeof(int))
-            //    return Expression.Constant(0);
-            //else if (type == typeof(string))
-            //    return Expression.Constant("");
-            //else if (type == typeof(long))
-            //    return Expression.Constant((long)0);
-            //else if (type == typeof(float))
-            //    return Expression.Constant((float)0);
-            //else if (type == typeof(double))
-            //    return Expression.Constant((double)0);
-            //else if (type == typeof(decimal))
-            //    return Expression.Constant((decimal)0);
-            //else if (type == typeof(DateTime))
-            //    return Expression.Constant(DateTime.Parse("0001/1/1 0:00:00"));
-            //else if (type == typeof(bool))
-            //    return Expression.Constant(false);
-            //else if (type == typeof(short))
-            //    return Expression.Constant((short)0);
-            //else if (type == typeof(byte))
-            //    return Expression.Constant((byte)0);
-            //else if (type == typeof(byte[]))
-            //    return Expression.Constant(new byte[] { });
-            //else if (type == typeof(uint))
-            //    return Expression.Constant((uint)0);
-            //else if (type == typeof(ulong))
-            //    return Expression.Constant((ulong)0);
-            //else if (type == typeof(char))
-            //    return Expression.Constant(' ');
-            //else if (type == typeof(Guid))
-            //    return Expression.Constant(Guid.Empty);
-            //else if (type == typeof(object))
-            //    return Expression.Constant(default);
-            //else
-            //    return Expression.Constant(default);
-        }
+        ///// <summary>
+        ///// 校检类型 返回对应的表达式
+        ///// </summary>
+        ///// <param name="type"></param>
+        ///// <returns></returns>
+        //private static Expression CheckType(Type type)
+        //{
+        //    if (type == typeof(int))
+        //        return Expression.Constant(0);
+        //    else if (type == typeof(string))
+        //        return Expression.Constant("");
+        //    else if (type == typeof(long))
+        //        return Expression.Constant((long)0);
+        //    else if (type == typeof(float))
+        //        return Expression.Constant((float)0);
+        //    else if (type == typeof(double))
+        //        return Expression.Constant((double)0);
+        //    else if (type == typeof(decimal))
+        //        return Expression.Constant((decimal)0);
+        //    else if (type == typeof(DateTime))
+        //        return Expression.Constant(DateTime.Parse("0001/1/1 0:00:00"));
+        //    else if (type == typeof(bool))
+        //        return Expression.Constant(false);
+        //    else if (type == typeof(short))
+        //        return Expression.Constant((short)0);
+        //    else if (type == typeof(byte))
+        //        return Expression.Constant((byte)0);
+        //    else if (type == typeof(byte[]))
+        //        return Expression.Constant(new byte[] { });
+        //    else if (type == typeof(uint))
+        //        return Expression.Constant((uint)0);
+        //    else if (type == typeof(ulong))
+        //        return Expression.Constant((ulong)0);
+        //    else if (type == typeof(char))
+        //        return Expression.Constant(' ');
+        //    else if (type == typeof(Guid))
+        //        return Expression.Constant(Guid.Empty);
+        //    else if (type == typeof(object))
+        //        return Expression.Constant(default);
+        //    else
+        //        return Expression.Convert(Expression.Constant(default), type);
+        //}
     }
 }
