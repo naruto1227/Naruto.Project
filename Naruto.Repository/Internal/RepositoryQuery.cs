@@ -8,7 +8,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace Naruto.Repository.Base
+namespace Naruto.Repository.Internal
 {
     /// <summary>
     /// 从库查询

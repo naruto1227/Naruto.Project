@@ -9,6 +9,7 @@ using Naruto.Repository.HostServer;
 using Naruto.Repository;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Naruto.Repository.Interface;
+using Naruto.Repository.Internal;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -54,6 +55,7 @@ namespace Microsoft.Extensions.DependencyInjection
             }
             services.TryAddSingleton<ISlaveDbConnectionFactory, DefaultSlaveDbConnectionFactory>();
             services.TryAddScoped(typeof(UnitOfWorkOptions<>));
+            services.TryAddSingleton<IEFOptionsFactory, EFOptionsFactory>();
             return services;
         }
 

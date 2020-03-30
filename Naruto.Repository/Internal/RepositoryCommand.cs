@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
 
-namespace Naruto.Repository.Base
+namespace Naruto.Repository.Internal
 {
     public class RepositoryCommand<T, TDbContext> : IRepositoryCommand<T, TDbContext> where T : class, IEntity where TDbContext : DbContext
     {

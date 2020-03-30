@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Naruto.Repository.Base
+namespace Naruto.Repository.Internal
 {
     /// <summary>
     /// 仓储的中介者实现

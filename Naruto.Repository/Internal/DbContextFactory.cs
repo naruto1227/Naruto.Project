@@ -11,7 +11,7 @@ using Naruto.Repository.Object;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Naruto.Repository.Base
+namespace Naruto.Repository.Internal
 {
 
     public class DbContextFactory : IDbContextFactory, IDisposable
@@ -27,11 +27,15 @@ namespace Naruto.Repository.Base
         /// </summary>
         private ConcurrentDictionary<Type, DbContext> _slaveDbContexts { get; set; }
 
-        public DbContextFactory(IServiceProvider _serviceProvider)
+        private readonly IEFOptionsFactory eFOptionsFactory;
+
+        public DbContextFactory(IServiceProvider _serviceProvider, IEFOptionsFactory _eFOptionsFactory)
         {
             _masterDbContexts = new ConcurrentDictionary<Type, DbContext>();
             _slaveDbContexts = new ConcurrentDictionary<Type, DbContext>();
             serviceProvider = _serviceProvider;
+            eFOptionsFactory = _eFOptionsFactory;
+
         }
         /// <summary>
         /// 设置上下文
@@ -81,7 +85,7 @@ namespace Naruto.Repository.Base
         /// <returns></returns>
         private EFOptions GetEfOption(Type DbContextType)
         {
-            return serviceProvider.GetService(MergeNamedType.Get(DbContextType.Name)) as EFOptions;
+            return eFOptionsFactory.Get(DbContextType);
         }
         void IDisposable.Dispose()
         {

@@ -50,13 +50,13 @@ namespace Naruto.Repository.UnitOfWork
         /// </summary>
         /// <param name="_options"></param>
         /// <param name="_service"></param>
-        public UnitOfWork(IServiceProvider _service, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IDbContextFactory _repositoryFactory, IRepositoryMediator<TDbContext> _repositoryMediator)
+        public UnitOfWork(IServiceProvider _service, UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IDbContextFactory _repositoryFactory, IRepositoryMediator<TDbContext> _repositoryMediator, IEFOptionsFactory eFOptionsFactory)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
             //获取上下文类型
             unitOfWorkOptions.DbContextType = typeof(TDbContext);
             //获取ef的配置信息
-            var dbInfo = _service.GetService(MergeNamedType.Get(unitOfWorkOptions.DbContextType.Name)) as EFOptions;
+            var dbInfo = eFOptionsFactory.Get<TDbContext>();
 
             unitOfWorkOptions.WriteReadConnectionString = dbInfo?.WriteReadConnectionString;
             //是否开启读写分离操作

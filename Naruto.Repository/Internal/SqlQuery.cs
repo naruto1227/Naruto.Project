@@ -11,7 +11,7 @@ using System.Linq;
 using Naruto.Repository.Object;
 using System.Threading;
 
-namespace Naruto.Repository.Base
+namespace Naruto.Repository.Internal
 {
     /// <summary>
     /// 张海波

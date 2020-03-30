@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
 
-namespace Naruto.Repository.Base
+namespace Naruto.Repository.Internal
 {
 
     /// <summary>
@@ -284,10 +284,10 @@ namespace Naruto.Repository.Base
         /// </summary>
         private readonly EFOptions options;
 
-        public RepositoryInfrastructureBase(UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IServiceProvider serviceProvider)
+        public RepositoryInfrastructureBase(UnitOfWorkOptions<TDbContext> _unitOfWorkOptions, IEFOptionsFactory eFOptionsFactory)
         {
             unitOfWorkOptions = _unitOfWorkOptions;
-            options = serviceProvider.GetService(MergeNamedType.Get(_unitOfWorkOptions.DbContextType.Name)) as EFOptions;
+            options = eFOptionsFactory.Get<TDbContext>();
         }
 
         public async Task SwitchAsync(DbContext dbContext)

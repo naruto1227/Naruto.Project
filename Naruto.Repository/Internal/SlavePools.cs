@@ -7,8 +7,9 @@ using System.Text;
 using System.Net.Sockets;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Naruto.Repository.Object;
 
-namespace Naruto.Repository.Object
+namespace Naruto.Repository.Internal
 {
     /// <summary>
     /// 张海波
