@@ -145,9 +145,9 @@ namespace Naruto.XUnitTest
             // await unit.ChangeDataBase("test1");
             //var sql =  unit.Query<setting>().AsQueryable().ToSql(services.BuildServiceProvider().GetRequiredService<MysqlDbContent>());
             // var sql = unit.Query<setting>().AsQueryable().ToSql();
-            var str2 = "";
-            var str = unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToSqlWithParams();
-            var res = await unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToListAsync();
+            //var str2 = "";
+            //var str = unit.Query<setting>().AsQueryable().Where(a => a.Description == str2).ToSqlWithParams();
+            var res = await unit.Query<setting>(true).AsQueryable().ToListAsync();
         }
 
         [Fact]

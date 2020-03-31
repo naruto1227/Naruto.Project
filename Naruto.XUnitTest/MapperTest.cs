@@ -185,6 +185,24 @@ namespace Naruto.XUnitTest
                 test15 = new List<string>() { "111" }
             }, new string[] { "test15" });
         }
+        /// <summary>
+        /// 给已经存在的对象赋值
+        /// </summary>
+        [Fact]
+        public void ExpressionMapperOld()
+        {
+            var t1 = new TestDto7()
+            {
+                Contact = "1",
+                Description = "",
+                test15 = new List<string>() { "111" }
+            };
+
+            var t2 = new TestDto8
+            {
+                Id = 1088
+            };
+        }
         [Fact]
         public void EntityMapper()
         {
